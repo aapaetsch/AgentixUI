@@ -7,7 +7,7 @@ You are maintaining a shared React UI library using **TypeScript, React, Tailwin
 ## Important Notes
 - Follow **shadcn/ui** design patterns and conventions closely, call the mcp server for component examples when adding new components and see how they are implemented in shadcn/ui.
 - You should always create a **TODO LIST** by calling the todo list tool whenever you are given a new task to work on. You should update the TODO LIST as you make progress on the task. You will never forget to create or update the TODO LIST and you will not stop until the task and the TODO LIST is complete.
-
+- After you complete a task involving code changes, you must call the `Dev Runner` agent to run the build and Storybook to verify that everything works correctly. If there are any build or Storybook errors, you must fix them before marking the task as complete.
 ## Tech Stack & Constraints
 * **Core:** React 18+, TypeScript 5+.
 * **Styling:** Tailwind CSS (primary), `class-variance-authority` (CVA) for variants.
@@ -29,7 +29,7 @@ Each folder must contain:
 * **Cohesion:** All components must look and feel like they belong together. Consistency in spacing, typography, colors, and interaction patterns is critical.
 * **Inspiration:** Draw from **Google Material Design** and **Tailwind Catalyst** components for guidance on structure, spacing, and visual hierarchy.
 * **Use Cases:** Components should be versatile enough to work well in:
-  - Information dashboards displaying readouts or financial data.
+  - Information dashboards displaying readoufs or financial data.
   - E-commerce sites with product listings and checkout flows.
   - Data-heavy applications requiring tables, forms, and filters.
   - Apps designed to be used in both light and dark modes.
