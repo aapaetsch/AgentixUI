@@ -55,3 +55,7 @@ export type { SpinnerProps } from "./components/Spinner";
 // Checkbox
 export { Checkbox, checkboxVariants } from "./components/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox";
+
+// Switch
+export { Switch, switchTrackVariants, switchThumbVariants } from "./components/Switch";
+export type { SwitchProps } from "./components/Switch";
