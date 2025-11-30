@@ -63,3 +63,14 @@ export type { SwitchProps } from "./components/Switch";
 // Badge
 export { Badge, BadgeAnchor, AnimatedBadge, badgeVariants } from "./components/Badge";
 export type { BadgeProps, BadgeAnchorProps, AnimatedBadgeProps } from "./components/Badge";
+// AnimatedChevron
+export {
+  AnimatedChevron,
+  animatedChevronVariants,
+} from "./components/AnimatedChevron";
+export type {
+  AnimatedChevronProps,
+  ChevronAnimationPreset as AnimatedChevronAnimationPreset,
+  ChevronDirection,
+} from "./components/AnimatedChevron";
+
