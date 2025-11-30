@@ -59,3 +59,7 @@ export type { CheckboxProps } from "./components/Checkbox";
 // Switch
 export { Switch, switchTrackVariants, switchThumbVariants } from "./components/Switch";
 export type { SwitchProps } from "./components/Switch";
+
+// Badge
+export { Badge, BadgeAnchor, AnimatedBadge, badgeVariants } from "./components/Badge";
+export type { BadgeProps, BadgeAnchorProps, AnimatedBadgeProps } from "./components/Badge";
