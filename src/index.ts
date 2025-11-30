@@ -95,3 +95,23 @@ export type {
   ChevronDirection,
 } from "./components/AnimatedChevron";
 
+// Avatar
+export {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarBadge,
+  AnimatedAvatar,
+  avatarVariants,
+  avatarGroupVariants,
+  avatarBadgeVariants,
+} from "./components/Avatar";
+export type {
+  AvatarProps,
+  AvatarImageProps,
+  AvatarFallbackProps,
+  AvatarGroupProps,
+  AvatarBadgeProps,
+  AnimatedAvatarProps,
+} from "./components/Avatar";
