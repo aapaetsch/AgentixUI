@@ -51,3 +51,7 @@ export type { FABMenuProps, FABMenuItem } from "./components/FAB/FABMenu";
 // Spinner
 export { Spinner, spinnerVariants } from "./components/Spinner";
 export type { SpinnerProps } from "./components/Spinner";
+
+// Checkbox
+export { Checkbox, checkboxVariants } from "./components/Checkbox";
+export type { CheckboxProps } from "./components/Checkbox";

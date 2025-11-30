@@ -44,6 +44,8 @@ Each folder must contain:
 3.  **Overrides:** All components must accept a `className` prop and merge it using the `cn()` utility (`clsx` + `tailwind-merge`) as the last argument.
 4.  **Shadcn:** When adding a shadcn component, copy the code into `src/components/[Name]/index.tsx` and refactor imports to be relative.
 5. **REM vs PX:** Prefer `rem` units for spacing, sizing, and typography to ensure scalability with root font size changes. Use `px` only for very specific use cases where exact pixel control is necessary (e.g., borders, shadows).
+6. **UI Kit Design Aim:** We are going for a minimalist, modern aesthetic with clean lines, ample whitespace, and a focus on usability. Components should feel light and unobtrusive while still being visually appealing, cohesive and functional.
+
 ## Component `agents.md` Requirement
 Every component folder **must** have an `agents.md` file using this template:
 - **Title:** Component Name.
