@@ -63,6 +63,27 @@ export type { SwitchProps } from "./components/Switch";
 // Badge
 export { Badge, BadgeAnchor, AnimatedBadge, badgeVariants } from "./components/Badge";
 export type { BadgeProps, BadgeAnchorProps, AnimatedBadgeProps } from "./components/Badge";
+
+// Accordion
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  accordionVariants,
+  accordionItemVariants,
+  accordionTriggerVariants,
+  accordionContentVariants,
+  chevronSizeVariants,
+} from "./components/Accordion";
+export type {
+  AccordionProps,
+  AccordionItemProps,
+  AccordionTriggerProps,
+  AccordionContentProps,
+  ChevronAnimationPreset,
+} from "./components/Accordion";
+
 // AnimatedChevron
 export {
   AnimatedChevron,
