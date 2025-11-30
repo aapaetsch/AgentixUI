@@ -35,14 +35,15 @@ const toggleIconButtonVariants = cva(
         standard: "",
       },
       /**
-       * Size variants
+       * Size variants (using rem for scalability)
+       * xs: 1.75rem (28px), sm: 2rem (32px), md: 2.5rem (40px), lg: 3rem (48px), xl: 3.5rem (56px)
        */
       size: {
-        xs: "size-7 [&_svg]:size-4",
-        sm: "size-8 [&_svg]:size-4",
-        md: "size-10 [&_svg]:size-5",
-        lg: "size-12 [&_svg]:size-6",
-        xl: "size-14 [&_svg]:size-7",
+        xs: "size-[1.75rem] [&_svg]:size-4",
+        sm: "size-[2rem] [&_svg]:size-4",
+        md: "size-[2.5rem] [&_svg]:size-5",
+        lg: "size-[3rem] [&_svg]:size-6",
+        xl: "size-[3.5rem] [&_svg]:size-7",
       },
       /**
        * Shape variants - morphs between states
