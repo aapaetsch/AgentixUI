@@ -39,11 +39,11 @@ const connectedButtonGroupVariants = cva(
         outlined: "border border-border",
       },
       size: {
-        xs: "h-7 rounded-[var(--radius-sm)]",
-        sm: "h-8 rounded-[var(--radius)]",
-        md: "h-9 rounded-[var(--radius)]",
-        lg: "h-11 rounded-[var(--radius-md)]",
-        xl: "h-13 rounded-[var(--radius-lg)]",
+        xs: "h-[1.75rem] rounded-[var(--radius-sm)]",
+        sm: "h-[2rem] rounded-[var(--radius)]",
+        md: "h-[2.25rem] rounded-[var(--radius)]",
+        lg: "h-[2.75rem] rounded-[var(--radius-md)]",
+        xl: "h-[3.25rem] rounded-[var(--radius-lg)]",
       },
     },
     defaultVariants: {

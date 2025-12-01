@@ -35,14 +35,15 @@ const toggleButtonVariants = cva(
         outlined: "",
       },
       /**
-       * Size variants
+       * Size variants (using rem for scalability)
+       * xs: 1.75rem (28px), sm: 2rem (32px), md: 2.25rem (36px), lg: 2.75rem (44px), xl: 3.25rem (52px)
        */
       size: {
-        xs: "h-7 px-2.5 text-xs [&_svg]:size-3.5",
-        sm: "h-8 px-3 text-sm [&_svg]:size-4",
-        md: "h-9 px-4 text-sm [&_svg]:size-4",
-        lg: "h-11 px-5 text-base [&_svg]:size-5",
-        xl: "h-13 px-6 text-lg [&_svg]:size-6",
+        xs: "h-[1.75rem] px-2.5 text-xs [&_svg]:size-3.5",
+        sm: "h-[2rem] px-3 text-sm [&_svg]:size-4",
+        md: "h-[2.25rem] px-4 text-sm [&_svg]:size-4",
+        lg: "h-[2.75rem] px-5 text-base [&_svg]:size-5",
+        xl: "h-[3.25rem] px-6 text-lg [&_svg]:size-6",
       },
       /**
        * Shape variants - morphs between states

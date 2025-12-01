@@ -61,14 +61,15 @@ const iconButtonVariants = cva(
         ].join(" "),
       },
       /**
-       * Size variants
+       * Size variants (using rem for scalability)
+       * xs: 1.75rem (28px), sm: 2rem (32px), md: 2.5rem (40px), lg: 3rem (48px), xl: 3.5rem (56px)
        */
       size: {
-        xs: "size-7 [&_svg]:size-4",
-        sm: "size-8 [&_svg]:size-4",
-        md: "size-10 [&_svg]:size-5",
-        lg: "size-12 [&_svg]:size-6",
-        xl: "size-14 [&_svg]:size-7",
+        xs: "size-[1.75rem] [&_svg]:size-4",
+        sm: "size-[2rem] [&_svg]:size-4",
+        md: "size-[2.5rem] [&_svg]:size-5",
+        lg: "size-[3rem] [&_svg]:size-6",
+        xl: "size-[3.5rem] [&_svg]:size-7",
       },
       /**
        * Width variants for non-square icon buttons
@@ -100,18 +101,18 @@ const iconButtonVariants = cva(
       { shape: "square", size: "md", className: "rounded-[var(--radius-sm)]" },
       { shape: "square", size: "lg", className: "rounded-[var(--radius)]" },
       { shape: "square", size: "xl", className: "rounded-[var(--radius)]" },
-      // Narrow width
-      { width: "narrow", size: "xs", className: "w-6" },
-      { width: "narrow", size: "sm", className: "w-7" },
-      { width: "narrow", size: "md", className: "w-8" },
-      { width: "narrow", size: "lg", className: "w-10" },
-      { width: "narrow", size: "xl", className: "w-12" },
-      // Wide width
-      { width: "wide", size: "xs", className: "w-9" },
-      { width: "wide", size: "sm", className: "w-10" },
-      { width: "wide", size: "md", className: "w-12" },
-      { width: "wide", size: "lg", className: "w-14" },
-      { width: "wide", size: "xl", className: "w-16" },
+      // Narrow width (using rem)
+      { width: "narrow", size: "xs", className: "w-[1.5rem]" },
+      { width: "narrow", size: "sm", className: "w-[1.75rem]" },
+      { width: "narrow", size: "md", className: "w-[2rem]" },
+      { width: "narrow", size: "lg", className: "w-[2.5rem]" },
+      { width: "narrow", size: "xl", className: "w-[3rem]" },
+      // Wide width (using rem)
+      { width: "wide", size: "xs", className: "w-[2.25rem]" },
+      { width: "wide", size: "sm", className: "w-[2.5rem]" },
+      { width: "wide", size: "md", className: "w-[3rem]" },
+      { width: "wide", size: "lg", className: "w-[3.5rem]" },
+      { width: "wide", size: "xl", className: "w-[4rem]" },
       // Shape morph on active
       { shape: "round", className: "active:rounded-[var(--radius-xl)]" },
     ],

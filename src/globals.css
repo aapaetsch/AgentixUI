@@ -28,6 +28,9 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
@@ -97,6 +100,9 @@
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
+
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 0%;
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
@@ -183,5 +189,48 @@
       transform: scale(2.4);
       opacity: 0;
     }
+  }
+
+  /* ============================================================================
+   * Animated Chevron - Custom easing functions for chevron animations
+   * Used in Accordion, Dropdown, and other expandable components
+   * ============================================================================ */
+
+  /* 
+   * Chevron Animation Presets:
+   * - smooth: Default, gentle deceleration following MD3 standard motion
+   * - bounce: Slight overshoot for playful, energetic feel
+   * - sharp: Quick and snappy for responsive, precise UI
+   */
+
+  /* Smooth easing - MD3 standard deceleration curve */
+  .animate-chevron-smooth {
+    transition-property: transform;
+    transition-duration: var(--motion-duration-medium);
+    transition-timing-function: cubic-bezier(0, 0, 0, 1);
+  }
+
+  /* Bounce easing - slight overshoot for playful feel */
+  .animate-chevron-bounce {
+    transition-property: transform;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Sharp easing - quick and snappy */
+  .animate-chevron-sharp {
+    transition-property: transform;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* CSS custom properties for chevron animation (can be overridden) */
+  :root {
+    --chevron-duration-smooth: var(--motion-duration-medium);
+    --chevron-duration-bounce: 300ms;
+    --chevron-duration-sharp: 150ms;
+    --chevron-easing-smooth: cubic-bezier(0, 0, 0, 1);
+    --chevron-easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --chevron-easing-sharp: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }

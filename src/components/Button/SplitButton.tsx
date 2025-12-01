@@ -81,11 +81,11 @@ const splitButtonActionVariants = cva(
         ].join(" "),
       },
       size: {
-        xs: "h-8 pl-3 pr-2.5 text-xs [&_svg]:size-[18px] rounded-l-[1.5rem] rounded-r-[0.5rem]",
-        sm: "h-9 pl-4 pr-3 text-sm [&_svg]:size-5 rounded-l-[1.75rem] rounded-r-[0.5rem]",
-        md: "h-10 pl-4 pr-3 text-sm [&_svg]:size-5 rounded-l-[2rem] rounded-r-[0.5rem]",
-        lg: "h-12 pl-5 pr-4 text-base [&_svg]:size-6 rounded-l-[2.5rem] rounded-r-[0.5rem]",
-        xl: "h-14 pl-6 pr-5 text-lg [&_svg]:size-7 rounded-l-[3rem] rounded-r-[0.5rem]",
+        xs: "h-[2rem] pl-3 pr-2.5 text-xs [&_svg]:size-[18px] rounded-l-[1.5rem] rounded-r-[0.5rem]",
+        sm: "h-[2.25rem] pl-4 pr-3 text-sm [&_svg]:size-5 rounded-l-[1.75rem] rounded-r-[0.5rem]",
+        md: "h-[2.5rem] pl-4 pr-3 text-sm [&_svg]:size-5 rounded-l-[2rem] rounded-r-[0.5rem]",
+        lg: "h-[3rem] pl-5 pr-4 text-base [&_svg]:size-6 rounded-l-[2.5rem] rounded-r-[0.5rem]",
+        xl: "h-[3.5rem] pl-6 pr-5 text-lg [&_svg]:size-7 rounded-l-[3rem] rounded-r-[0.5rem]",
       },
     },
     defaultVariants: {
@@ -140,11 +140,11 @@ const splitButtonTriggerVariants = cva(
         ].join(" "),
       },
       size: {
-        xs: "size-8 [&_svg]:size-[22px] rounded-r-[1.5rem]",
-        sm: "size-9 [&_svg]:size-6 rounded-r-[1.75rem]",
-        md: "size-10 [&_svg]:size-6 rounded-r-[2rem]",
-        lg: "size-12 [&_svg]:size-7 rounded-r-[2.5rem]",
-        xl: "size-14 [&_svg]:size-8 rounded-r-[3rem]",
+        xs: "size-[2rem] [&_svg]:size-[22px] rounded-r-[1.5rem]",
+        sm: "size-[2.25rem] [&_svg]:size-6 rounded-r-[1.75rem]",
+        md: "size-[2.5rem] [&_svg]:size-6 rounded-r-[2rem]",
+        lg: "size-[3rem] [&_svg]:size-7 rounded-r-[2.5rem]",
+        xl: "size-[3.5rem] [&_svg]:size-8 rounded-r-[3rem]",
       },
       // Whether menu is open (controls left inner corner shape)
       // Open = circular (chevron up), Closed = inner corners (chevron down)
