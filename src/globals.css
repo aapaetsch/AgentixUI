@@ -64,10 +64,22 @@
     --tertiary-container: 280 65% 90%;
     --on-tertiary-container: 280 65% 20%;
 
-    /* Surface container colors */
+    /* Surface container colors (MD3) */
+    --surface: 0 0% 100%;
+    --surface-dim: 210 40% 94%;
+    --surface-bright: 0 0% 100%;
+    --surface-container-lowest: 0 0% 100%;
     --surface-container-low: 210 40% 98%;
     --surface-container: 210 40% 96%;
     --surface-container-high: 210 40% 94%;
+    --surface-container-highest: 210 40% 92%;
+    
+    /* Outline colors (MD3) */
+    --outline: 220 13% 46%;
+    --outline-variant: 220 13% 80%;
+    
+    /* On-surface color for state layers */
+    --on-surface: 222.2 84% 4.9%;
 
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
@@ -121,10 +133,22 @@
     --tertiary-container: 280 65% 25%;
     --on-tertiary-container: 280 65% 90%;
 
-    /* Surface container colors - dark mode */
+    /* Surface container colors - dark mode (MD3) */
+    --surface: 222.2 84% 6%;
+    --surface-dim: 222.2 84% 4.9%;
+    --surface-bright: 222.2 60% 16%;
+    --surface-container-lowest: 222.2 84% 4%;
     --surface-container-low: 222.2 84% 8%;
     --surface-container: 222.2 84% 10%;
     --surface-container-high: 222.2 84% 12%;
+    --surface-container-highest: 222.2 84% 15%;
+    
+    /* Outline colors - dark mode (MD3) */
+    --outline: 220 13% 46%;
+    --outline-variant: 220 13% 30%;
+    
+    /* On-surface color for state layers - dark mode */
+    --on-surface: 210 40% 98%;
 
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
