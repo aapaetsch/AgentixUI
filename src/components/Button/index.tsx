@@ -95,14 +95,14 @@ const buttonVariants = cva(
       },
       /**
        * Size variants following M3 specifications
-       * xs: 28px, sm: 32px, md: 36px (default), lg: 44px, xl: 52px
+       * xs: 1.75rem (28px), sm: 2rem (32px), md: 2.25rem (36px), lg: 2.75rem (44px), xl: 3.25rem (52px)
        */
       size: {
-        xs: "h-7 px-2.5 text-xs [&_svg]:size-3.5",
-        sm: "h-8 px-3 text-sm [&_svg]:size-4",
-        md: "h-9 px-4 text-sm [&_svg]:size-4",
-        lg: "h-11 px-5 text-base [&_svg]:size-5",
-        xl: "h-13 px-6 text-lg [&_svg]:size-6",
+        xs: "h-[1.75rem] px-2.5 text-xs [&_svg]:size-3.5",
+        sm: "h-[2rem] px-3 text-sm [&_svg]:size-4",
+        md: "h-[2.25rem] px-4 text-sm [&_svg]:size-4",
+        lg: "h-[2.75rem] px-5 text-base [&_svg]:size-5",
+        xl: "h-[3.25rem] px-6 text-lg [&_svg]:size-6",
       },
       /**
        * Shape variants
@@ -137,11 +137,11 @@ const buttonVariants = cva(
       { shape: "square", size: "lg", className: "rounded-[var(--radius)]" },
       { shape: "square", size: "xl", className: "rounded-[var(--radius)]" },
       // Icon-only sizing - make square
-      { iconOnly: true, size: "xs", className: "size-7" },
-      { iconOnly: true, size: "sm", className: "size-8" },
-      { iconOnly: true, size: "md", className: "size-9" },
-      { iconOnly: true, size: "lg", className: "size-11" },
-      { iconOnly: true, size: "xl", className: "size-13" },
+      { iconOnly: true, size: "xs", className: "size-[1.75rem]" },
+      { iconOnly: true, size: "sm", className: "size-[2rem]" },
+      { iconOnly: true, size: "md", className: "size-[2.25rem]" },
+      { iconOnly: true, size: "lg", className: "size-[2.75rem]" },
+      { iconOnly: true, size: "xl", className: "size-[3.25rem]" },
       // Shape morph on active - round becomes slightly less round
       { shape: "round", className: "active:rounded-[var(--radius-xl)]" },
     ],

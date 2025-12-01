@@ -95,3 +95,66 @@ export type {
   ChevronDirection,
 } from "./components/AnimatedChevron";
 
+// Select
+export {
+  Select,
+  SelectGroup,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
+  selectTriggerVariants,
+  selectContentVariants,
+  selectItemVariants,
+  selectLabelVariants,
+  selectSeparatorVariants,
+} from "./components/Select";
+export type {
+  SelectProps,
+  SelectTriggerProps,
+  SelectValueProps,
+  SelectContentProps,
+  SelectGroupProps,
+  SelectLabelProps,
+  SelectItemProps,
+  SelectSeparatorProps,
+  SelectScrollUpButtonProps,
+  SelectScrollDownButtonProps,
+} from "./components/Select";
+
+// Avatar
+export {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarBadge,
+  AnimatedAvatar,
+  avatarVariants,
+  avatarGroupVariants,
+  avatarBadgeVariants,
+} from "./components/Avatar";
+export type {
+  AvatarProps,
+  AvatarImageProps,
+  AvatarFallbackProps,
+  AvatarGroupProps,
+  AvatarBadgeProps,
+  AnimatedAvatarProps,
+} from "./components/Avatar";
+
+// Textarea
+export {
+  Textarea,
+  TextareaWithCounter,
+  textareaVariants,
+  textareaContainerVariants,
+} from "./components/Textarea";
+export type {
+  TextareaProps,
+  TextareaWithCounterProps,
+} from "./components/Textarea";
