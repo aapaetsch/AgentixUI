@@ -20,8 +20,6 @@ import {
 } from "./index";
 
 /**
- * # Accordion
- *
  * A vertically stacked set of interactive headings that reveal or hide
  * associated content sections.
  *

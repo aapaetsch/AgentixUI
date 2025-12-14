@@ -3,8 +3,6 @@ import { useState } from "react";
 import { AnimatedChevron } from "./index";
 
 /**
- * # AnimatedChevron
- *
  * A standalone animated chevron indicator with morphing SVG animation.
  *
  * ## Features
