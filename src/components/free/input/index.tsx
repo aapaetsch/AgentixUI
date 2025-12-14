@@ -3,7 +3,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "../../lib/utils";
+import { cn } from "../../../lib/utils";
 
 // ============================================================================
 // CVA Variants
@@ -38,8 +38,8 @@ const inputVariants = cva(
       variant: {
         shadcn: [
           "rounded-[var(--radius)]",
-          "border border-border",
-          "outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+          "border-2 border-border",
+          "outline-none",
           "focus-visible:border-ring",
         ].join(" "),
         outlined: [
@@ -54,9 +54,9 @@ const inputVariants = cva(
        * sm: compact, md: default, lg: larger touch targets
        */
       size: {
-        sm: "h-[2rem] px-2.5 text-sm",
-        md: "h-[2.5rem] px-3 text-sm",
-        lg: "h-[3rem] px-4 text-base",
+        sm: "h-[1.75rem] px-2.5 text-sm",
+        md: "h-[2rem] px-3 text-sm",
+        lg: "h-[2.5rem] px-4 text-base",
       },
       /**
        * Error state - destructive border color
@@ -81,7 +81,6 @@ const inputVariants = cva(
         className: [
           "border-destructive",
           "focus-visible:border-destructive",
-          "focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
         ].join(" "),
       },
       // Shadcn warning state
@@ -92,7 +91,6 @@ const inputVariants = cva(
         className: [
           "border-warning",
           "focus-visible:border-warning",
-          "focus-visible:ring-warning/20 dark:focus-visible:ring-warning/40",
         ].join(" "),
       },
     ],
@@ -151,7 +149,7 @@ const outlinedContainerVariants = cva(
         false: "",
       },
       focused: {
-        true: "ring-[3px] ring-ring/50 border-ring",
+        true: "border-2 border-ring focus:ring-0",
         false: "",
       },
       disabled: {
