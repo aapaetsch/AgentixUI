@@ -5,8 +5,8 @@ import * as SelectPrimitive from "@radix-ui/react-select";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Check, ChevronDown, ChevronUp, type LucideIcon } from "lucide-react";
 
-import { cn } from "../../lib/utils";
-import { AnimatedChevron, type ChevronAnimationPreset } from "../AnimatedChevron";
+import { cn } from "../../../lib/utils";
+import { AnimatedChevron, type ChevronAnimationPreset } from "../animated-chevron";
 
 /**
  * SelectTrigger variants using CVA
@@ -17,17 +17,16 @@ const selectTriggerVariants = cva(
     // Base styles
     "flex items-center justify-between gap-2",
     "w-full whitespace-nowrap rounded-[var(--radius)]",
-    "border border-border bg-transparent",
+    "border-2 border-border bg-transparent",
     "text-foreground data-[placeholder]:text-muted-foreground",
     "select-none cursor-pointer",
-    // Focus styles
-    "outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+    // Focus styles - only border color change, no ring
+    "outline-none",
     "focus-visible:border-ring",
     // Disabled state
     "disabled:cursor-not-allowed disabled:opacity-50",
     "aria-disabled:pointer-events-none aria-disabled:opacity-50",
     // Invalid state
-    "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
     "aria-invalid:border-destructive",
     // M3 Motion
     "transition-all",
@@ -43,15 +42,15 @@ const selectTriggerVariants = cva(
   {
     variants: {
       /**
-       * Size variants matching Button component
-       * xs: 1.75rem (28px), sm: 2rem (32px), md: 2.25rem (36px), lg: 2.75rem (44px), xl: 3.25rem (52px)
+       * Size variants - reduced heights compared to MD3
+       * xs: 1.5rem (24px), sm: 1.75rem (28px), md: 2rem (32px), lg: 2.25rem (36px), xl: 2.75rem (44px)
        */
       size: {
-        xs: "h-[1.75rem] px-2.5 text-xs [&_svg]:size-3.5",
-        sm: "h-[2rem] px-3 text-sm [&_svg]:size-4",
-        md: "h-[2.25rem] px-3 text-sm [&_svg]:size-4",
-        lg: "h-[2.75rem] px-4 text-base [&_svg]:size-5",
-        xl: "h-[3.25rem] px-5 text-lg [&_svg]:size-6",
+        xs: "h-[1.5rem] px-2.5 text-xs [&_svg]:size-3.5",
+        sm: "h-[1.75rem] px-3 text-sm [&_svg]:size-4",
+        md: "h-[2rem] px-3 text-sm [&_svg]:size-4",
+        lg: "h-[2.25rem] px-4 text-base [&_svg]:size-5",
+        xl: "h-[2.75rem] px-5 text-lg [&_svg]:size-6",
       },
     },
     defaultVariants: {

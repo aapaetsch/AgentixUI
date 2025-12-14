@@ -29,8 +29,6 @@ import {
 } from "./index";
 
 /**
- * # Select
- *
  * A dropdown select component following Material Design 3 patterns.
  * Built on Radix UI Select primitive with custom styling and size variants.
  *
