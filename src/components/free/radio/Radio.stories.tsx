@@ -3,8 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { RadioGroup, RadioGroupItem } from "./index";
 
 /**
- * # RadioGroup
- *
  * A set of checkable buttons (radio buttons) where only one can be checked at a time.
  * Built on Radix UI Radio Group primitive with Material Design 3 styling.
  *
