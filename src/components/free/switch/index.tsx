@@ -2,7 +2,7 @@ import * as React from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "../../lib/utils";
+import { cn } from "../../../lib/utils";
 
 /**
  * State layer size variants - MD3 specifies 40dp state layer around switch handle

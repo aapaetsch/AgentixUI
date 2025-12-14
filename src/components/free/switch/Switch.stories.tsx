@@ -4,8 +4,6 @@ import { Check, X, Moon, Sun, Volume2, VolumeX } from "lucide-react";
 import { Switch } from "./index";
 
 /**
- * # Switch
- *
  * A customizable switch component following Material Design 3 patterns.
  *
  * ## Features
