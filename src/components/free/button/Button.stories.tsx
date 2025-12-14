@@ -18,16 +18,14 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { Button } from "./index";
-import { IconButton } from "./IconButton";
-import { ToggleButton } from "./ToggleButton";
-import { ToggleIconButton } from "./ToggleIconButton";
-import { SplitButton } from "./SplitButton";
-import { ButtonGroup } from "./ButtonGroup";
-import { ConnectedButtonGroup, ConnectedButtonGroupItem } from "./ConnectedButtonGroup";
+import { IconButton } from "./icon-button";
+import { ToggleButton } from "./toggle-button";
+import { ToggleIconButton } from "./toggle-icon-button";
+import { SplitButton } from "./split-button";
+import { ButtonGroup } from "./button-group";
+import { ConnectedButtonGroup } from "./connected-button-group";
 
 /**
- * # Button
- *
  * A customizable button component following Material Design 3 patterns.
  *
  * ## Features
