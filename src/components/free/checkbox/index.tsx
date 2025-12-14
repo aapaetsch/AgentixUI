@@ -3,7 +3,7 @@ import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Check, Minus } from "lucide-react";
 
-import { cn } from "../../lib/utils";
+import { cn } from "../../../lib/utils";
 
 /**
  * State layer size variants - MD3 specifies 40dp state layer around 18dp checkbox
