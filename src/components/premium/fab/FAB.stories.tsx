@@ -1,12 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Plus, Edit, Heart, Share2, Download, Folder, File, Settings, X } from "lucide-react";
 import { FAB } from "./index";
-import { ExtendedFAB } from "./ExtendedFAB";
-import { FABMenu, type FABMenuItem } from "./FABMenu";
+import { ExtendedFAB } from "./extended-fab";
+import { FABMenu, type FABMenuItem } from "./fab-menu";
 
 /**
- * # FAB (Floating Action Button)
- *
  * A prominent button for the primary action on a screen.
  * Follows Material Design 3 specifications with shape morphing animations.
  *

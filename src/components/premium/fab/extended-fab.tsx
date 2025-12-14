@@ -1,16 +1,16 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "../../lib/utils";
+import { cn } from "../../../lib/utils";
 
 /**
- * FAB (Floating Action Button) variants using CVA
- * Implements Material Design 3 FAB patterns with shape, size, and color options
+ * Extended FAB variants using CVA
+ * Extended FABs include both an icon and a text label
  */
-export const fabVariants = cva(
+export const extendedFabVariants = cva(
   [
     // Base styles
-    "inline-flex items-center justify-center",
-    "font-medium select-none",
+    "inline-flex items-center justify-center gap-2",
+    "font-medium select-none whitespace-nowrap",
     "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
     "disabled:pointer-events-none disabled:opacity-50",
     "aria-disabled:pointer-events-none aria-disabled:opacity-50",
@@ -18,8 +18,8 @@ export const fabVariants = cva(
     "transition-all",
     "duration-[var(--motion-duration-medium)]",
     "ease-[var(--motion-easing-standard)]",
-    // Active state shape morph (more square when pressed)
-    "active:scale-95",
+    // Active state
+    "active:scale-[0.98]",
     // SVG icon sizing
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
   ].join(" "),
@@ -61,27 +61,26 @@ export const fabVariants = cva(
         ].join(" "),
       },
       /**
-       * Size variants following M3 FAB specifications
-       * sm: 40px, md: 56px (default), lg: 96px
+       * Size variants following M3 Extended FAB specifications
+       * sm: 48px height, md: 56px height (default), lg: 72px height
        */
       size: {
-        sm: "size-10 [&_svg]:size-5",
-        md: "size-14 [&_svg]:size-6",
-        lg: "size-24 [&_svg]:size-9",
+        sm: "h-12 px-4 text-sm [&_svg]:size-5",
+        md: "h-14 px-5 text-base [&_svg]:size-6",
+        lg: "h-[4.5rem] px-6 text-lg [&_svg]:size-7",
       },
       /**
        * Shape variants
-       * round: fully rounded (circle for square FABs)
-       * pill: fully rounded (same as round for icon-only)
+       * round/pill: fully rounded ends
        * rect: rounded corners based on size
        */
       shape: {
         round: "rounded-full",
         pill: "rounded-full",
-        rect: "", // Handled by compound variants based on size
+        rect: "", // Handled by compound variants
       },
       /**
-       * Optional fixed positioning for FABs
+       * Optional fixed positioning
        */
       position: {
         none: "",
@@ -92,11 +91,11 @@ export const fabVariants = cva(
       },
     },
     compoundVariants: [
-      // Rect shape radius based on size (M3 corner radius)
+      // Rect shape radius based on size
       { shape: "rect", size: "sm", className: "rounded-[var(--radius-md)]" },
       { shape: "rect", size: "md", className: "rounded-[var(--radius-lg)]" },
       { shape: "rect", size: "lg", className: "rounded-[var(--radius-xl)]" },
-      // Active state shape morph - rect gets more rounded, round gets more square
+      // Active state shape morph
       {
         shape: "round",
         className: "active:rounded-[var(--radius-xl)]",
@@ -109,43 +108,53 @@ export const fabVariants = cva(
     defaultVariants: {
       colorStyle: "filled",
       size: "md",
-      shape: "round",
+      shape: "pill",
       position: "none",
     },
   }
 );
 
-export interface FABProps
+export interface ExtendedFABProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof fabVariants> {
+    VariantProps<typeof extendedFabVariants> {
   /**
-   * Icon element to display in the FAB
+   * Icon element to display before the label
    */
   icon: React.ReactNode;
   /**
+   * Text label for the FAB
+   */
+  label: string;
+  /**
    * Custom positioning styles when position is set to a fixed value
-   * Useful for custom offsets or responsive positioning
    */
   positionStyle?: React.CSSProperties;
   /**
-   * Optional label for accessibility (used as aria-label)
+   * Whether to collapse to icon-only on smaller screens
+   * When true, hides the label on screens smaller than sm breakpoint
    */
-  label?: string;
+  collapseOnMobile?: boolean;
 }
 
 /**
- * FAB - Floating Action Button
+ * ExtendedFAB - Extended Floating Action Button
  *
- * A prominent button for the primary action on a screen.
- * Follows Material Design 3 specifications with shape morphing animations.
+ * A FAB that includes both an icon and a text label for clearer actions.
+ * Follows Material Design 3 specifications.
  *
  * @example
  * ```tsx
- * <FAB icon={<PlusIcon />} label="Add item" />
- * <FAB icon={<EditIcon />} size="lg" colorStyle="tertiary" position="bottom-right" />
+ * <ExtendedFAB icon={<PlusIcon />} label="Create new" />
+ * <ExtendedFAB
+ *   icon={<EditIcon />}
+ *   label="Edit document"
+ *   size="lg"
+ *   position="bottom-right"
+ *   collapseOnMobile
+ * />
  * ```
  */
-const FAB = React.forwardRef<HTMLButtonElement, FABProps>(
+const ExtendedFAB = React.forwardRef<HTMLButtonElement, ExtendedFABProps>(
   (
     {
       className,
@@ -156,6 +165,7 @@ const FAB = React.forwardRef<HTMLButtonElement, FABProps>(
       positionStyle,
       icon,
       label,
+      collapseOnMobile = false,
       style,
       ...props
     },
@@ -170,20 +180,23 @@ const FAB = React.forwardRef<HTMLButtonElement, FABProps>(
       <button
         ref={ref}
         type="button"
-        data-slot="fab"
+        data-slot="extended-fab"
         aria-label={label}
         className={cn(
-          fabVariants({ colorStyle, size, shape, position }),
+          extendedFabVariants({ colorStyle, size, shape, position }),
           className
         )}
         style={combinedStyle}
         {...props}
       >
         {icon}
+        <span className={cn(collapseOnMobile && "hidden sm:inline")}>
+          {label}
+        </span>
       </button>
     );
   }
 );
-FAB.displayName = "FAB";
+ExtendedFAB.displayName = "ExtendedFAB";
 
-export { FAB };
+export { ExtendedFAB };
