@@ -3,7 +3,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "../../lib/utils";
+import { cn } from "../../../lib/utils";
 
 // ============================================================================
 // CVA Variants
@@ -17,12 +17,12 @@ const textareaVariants = cva(
   [
     // Base styles
     "flex w-full rounded-[var(--radius)]",
-    "border bg-transparent",
+    "border-2 border-border bg-transparent",
     "text-foreground placeholder:text-muted-foreground",
     // Hide native resize handle by default
     "resize-none",
-    // Focus styles
-    "outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+    // Focus styles - only border color change, no ring
+    "outline-none",
     "focus-visible:border-ring",
     // Disabled state
     "disabled:cursor-not-allowed disabled:opacity-50",
@@ -30,6 +30,8 @@ const textareaVariants = cva(
     "transition-all",
     "duration-[var(--motion-duration-medium)]",
     "ease-[var(--motion-easing-standard)]",
+    // Hover
+    "hover:border-accent-foreground/20",
   ].join(" "),
   {
     variants: {
@@ -47,20 +49,18 @@ const textareaVariants = cva(
        */
       error: {
         true: [
-          "border-destructive",
+          "border-2 border-destructive",
           "focus-visible:border-destructive",
-          "focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
         ].join(" "),
-        false: "border-border",
+        false: "border-2 border-border",
       },
       /**
        * Warning state - warning border color (amber)
        */
       warning: {
         true: [
-          "border-warning",
+          "border-2 border-warning",
           "focus-visible:border-warning",
-          "focus-visible:ring-warning/20 dark:focus-visible:ring-warning/40",
         ].join(" "),
         false: "",
       },
@@ -71,9 +71,8 @@ const textareaVariants = cva(
         error: true,
         warning: true,
         className: [
-          "border-destructive",
+          "border-2 border-destructive",
           "focus-visible:border-destructive",
-          "focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
         ].join(" "),
       },
     ],
