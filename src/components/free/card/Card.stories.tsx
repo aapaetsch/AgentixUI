@@ -14,10 +14,10 @@ import {
   SwipeableCard,
   ExpandableCard,
 } from "./index";
-import { Button } from "../Button";
-import { IconButton } from "../Button/IconButton";
-import { Badge } from "../Badge";
-import { Avatar, AvatarFallback, AvatarImage } from "../Avatar";
+import { Button } from "../button";
+import { IconButton } from "../button/icon-button";
+import { Badge } from "../badge";
+import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 
 const meta: Meta<typeof Card> = {
   title: "Components/Card",
