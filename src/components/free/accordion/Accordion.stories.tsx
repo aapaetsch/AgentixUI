@@ -157,20 +157,21 @@ export const CustomIcon: Story = {
   render: () => (
     <Accordion type="single" collapsible className="w-[400px]">
       <AccordionItem value="item-1">
-        <AccordionTrigger icon={<Plus />}>
-          Plus icon (rotates to X)
+        <AccordionTrigger icon={<Plus />} iconRotation={45}>
+          Plus icon (rotates 45° to ×)
         </AccordionTrigger>
         <AccordionContent>
-          When you provide a custom icon, it rotates 180° when the accordion
-          opens, similar to the standard shadcn behavior.
+          The Plus icon rotates 45° to form an X shape when opened.
+          Use iconRotation={"{45}"} for this effect.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
-        <AccordionTrigger icon={<ChevronRight />}>
-          Chevron right (rotates down)
+        <AccordionTrigger icon={<ChevronRight />} iconRotation={90}>
+          Chevron right (rotates 90° to V)
         </AccordionTrigger>
         <AccordionContent>
-          You can use any icon from lucide-react or your own custom icons.
+          The ChevronRight icon rotates 90° to point downward when opened.
+          Use iconRotation={"{90}"} for this effect.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-3">
