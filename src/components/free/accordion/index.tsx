@@ -188,10 +188,18 @@ export interface AccordionTriggerProps
   extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>,
     VariantProps<typeof accordionTriggerVariants> {
   /**
-   * Custom icon to use instead of the animated chevron
-   * When provided, the icon will rotate 180° when open
+   * Custom icon to use instead of the default chevron
    */
   icon?: React.ReactNode;
+  /**
+   * Rotation angle for the custom icon when accordion is open
+   * - 45: For Plus icon (+ rotates to ×)
+   * - 90: For ChevronRight icon (> rotates to V)
+   * - 180: Default rotation (V rotates to ^)
+   * - "none": No rotation (for icons with their own animation like AnimatedChevron)
+   * @default 180
+   */
+  iconRotation?: 45 | 90 | 180 | "none";
   /**
    * Whether to hide the chevron/icon completely
    * @default false
@@ -239,64 +247,73 @@ const AccordionTrigger = React.forwardRef<
       children,
       size,
       icon,
+      iconRotation = 180,
       hideChevron = false,
       chevronAnimation = "smooth",
       chevronSize = "md",
       ...props
     },
     ref
-  ) => (
-    <AccordionPrimitive.Header className="flex">
-      <AccordionPrimitive.Trigger
-        ref={ref}
-        data-slot="accordion-trigger"
-        className={cn(
-          accordionTriggerVariants({ size }),
-          // Apply rotation to direct child svg or icon wrapper when open
-          "[&[data-state=open]>[data-slot=icon-wrapper]]:rotate-180",
-          className
-        )}
-        {...props}
-      >
-        {children}
-        {!hideChevron &&
-          (icon ? (
-            // Custom icon - uses standard rotation via data-state selector
-            <span
-              data-slot="icon-wrapper"
-              className={cn(
-                "shrink-0 text-muted-foreground",
-                "transition-transform duration-200",
-                "[&>svg]:size-4"
-              )}
-            >
-              {icon}
-            </span>
-          ) : (
-            // Default: Use ChevronDown icon with rotation (not AnimatedChevron for now)
-            <span
-              data-slot="icon-wrapper"
-              className={cn(
-                "shrink-0 text-muted-foreground",
-                "transition-transform",
-                {
-                  "duration-200": chevronAnimation === "smooth",
-                  "duration-300": chevronAnimation === "bounce",
-                  "duration-150": chevronAnimation === "sharp",
-                },
-                {
-                  "[transition-timing-function:cubic-bezier(0,0,0,1)]": chevronAnimation === "smooth",
-                  "[transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)]": chevronAnimation === "bounce",
-                  "[transition-timing-function:cubic-bezier(0.4,0,0.2,1)]": chevronAnimation === "sharp",
-                }
-              )}
-            >
-              <ChevronDown className={cn(chevronSizeVariants({ size: chevronSize }))} />
-            </span>
-          ))}
-      </AccordionPrimitive.Trigger>
-    </AccordionPrimitive.Header>
-  )
+  ) => {
+    // Determine rotation angle - use explicit prop or default to 180 for default chevron
+    const rotation = icon ? iconRotation : 180;
+
+    return (
+      <AccordionPrimitive.Header className="flex">
+        <AccordionPrimitive.Trigger
+          ref={ref}
+          data-slot="accordion-trigger"
+          className={cn(
+            accordionTriggerVariants({ size }),
+            // Apply rotation to icon wrapper when open
+            // "none" means the icon handles its own animation (like AnimatedChevron)
+            rotation === 45 && "[&[data-state=open]>[data-slot=icon-wrapper]]:rotate-45",
+            rotation === 90 && "[&[data-state=open]>[data-slot=icon-wrapper]]:rotate-90",
+            rotation === 180 && "[&[data-state=open]>[data-slot=icon-wrapper]]:rotate-180",
+            className
+          )}
+          {...props}
+        >
+          {children}
+          {!hideChevron &&
+            (icon ? (
+              // Custom icon - uses rotation based on icon type
+              <span
+                data-slot="icon-wrapper"
+                className={cn(
+                  "shrink-0 text-muted-foreground",
+                  "transition-transform duration-200",
+                  "[&>svg]:size-4"
+                )}
+              >
+                {icon}
+              </span>
+            ) : (
+              // Default: Use ChevronDown icon with rotation (not AnimatedChevron for now)
+              <span
+                data-slot="icon-wrapper"
+                className={cn(
+                  "shrink-0 text-muted-foreground",
+                  "transition-transform",
+                  {
+                    "duration-200": chevronAnimation === "smooth",
+                    "duration-300": chevronAnimation === "bounce",
+                    "duration-150": chevronAnimation === "sharp",
+                  },
+                  {
+                    "[transition-timing-function:cubic-bezier(0,0,0,1)]": chevronAnimation === "smooth",
+                    "[transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)]": chevronAnimation === "bounce",
+                    "[transition-timing-function:cubic-bezier(0.4,0,0.2,1)]": chevronAnimation === "sharp",
+                  }
+                )}
+              >
+                <ChevronDown className={cn(chevronSizeVariants({ size: chevronSize }))} />
+              </span>
+            ))}
+        </AccordionPrimitive.Trigger>
+      </AccordionPrimitive.Header>
+    );
+  }
 );
 AccordionTrigger.displayName = "AccordionTrigger";
 

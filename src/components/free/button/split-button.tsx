@@ -2,6 +2,7 @@ import * as React from "react";
 import { ChevronDown } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../../lib/utils";
+import { AnimatedChevron } from "../animated-chevron";
 
 /**
  * SplitButton container variants
@@ -203,7 +204,17 @@ export interface SplitButtonProps
    */
   dropdownOpen?: boolean;
   /**
-   * Custom dropdown icon (disables rotation animation)
+   * Use AnimatedChevron component with morphing animation instead of rotating ChevronDown
+   * @default false
+   */
+  useAnimatedChevron?: boolean;
+  /**
+   * Animation preset for AnimatedChevron (only when useAnimatedChevron is true)
+   * @default "smooth"
+   */
+  animationPreset?: "smooth" | "bounce" | "sharp";
+  /**
+   * Custom dropdown icon (overrides both default chevron and animated chevron)
    */
   dropdownIcon?: React.ReactNode;
   /**
@@ -255,6 +266,8 @@ const SplitButton = React.forwardRef<HTMLDivElement, SplitButtonProps>(
       onAction,
       onDropdownClick,
       dropdownOpen = false,
+      useAnimatedChevron = false,
+      animationPreset = "smooth",
       dropdownIcon,
       actionDisabled = false,
       dropdownDisabled = false,
@@ -298,9 +311,16 @@ const SplitButton = React.forwardRef<HTMLDivElement, SplitButtonProps>(
             open: dropdownOpen,
           })}
         >
-          {dropdownIcon ?? (
-            <ChevronDown className={chevronVariants({ open: dropdownOpen })} />
-          )}
+          {dropdownIcon ??
+            (useAnimatedChevron ? (
+              <AnimatedChevron
+                open={dropdownOpen}
+                animation={animationPreset}
+                direction="down"
+              />
+            ) : (
+              <ChevronDown className={chevronVariants({ open: dropdownOpen })} />
+            ))}
         </button>
       </div>
     );

@@ -8,6 +8,7 @@ You are maintaining a shared React UI library using **TypeScript, React, Tailwin
 - Follow **shadcn/ui** design patterns and conventions closely, call the mcp server for component examples when adding new components and see how they are implemented in shadcn/ui.
 - You should always create a **TODO LIST** by calling the todo list tool whenever you are given a new task to work on. You should update the TODO LIST as you make progress on the task. You will never forget to create or update the TODO LIST and you will not stop until the task and the TODO LIST is complete.
 - After you complete a task involving code changes, you must call the `Dev Runner` subagent using the `agent/runSubagent` tool to run the build and Storybook to verify that everything works correctly. If there are any build or Storybook errors, you must fix them before marking the task as complete.
+- As components are implemented, you must update their status in the `docs/ROADMAP.md` file to reflect current progress.
 
 ## Tech Stack & Constraints
 * **Core:** React 18+, TypeScript 5+.
@@ -20,11 +21,18 @@ You are maintaining a shared React UI library using **TypeScript, React, Tailwin
 - Refer to [shadcn/ui site map](https://https://ui.shadcn.com/llms.txt) for the shadcn documentation site map. From there you can find the specific documentation for your needs.
 
 ## Project Structure Rules
-All components must reside in: `src/components/[PascalCaseName]/`
+All components must reside in: `src/components/[tier]/[kebab-case-name]/`
 Each folder must contain:
 1.  `index.tsx`: Component source.
-2.  `[Name].stories.tsx`: Storybook stories.
-3.  `agents.md`: Component-specific context.
+2.  `[component-name].stories.tsx`: Storybook stories.
+3.  `agents.md`: Component-specific context for AI agents.
+4.  `README.md`: Component-specific documentation for human developers.
+
+Component files must follow these naming conventions:
+- Component folder names: Use `kebab-case` (e.g., `button-group`)
+- Component file names: Use `kebab-case` (e.g., `button-group.tsx`)
+- Component names: Use `PascalCase` (e.g., `ButtonGroup`)
+- Functions and methods: Use `camelCase` (e.g., `handleClick`)
 
 ## Design Philosophy
 * **Cohesion:** All components must look and feel like they belong together. Consistency in spacing, typography, colors, and interaction patterns is critical.
@@ -93,3 +101,17 @@ Every component folder **must** have an `agents.md` file using this template:
 * **Accessibility Testing:** Components must be tested for accessibility compliance using tools like axe-core or browser dev tools.
 * **Type Safety:** Maintain strict TypeScript settings with no implicit any. Utilize advanced types (unions, generics) where appropriate for better DX.
 * **Component API Documentation:** Document public APIs in component comments and maintain updated README files for complex components.
+
+## Roadmap Maintenance Practices
+
+### Keeping the ROADMAP.md Updated
+* **Status Tracking:** As components are implemented, their status in `docs/ROADMAP.md` must be updated from "Planned" (📋) to "Complete" (✅).
+* **Implementation Documentation:** When marking a component as complete, ensure all variants and sub-components are properly documented in the roadmap.
+* **Progress Tracking:** Update the development phase checklists in the roadmap to reflect completed work.
+* **Summary Updates:** Keep the component count summary at the end of the roadmap accurate as work progresses.
+* **Changelog Entries:** Add entries to the changelog section of the roadmap when significant milestones are reached or components are completed.
+
+### Component Implementation Process
+* **Pre-Implementation:** Before starting work on a component, verify its status in the roadmap and update it to "In Progress" (🔄) if needed.
+* **Post-Implementation:** After completing a component, update its status in the roadmap and ensure all relevant details are captured.
+* **Cross-Referencing:** Ensure that any changes to component scope or variants are reflected in both the roadmap and the component's individual documentation.

@@ -18,6 +18,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "./index";
+import { AnimatedChevron } from "../animated-chevron";
 
 /**
  * A vertically stacked set of interactive headings that reveal or hide
@@ -157,20 +158,21 @@ export const CustomIcon: Story = {
   render: () => (
     <Accordion type="single" collapsible className="w-[400px]">
       <AccordionItem value="item-1">
-        <AccordionTrigger icon={<Plus />}>
-          Plus icon (rotates to X)
+        <AccordionTrigger icon={<Plus />} iconRotation={45}>
+          Plus icon (rotates 45° to ×)
         </AccordionTrigger>
         <AccordionContent>
-          When you provide a custom icon, it rotates 180° when the accordion
-          opens, similar to the standard shadcn behavior.
+          The Plus icon rotates 45° to form an X shape when opened.
+          Use iconRotation={"{45}"} for this effect.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
-        <AccordionTrigger icon={<ChevronRight />}>
-          Chevron right (rotates down)
+        <AccordionTrigger icon={<ChevronRight />} iconRotation={90}>
+          Chevron right (rotates 90° to V)
         </AccordionTrigger>
         <AccordionContent>
-          You can use any icon from lucide-react or your own custom icons.
+          The ChevronRight icon rotates 90° to point downward when opened.
+          Use iconRotation={"{90}"} for this effect.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-3">
@@ -656,6 +658,104 @@ export const Controlled: Story = {
         <p className="text-xs text-muted-foreground">
           Current value: {value || "none"}
         </p>
+      </div>
+    );
+  },
+};
+
+// ============================================================================
+// AnimatedChevron Variants
+// ============================================================================
+
+export const WithAnimatedChevron: Story = {
+  name: "With AnimatedChevron (Morphing)",
+  render: function AnimatedChevronStory() {
+    const [openItems, setOpenItems] = useState<string[]>([]);
+
+    const handleValueChange = (value: string[]) => {
+      setOpenItems(value);
+    };
+
+    return (
+      <div className="w-[400px]">
+        <p className="mb-4 text-sm text-muted-foreground">
+          This example uses the standalone AnimatedChevron component for a
+          morphing animation effect instead of simple rotation. Use{" "}
+          <code>iconRotation="none"</code> to prevent rotation.
+        </p>
+        <Accordion
+          type="multiple"
+          value={openItems}
+          onValueChange={handleValueChange}
+        >
+          <AccordionItem value="item-1">
+            <AccordionTrigger
+              icon={
+                <AnimatedChevron
+                  open={openItems.includes("item-1")}
+                  animation="smooth"
+                />
+              }
+              iconRotation="none"
+            >
+              Smooth Animation
+            </AccordionTrigger>
+            <AccordionContent>
+              The chevron morphs with a gentle deceleration curve, following
+              Material Design 3 motion principles.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger
+              icon={
+                <AnimatedChevron
+                  open={openItems.includes("item-2")}
+                  animation="bounce"
+                />
+              }
+              iconRotation="none"
+            >
+              Bounce Animation
+            </AccordionTrigger>
+            <AccordionContent>
+              Features a playful overshoot effect that adds energy to the
+              interaction.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger
+              icon={
+                <AnimatedChevron
+                  open={openItems.includes("item-3")}
+                  animation="sharp"
+                />
+              }
+              iconRotation="none"
+            >
+              Sharp Animation
+            </AccordionTrigger>
+            <AccordionContent>
+              Quick and snappy for a responsive, precise UI feel.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-4">
+            <AccordionTrigger
+              icon={
+                <AnimatedChevron
+                  open={openItems.includes("item-4")}
+                  direction="right"
+                />
+              }
+              iconRotation="none"
+            >
+              Right-Facing Chevron
+            </AccordionTrigger>
+            <AccordionContent>
+              The chevron can start pointing right and morph to pointing down
+              when opened.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     );
   },
