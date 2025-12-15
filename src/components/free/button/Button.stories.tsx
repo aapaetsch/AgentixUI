@@ -492,6 +492,68 @@ export const SplitButtonM3Anatomy: Story = {
   ),
 };
 
+export const SplitButtonWithAnimatedChevron: Story = {
+  name: "SplitButton with AnimatedChevron",
+  render: () => {
+    const [open1, setOpen1] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
+    const [open3, setOpen3] = React.useState(false);
+
+    return (
+      <div className="flex flex-col items-center gap-8">
+        <p className="text-sm text-muted-foreground max-w-md text-center">
+          SplitButton can use the AnimatedChevron component for a morphing
+          animation instead of simple rotation.
+        </p>
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            <span className="text-xs font-medium text-muted-foreground w-24">Smooth:</span>
+            <SplitButton
+              colorStyle="filled"
+              useAnimatedChevron
+              animationPreset="smooth"
+              dropdownOpen={open1}
+              onDropdownClick={() => setOpen1(!open1)}
+              onAction={() => console.log("Action")}
+            >
+              Save
+            </SplitButton>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-xs font-medium text-muted-foreground w-24">Bounce:</span>
+            <SplitButton
+              colorStyle="tonal"
+              useAnimatedChevron
+              animationPreset="bounce"
+              dropdownOpen={open2}
+              onDropdownClick={() => setOpen2(!open2)}
+              onAction={() => console.log("Action")}
+            >
+              Export
+            </SplitButton>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-xs font-medium text-muted-foreground w-24">Sharp:</span>
+            <SplitButton
+              colorStyle="outlined"
+              useAnimatedChevron
+              animationPreset="sharp"
+              dropdownOpen={open3}
+              onDropdownClick={() => setOpen3(!open3)}
+              onAction={() => console.log("Action")}
+            >
+              Share
+            </SplitButton>
+          </div>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          The chevron morphs its shape instead of rotating
+        </p>
+      </div>
+    );
+  },
+};
+
 // ============================================================================
 // ButtonGroup Stories
 // ============================================================================
