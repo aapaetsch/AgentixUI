@@ -11,7 +11,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "../avatar";
 import { Bell, Download, Mail, Send, Trash2, Upload } from "lucide-react";
 
 const meta: Meta<typeof ToastProvider> = {
-  title: "Free/Toast",
+  title: "Free/Overlay/Toast",
   component: ToastProvider,
   parameters: {
     layout: "centered",
