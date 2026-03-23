@@ -20,10 +20,20 @@ Icon button with toggle state and optional pressed icon.
 Button with primary action and dropdown trigger.
 
 ### ButtonGroup
-Standard container for grouped buttons with configurable gap.
+Container for grouping related buttons with two style variants:
+- **shadcn**: Gap-based grouping following shadcn/ui patterns with separator support
+- **md3**: Material Design 3 style with proper spacing guidelines
+
+### ButtonGroupSeparator
+Visual divider between buttons in a group (shadcn pattern).
+
+### ButtonGroupText
+Text element within a button group for labels (shadcn pattern).
 
 ### ConnectedButtonGroup
-Segmented buttons with merged borders and single/multi-select.
+Segmented buttons with merged borders and single/multi-select. Supports two style variants:
+- **shadcn**: Clean dividers between items, subtle state changes
+- **md3**: Material Design 3 with shape morphing on selection
 
 ## Installation
 
@@ -103,12 +113,39 @@ import { SplitButton } from '@aidan/ui';
 ### ButtonGroup
 
 ```tsx
-import { ButtonGroup, Button } from '@aidan/ui';
+import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, Button } from '@aidan/ui';
 
+// Basic usage (shadcn style - default)
 <ButtonGroup>
   <Button>First</Button>
   <Button>Second</Button>
   <Button>Third</Button>
+</ButtonGroup>
+
+// With separator (for buttons without borders)
+<ButtonGroup>
+  <Button colorStyle="tonal">Copy</Button>
+  <ButtonGroupSeparator />
+  <Button colorStyle="tonal">Paste</Button>
+</ButtonGroup>
+
+// With text label
+<ButtonGroup>
+  <ButtonGroupText>Actions:</ButtonGroupText>
+  <Button colorStyle="outlined">Save</Button>
+  <Button colorStyle="outlined">Cancel</Button>
+</ButtonGroup>
+
+// MD3 style
+<ButtonGroup styleVariant="md3">
+  <Button colorStyle="filled">Primary</Button>
+  <IconButton colorStyle="tonal" aria-label="Add"><Plus /></IconButton>
+</ButtonGroup>
+
+// Vertical orientation
+<ButtonGroup orientation="vertical">
+  <Button>Top</Button>
+  <Button>Bottom</Button>
 </ButtonGroup>
 ```
 
@@ -117,10 +154,44 @@ import { ButtonGroup, Button } from '@aidan/ui';
 ```tsx
 import { ConnectedButtonGroup, ConnectedButtonGroupItem } from '@aidan/ui';
 
+// Shadcn style (default) - single select
 <ConnectedButtonGroup value={selectedValue} onValueChange={setSelectedValue}>
   <ConnectedButtonGroupItem value="first">First</ConnectedButtonGroupItem>
   <ConnectedButtonGroupItem value="second">Second</ConnectedButtonGroupItem>
   <ConnectedButtonGroupItem value="third">Third</ConnectedButtonGroupItem>
+</ConnectedButtonGroup>
+
+// MD3 style with round shape and shape morphing
+<ConnectedButtonGroup 
+  styleVariant="md3" 
+  defaultShape="round"
+  value={view} 
+  onValueChange={setView}
+>
+  <ConnectedButtonGroupItem value="grid">Grid</ConnectedButtonGroupItem>
+  <ConnectedButtonGroupItem value="list">List</ConnectedButtonGroupItem>
+</ConnectedButtonGroup>
+
+// MD3 style with square shape
+<ConnectedButtonGroup 
+  styleVariant="md3" 
+  defaultShape="square"
+  value={view} 
+  onValueChange={setView}
+>
+  <ConnectedButtonGroupItem value="grid">Grid</ConnectedButtonGroupItem>
+  <ConnectedButtonGroupItem value="list">List</ConnectedButtonGroupItem>
+</ConnectedButtonGroup>
+
+// Multiple selection
+<ConnectedButtonGroup 
+  selectionMode="multiple" 
+  value={formats} 
+  onValueChange={setFormats}
+>
+  <ConnectedButtonGroupItem value="bold"><Bold /></ConnectedButtonGroupItem>
+  <ConnectedButtonGroupItem value="italic"><Italic /></ConnectedButtonGroupItem>
+  <ConnectedButtonGroupItem value="underline"><Underline /></ConnectedButtonGroupItem>
 </ConnectedButtonGroup>
 ```
 
@@ -206,6 +277,15 @@ interface SplitButtonProps {
 interface ButtonGroupProps {
   gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg';
   orientation?: 'horizontal' | 'vertical';
+  styleVariant?: 'shadcn' | 'md3';  // Style variant (default: 'shadcn')
+}
+
+interface ButtonGroupSeparatorProps {
+  orientation?: 'horizontal' | 'vertical';  // Inferred from parent if inside ButtonGroup
+}
+
+interface ButtonGroupTextProps {
+  asChild?: boolean;  // Render as child element (useful for Label)
 }
 ```
 
@@ -215,15 +295,34 @@ interface ButtonGroupProps {
 interface ConnectedButtonGroupProps {
   colorStyle?: 'filled' | 'tonal' | 'outlined';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  styleVariant?: 'shadcn' | 'md3';        // Style variant (default: 'shadcn')
+  defaultShape?: 'round' | 'square';      // For MD3: container shape (default: 'round')
   selectionMode?: 'single' | 'multiple';
-  value?: string | string[];         // Controlled selection
-  defaultValue?: string | string[];  // Uncontrolled default
+  value?: string | string[];              // Controlled selection
+  defaultValue?: string | string[];       // Uncontrolled default
   onValueChange?: (value: string | string[]) => void;
 }
 
 interface ConnectedButtonGroupItemProps {
   value: string;  // Selection value
 }
+```
+
+### Style Variant Comparison
+
+| Feature | Shadcn Style | MD3 Style |
+|---------|--------------|-----------|
+| **Spacing** | Configurable gap | Fixed 2dp gap between items |
+| **Dividers** | Border-based dividers | Gap-based separation |
+| **Shape** | Consistent corner radius | Shape morphing on selection |
+| **Selection Visual** | Background change | Background + shape morph |
+| **Best For** | General purpose UI | Material Design apps |
+
+### MD3 Shape Morphing
+
+When using `styleVariant="md3"`:
+- **Round shape** (`defaultShape="round"`): Outer corners are fully rounded (pill shape). Selected items morph to square corners.
+- **Square shape** (`defaultShape="square"`): Outer corners use standard radius. Selected items morph to fully rounded.
 ```
 
 ## Styling Decisions
