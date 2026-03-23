@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 
 const meta: Meta<typeof Badge> = {
-  title: "Components/Badge",
+  title: "Free/Components/Badge",
   component: Badge,
   parameters: {
     layout: "centered",
