@@ -10,6 +10,13 @@ import { X } from "lucide-react";
 import { cn } from "../../../lib/utils";
 
 // ============================================================================
+// Animated Components
+// ============================================================================
+
+const AnimatedOverlay = animated(DialogPrimitive.Overlay);
+const AnimatedContent = animated(DialogPrimitive.Content);
+
+// ============================================================================
 // Types
 // ============================================================================
 
@@ -56,6 +63,7 @@ const premiumSheetOverlayVariants = cva(
   [
     "fixed inset-0 z-50",
     "bg-black/50 backdrop-blur-sm",
+    "overflow-hidden", // Prevent content from showing outside viewport during bounce
   ].join(" ")
 );
 
@@ -71,6 +79,8 @@ const premiumSheetContentVariants = cva(
     "shadow-[var(--elevation-5)]",
     "outline-none",
     "touch-none", // Prevent default touch behaviors for gesture handling
+    // Add pseudo-element for overshoot coverage
+    "before:content-[''] before:absolute before:bg-background",
   ].join(" "),
   {
     variants: {
@@ -78,18 +88,26 @@ const premiumSheetContentVariants = cva(
         top: [
           "inset-x-0 top-0",
           "border-t-0 border-x-0 rounded-b-[var(--radius-lg)]",
+          // Extend upward to cover overshoot
+          "before:inset-x-0 before:-top-[200px] before:h-[200px]",
         ].join(" "),
         right: [
           "inset-y-0 right-0",
           "border-r-0 border-y-0 rounded-l-[var(--radius-lg)]",
+          // Extend rightward to cover overshoot
+          "before:inset-y-0 before:-right-[200px] before:w-[200px]",
         ].join(" "),
         bottom: [
           "inset-x-0 bottom-0",
           "border-b-0 border-x-0 rounded-t-[var(--radius-lg)]",
+          // Extend downward to cover overshoot
+          "before:inset-x-0 before:-bottom-[200px] before:h-[200px]",
         ].join(" "),
         left: [
           "inset-y-0 left-0",
           "border-l-0 border-y-0 rounded-r-[var(--radius-lg)]",
+          // Extend leftward to cover overshoot
+          "before:inset-y-0 before:-left-[200px] before:w-[200px]",
         ].join(" "),
       },
       size: {
@@ -371,21 +389,19 @@ function getClosestSnapPoint(
 
 interface PremiumSheetContextValue {
   level: number;
-  onOpenChange?: (open: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
 }
 
-const PremiumSheetContext = React.createContext<PremiumSheetContextValue>({ level: 0 });
+const PremiumSheetContext = React.createContext<PremiumSheetContextValue>({
+  level: 0,
+  isOpen: false,
+  setIsOpen: () => {},
+});
 
 function usePremiumSheetContext() {
   return React.useContext(PremiumSheetContext);
 }
-
-// ============================================================================
-// Animated Components
-// ============================================================================
-
-const AnimatedDialogOverlay = animated(DialogPrimitive.Overlay);
-const AnimatedDialogContent = animated(DialogPrimitive.Content);
 
 // ============================================================================
 // Components
@@ -416,13 +432,32 @@ const AnimatedDialogContent = animated(DialogPrimitive.Content);
  * </PremiumSheet>
  * ```
  */
-function PremiumSheet({ children, onOpenChange, ...props }: PremiumSheetProps) {
+function PremiumSheet({ children, open, onOpenChange, defaultOpen, ...props }: PremiumSheetProps) {
   const parentContext = usePremiumSheetContext();
   const level = parentContext.level + 1;
+  
+  // Internal state for uncontrolled mode
+  const [internalOpen, setInternalOpen] = React.useState(defaultOpen ?? false);
+  
+  // Determine if controlled or uncontrolled
+  const isControlled = open !== undefined;
+  const isOpen = isControlled ? open : internalOpen;
+  
+  const setIsOpen = React.useCallback((newOpen: boolean) => {
+    if (!isControlled) {
+      setInternalOpen(newOpen);
+    }
+    onOpenChange?.(newOpen);
+  }, [isControlled, onOpenChange]);
 
   return (
-    <PremiumSheetContext.Provider value={{ level, onOpenChange }}>
-      <DialogPrimitive.Root data-slot="premium-sheet" onOpenChange={onOpenChange} {...props}>
+    <PremiumSheetContext.Provider value={{ level, isOpen, setIsOpen }}>
+      <DialogPrimitive.Root
+        data-slot="premium-sheet"
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        {...props}
+      >
         {children}
       </DialogPrimitive.Root>
     </PremiumSheetContext.Provider>
@@ -485,11 +520,12 @@ const PremiumSheetContent = React.forwardRef<
     },
     ref
   ) => {
-    const { level, onOpenChange } = usePremiumSheetContext();
+    const { level, setIsOpen, isOpen } = usePremiumSheetContext();
     const contentRef = React.useRef<HTMLDivElement>(null);
     const [sheetDimension, setSheetDimension] = React.useState(0);
     const [currentSnapIndex, setCurrentSnapIndex] = React.useState(defaultSnapPoint ?? 0);
-    const isMountedRef = React.useRef(true);
+    const [isAnimating, setIsAnimating] = React.useState(false);
+    const closeTimeoutRef = React.useRef<NodeJS.Timeout>();
 
     // Ensure position has a default value
     const resolvedPosition = position ?? "right";
@@ -508,48 +544,62 @@ const PremiumSheetContent = React.forwardRef<
     const axis = getTransformAxis(resolvedPosition);
     const directionMultiplier = getDirectionMultiplier(resolvedPosition);
 
+    // Calculate target position for open state
+    const openPosition = snapPoints && snapPoints.length > 0 && defaultSnapPoint !== undefined
+      ? (1 - snapPoints[defaultSnapPoint]) * directionMultiplier * 100
+      : 0;
+
     // Spring animation for overlay
     const [overlaySpring, overlayApi] = useSpring(() => ({
       opacity: 0,
       config: springConfig.default,
     }));
 
-    // Spring animation for content - using Record type for dynamic axis access
-    const [contentSpring, contentApi] = useSpring<Record<string, any>>(() => ({
-      [axis]: directionMultiplier * 100, // Start off-screen (percentage)
+    // Spring animation for content
+    const [contentSpring, contentApi] = useSpring(() => ({
+      [axis]: directionMultiplier * 100, // Start off-screen
       config: springConfigValue,
     }));
+
+    // Animate based on isOpen state
+    React.useEffect(() => {
+      if (isOpen) {
+        // Clear any pending close timeout
+        if (closeTimeoutRef.current) {
+          clearTimeout(closeTimeoutRef.current);
+          closeTimeoutRef.current = undefined;
+        }
+        // Animate in
+        setIsAnimating(true);
+        overlayApi.start({ opacity: 1 });
+        contentApi.start({
+          [axis]: openPosition,
+          onRest: () => setIsAnimating(false),
+        });
+      } else if (!isOpen && isAnimating) {
+        // Already animating closed, do nothing
+      }
+    }, [isOpen, overlayApi, contentApi, axis, openPosition, directionMultiplier, isAnimating]);
+
+    // Cleanup timeout on unmount
+    React.useEffect(() => {
+      return () => {
+        if (closeTimeoutRef.current) {
+          clearTimeout(closeTimeoutRef.current);
+        }
+      };
+    }, []);
 
     // Measure sheet dimension on mount
     React.useEffect(() => {
       if (contentRef.current) {
         const dimension = getSheetDimension(resolvedPosition);
-        const size = dimension === "width"
+        const measuredSize = dimension === "width"
           ? contentRef.current.offsetWidth
           : contentRef.current.offsetHeight;
-        setSheetDimension(size);
+        setSheetDimension(measuredSize);
       }
     }, [resolvedPosition]);
-
-    // Cleanup on unmount
-    React.useEffect(() => {
-      return () => {
-        isMountedRef.current = false;
-      };
-    }, []);
-
-    // Animate in on mount
-    React.useEffect(() => {
-      overlayApi.start({ opacity: 1 });
-      
-      if (snapPoints && snapPoints.length > 0 && defaultSnapPoint !== undefined) {
-        // Animate to initial snap point
-        const initialPosition = (1 - snapPoints[defaultSnapPoint]) * directionMultiplier * 100;
-        contentApi.start({ [axis]: initialPosition });
-      } else {
-        contentApi.start({ [axis]: 0 });
-      }
-    }, [overlayApi, contentApi, axis, snapPoints, defaultSnapPoint, directionMultiplier]);
 
     // Drag gesture handler
     const bind = useDrag(
@@ -557,7 +607,6 @@ const PremiumSheetContent = React.forwardRef<
         movement: [mx, my],
         velocity: [vx, vy],
         direction: [dx, dy],
-        cancel,
         canceled,
         last,
         active,
@@ -585,7 +634,7 @@ const PremiumSheetContent = React.forwardRef<
             : percentMovement;
 
           contentApi.start({
-            [axis]: resistedMovement * directionMultiplier,
+            [axis]: (openPosition + resistedMovement * directionMultiplier),
             immediate: true,
           });
         }
@@ -600,66 +649,56 @@ const PremiumSheetContent = React.forwardRef<
           const shouldCloseByDistance = isClosingDirection && percentMoved > distanceThreshold;
 
           if (snapPoints && snapPoints.length > 0) {
-            // Snap to nearest point
-            const currentPercentage = 1 - percentMoved;
-            let targetSnapIndex: number;
-
             if (shouldCloseByVelocity || shouldCloseByDistance) {
               // Find next lower snap point or close
-              targetSnapIndex = currentSnapIndex - 1;
+              const targetSnapIndex = currentSnapIndex - 1;
               if (targetSnapIndex < 0) {
-                // Close the sheet by calling onOpenChange
-                if (onOpenChange) {
-                  // Animate out first
-                  overlayApi.start({ opacity: 0 });
-                  contentApi.start({
-                    [axis]: directionMultiplier * 100,
-                    onRest: () => {
-                      if (isMountedRef.current) {
-                        onOpenChange?.(false);
-                      }
-                    },
-                  });
-                }
-                return;
-              }
-            } else {
-              // Snap to closest point
-              targetSnapIndex = getClosestSnapPoint(normalizedMovement, snapPoints, sheetDimension);
-            }
-
-            const targetPosition = (1 - snapPoints[targetSnapIndex]) * directionMultiplier * 100;
-            contentApi.start({ [axis]: targetPosition });
-            setCurrentSnapIndex(targetSnapIndex);
-            onSnapPointChange?.(targetSnapIndex);
-          } else {
-            // No snap points - either close or return to open
-            if (shouldCloseByVelocity || shouldCloseByDistance) {
-              // Close the sheet by calling onOpenChange
-              if (onOpenChange) {
+                // Animate out before closing
+                setIsAnimating(true);
                 overlayApi.start({ opacity: 0 });
                 contentApi.start({
                   [axis]: directionMultiplier * 100,
                   onRest: () => {
-                    if (isMountedRef.current) {
-                      onOpenChange?.(false);
-                    }
+                    setIsAnimating(false);
+                    setIsOpen(false);
                   },
                 });
+                return;
               }
+              const targetPosition = (1 - snapPoints[targetSnapIndex]) * directionMultiplier * 100;
+              contentApi.start({ [axis]: targetPosition });
+              setCurrentSnapIndex(targetSnapIndex);
+              onSnapPointChange?.(targetSnapIndex);
+            } else {
+              // Snap to closest point
+              const targetSnapIndex = getClosestSnapPoint(normalizedMovement, snapPoints, sheetDimension);
+              const targetPosition = (1 - snapPoints[targetSnapIndex]) * directionMultiplier * 100;
+              contentApi.start({ [axis]: targetPosition });
+              setCurrentSnapIndex(targetSnapIndex);
+              onSnapPointChange?.(targetSnapIndex);
+            }
+          } else {
+            // No snap points - either close or return to open
+            if (shouldCloseByVelocity || shouldCloseByDistance) {
+              // Animate out before closing
+              setIsAnimating(true);
+              overlayApi.start({ opacity: 0 });
+              contentApi.start({
+                [axis]: directionMultiplier * 100,
+                onRest: () => {
+                  setIsAnimating(false);
+                  setIsOpen(false);
+                },
+              });
             } else {
               // Return to open position
-              contentApi.start({ [axis]: 0 });
+              contentApi.start({ [axis]: openPosition });
             }
           }
         }
       },
       {
         axis,
-        from: () => {
-          const currentValue = contentSpring[axis].get();
-          return axis === "x" ? [currentValue, 0] : [0, currentValue];
-        },
         bounds: {
           top: resolvedPosition === "top" ? -Infinity : 0,
           bottom: resolvedPosition === "bottom" ? Infinity : 0,
@@ -678,21 +717,21 @@ const PremiumSheetContent = React.forwardRef<
         if (preventBackgroundClose) {
           event.preventDefault();
         } else {
-          // Animate out before closing
+          // Prevent default close and animate out first
           event.preventDefault();
+          setIsAnimating(true);
           overlayApi.start({ opacity: 0 });
           contentApi.start({
             [axis]: directionMultiplier * 100,
             onRest: () => {
-              if (isMountedRef.current) {
-                onOpenChange?.(false);
-              }
+              setIsAnimating(false);
+              setIsOpen(false);
             },
           });
         }
         onInteractOutside?.(event);
       },
-      [preventBackgroundClose, onInteractOutside, overlayApi, contentApi, axis, directionMultiplier]
+      [preventBackgroundClose, onInteractOutside, overlayApi, contentApi, axis, directionMultiplier, setIsOpen]
     );
 
     // Handle escape key prevention
@@ -701,75 +740,87 @@ const PremiumSheetContent = React.forwardRef<
         if (preventBackgroundClose) {
           event.preventDefault();
         } else {
-          // Animate out before closing
+          // Prevent default close and animate out first
           event.preventDefault();
+          setIsAnimating(true);
           overlayApi.start({ opacity: 0 });
           contentApi.start({
             [axis]: directionMultiplier * 100,
             onRest: () => {
-              if (isMountedRef.current) {
-                onOpenChange?.(false);
-              }
+              setIsAnimating(false);
+              setIsOpen(false);
             },
           });
         }
         onEscapeKeyDown?.(event);
       },
-      [preventBackgroundClose, onEscapeKeyDown, overlayApi, contentApi, axis, directionMultiplier]
+      [preventBackgroundClose, onEscapeKeyDown, overlayApi, contentApi, axis, directionMultiplier, setIsOpen]
     );
 
     // Handle close button click
-    const handleCloseClick = React.useCallback(() => {
+    const handleCloseClick = React.useCallback((e: React.MouseEvent) => {
+      // Prevent the default DialogPrimitive.Close behavior
+      e.preventDefault();
+      setIsAnimating(true);
       overlayApi.start({ opacity: 0 });
       contentApi.start({
         [axis]: directionMultiplier * 100,
         onRest: () => {
-          if (isMountedRef.current) {
-            onOpenChange?.(false);
-          }
+          setIsAnimating(false);
+          setIsOpen(false);
+          onCloseClick?.();
         },
       });
-      onCloseClick?.();
-    }, [onCloseClick, overlayApi, contentApi, axis, directionMultiplier, onOpenChange]);
+    }, [onCloseClick, overlayApi, contentApi, axis, directionMultiplier, setIsOpen]);
+
+    // Create transform interpolation
+    const transformStyle = (contentSpring as any)[axis].to(
+      (v: number) => axis === "x" ? `translateX(${v}%)` : `translateY(${v}%)`
+    );
+
+    // Only render when open or animating to prevent blocking interactions
+    const shouldRender = isOpen || isAnimating;
 
     return (
       <PremiumSheetPortal>
-        <AnimatedDialogOverlay
-          data-slot="premium-sheet-overlay"
-          data-sheet-level={level}
-          className={cn(premiumSheetOverlayVariants(), overlayClassName)}
-          style={{
-            opacity: overlaySpring.opacity,
-            zIndex: 50 + (level - 1) * 10,
-          }}
-        />
-        <AnimatedDialogContent
-          ref={(node) => {
-            (contentRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
-            if (typeof ref === "function") {
-              ref(node);
-            } else if (ref) {
-              ref.current = node;
-            }
-          }}
-          data-slot="premium-sheet-content"
-          data-sheet-level={level}
-          data-position={resolvedPosition}
-          className={cn(
-            premiumSheetContentVariants({ position: resolvedPosition, size }),
-            scrollLock && "overscroll-contain",
-            className
-          )}
-          style={{
-            transform: contentSpring[axis].to(
-              (v: number) => axis === "x" ? `translateX(${v}%)` : `translateY(${v}%)`
-            ),
-            zIndex: 50 + (level - 1) * 10 + 1,
-          }}
-          onInteractOutside={handleInteractOutside}
-          onEscapeKeyDown={handleEscapeKeyDown}
-          {...bind()}
-          {...props}
+        {shouldRender && (
+          <>
+            <AnimatedOverlay
+              forceMount
+              data-slot="premium-sheet-overlay"
+              data-sheet-level={level}
+              className={cn(premiumSheetOverlayVariants(), overlayClassName)}
+              style={{
+                opacity: overlaySpring.opacity,
+                zIndex: 50 + (level - 1) * 10,
+              }}
+            />
+            <AnimatedContent
+              forceMount
+              ref={(node) => {
+                (contentRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+                if (typeof ref === "function") {
+                  ref(node);
+                } else if (ref) {
+                  ref.current = node;
+                }
+              }}
+              data-slot="premium-sheet-content"
+              data-sheet-level={level}
+              data-position={resolvedPosition}
+              className={cn(
+                premiumSheetContentVariants({ position: resolvedPosition, size }),
+                scrollLock && "overscroll-contain",
+                className
+              )}
+              style={{
+                transform: transformStyle,
+                zIndex: 50 + (level - 1) * 10 + 1,
+              }}
+              onInteractOutside={handleInteractOutside}
+              onEscapeKeyDown={handleEscapeKeyDown}
+              {...bind()}
+              {...props}
         >
           {/* Handle for touch devices */}
           {showHandle && (resolvedPosition === "top" || resolvedPosition === "bottom") && (
@@ -785,17 +836,20 @@ const PremiumSheetContent = React.forwardRef<
 
           {showCloseButton && (
             closeButton || (
-              <DialogPrimitive.Close
+              <button
+                type="button"
                 data-slot="premium-sheet-close-button"
                 className={cn(premiumSheetCloseVariants())}
                 onClick={handleCloseClick}
               >
                 <X className="size-4" />
                 <span className="sr-only">Close</span>
-              </DialogPrimitive.Close>
+              </button>
             )
           )}
-        </AnimatedDialogContent>
+            </AnimatedContent>
+          </>
+        )}
       </PremiumSheetPortal>
     );
   }
