@@ -1,56 +1,54 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Volume2, VolumeX, Sun, Moon, Thermometer, SunMedium } from "lucide-react";
-import { Slider } from "./index";
+import { PremiumSlider } from "./index";
 
 /**
- * # Slider
+ * # Premium Slider
  *
  * A premium slider component for selecting values from a range following
  * Material Design 3 specifications.
  *
- * ## MD3 Features
- * - **Handle Shapes**: Bar (vertical pill, MD3 default) or circular (traditional)
+ * ## Premium Features (in addition to Free Tier)
+ * - **All Sizes**: XS (16dp), S (24dp), M (40dp), L (56dp), XL (96dp)
+ * - **Handle Shapes**: Bar (MD3 default), circular (xs only), or knobless
  * - **Handle Animation**: Bar narrows on click/touch/drag, circular scales down
- * - **Track Sizes**: XS (16dp), S (24dp), M (40dp), L (56dp), XL (96dp)
- * - **Handle Heights**: XS/S (44dp), M (52dp), L (68dp), XL (108dp)
- * - **Track Gap**: Visual gap between handle and track with rounded corners
- * - **Inset Icons**: For M, L, XL sizes - icon in track that moves based on value
- * - **Stop Indicators**: 4dp dots showing discrete step values
  * - **Value Indicators**: Configurable size (sm, md, lg) with inverse colors
+ * - **Stop Indicators**: 4dp dots showing discrete step values
+ * - **Inset Icons**: For M, L, XL sizes - icon in track that moves based on value
+ * - **Track Gap**: Visual gap between handle and track with rounded corners
  *
- * ## Types
- * - **Standard**: Single value from zero/start
- * - **Range**: Two values defining min/max
- * - **Centered**: (Planned) Value from center point
+ * ## Free Tier Available
+ * For basic slider functionality (xs, sm, md sizes with bar handle only),
+ * see the Free/Slider component.
  *
  * ## Usage
  * ```tsx
  * // Basic
- * <Slider defaultValue={[50]} />
+ * <PremiumSlider defaultValue={[50]} />
  *
  * // Range
- * <Slider defaultValue={[25, 75]} />
+ * <PremiumSlider defaultValue={[25, 75]} />
  *
  * // Circular handle
- * <Slider defaultValue={[50]} handleShape="circular" />
+ * <PremiumSlider defaultValue={[50]} handleShape="circular" />
  *
  * // With value indicator
- * <Slider defaultValue={[50]} showValueIndicator="always" />
+ * <PremiumSlider defaultValue={[50]} showValueIndicator="always" />
  *
  * // Large value indicator
- * <Slider defaultValue={[50]} showValueIndicator="always" valueIndicatorSize="lg" />
+ * <PremiumSlider defaultValue={[50]} showValueIndicator="always" valueIndicatorSize="lg" />
  *
  * // Discrete with stops
- * <Slider defaultValue={[50]} step={10} showStops />
+ * <PremiumSlider defaultValue={[50]} step={10} showStops />
  *
  * // With inset icon (MD3 feature)
- * <Slider defaultValue={[50]} size="md" insetIcon={<Volume2 />} />
+ * <PremiumSlider defaultValue={[50]} size="md" insetIcon={<Volume2 />} />
  * ```
  */
-const meta: Meta<typeof Slider> = {
+const meta: Meta<typeof PremiumSlider> = {
   title: "Premium/Slider",
-  component: Slider,
+  component: PremiumSlider,
   parameters: {
     layout: "centered",
   },
@@ -105,7 +103,7 @@ const meta: Meta<typeof Slider> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Slider>;
+type Story = StoryObj<typeof PremiumSlider>;
 
 // ============================================================================
 // Basic Stories
@@ -139,12 +137,12 @@ export const HandlePressAnimation: Story = {
       <p className="text-sm text-muted-foreground">
         Click/touch or drag the handle to see the MD3 press animation (bar narrows, circular scales).
       </p>
-      <Slider defaultValue={[50]} size="xs" />
-      <Slider defaultValue={[50]} size="md" />
-      <Slider defaultValue={[50]} size="xl" />
+      <PremiumSlider defaultValue={[50]} size="xs" />
+      <PremiumSlider defaultValue={[50]} size="md" />
+      <PremiumSlider defaultValue={[50]} size="xl" />
       <div className="pt-2">
         <p className="text-sm text-muted-foreground mb-2">With circular handles (no focus ring):</p>
-        <Slider defaultValue={[50]} size="md" handleShape="circular" />
+        <PremiumSlider defaultValue={[50]} size="md" handleShape="circular" />
       </div>
     </div>
   ),
@@ -256,23 +254,23 @@ export const Sizes: Story = {
     <div className="w-[300px] space-y-8">
       <div>
         <p className="text-sm text-muted-foreground mb-2">Extra Small (xs) - 16dp track</p>
-        <Slider defaultValue={[50]} size="xs" />
+        <PremiumSlider defaultValue={[50]} size="xs" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Small (sm) - 24dp track</p>
-        <Slider defaultValue={[50]} size="sm" />
+        <PremiumSlider defaultValue={[50]} size="sm" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Medium (md) - 40dp track</p>
-        <Slider defaultValue={[50]} size="md" />
+        <PremiumSlider defaultValue={[50]} size="md" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Large (lg) - 56dp track</p>
-        <Slider defaultValue={[50]} size="lg" />
+        <PremiumSlider defaultValue={[50]} size="lg" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Extra Large (xl) - 96dp track, for hero moments</p>
-        <Slider defaultValue={[50]} size="xl" />
+        <PremiumSlider defaultValue={[50]} size="xl" />
       </div>
     </div>
   ),
@@ -418,7 +416,7 @@ export const WithInsetIcon: Story = {
     <div className="w-[300px] space-y-8">
       <div>
         <p className="text-sm text-muted-foreground mb-2">Volume with inset icon (md)</p>
-        <Slider 
+        <PremiumSlider 
           defaultValue={[50]} 
           size="md" 
           insetIcon={<Volume2 />}
@@ -427,7 +425,7 @@ export const WithInsetIcon: Story = {
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Brightness with three inset icons (lg)</p>
-        <Slider 
+        <PremiumSlider 
           defaultValue={[75]} 
           size="lg" 
           insetIcon={<SunMedium />}
@@ -437,7 +435,7 @@ export const WithInsetIcon: Story = {
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Hero slider with three inset icons (xl)</p>
-        <Slider 
+        <PremiumSlider 
           defaultValue={[30]} 
           size="xl" 
           insetIcon={<Volume2 />}
@@ -461,7 +459,7 @@ export const InsetIconAtMinimum: Story = {
         <p className="text-sm text-muted-foreground">
           Drag to see icon swap at min/max
         </p>
-        <Slider 
+        <PremiumSlider 
           value={volume}
           onValueChange={setVolume}
           size="md" 
@@ -488,7 +486,7 @@ export const ThreeStateIcons: Story = {
         <p className="text-sm text-muted-foreground">
           Drag to see icons change at min/partial/max states
         </p>
-        <Slider 
+        <PremiumSlider 
           value={value}
           onValueChange={setValue}
           size="lg" 
@@ -533,11 +531,11 @@ export const Extremes: Story = {
     <div className="w-[300px] space-y-6">
       <div>
         <p className="text-sm text-muted-foreground mb-2">At minimum</p>
-        <Slider defaultValue={[0]} />
+        <PremiumSlider defaultValue={[0]} />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">At maximum</p>
-        <Slider defaultValue={[100]} />
+        <PremiumSlider defaultValue={[100]} />
       </div>
     </div>
   ),
@@ -784,7 +782,7 @@ export const SizeComparison: Story = {
         {(["xs", "sm", "md", "lg", "xl"] as const).map((size) => (
           <div key={size} className="flex items-center gap-4">
             <span className="text-xs text-muted-foreground w-6">{size}</span>
-            <Slider defaultValue={[50]} size={size} className="flex-1" />
+            <PremiumSlider defaultValue={[50]} size={size} className="flex-1" />
           </div>
         ))}
       </div>
@@ -833,15 +831,15 @@ export const HandleShapes: Story = {
     <div className="w-[300px] space-y-8">
       <div>
         <p className="text-sm text-muted-foreground mb-2">Bar handle (default)</p>
-        <Slider defaultValue={[50]} size="md" handleShape="bar" />
+        <PremiumSlider defaultValue={[50]} size="md" handleShape="bar" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Circular handle (xs only)</p>
-        <Slider defaultValue={[50]} size="xs" handleShape="circular" />
+        <PremiumSlider defaultValue={[50]} size="xs" handleShape="circular" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Knobless (all sizes)</p>
-        <Slider defaultValue={[50]} size="md" handleShape="knobless" />
+        <PremiumSlider defaultValue={[50]} size="md" handleShape="knobless" />
       </div>
     </div>
   ),
@@ -856,7 +854,7 @@ export const CircularHandleXsOnly: Story = {
     <div className="w-[300px] space-y-8">
       <div>
         <p className="text-sm text-muted-foreground mb-2">Circular handle - xs size</p>
-        <Slider defaultValue={[50]} size="xs" handleShape="circular" />
+        <PremiumSlider defaultValue={[50]} size="xs" handleShape="circular" />
       </div>
       <div className="bg-muted/50 p-4 rounded-lg text-sm">
         <p className="font-medium text-orange-600">Note:</p>
@@ -877,23 +875,23 @@ export const KnoblessSizes: Story = {
     <div className="w-[300px] space-y-8">
       <div>
         <p className="text-sm text-muted-foreground mb-2">Extra Small (xs)</p>
-        <Slider defaultValue={[50]} size="xs" handleShape="knobless" />
+        <PremiumSlider defaultValue={[50]} size="xs" handleShape="knobless" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Small (sm)</p>
-        <Slider defaultValue={[50]} size="sm" handleShape="knobless" />
+        <PremiumSlider defaultValue={[50]} size="sm" handleShape="knobless" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Medium (md)</p>
-        <Slider defaultValue={[50]} size="md" handleShape="knobless" />
+        <PremiumSlider defaultValue={[50]} size="md" handleShape="knobless" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Large (lg)</p>
-        <Slider defaultValue={[50]} size="lg" handleShape="knobless" />
+        <PremiumSlider defaultValue={[50]} size="lg" handleShape="knobless" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">Extra Large (xl)</p>
-        <Slider defaultValue={[50]} size="xl" handleShape="knobless" />
+        <PremiumSlider defaultValue={[50]} size="xl" handleShape="knobless" />
       </div>
     </div>
   ),
@@ -912,7 +910,7 @@ export const ValueIndicatorSizes: Story = {
     <div className="w-[300px] space-y-12 pt-16">
       <div>
         <p className="text-sm text-muted-foreground mb-4">Small indicator (sm)</p>
-        <Slider 
+        <PremiumSlider 
           defaultValue={[50]} 
           showValueIndicator="always" 
           valueIndicatorSize="sm" 
@@ -920,7 +918,7 @@ export const ValueIndicatorSizes: Story = {
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-4">Medium indicator (md) - default</p>
-        <Slider 
+        <PremiumSlider 
           defaultValue={[50]} 
           showValueIndicator="always" 
           valueIndicatorSize="md" 
@@ -928,7 +926,7 @@ export const ValueIndicatorSizes: Story = {
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-4">Large indicator (lg)</p>
-        <Slider 
+        <PremiumSlider 
           defaultValue={[50]} 
           showValueIndicator="always" 
           valueIndicatorSize="lg" 
@@ -946,7 +944,7 @@ export const RangeIndicatorSizes: Story = {
     <div className="w-[300px] space-y-12 pt-16">
       <div>
         <p className="text-sm text-muted-foreground mb-4">Range with small indicators</p>
-        <Slider 
+        <PremiumSlider 
           defaultValue={[25, 75]} 
           showValueIndicator="always" 
           valueIndicatorSize="sm" 
@@ -954,7 +952,7 @@ export const RangeIndicatorSizes: Story = {
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-4">Range with large indicators</p>
-        <Slider 
+        <PremiumSlider 
           defaultValue={[25, 75]} 
           showValueIndicator="always" 
           valueIndicatorSize="lg" 
@@ -982,19 +980,19 @@ export const HandlePressAndDrag: Story = {
         <p className="text-sm text-muted-foreground mb-4">
           <strong>Bar handle:</strong> Click, hold, or drag to see it narrow from 4dp to 2dp with 6px gap from track.
         </p>
-        <Slider defaultValue={[50]} size="md" handleShape="bar" />
+        <PremiumSlider defaultValue={[50]} size="md" handleShape="bar" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-4">
           <strong>Circular handle (xs only):</strong> Click or drag to see the scale-down effect - positioned left so bar end is centered on knob.
         </p>
-        <Slider defaultValue={[50]} size="xs" handleShape="circular" />
+        <PremiumSlider defaultValue={[50]} size="xs" handleShape="circular" />
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-4">
           <strong>Knobless:</strong> No visible handle - track itself is interactive.
         </p>
-        <Slider defaultValue={[50]} size="md" handleShape="knobless" />
+        <PremiumSlider defaultValue={[50]} size="md" handleShape="knobless" />
       </div>
       <div className="bg-muted/50 p-4 rounded-lg text-sm space-y-2">
         <p className="font-medium">Animation behaviors:</p>

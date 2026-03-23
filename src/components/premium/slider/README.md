@@ -1,6 +1,22 @@
-# Slider
+# Premium Slider
 
-A premium slider component for selecting values from a range, following Material Design 3 specifications with smooth animations and comprehensive customization options.
+A premium slider component for selecting values from a range, following Material Design 3 specifications with smooth animations and comprehensive customization options. This component extends the free tier slider with additional sizes, handle shapes, value indicators, stop indicators, and inset icons.
+
+## Tier Architecture
+
+### Free Tier
+The free tier slider (`@aidan/ui` Slider) provides:
+- **Sizes**: xs, sm, md (16dp, 24dp, 40dp track heights)
+- **Handle**: Bar shape only (MD3 default)
+- **Features**: Press animation, gap styling, range support
+
+### Premium Tier
+The premium slider extends the free tier with:
+- **Additional Sizes**: lg (56dp), xl (96dp)
+- **Handle Shapes**: bar, circular, knobless
+- **Value Indicators**: Configurable tooltip showing current values
+- **Stop Indicators**: Visual dots for discrete steps
+- **Inset Icons**: Icons within the track
 
 ## Installation
 
@@ -13,13 +29,15 @@ npm install @radix-ui/react-slider
 ## Usage
 
 ```tsx
-import { Slider } from "@aidan/ui";
+import { PremiumSlider } from "@aidan/ui";
+// or for backward compatibility:
+// import { Slider } from "@aidan/ui";
 
 // Basic usage
-<Slider defaultValue={[50]} />
+<PremiumSlider defaultValue={[50]} />
 
 // Range slider
-<Slider defaultValue={[25, 75]} />
+<PremiumSlider defaultValue={[25, 75]} />
 ```
 
 ## Features
@@ -68,10 +86,10 @@ The handle can be a bar (vertical pill, MD3 default) or circular:
 
 ```tsx
 // Bar handle (default, MD3)
-<Slider defaultValue={[50]} handleShape="bar" />
+<PremiumSlider defaultValue={[50]} handleShape="bar" />
 
 // Circular handle
-<Slider defaultValue={[50]} handleShape="circular" />
+<PremiumSlider defaultValue={[50]} handleShape="circular" />
 ```
 
 ### Track Sizes
@@ -95,7 +113,7 @@ The handle can be a bar (vertical pill, MD3 default) or circular:
 ### Basic Slider
 
 ```tsx
-<Slider defaultValue={[50]} />
+<PremiumSlider defaultValue={[50]} />
 ```
 
 ### Range Slider
@@ -103,7 +121,7 @@ The handle can be a bar (vertical pill, MD3 default) or circular:
 Select a range with two thumbs:
 
 ```tsx
-<Slider defaultValue={[25, 75]} />
+<PremiumSlider defaultValue={[25, 75]} />
 ```
 
 ### With Value Indicator
@@ -118,19 +136,19 @@ Show the current value above the thumb:
 />
 
 // Different indicator sizes
-<Slider defaultValue={[50]} showValueIndicator="always" valueIndicatorSize="sm" />
-<Slider defaultValue={[50]} showValueIndicator="always" valueIndicatorSize="md" /> // default
-<Slider defaultValue={[50]} showValueIndicator="always" valueIndicatorSize="lg" />
+<PremiumSlider defaultValue={[50]} showValueIndicator="always" valueIndicatorSize="sm" />
+<PremiumSlider defaultValue={[50]} showValueIndicator="always" valueIndicatorSize="md" /> // default
+<PremiumSlider defaultValue={[50]} showValueIndicator="always" valueIndicatorSize="lg" />
 ```
 
 ### Handle Shapes
 
 ```tsx
 // Bar handle (default, MD3 style)
-<Slider defaultValue={[50]} handleShape="bar" />
+<PremiumSlider defaultValue={[50]} handleShape="bar" />
 
 // Circular handle (traditional)
-<Slider defaultValue={[50]} handleShape="circular" />
+<PremiumSlider defaultValue={[50]} handleShape="circular" />
 ```
 
 ### Discrete Steps with Stops
@@ -138,7 +156,7 @@ Show the current value above the thumb:
 Display stop indicators for discrete values:
 
 ```tsx
-<Slider defaultValue={[50]} step={10} showStops />
+<PremiumSlider defaultValue={[50]} step={10} showStops />
 ```
 
 ### Vertical Orientation
@@ -154,11 +172,11 @@ Display stop indicators for discrete values:
 ### Size Variants
 
 ```tsx
-<Slider defaultValue={[50]} size="xs" /> {/* Default, 16dp track */}
-<Slider defaultValue={[50]} size="sm" /> {/* 24dp track */}
-<Slider defaultValue={[50]} size="md" /> {/* 40dp track, supports inset icon */}
-<Slider defaultValue={[50]} size="lg" /> {/* 56dp track, supports inset icon */}
-<Slider defaultValue={[50]} size="xl" /> {/* 96dp track, for hero moments */}
+<PremiumSlider defaultValue={[50]} size="xs" /> {/* Default, 16dp track */}
+<PremiumSlider defaultValue={[50]} size="sm" /> {/* 24dp track */}
+<PremiumSlider defaultValue={[50]} size="md" /> {/* 40dp track, supports inset icon */}
+<PremiumSlider defaultValue={[50]} size="lg" /> {/* 56dp track, supports inset icon */}
+<PremiumSlider defaultValue={[50]} size="xl" /> {/* 96dp track, for hero moments */}
 ```
 
 ### With Inset Icon (MD3 Feature)

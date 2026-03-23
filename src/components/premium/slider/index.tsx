@@ -5,36 +5,32 @@ import * as SliderPrimitive from "@radix-ui/react-slider";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "../../../lib/utils";
+import {
+  sliderVariants as baseSliderVariants,
+  sliderTrackVariants as baseSliderTrackVariants,
+  sliderRangeVariants as baseSliderRangeVariants,
+  sliderThumbVariants as baseSliderThumbVariants,
+  getGapSize,
+} from "../../free/slider";
 
 // ============================================================================
-// CVA Variants
+// Premium CVA Variants (Extended from Free Tier)
 // ============================================================================
 
 /**
- * Slider root variants using CVA
- * Implements Material Design 3 slider patterns with proper states and styling
+ * Premium slider root variants - extends free tier with lg and xl sizes
  */
-const sliderVariants = cva(
+const premiumSliderVariants = cva(
   [
     "relative flex touch-none select-none group",
-    // Focus states handled on thumb
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
   ].join(" "),
   {
     variants: {
-      /**
-       * Orientation of the slider
-       * - horizontal: Left to right slider (default)
-       * - vertical: Bottom to top slider
-       */
       orientation: {
         horizontal: "w-full items-center",
         vertical: "h-full flex-col items-center",
       },
-      /**
-       * Size variants following MD3 specifications
-       * XS: 16dp, S: 24dp, M: 40dp, L: 56dp, XL: 96dp track height
-       */
       size: {
         xs: "",
         sm: "",
@@ -51,17 +47,14 @@ const sliderVariants = cva(
 );
 
 /**
- * Slider track variants
- * The track shows the full range of values
+ * Premium slider track variants - includes lg and xl sizes
  * MD3 Specs:
  * - Track heights: XS=16dp, S=24dp, M=40dp, L=56dp, XL=96dp
  * - Track shapes (border-radius): XS=8dp, S=8dp, M=12dp, L=16dp, XL=28dp
- * - Inactive track color: Secondary Container
  */
-const sliderTrackVariants = cva(
+const premiumSliderTrackVariants = cva(
   [
-    "relative grow overflow-visible", // Changed to overflow-visible for gap effect
-    // Inactive track color - MD3: secondary-container
+    "relative grow overflow-visible",
     "bg-secondary",
   ].join(" "),
   {
@@ -71,21 +64,21 @@ const sliderTrackVariants = cva(
         vertical: "h-full",
       },
       size: {
-        xs: "", // 16dp
-        sm: "", // 24dp
-        md: "", // 40dp
-        lg: "", // 56dp
-        xl: "", // 96dp
+        xs: "",
+        sm: "",
+        md: "",
+        lg: "",
+        xl: "",
       },
     },
     compoundVariants: [
-      // Horizontal orientation - height and border-radius per M3 spec
-      { orientation: "horizontal", size: "xs", className: "h-4 rounded-lg" }, // 16px, 8px radius
-      { orientation: "horizontal", size: "sm", className: "h-6 rounded-lg" }, // 24px, 8px radius
-      { orientation: "horizontal", size: "md", className: "h-10 rounded-xl" }, // 40px, 12px radius
-      { orientation: "horizontal", size: "lg", className: "h-14 rounded-2xl" }, // 56px, 16px radius
-      { orientation: "horizontal", size: "xl", className: "h-24 rounded-[1.75rem]" }, // 96px, 28px radius
-      // Vertical orientation - width and border-radius per M3 spec
+      // Horizontal orientation
+      { orientation: "horizontal", size: "xs", className: "h-4 rounded-lg" },
+      { orientation: "horizontal", size: "sm", className: "h-6 rounded-lg" },
+      { orientation: "horizontal", size: "md", className: "h-10 rounded-xl" },
+      { orientation: "horizontal", size: "lg", className: "h-14 rounded-2xl" },
+      { orientation: "horizontal", size: "xl", className: "h-24 rounded-[1.75rem]" },
+      // Vertical orientation
       { orientation: "vertical", size: "xs", className: "w-4 rounded-lg" },
       { orientation: "vertical", size: "sm", className: "w-6 rounded-lg" },
       { orientation: "vertical", size: "md", className: "w-10 rounded-xl" },
@@ -104,10 +97,12 @@ const sliderTrackVariants = cva(
  * The active portion of the track
  * MD3: Active track color is Primary
  */
-const sliderRangeVariants = cva(
+/**
+ * Premium slider range variants - includes lg and xl sizes
+ */
+const premiumSliderRangeVariants = cva(
   [
     "absolute",
-    // Active track color - MD3: primary
     "bg-primary",
   ].join(" "),
   {
@@ -117,7 +112,7 @@ const sliderRangeVariants = cva(
         vertical: "w-full",
       },
       size: {
-        xs: "", // Same border radius as track
+        xs: "",
         sm: "",
         md: "",
         lg: "",
@@ -125,7 +120,6 @@ const sliderRangeVariants = cva(
       },
     },
     compoundVariants: [
-      // Match track border radius per size
       { orientation: "horizontal", size: "xs", className: "rounded-lg" },
       { orientation: "horizontal", size: "sm", className: "rounded-lg" },
       { orientation: "horizontal", size: "md", className: "rounded-xl" },
@@ -145,44 +139,31 @@ const sliderRangeVariants = cva(
 );
 
 /**
- * Slider thumb variants - Bar style (default)
- * The draggable handle - MD3: vertical pill/capsule shape
+ * Premium slider thumb variants - Bar style with lg and xl sizes
  * MD3 Specs:
  * - Handle width: 4dp (always)
  * - Handle heights: XS=44dp, S=44dp, M=52dp, L=68dp, XL=108dp
- * - Handle color: Primary (filled)
- * - Handle changes shape when pressed (narrows to 2dp width)
  */
-const sliderThumbVariants = cva(
+const premiumSliderThumbVariants = cva(
   [
     "relative block",
-    // MD3: Primary filled handle
     "bg-primary",
-    // Tightly rounded capsule shape - smaller radius for tighter corners
-    "rounded-[0.125rem]", // 2px radius for tighter top/bottom corners
+    "rounded-[0.125rem]",
     "ring-offset-background",
-    // Focus ring - no ring when focused, handle gets narrower on focus
     "focus:outline-none focus-visible:outline-none",
-    // Remove all focus ring styles
     "disabled:pointer-events-none disabled:opacity-50",
-    // MD3 Motion - handle narrows on press
     "transition-[width,height]",
     "duration-100",
-    // Remove default shadows for clean M3 look
     "shadow-none",
   ].join(" "),
   {
     variants: {
-      /**
-       * Handle sizes following MD3 specifications
-       * Width is always 4dp (1 = 0.25rem), height varies
-       */
       size: {
-        xs: "w-1 h-11", // 4px × 44px
-        sm: "w-1 h-11", // 4px × 44px
-        md: "w-1 h-[3.25rem]", // 4px × 52px
-        lg: "w-1 h-[4.25rem]", // 4px × 68px
-        xl: "w-1 h-[6.75rem]", // 4px × 108px
+        xs: "w-1 h-11",
+        sm: "w-1 h-11",
+        md: "w-1 h-[3.25rem]",
+        lg: "w-1 h-[4.25rem]",
+        xl: "w-1 h-[6.75rem]",
       },
       orientation: {
         horizontal: "",
@@ -190,7 +171,6 @@ const sliderThumbVariants = cva(
       },
     },
     compoundVariants: [
-      // Vertical orientation - swap width and height
       { orientation: "vertical", size: "xs", className: "h-1 w-11" },
       { orientation: "vertical", size: "sm", className: "h-1 w-11" },
       { orientation: "vertical", size: "md", className: "h-1 w-[3.25rem]" },
@@ -213,8 +193,8 @@ const sliderThumbCircularStateLayerVariants = cva(
     "transition-all",
     "duration-[var(--motion-duration-medium)]",
     "ease-[var(--motion-easing-standard)]",
-    // Centered on knob (knob is already shifted left with -translate-x-1/2)
-    "-translate-y-1/2",
+    // Center the state layer on the knob
+    "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
     "bg-foreground/[0.08]",
     "group-hover:opacity-100",
     "opacity-0",
@@ -249,11 +229,6 @@ const SliderThumbCircularVariants = cva(
     "duration-100",
     // Subtle shadow for depth
     "shadow-md",
-    // Positioned left so bar end is centered on knob
-    "-translate-x-1/2",
-    // Ensure knob sits on the left edge of the bar
-    "ml-0",
-    "mr-0",
   ].join(" "),
   {
     variants: {
@@ -416,12 +391,12 @@ const insetIconVariants = cva(
 // Types
 // ============================================================================
 
-export interface SliderProps
+export interface PremiumSliderProps
   extends Omit<
       React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>,
       "orientation"
     >,
-    VariantProps<typeof sliderVariants> {
+    VariantProps<typeof premiumSliderVariants> {
   /**
    * Whether to show value indicator(s) above/beside the thumb(s)
    * - "always": Always visible
@@ -477,6 +452,7 @@ export interface SliderProps
    */
   trackClassName?: string;
   /**
+  /**
    * Additional class names for the range
    */
   rangeClassName?: string;
@@ -487,33 +463,32 @@ export interface SliderProps
 }
 
 // ============================================================================
-// Component
+// Helper Functions
 // ============================================================================
 
-// Helper function for gap size (1.5x handle width = 6px)
-function getGapSize(): string {
-  return "6px";
-}
-
-// Helper function to get border radius based on size
-function getBorderRadius(size: SliderProps["size"]): string {
+/**
+ * Get border radius based on size (extended for premium sizes)
+ */
+function getPremiumBorderRadius(size: PremiumSliderProps["size"]): string {
   switch (size) {
     case "xs":
     case "sm":
-      return "8px"; // rounded-lg (0.5rem = 8px)
+      return "8px";
     case "md":
-      return "12px"; // rounded-xl (0.75rem = 12px)
+      return "12px";
     case "lg":
-      return "16px"; // rounded-2xl (1rem = 16px)
+      return "16px";
     case "xl":
-      return "28px"; // rounded-[1.75rem] (1.75rem = 28px)
+      return "28px";
     default:
       return "8px";
   }
 }
 
-// Helper component for range sliders
-function RangeComponent({
+/**
+ * Helper component for range sliders with premium sizes
+ */
+function PremiumRangeComponent({
   orientation,
   size,
   currentValue,
@@ -521,7 +496,7 @@ function RangeComponent({
   max,
 }: {
   orientation: "horizontal" | "vertical";
-  size: SliderProps["size"];
+  size: PremiumSliderProps["size"];
   currentValue: number[];
   min: number;
   max: number;
@@ -529,7 +504,7 @@ function RangeComponent({
   const [start, end] = currentValue;
   const percentageStart = ((start - min) / (max - min)) * 100;
   const percentageEnd = ((end - min) / (max - min)) * 100;
-  const borderRadius = getBorderRadius(size);
+  const borderRadius = getPremiumBorderRadius(size);
 
   if (orientation === "horizontal") {
     return (
@@ -537,14 +512,13 @@ function RangeComponent({
         {/* Inactive track at start */}
         <div
           className={cn(
-            sliderTrackVariants({ orientation: "horizontal", size }),
+            premiumSliderTrackVariants({ orientation: "horizontal", size }),
             "absolute top-0 left-0 bg-secondary"
           )}
           style={{
-            width: `calc(${percentageStart}% + 6px)`, // Extend to handle edge
+            width: `calc(${percentageStart}% + 6px)`,
             borderTopLeftRadius: borderRadius,
             borderBottomLeftRadius: borderRadius,
-            // Flat right edge
             borderTopRightRadius: "0px",
             borderBottomRightRadius: "0px",
           }}
@@ -553,13 +527,12 @@ function RangeComponent({
         {/* Active range */}
         <div
           className={cn(
-            sliderRangeVariants({ orientation: "horizontal", size }),
+            premiumSliderRangeVariants({ orientation: "horizontal", size }),
             "absolute top-0 bg-primary"
           )}
           style={{
-            left: `calc(${percentageStart}% + 6px)`, // Add 6px gap from left handle
-            width: `calc(${percentageEnd - percentageStart}% - 12px)`, // Subtract 12px total gap (6px from each handle)
-            // Flat edges on both sides - 4px border radius
+            left: `calc(${percentageStart}% + 6px)`,
+            width: `calc(${percentageEnd - percentageStart}% - 12px)`,
             borderRadius: "4px",
           }}
         />
@@ -567,14 +540,13 @@ function RangeComponent({
         {/* Inactive track at end */}
         <div
           className={cn(
-            sliderTrackVariants({ orientation: "horizontal", size }),
+            premiumSliderTrackVariants({ orientation: "horizontal", size }),
             "absolute top-0 right-0 bg-secondary"
           )}
           style={{
-            width: `calc(${100 - percentageEnd}% + 6px)`, // Extend to handle edge
+            width: `calc(${100 - percentageEnd}% + 6px)`,
             borderTopRightRadius: borderRadius,
             borderBottomRightRadius: borderRadius,
-            // Flat left edge
             borderTopLeftRadius: "0px",
             borderBottomLeftRadius: "0px",
           }}
@@ -587,14 +559,13 @@ function RangeComponent({
         {/* Inactive track at bottom */}
         <div
           className={cn(
-            sliderTrackVariants({ orientation: "vertical", size }),
+            premiumSliderTrackVariants({ orientation: "vertical", size }),
             "absolute bottom-0 left-0 bg-secondary"
           )}
           style={{
-            height: `calc(${percentageStart}% + 6px)`, // Extend to handle edge
+            height: `calc(${percentageStart}% + 6px)`,
             borderBottomLeftRadius: borderRadius,
             borderBottomRightRadius: borderRadius,
-            // Flat top edge
             borderTopLeftRadius: "0px",
             borderTopRightRadius: "0px",
           }}
@@ -603,13 +574,12 @@ function RangeComponent({
         {/* Active range */}
         <div
           className={cn(
-            sliderRangeVariants({ orientation: "vertical", size }),
+            premiumSliderRangeVariants({ orientation: "vertical", size }),
             "absolute bottom-0 bg-primary"
           )}
           style={{
-            bottom: `calc(${percentageStart}% + 6px)`, // Add 6px gap from bottom handle
-            height: `calc(${percentageEnd - percentageStart}% - 12px)`, // Subtract 12px total gap
-            // Flat edges on both sides - 4px border radius
+            bottom: `calc(${percentageStart}% + 6px)`,
+            height: `calc(${percentageEnd - percentageStart}% - 12px)`,
             borderRadius: "4px",
           }}
         />
@@ -617,14 +587,13 @@ function RangeComponent({
         {/* Inactive track at top */}
         <div
           className={cn(
-            sliderTrackVariants({ orientation: "vertical", size }),
+            premiumSliderTrackVariants({ orientation: "vertical", size }),
             "absolute top-0 left-0 bg-secondary"
           )}
           style={{
-            height: `calc(${100 - percentageEnd}% + 6px)`, // Extend to handle edge
+            height: `calc(${100 - percentageEnd}% + 6px)`,
             borderTopLeftRadius: borderRadius,
             borderTopRightRadius: borderRadius,
-            // Flat bottom edge
             borderBottomLeftRadius: "0px",
             borderBottomRightRadius: "0px",
           }}
@@ -634,17 +603,18 @@ function RangeComponent({
   }
 }
 
+// ============================================================================
+// Component
+// ============================================================================
+
 /**
- * Slider - A premium slider component following Material Design 3 patterns
+ * PremiumSlider - A premium slider component following Material Design 3 patterns
  *
- * Features:
- * - Single value or range selection (multiple thumbs)
- * - MD3 animations and motion patterns
+ * Premium Features (in addition to free tier):
  * - Five sizes: xs, sm, md, lg, xl (matching M3 specs)
- * - Horizontal and vertical orientations
- * - Bar or circular handle shapes
- * - Optional value indicators with custom formatting and sizing
- * - Optional stop indicators for discrete steps
+ * - Handle shapes: bar (default), circular (xs only), knobless
+ * - Value indicators with custom formatting and sizing
+ * - Stop indicators for discrete steps
  * - Inset icons for larger sizes (md, lg, xl)
  * - Handle that narrows on press/click
  * - Gap styling between handle and track
@@ -653,24 +623,24 @@ function RangeComponent({
  * @example
  * ```tsx
  * // Basic usage
- * <Slider defaultValue={[50]} />
+ * <PremiumSlider defaultValue={[50]} />
  *
  * // Range slider
- * <Slider defaultValue={[25, 75]} />
+ * <PremiumSlider defaultValue={[25, 75]} />
  *
  * // With value indicator
- * <Slider defaultValue={[50]} showValueIndicator="always" />
+ * <PremiumSlider defaultValue={[50]} showValueIndicator="always" />
  *
  * // Circular handle
- * <Slider defaultValue={[50]} handleShape="circular" />
+ * <PremiumSlider defaultValue={[50]} handleShape="circular" />
  *
  * // With inset icon (volume control)
- * <Slider defaultValue={[50]} size="md" insetIcon={<Volume2 />} />
+ * <PremiumSlider defaultValue={[50]} size="md" insetIcon={<Volume2 />} />
  * ```
  */
-const Slider = React.forwardRef<
+const PremiumSlider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
-  SliderProps
+  PremiumSliderProps
 >(
   (
     {
@@ -802,11 +772,10 @@ const Slider = React.forwardRef<
         defaultValue={defaultValue}
         onValueChange={handleValueChange}
         onValueCommit={onValueCommit}
-        className={cn(sliderVariants({ orientation, size }), className)}
+        className={cn(premiumSliderVariants({ orientation, size }), className)}
         onPointerEnter={() => setIsHovering(true)}
         onPointerLeave={() => {
           setIsHovering(false);
-          // Don't clear activeThumb here - let it persist while focused
         }}
         onFocus={() => setIsFocused(true)}
         onBlur={() => {
@@ -818,10 +787,12 @@ const Slider = React.forwardRef<
         <SliderPrimitive.Track
           data-slot="slider-track"
           className={cn(
-            // For circular handle with xs size, use shorter track
+            // For circular handle with xs size, use shorter track with proper styling
             ((actualHandleShape === "circular" && size === "xs") 
-              ? (orientation === "horizontal" ? "h-2" : "w-2") // 8px height/width instead of 16px
-              : sliderTrackVariants({ orientation, size })),
+              ? (orientation === "horizontal" 
+                  ? "relative grow overflow-visible bg-secondary w-full h-2 rounded-full" 
+                  : "relative grow overflow-visible bg-secondary h-full w-2 rounded-full")
+              : premiumSliderTrackVariants({ orientation, size })),
             trackClassName
           )}
         >
@@ -846,9 +817,8 @@ const Slider = React.forwardRef<
               />
             ))}
           {/* Active range with inner corner radius for gap effect */}
-          {/* For range sliders, use custom implementation */}
           {currentValue.length > 1 ? (
-            <RangeComponent
+            <PremiumRangeComponent
               orientation={orientation as "horizontal" | "vertical"}
               size={size}
               currentValue={currentValue}
@@ -858,34 +828,30 @@ const Slider = React.forwardRef<
           ) : (
             /* Single value slider - use original Range primitive */
             <SliderPrimitive.Range
-                data-slot="slider-range"
+              data-slot="slider-range"
               className={cn(
-                // For circular handle with xs size, use shorter range to match track
                 ((actualHandleShape === "circular" && size === "xs")
-                  ? "h-full"
-                  : sliderRangeVariants({ orientation, size })),
+                  ? (orientation === "horizontal" 
+                      ? "absolute h-full bg-primary rounded-full" 
+                      : "absolute w-full bg-primary rounded-full")
+                  : premiumSliderRangeVariants({ orientation, size })),
                 rangeClassName
               )}
               style={{
-                // Add margin to create visual gap from handle
                 [orientation === "horizontal" ? "marginRight" : "marginTop"]: getGapSize(),
-                // MD3 border radius specifications:
-                // Horizontal: 4px for top-right and bottom-right, proper radius for left side
-                // Vertical: 4px for top-left and top-right, proper radius for bottom side
                 ...(orientation === "horizontal" ? {
-                  borderTopLeftRadius: getBorderRadius(size),
-                  borderBottomLeftRadius: getBorderRadius(size),
+                  borderTopLeftRadius: getPremiumBorderRadius(size),
+                  borderBottomLeftRadius: getPremiumBorderRadius(size),
                   borderTopRightRadius: "4px",
                   borderBottomRightRadius: "4px",
                 } : {
-                  borderBottomLeftRadius: getBorderRadius(size),
-                  borderBottomRightRadius: getBorderRadius(size),
+                  borderBottomLeftRadius: getPremiumBorderRadius(size),
+                  borderBottomRightRadius: getPremiumBorderRadius(size),
                   borderTopLeftRadius: "4px",
                   borderTopRightRadius: "4px",
                 }),
               }}
             />
-
           )}
 
           {showInsetIcon && (
@@ -899,13 +865,11 @@ const Slider = React.forwardRef<
                 iconInActiveTrack ? "text-primary-foreground" : "text-muted-foreground",
               )}
               style={{
-                // Position icon at the start of the respective track section
-                // Use transform for smoother positioning instead of changing left/bottom values
                 [orientation === "horizontal" ? "left" : "bottom"]: "0.5rem",
                 transform: orientation === "horizontal" 
                   ? `translateY(-50%) ${iconInActiveTrack ? "" : `translateX(calc(${activeTrackPercentage}%))`}`
                   : `translateX(-50%) ${iconInActiveTrack ? "" : `translateY(calc(${activeTrackPercentage}%))`}`,
-                transition: "transform 0.2s ease-out", // Smooth transition
+                transition: "transform 0.2s ease-out",
               }}
             >
               {currentInsetIcon}
@@ -927,20 +891,13 @@ const Slider = React.forwardRef<
                   ? SliderThumbCircularVariants({ size: "xs" })
                   : actualHandleShape === "knobless"
                   ? sliderThumbKnoblessVariants({ size })
-                  : sliderThumbVariants({ size, orientation }),
-                // Bar handle: narrows when pressed or active (click/touch/drag)
+                  : premiumSliderThumbVariants({ size, orientation }),
                 actualHandleShape === "bar" && isPressed && (orientation === "horizontal" ? "!w-0.5" : "!h-0.5"),
-                // Circular handle: scales down slightly when pressed
                 actualHandleShape === "circular" && isPressed && "scale-90",
                 thumbClassName
               )}
-              style={{
-                // Add visual gap from track using negative margin compensation
-                // This creates the "floating" effect where handle doesn't touch track
-                ...(handleShape === "bar" ? {
-                  // The handle already extends beyond track, this adds the inner corner effect
-                } : {}),
-              }}
+              onPointerEnter={() => setActiveThumb(index)}
+              onPointerLeave={() => setActiveThumb(null)}
               onPointerDown={() => {
                 setActiveThumb(index);
                 setPressedThumb(index);
@@ -964,7 +921,6 @@ const Slider = React.forwardRef<
                   data-slot="slider-value-indicator"
                   className={cn(
                     valueIndicatorVariants({ orientation, indicatorSize: valueIndicatorSize }),
-                    // Animation based on active state
                     isActive || showValueIndicator === "always"
                       ? "opacity-100 scale-100"
                       : "opacity-0 scale-95"
@@ -981,18 +937,27 @@ const Slider = React.forwardRef<
   }
 );
 
-Slider.displayName = "Slider";
+PremiumSlider.displayName = "PremiumSlider";
 
 // ============================================================================
 // Exports
 // ============================================================================
 
+// Re-export free tier for backward compatibility
 export {
-  Slider,
-  sliderVariants,
-  sliderTrackVariants,
-  sliderRangeVariants,
-  sliderThumbVariants,
+  baseSliderVariants as sliderVariants,
+  baseSliderTrackVariants as sliderTrackVariants,
+  baseSliderRangeVariants as sliderRangeVariants,
+  baseSliderThumbVariants as sliderThumbVariants,
+};
+
+// Export premium component and variants
+export {
+  PremiumSlider,
+  premiumSliderVariants,
+  premiumSliderTrackVariants,
+  premiumSliderRangeVariants,
+  premiumSliderThumbVariants,
   SliderThumbCircularVariants,
   sliderThumbCircularStateLayerVariants,
   sliderThumbKnoblessVariants,
@@ -1000,3 +965,9 @@ export {
   stopIndicatorVariants,
   insetIconVariants,
 };
+
+// Export types
+
+// For backward compatibility, also export PremiumSlider as Slider
+export { PremiumSlider as Slider };
+export type { PremiumSliderProps as SliderProps };

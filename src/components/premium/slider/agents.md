@@ -1,16 +1,38 @@
-# Slider Component
+# Premium Slider Component
+## Important Notes
+- Follow **shadcn/ui** design patterns and conventions closely, call the mcp server for component examples when adding new components and see how they are implemented in shadcn/ui.
+- You should always create a **TODO LIST** by calling the todo list tool whenever you are given a new task to work on. You should update the TODO LIST as you make progress on the task. You will never forget to create or update the TODO LIST and you will not stop until the task and the TODO LIST is complete.
+- After you complete a task involving code changes, you must call the `Dev Runner` subagent using the `agent/runSubagent` tool to run the build and Storybook to verify that everything works correctly. If there are any build or Storybook errors, you must fix them before marking the task as complete.
+- As components are implemented, you must update their status in the `docs/ROADMAP.md` file to reflect current progress.
+- **Inspiration:** Draw from **Google Material Design** and **Tailwind Catalyst** components for guidance on structure, spacing, and visual hierarchy.
 
-Premium slider component for selecting values from a range following Material Design 3 specifications.
+Premium tier slider component for selecting values from a range following Material Design 3 specifications. Extends the free tier slider with additional sizes, handle shapes, value indicators, stop indicators, and inset icons.
+
+## Tier Architecture
+
+### Free Tier (Base)
+The free tier slider (`src/components/free/slider`) provides:
+- **Sizes**: xs, sm, md (track heights 16dp, 24dp, 40dp)
+- **Handle**: Bar shape only (4dp width, MD3 default)
+- **Features**: Press animation, gap styling, range support
+
+### Premium Tier (Extended)
+The premium slider extends the free tier with:
+- **Additional Sizes**: lg (56dp), xl (96dp)
+- **Handle Shapes**: bar, circular, knobless
+- **Value Indicators**: Always, hover, or never visible
+- **Stop Indicators**: Visual dots for discrete steps
+- **Inset Icons**: Icons within the track (md, lg, xl sizes)
 
 ## Components
 
-### Slider
-A versatile slider supporting single value or range selection with MD3 animations.
+### PremiumSlider
+A versatile slider supporting single value or range selection with MD3 animations and premium features.
 
 ## Props
 
 ```typescript
-interface SliderProps extends Omit<SliderPrimitive.RootProps, "orientation"> {
+interface PremiumSliderProps extends Omit<SliderPrimitive.RootProps, "orientation"> {
   orientation?: "horizontal" | "vertical";  // Slider orientation
   size?: "xs" | "sm" | "md" | "lg" | "xl";  // Size variant (default: "xs")
   handleShape?: "bar" | "circular" | "knobless";  // Handle shape (default: "bar" for MD3)
@@ -161,43 +183,43 @@ No visible handle - the track itself is interactive. Available for all sizes.
 
 ```tsx
 // Basic slider (XS size default)
-<Slider defaultValue={[50]} />
+<PremiumSlider defaultValue={[50]} />
 
 // Range slider
-<Slider defaultValue={[25, 75]} />
+<PremiumSlider defaultValue={[25, 75]} />
 
 // Circular handle variant (xs only)
-<Slider defaultValue={[50]} size="xs" handleShape="circular" />
+<PremiumSlider defaultValue={[50]} size="xs" handleShape="circular" />
 
 // Knobless variant (all sizes)
-<Slider defaultValue={[50]} handleShape="knobless" />
+<PremiumSlider defaultValue={[50]} handleShape="knobless" />
 
 // With value indicator
-<Slider
+<PremiumSlider
   defaultValue={[50]}
   showValueIndicator="always"
   formatValue={(v) => `${v}%`}
 />
 
 // Large value indicator
-<Slider
+<PremiumSlider
   defaultValue={[50]}
   showValueIndicator="always"
   valueIndicatorSize="lg"
 />
 
 // Discrete with stops
-<Slider defaultValue={[50]} step={10} showStops />
+<PremiumSlider defaultValue={[50]} step={10} showStops />
 
 // Vertical orientation
-<Slider
+<PremiumSlider
   defaultValue={[50]}
   orientation="vertical"
   className="h-48"
 />
 
 // With inset icon (MD3 feature)
-<Slider
+<PremiumSlider
   defaultValue={[50]}
   size="md"
   insetIcon={<Volume2 />}
@@ -205,7 +227,7 @@ No visible handle - the track itself is interactive. Available for all sizes.
 />
 
 // XL hero slider
-<Slider
+<PremiumSlider
   defaultValue={[50]}
   size="xl"
   insetIcon={<SunMedium />}
@@ -213,9 +235,16 @@ No visible handle - the track itself is interactive. Available for all sizes.
 
 // Controlled component
 const [value, setValue] = useState([50]);
-<Slider
+<PremiumSlider
   value={value}
   onValueChange={setValue}
   onValueCommit={(v) => console.log('Final:', v)}
 />
 ```
+
+## See Also
+
+- **Free Tier Slider**: `src/components/free/slider` - Basic slider with xs, sm, md sizes
+- For basic slider needs without premium features, use the free tier slider directly
+
+
