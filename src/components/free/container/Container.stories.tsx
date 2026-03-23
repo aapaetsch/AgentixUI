@@ -23,7 +23,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "../card";
  * ```
  */
 const meta: Meta<typeof Container> = {
-  title: "Layout/Container",
+  title: "Free/Layout/Container",
   component: Container,
   parameters: {
     layout: "fullscreen",

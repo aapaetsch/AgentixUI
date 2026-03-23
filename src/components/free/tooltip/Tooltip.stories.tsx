@@ -38,7 +38,7 @@ import { IconButton } from "../button/icon-button";
  * - Proper ARIA attributes
  */
 const meta: Meta<typeof Tooltip> = {
-  title: "Components/Tooltip",
+  title: "Free/Overlay/Tooltip",
   component: Tooltip,
   parameters: {
     layout: "centered",

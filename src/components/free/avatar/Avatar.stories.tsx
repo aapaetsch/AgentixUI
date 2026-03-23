@@ -11,7 +11,7 @@ import { useState } from "react";
 import { User, Building2, Bot } from "lucide-react";
 
 const meta: Meta<typeof Avatar> = {
-  title: "Components/Avatar",
+  title: "Free/Components/Avatar",
   component: Avatar,
   parameters: {
     layout: "centered",

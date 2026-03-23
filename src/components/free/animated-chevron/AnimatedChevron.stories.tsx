@@ -20,7 +20,7 @@ import { AnimatedChevron } from "./index";
  * The AnimatedChevron is specifically designed for smooth chevron morphing.
  */
 const meta: Meta<typeof AnimatedChevron> = {
-  title: "Components/AnimatedChevron",
+  title: "Free/Components/AnimatedChevron",
   component: AnimatedChevron,
   parameters: {
     layout: "centered",

@@ -1,4 +1,10 @@
 # Checkbox
+## Important Notes
+- Follow **shadcn/ui** design patterns and conventions closely, call the mcp server for component examples when adding new components and see how they are implemented in shadcn/ui.
+- You should always create a **TODO LIST** by calling the todo list tool whenever you are given a new task to work on. You should update the TODO LIST as you make progress on the task. You will never forget to create or update the TODO LIST and you will not stop until the task and the TODO LIST is complete.
+- After you complete a task involving code changes, you must call the `Dev Runner` subagent using the `agent/runSubagent` tool to run the build and Storybook to verify that everything works correctly. If there are any build or Storybook errors, you must fix them before marking the task as complete.
+- As components are implemented, you must update their status in the `docs/ROADMAP.md` file to reflect current progress.
+- **Inspiration:** Draw from **Google Material Design** and **Tailwind Catalyst** components for guidance on structure, spacing, and visual hierarchy.
 
 A Material Design 3 compliant checkbox component with proper state layer ripple effects.
 
@@ -140,3 +146,5 @@ const [checked, setChecked] = React.useState(false);
 - The ripple effect is triggered on click and animates the full state layer area
 - Error state changes both border color (unselected) and background color (selected)
 - Indeterminate state uses the Minus icon from lucide-react
+
+

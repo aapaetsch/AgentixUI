@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Grid, GridItem } from "./index";
 
 const meta: Meta<typeof Grid> = {
-  title: "Free/Grid",
+  title: "Free/Layout/Grid",
   component: Grid,
   parameters: {
     layout: "padded",

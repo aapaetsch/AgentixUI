@@ -1,4 +1,10 @@
 # Sheet Component - Agent Context
+## Important Notes
+- Follow **shadcn/ui** design patterns and conventions closely, call the mcp server for component examples when adding new components and see how they are implemented in shadcn/ui.
+- You should always create a **TODO LIST** by calling the todo list tool whenever you are given a new task to work on. You should update the TODO LIST as you make progress on the task. You will never forget to create or update the TODO LIST and you will not stop until the task and the TODO LIST is complete.
+- After you complete a task involving code changes, you must call the `Dev Runner` subagent using the `agent/runSubagent` tool to run the build and Storybook to verify that everything works correctly. If there are any build or Storybook errors, you must fix them before marking the task as complete.
+- As components are implemented, you must update their status in the `docs/ROADMAP.md` file to reflect current progress.
+- **Inspiration:** Draw from **Google Material Design** and **Tailwind Catalyst** components for guidance on structure, spacing, and visual hierarchy.
 
 ## Component Overview
 The Sheet component is a slide-out panel that displays content from the edge of the screen. It extends Radix UI's Dialog primitive to create a side panel experience commonly used for navigation menus, settings panels, detail views, and form inputs.
@@ -92,3 +98,5 @@ The Premium Sheet component (`src/components/premium/sheet`) extends this base i
 - `Dialog` - Full modal dialog (centered)
 - `Popover` - Small floating content
 - `Drawer` - Alias for bottom-positioned Sheet
+
+

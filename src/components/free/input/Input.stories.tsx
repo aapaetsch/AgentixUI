@@ -6,7 +6,7 @@ import { Input, OutlinedInput } from "./index";
 // ============================================================================
 
 const meta: Meta<typeof Input> = {
-  title: "Components/Input",
+  title: "Free/Inputs/Input",
   component: Input,
   parameters: {
     layout: "centered",

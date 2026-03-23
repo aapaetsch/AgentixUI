@@ -36,7 +36,7 @@ import { Button } from "../button";
  * ```
  */
 const meta: Meta<typeof Skeleton> = {
-  title: "Components/Skeleton",
+  title: "Free/Components/Skeleton",
   component: Skeleton,
   parameters: {
     layout: "centered",

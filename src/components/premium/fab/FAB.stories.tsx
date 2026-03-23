@@ -16,7 +16,7 @@ import { FABMenu, type FABMenuItem } from "./fab-menu";
  * - M3 motion: shape morph on press
  */
 const meta: Meta<typeof FAB> = {
-  title: "Components/FAB",
+  title: "Premium/FAB",
   component: FAB,
   parameters: {
     layout: "centered",

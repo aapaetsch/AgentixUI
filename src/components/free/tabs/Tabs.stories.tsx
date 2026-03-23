@@ -34,7 +34,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "./index";
  * - Motion: 200ms standard duration, standard easing
  */
 const meta: Meta<typeof Tabs> = {
-  title: "Components/Tabs",
+  title: "Free/Navigation/Tabs",
   component: Tabs,
   parameters: {
     layout: "centered",

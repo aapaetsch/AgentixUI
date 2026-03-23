@@ -42,7 +42,7 @@ import {
  * - Custom positioning via Radix UI popper
  */
 const meta: Meta<typeof Select> = {
-  title: "Components/Select",
+  title: "Free/Inputs/Select",
   component: Select,
   parameters: {
     layout: "centered",

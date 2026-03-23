@@ -63,7 +63,7 @@ import { Input } from "../Input";
  * ```
  */
 const meta: Meta<typeof Dialog> = {
-  title: "Components/Dialog",
+  title: "Free/Overlay/Dialog",
   component: Dialog,
   parameters: {
     layout: "centered",

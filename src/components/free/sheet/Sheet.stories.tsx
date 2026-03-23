@@ -15,7 +15,7 @@ import { Input } from "../input";
 import { Separator } from "../separator";
 
 const meta: Meta<typeof Sheet> = {
-  title: "Free/Sheet",
+  title: "Free/Overlay/Sheet",
   component: Sheet,
   parameters: {
     layout: "centered",

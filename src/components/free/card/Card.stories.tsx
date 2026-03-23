@@ -20,7 +20,7 @@ import { Badge } from "../badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 
 const meta: Meta<typeof Card> = {
-  title: "Components/Card",
+  title: "Free/Components/Card",
   component: Card,
   parameters: {
     layout: "centered",

@@ -31,7 +31,7 @@ import { Switch } from "./index";
  * ```
  */
 const meta: Meta<typeof Switch> = {
-  title: "Components/Switch",
+  title: "Free/Inputs/Switch",
   component: Switch,
   parameters: {
     layout: "centered",

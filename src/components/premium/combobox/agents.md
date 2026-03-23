@@ -1,4 +1,10 @@
 # ComboBox Component - Agent Context
+## Important Notes
+- Follow **shadcn/ui** design patterns and conventions closely, call the mcp server for component examples when adding new components and see how they are implemented in shadcn/ui.
+- You should always create a **TODO LIST** by calling the todo list tool whenever you are given a new task to work on. You should update the TODO LIST as you make progress on the task. You will never forget to create or update the TODO LIST and you will not stop until the task and the TODO LIST is complete.
+- After you complete a task involving code changes, you must call the `Dev Runner` subagent using the `agent/runSubagent` tool to run the build and Storybook to verify that everything works correctly. If there are any build or Storybook errors, you must fix them before marking the task as complete.
+- As components are implemented, you must update their status in the `docs/ROADMAP.md` file to reflect current progress.
+- **Inspiration:** Draw from **Google Material Design** and **Tailwind Catalyst** components for guidance on structure, spacing, and visual hierarchy.
 
 ## Component Overview
 ComboBox is a searchable select component using the **Catalyst/Headless UI pattern**. The key difference from traditional comboboxes: the input IS the trigger - you type directly in it to filter options. When you select an option, its display value shows in the input.
@@ -131,3 +137,5 @@ Component supports generic types for values:
 - `Select`: Non-searchable select (Radix-based)
 - `Input`: Text input with MD3 variants
 - `AnimatedChevron`: Chevron animation
+
+

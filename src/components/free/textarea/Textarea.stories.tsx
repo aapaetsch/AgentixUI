@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Textarea, TextareaWithCounter } from './index';
 
 const meta: Meta<typeof Textarea> = {
-  title: 'Components/Textarea',
+  title: 'Free/Inputs/Textarea',
   component: Textarea,
   parameters: {
     layout: 'centered',

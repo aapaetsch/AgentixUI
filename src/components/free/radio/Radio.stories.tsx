@@ -24,7 +24,7 @@ import { RadioGroup, RadioGroupItem } from "./index";
  * ```
  */
 const meta: Meta<typeof RadioGroup> = {
-  title: "Components/RadioGroup",
+  title: "Free/Inputs/RadioGroup",
   component: RadioGroup,
   parameters: {
     layout: "centered",

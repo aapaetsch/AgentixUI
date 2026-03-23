@@ -64,7 +64,7 @@ import { Chip, ChipGroup } from "./index";
  * - Padding between elements: 8dp
  */
 const meta: Meta<typeof Chip> = {
-  title: "Components/Chip",
+  title: "Free/Components/Chip",
   component: Chip,
   parameters: {
     layout: "centered",
