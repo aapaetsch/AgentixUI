@@ -48,9 +48,9 @@ export const fabVariants = cva(
           "active:shadow-[var(--elevation-2)]",
         ].join(" "),
         outlined: [
-          "border border-border bg-transparent text-foreground",
+          "border-2 border-border bg-transparent text-foreground",
           "shadow-none",
-          "hover:bg-accent hover:text-accent-foreground",
+          "hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground/30",
           "active:bg-accent/80",
         ].join(" "),
         tertiary: [
