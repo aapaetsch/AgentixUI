@@ -34,7 +34,7 @@ import { AnimatedChevron } from "../animated-chevron";
  * - Styling variants: default, bordered, separated
  */
 const meta: Meta<typeof Accordion> = {
-  title: "Components/Accordion",
+  title: "Free/Components/Accordion",
   component: Accordion,
   parameters: {
     layout: "centered",
