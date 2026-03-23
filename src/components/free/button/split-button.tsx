@@ -76,7 +76,7 @@ const splitButtonActionVariants = cva(
           "active:bg-secondary/70",
         ].join(" "),
         outlined: [
-          "border border-border bg-transparent text-foreground",
+          "border-2 border-border bg-transparent text-foreground",
           "hover:bg-accent/50",
           "active:bg-accent/70",
         ].join(" "),
@@ -135,7 +135,7 @@ const splitButtonTriggerVariants = cva(
           "active:bg-secondary/70",
         ].join(" "),
         outlined: [
-          "border border-border bg-transparent text-foreground",
+          "border-2 border-border bg-transparent text-foreground",
           "hover:bg-accent/50",
           "active:bg-accent/70",
         ].join(" "),

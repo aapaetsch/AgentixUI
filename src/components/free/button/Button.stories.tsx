@@ -16,14 +16,22 @@ import {
   Underline,
   Settings,
   ChevronDown,
+  Copy,
+  Clipboard,
+  Archive,
+  Trash2,
+  MoreHorizontal,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  AlignJustify,
+  Check,
 } from "lucide-react";
 import { Button } from "./index";
 import { IconButton } from "./icon-button";
 import { ToggleButton } from "./toggle-button";
 import { ToggleIconButton } from "./toggle-icon-button";
 import { SplitButton } from "./split-button";
-import { ButtonGroup } from "./button-group";
-import { ConnectedButtonGroup } from "./connected-button-group";
 
 /**
  * A customizable button component following Material Design 3 patterns.
@@ -36,7 +44,7 @@ import { ConnectedButtonGroup } from "./connected-button-group";
  * - M3 motion: scale and shape morph on press
  */
 const meta: Meta<typeof Button> = {
-  title: "Components/Button",
+  title: "Free/Buttons/Button",
   component: Button,
   parameters: {
     layout: "centered",
@@ -327,10 +335,10 @@ export const ToggleButtonShapeMorph: Story = {
     return (
       <div className="flex flex-wrap items-center gap-4">
         <ToggleButton shape="round" pressed={pressed1} onPressedChange={setPressed1}>
-          Round → Rect
+          Round → Square
         </ToggleButton>
-        <ToggleButton shape="rect" pressed={pressed2} onPressedChange={setPressed2}>
-          Rect → Round
+        <ToggleButton shape="square" pressed={pressed2} onPressedChange={setPressed2}>
+          Square → Round
         </ToggleButton>
       </div>
     );
@@ -554,171 +562,6 @@ export const SplitButtonWithAnimatedChevron: Story = {
   },
 };
 
-// ============================================================================
-// ButtonGroup Stories
-// ============================================================================
 
-export const ButtonGroupDefault: Story = {
-  render: () => (
-    <ButtonGroup>
-      <Button colorStyle="outlined">Left</Button>
-      <Button colorStyle="outlined">Middle</Button>
-      <Button colorStyle="outlined">Right</Button>
-    </ButtonGroup>
-  ),
-};
 
-export const ButtonGroupGaps: Story = {
-  render: () => (
-    <div className="flex flex-col items-start gap-4">
-      <ButtonGroup gap="none">
-        <Button colorStyle="outlined">None</Button>
-        <Button colorStyle="outlined">Gap</Button>
-      </ButtonGroup>
-      <ButtonGroup gap="xs">
-        <Button colorStyle="outlined">XS</Button>
-        <Button colorStyle="outlined">Gap</Button>
-      </ButtonGroup>
-      <ButtonGroup gap="sm">
-        <Button colorStyle="outlined">SM</Button>
-        <Button colorStyle="outlined">Gap</Button>
-      </ButtonGroup>
-      <ButtonGroup gap="md">
-        <Button colorStyle="outlined">MD</Button>
-        <Button colorStyle="outlined">Gap</Button>
-      </ButtonGroup>
-      <ButtonGroup gap="lg">
-        <Button colorStyle="outlined">LG</Button>
-        <Button colorStyle="outlined">Gap</Button>
-      </ButtonGroup>
-    </div>
-  ),
-};
 
-export const ButtonGroupVertical: Story = {
-  render: () => (
-    <ButtonGroup orientation="vertical">
-      <Button colorStyle="outlined">Top</Button>
-      <Button colorStyle="outlined">Middle</Button>
-      <Button colorStyle="outlined">Bottom</Button>
-    </ButtonGroup>
-  ),
-};
-
-// ============================================================================
-// ConnectedButtonGroup Stories
-// ============================================================================
-
-export const ConnectedButtonGroupSingleSelect: Story = {
-  render: () => {
-    const [view, setView] = React.useState("grid");
-    return (
-      <ConnectedButtonGroup value={view} onValueChange={(v) => setView(v as string)}>
-        <ConnectedButtonGroupItem value="grid">
-          <Grid />
-          Grid
-        </ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="list">
-          <List />
-          List
-        </ConnectedButtonGroupItem>
-      </ConnectedButtonGroup>
-    );
-  },
-};
-
-export const ConnectedButtonGroupMultiSelect: Story = {
-  render: () => {
-    const [formats, setFormats] = React.useState<string[]>(["bold"]);
-    return (
-      <ConnectedButtonGroup
-        selectionMode="multiple"
-        value={formats}
-        onValueChange={(v) => setFormats(v as string[])}
-      >
-        <ConnectedButtonGroupItem value="bold">
-          <Bold />
-        </ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="italic">
-          <Italic />
-        </ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="underline">
-          <Underline />
-        </ConnectedButtonGroupItem>
-      </ConnectedButtonGroup>
-    );
-  },
-};
-
-export const ConnectedButtonGroupColorStyles: Story = {
-  render: () => (
-    <div className="flex flex-col items-start gap-4">
-      <ConnectedButtonGroup colorStyle="outlined" defaultValue="a">
-        <ConnectedButtonGroupItem value="a">A</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="b">B</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="c">C</ConnectedButtonGroupItem>
-      </ConnectedButtonGroup>
-      <ConnectedButtonGroup colorStyle="filled" defaultValue="a">
-        <ConnectedButtonGroupItem value="a">A</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="b">B</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="c">C</ConnectedButtonGroupItem>
-      </ConnectedButtonGroup>
-      <ConnectedButtonGroup colorStyle="tonal" defaultValue="a">
-        <ConnectedButtonGroupItem value="a">A</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="b">B</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="c">C</ConnectedButtonGroupItem>
-      </ConnectedButtonGroup>
-    </div>
-  ),
-};
-
-export const ConnectedButtonGroupSizes: Story = {
-  render: () => (
-    <div className="flex flex-col items-start gap-4">
-      <ConnectedButtonGroup size="xs" defaultValue="a">
-        <ConnectedButtonGroupItem value="a">XS</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="b">Size</ConnectedButtonGroupItem>
-      </ConnectedButtonGroup>
-      <ConnectedButtonGroup size="sm" defaultValue="a">
-        <ConnectedButtonGroupItem value="a">SM</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="b">Size</ConnectedButtonGroupItem>
-      </ConnectedButtonGroup>
-      <ConnectedButtonGroup size="md" defaultValue="a">
-        <ConnectedButtonGroupItem value="a">MD</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="b">Size</ConnectedButtonGroupItem>
-      </ConnectedButtonGroup>
-      <ConnectedButtonGroup size="lg" defaultValue="a">
-        <ConnectedButtonGroupItem value="a">LG</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="b">Size</ConnectedButtonGroupItem>
-      </ConnectedButtonGroup>
-      <ConnectedButtonGroup size="xl" defaultValue="a">
-        <ConnectedButtonGroupItem value="a">XL</ConnectedButtonGroupItem>
-        <ConnectedButtonGroupItem value="b">Size</ConnectedButtonGroupItem>
-      </ConnectedButtonGroup>
-    </div>
-  ),
-};
-
-// ============================================================================
-// Interactive Demo
-// ============================================================================
-
-export const InteractiveDemo: Story = {
-  render: () => (
-    <div className="flex flex-col items-center gap-8">
-      <p className="text-sm text-muted-foreground">
-        Click/tap buttons to see M3 scale and shape morphing animations
-      </p>
-      <div className="flex items-center gap-4">
-        <Button size="lg" shape="round">Round Pill</Button>
-        <Button size="lg" shape="rect">Rectangle</Button>
-        <Button size="lg" shape="square">Square</Button>
-      </div>
-      <div className="flex items-center gap-4">
-        <Button colorStyle="elevated" size="lg">Elevated</Button>
-        <Button colorStyle="tonal" size="lg">Tonal</Button>
-        <Button colorStyle="destructive" size="lg">Destructive</Button>
-      </div>
-    </div>
-  ),
-};

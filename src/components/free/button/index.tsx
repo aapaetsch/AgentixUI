@@ -58,9 +58,9 @@ const buttonVariants = cva(
           "active:shadow-[var(--elevation-1)] active:brightness-95",
         ].join(" "),
         outlined: [
-          "border border-border bg-transparent text-foreground",
+          "border-2 border-border bg-transparent text-foreground",
           // Hover: visible background fill
-          "hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground/20",
+          "hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground/30",
           // Active: darker state
           "active:bg-accent/80",
         ].join(" "),
@@ -142,8 +142,9 @@ const buttonVariants = cva(
       { iconOnly: true, size: "md", className: "size-[2.25rem]" },
       { iconOnly: true, size: "lg", className: "size-[2.75rem]" },
       { iconOnly: true, size: "xl", className: "size-[3.25rem]" },
-      // Shape morph on active - round becomes slightly less round
-      { shape: "round", className: "active:rounded-[var(--radius-xl)]" },
+      // Shape morph on active (MD3: round→square, square→round)
+      { shape: "round", className: "active:rounded-[var(--radius)]" },
+      { shape: "square", className: "active:rounded-full" },
     ],
     defaultVariants: {
       colorStyle: "filled",
@@ -220,14 +221,23 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-busy={loading}
         {...props}
       >
-        {loading && (
-          <Spinner
-            size={spinnerSize}
-            label="Loading"
-            className="shrink-0"
-          />
+        {asChild ? (
+          // When asChild is true, we must render exactly one child
+          // If loading, we display the loading text or nothing (as the parent controls the loading UI)
+          children
+        ) : (
+          // When asChild is false, we can render multiple children
+          <>
+            {loading && (
+              <Spinner
+                size={spinnerSize}
+                label="Loading"
+                className="shrink-0"
+              />
+            )}
+            {loading && loadingText ? loadingText : children}
+          </>
         )}
-        {loading && loadingText ? loadingText : (!loading || !iconOnly) && children}
       </Comp>
     );
   }

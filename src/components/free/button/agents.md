@@ -1,4 +1,10 @@
 # Button Components
+## Important Notes
+- Follow **shadcn/ui** design patterns and conventions closely, call the mcp server for component examples when adding new components and see how they are implemented in shadcn/ui.
+- You should always create a **TODO LIST** by calling the todo list tool whenever you are given a new task to work on. You should update the TODO LIST as you make progress on the task. You will never forget to create or update the TODO LIST and you will not stop until the task and the TODO LIST is complete.
+- After you complete a task involving code changes, you must call the `Dev Runner` subagent using the `agent/runSubagent` tool to run the build and Storybook to verify that everything works correctly. If there are any build or Storybook errors, you must fix them before marking the task as complete.
+- As components are implemented, you must update their status in the `docs/ROADMAP.md` file to reflect current progress.
+- **Inspiration:** Draw from **Google Material Design** and **Tailwind Catalyst** components for guidance on structure, spacing, and visual hierarchy.
 
 A comprehensive button system following Material Design 3 patterns with M3 motion, shape morphing, and consistent styling.
 
@@ -20,10 +26,20 @@ Icon button with toggle state and optional pressed icon.
 Button with primary action and dropdown trigger.
 
 ### ButtonGroup
-Standard container for grouped buttons with configurable gap.
+Container for grouping related buttons with two style variants:
+- **shadcn**: Gap-based grouping following shadcn/ui patterns with separator support
+- **md3**: Material Design 3 style with proper spacing guidelines
+
+### ButtonGroupSeparator
+Visual divider between buttons in a group (shadcn pattern).
+
+### ButtonGroupText
+Text element within a button group for labels (shadcn pattern).
 
 ### ConnectedButtonGroup
-Segmented buttons with merged borders and single/multi-select.
+Segmented buttons with merged borders and single/multi-select. Supports two style variants:
+- **shadcn**: Clean dividers between items, subtle state changes
+- **md3**: Material Design 3 with shape morphing on selection
 
 ## Props
 
@@ -101,6 +117,15 @@ interface SplitButtonProps {
 interface ButtonGroupProps {
   gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg';
   orientation?: 'horizontal' | 'vertical';
+  styleVariant?: 'shadcn' | 'md3';  // Style variant (default: 'shadcn')
+}
+
+interface ButtonGroupSeparatorProps {
+  orientation?: 'horizontal' | 'vertical';  // Inferred from parent if inside ButtonGroup
+}
+
+interface ButtonGroupTextProps {
+  asChild?: boolean;  // Render as child element (useful for Label)
 }
 ```
 
@@ -109,9 +134,11 @@ interface ButtonGroupProps {
 interface ConnectedButtonGroupProps {
   colorStyle?: 'filled' | 'tonal' | 'outlined';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  styleVariant?: 'shadcn' | 'md3';        // Style variant (default: 'shadcn')
+  defaultShape?: 'round' | 'square';      // For MD3: container shape (default: 'round')
   selectionMode?: 'single' | 'multiple';
-  value?: string | string[];         // Controlled selection
-  defaultValue?: string | string[];  // Uncontrolled default
+  value?: string | string[];              // Controlled selection
+  defaultValue?: string | string[];       // Uncontrolled default
   onValueChange?: (value: string | string[]) => void;
 }
 
@@ -166,6 +193,27 @@ interface ConnectedButtonGroupItemProps {
 | `round` | `rounded-full` | `rounded-lg` |
 | `rect` | `rounded-md` | `rounded-lg` |
 
+### ButtonGroup Style Variants
+| Feature | Shadcn Style | MD3 Style |
+|---------|--------------|-----------|
+| **Spacing** | Configurable gap | Fixed 8dp gap (2rem) |
+| **Separator** | ButtonGroupSeparator | Not needed |
+| **Text Labels** | ButtonGroupText | Not supported |
+| **Best For** | General purpose UI | Material Design apps |
+
+### ConnectedButtonGroup Style Variants
+| Feature | Shadcn Style | MD3 Style |
+|---------|--------------|-----------|
+| **Spacing** | Border-based dividers | 2dp (0.5rem) gap |
+| **Selection Visual** | Background change | Background + shape morph |
+| **Shape Options** | Fixed radius | Round or Square |
+| **Shape Morphing** | None | Selected items change shape |
+
+### MD3 Shape Morphing (ConnectedButtonGroup)
+When using `styleVariant="md3"`:
+- **Round shape** (`defaultShape="round"`): Outer corners are fully rounded (pill). Selected items morph to square corners.
+- **Square shape** (`defaultShape="square"`): Outer corners use standard radius. Selected items morph to fully rounded.
+
 ## Maintenance Notes
 
 ### Accessibility
@@ -194,3 +242,5 @@ interface ConnectedButtonGroupItemProps {
 --radius, --radius-sm, --radius-md, --radius-lg, --radius-xl
 --surface-container-low, --surface-container
 ```
+
+

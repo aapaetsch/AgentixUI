@@ -46,9 +46,9 @@ const iconButtonVariants = cva(
           "active:bg-secondary/60 active:brightness-95",
         ].join(" "),
         outlined: [
-          "border border-border bg-transparent text-foreground",
+          "border-2 border-border bg-transparent text-foreground",
           // Hover: visible background fill
-          "hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground/20",
+          "hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground/30",
           // Active: darker state
           "active:bg-accent/80",
         ].join(" "),
@@ -113,8 +113,9 @@ const iconButtonVariants = cva(
       { width: "wide", size: "md", className: "w-[3rem]" },
       { width: "wide", size: "lg", className: "w-[3.5rem]" },
       { width: "wide", size: "xl", className: "w-[4rem]" },
-      // Shape morph on active
-      { shape: "round", className: "active:rounded-[var(--radius-xl)]" },
+      // Shape morph on active (MD3: round→square, square→round)
+      { shape: "round", className: "active:rounded-[var(--radius)]" },
+      { shape: "square", className: "active:rounded-full" },
     ],
     defaultVariants: {
       colorStyle: "standard",
