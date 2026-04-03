@@ -7,6 +7,9 @@ import { X, Check } from "lucide-react";
 
 import { cn } from "../../../lib/utils";
 
+type ChipVariant = "assist" | "filter" | "input" | "suggestion";
+type ChipColor = "default" | "primary" | "secondary" | "success" | "warning" | "destructive";
+
 // ============================================================================
 // CVA Variants
 // ============================================================================
@@ -100,6 +103,18 @@ const chipVariants = cva(
         ].join(" "),
       },
       /**
+       * Semantic color treatment for chips.
+       * Colors use subtle surfaces by default and stronger fills when selected.
+       */
+      color: {
+        default: "",
+        primary: "",
+        secondary: "",
+        success: "",
+        warning: "",
+        destructive: "",
+      },
+      /**
        * Whether the chip is elevated (has shadow)
        * Only applies to assist and suggestion chips per MD3
        */
@@ -133,9 +148,80 @@ const chipVariants = cva(
         elevated: true,
         className: "border-outline-variant bg-transparent shadow-none hover:shadow-none",
       },
+      {
+        variant: ["assist", "suggestion"],
+        color: "primary",
+        className: "border-primary/30 bg-primary/10 text-primary hover:bg-primary/15 active:bg-primary/20",
+      },
+      {
+        variant: ["assist", "suggestion"],
+        color: "secondary",
+        className: "border-secondary/40 bg-secondary/50 text-secondary-foreground hover:bg-secondary/70 active:bg-secondary/80",
+      },
+      {
+        variant: ["assist", "suggestion"],
+        color: "success",
+        className: "border-green-600/30 bg-green-600/10 text-green-700 hover:bg-green-600/15 active:bg-green-600/20 dark:text-green-400",
+      },
+      {
+        variant: ["assist", "suggestion"],
+        color: "warning",
+        className: "border-amber-500/40 bg-amber-500/15 text-amber-800 hover:bg-amber-500/20 active:bg-amber-500/25 dark:text-amber-300",
+      },
+      {
+        variant: ["assist", "suggestion"],
+        color: "destructive",
+        className: "border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/15 active:bg-destructive/20",
+      },
+      {
+        variant: ["filter", "input"],
+        color: "primary",
+        className: [
+          "border-primary/30 bg-primary/5 text-primary hover:bg-primary/10 active:bg-primary/15",
+          "data-[selected=true]:border-primary/20 data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground",
+          "data-[selected=true]:hover:bg-primary/90",
+        ].join(" "),
+      },
+      {
+        variant: ["filter", "input"],
+        color: "secondary",
+        className: [
+          "border-secondary/40 bg-secondary/20 text-secondary-foreground hover:bg-secondary/35 active:bg-secondary/45",
+          "data-[selected=true]:border-secondary/20 data-[selected=true]:bg-secondary data-[selected=true]:text-secondary-foreground",
+          "data-[selected=true]:hover:bg-secondary/90",
+        ].join(" "),
+      },
+      {
+        variant: ["filter", "input"],
+        color: "success",
+        className: [
+          "border-green-600/30 bg-green-600/5 text-green-700 hover:bg-green-600/10 active:bg-green-600/15 dark:text-green-400",
+          "data-[selected=true]:border-green-600/20 data-[selected=true]:bg-green-600 data-[selected=true]:text-white",
+          "data-[selected=true]:hover:bg-green-600/90",
+        ].join(" "),
+      },
+      {
+        variant: ["filter", "input"],
+        color: "warning",
+        className: [
+          "border-amber-500/40 bg-amber-500/10 text-amber-800 hover:bg-amber-500/15 active:bg-amber-500/20 dark:text-amber-300",
+          "data-[selected=true]:border-amber-500/20 data-[selected=true]:bg-amber-500 data-[selected=true]:text-black",
+          "data-[selected=true]:hover:bg-amber-500/90",
+        ].join(" "),
+      },
+      {
+        variant: ["filter", "input"],
+        color: "destructive",
+        className: [
+          "border-destructive/30 bg-destructive/5 text-destructive hover:bg-destructive/10 active:bg-destructive/15",
+          "data-[selected=true]:border-destructive/20 data-[selected=true]:bg-destructive data-[selected=true]:text-white",
+          "data-[selected=true]:hover:bg-destructive/90",
+        ].join(" "),
+      },
     ],
     defaultVariants: {
       variant: "assist",
+      color: "default",
       elevated: false,
       size: "md",
     },
@@ -207,7 +293,7 @@ const chipDismissVariants = cva(
 // ============================================================================
 
 export interface ChipProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange">,
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange" | "color">,
     VariantProps<typeof chipVariants> {
   /**
    * When true, the chip will render as its child element (polymorphic)
@@ -308,6 +394,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
     {
       className,
       variant = "assist",
+      color = "default",
       elevated = false,
       size = "md",
       asChild = false,
@@ -373,7 +460,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
         data-selected={selected}
         data-slot="chip"
         className={cn(
-          chipVariants({ variant, elevated, size }),
+          chipVariants({ variant, color, elevated, size }),
           paddingClasses,
           className
         )}
@@ -531,3 +618,5 @@ export {
   chipDismissVariants,
   chipGroupVariants,
 };
+
+export type { ChipColor, ChipVariant };

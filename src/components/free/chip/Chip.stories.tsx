@@ -76,6 +76,11 @@ const meta: Meta<typeof Chip> = {
       options: ["assist", "filter", "input", "suggestion"],
       description: "The type of chip",
     },
+    color: {
+      control: "select",
+      options: ["default", "primary", "secondary", "success", "warning", "destructive"],
+      description: "Semantic color treatment for the chip",
+    },
     size: {
       control: "select",
       options: ["sm", "md", "lg"],
@@ -121,6 +126,19 @@ export const AllVariants: Story = {
       <Chip variant="filter">Filter</Chip>
       <Chip variant="input">Input</Chip>
       <Chip variant="suggestion">Suggestion</Chip>
+    </div>
+  ),
+};
+
+export const SemanticColors: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-center gap-4">
+      <Chip variant="input" color="default">Default</Chip>
+      <Chip variant="input" color="primary">Primary</Chip>
+      <Chip variant="input" color="secondary">Secondary</Chip>
+      <Chip variant="input" color="success">Success</Chip>
+      <Chip variant="input" color="warning">Warning</Chip>
+      <Chip variant="input" color="destructive">Destructive</Chip>
     </div>
   ),
 };
