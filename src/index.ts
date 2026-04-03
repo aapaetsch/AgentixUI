@@ -681,6 +681,65 @@ export type {
 } from "./components/free/context-menu";
 
 // -----------------------------------------------------------------------------
+// Dropdown Menu
+// -----------------------------------------------------------------------------
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuPortal,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuGroup,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuShortcut,
+  dropdownMenuContentVariants,
+  dropdownMenuItemVariants,
+  dropdownMenuLabelVariants,
+  dropdownMenuSeparatorVariants,
+  dropdownMenuShortcutVariants,
+  dropdownMenuSubTriggerVariants,
+} from "./components/free/dropdown-menu";
+export type {
+  DropdownMenuProps,
+  DropdownMenuTriggerProps,
+  DropdownMenuPortalProps,
+  DropdownMenuContentProps,
+  DropdownMenuItemProps,
+  DropdownMenuCheckboxItemProps,
+  DropdownMenuRadioGroupProps,
+  DropdownMenuRadioItemProps,
+  DropdownMenuLabelProps,
+  DropdownMenuSeparatorProps,
+  DropdownMenuGroupProps,
+  DropdownMenuSubProps,
+  DropdownMenuSubTriggerProps,
+  DropdownMenuSubContentProps,
+  DropdownMenuShortcutProps,
+} from "./components/free/dropdown-menu";
+
+// -----------------------------------------------------------------------------
+// Table
+// -----------------------------------------------------------------------------
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from "./components/free/table";
+export type { TableProps } from "./components/free/table";
+
+// -----------------------------------------------------------------------------
 // Navigation (Navbar, Navrail, Navdrawer)
 // -----------------------------------------------------------------------------
 export {
@@ -1206,6 +1265,24 @@ export type {
   MultiSelectGroupProps,
   MultiSelectItemProps,
 } from "./components/premium/multi-select";
+
+// -----------------------------------------------------------------------------
+// DataTable
+// -----------------------------------------------------------------------------
+export {
+  DataTable,
+  DataTableColumnHeader,
+  DataTableToolbar,
+  DataTablePagination,
+  DataTableRowActions,
+  dataTableSurfaceVariants,
+} from "./components/premium/data-table";
+export type {
+  DataTableProps,
+  DataTableRowAction,
+  DataTableSize,
+  DataTableVariant,
+} from "./components/premium/data-table";
 
 // -----------------------------------------------------------------------------
 // ScrollArea

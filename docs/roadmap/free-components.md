@@ -37,10 +37,12 @@
 | **Dialog / Modal** | ✅ Complete | Modal with sizes, close button, overlay | Radix Dialog |
 | **Popover** | ✅ Complete | Click-triggered floating content | Radix Popover |
 | **Context Menu** | ✅ Complete | Right-click action menu with submenus, checkboxes, radios | Radix ContextMenu |
+| **Dropdown Menu** | ✅ Complete | Action menu with submenus, checkboxes, radios, and shortcut slots | Radix Dropdown Menu |
 | **Tooltip** | ✅ Complete | Hover/focus information popover | Radix Tooltip |
 | **HoverCard** | ✅ Complete | `HoverCard`, `HoverCardTrigger`, `HoverCardContent`, `HoverCardArrow`, `HoverCardClose` with size variants (xs-xl), hover/click trigger modes, touch detection, scrollable content | Rich content preview on hover |
 | **Tabs** | ✅ Complete | Tab navigation with variants | Radix Tabs |
 | **Accordion** | ✅ Complete | `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent` | Content disclosure |
+| **Table** | ✅ Complete | `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableHead`, `TableRow`, `TableCell`, `TableCaption` | Presentational table primitive |
 | **Toast / Notification (basic)** | ✅ Complete | `toast()`, `useToast()`, `ToastProvider`, 5 variants, 6 positions, Avatar/Button integration | Store pattern with imperative API |
 | **Slider (basic)** | ✅ Complete | `Slider` with xs/sm/md sizes, bar handle, press animation, gap styling, range support | Basic slider with free tier; advanced features (lg/xl sizes, circular/knobless handles, value/stop indicators, inset icons) in Premium |
 | **Breadcrumb** | ✅ Complete | `Breadcrumb`, `BreadcrumbList`, `BreadcrumbItem`, `BreadcrumbLink`, `BreadcrumbPage`, `BreadcrumbSeparator`, `BreadcrumbEllipsis`, `ResponsiveBreadcrumb`, `useResponsiveBreadcrumb` | Path/hierarchy navigation with custom separators and responsive collapsing |

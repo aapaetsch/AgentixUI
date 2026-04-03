@@ -17,16 +17,15 @@
 | **Date Picker** | ✅ Complete | `DatePicker`, `Calendar`, `YearSelector`, `Presets` | Single/range/multiple date selection, min/max constraints, disabled dates, presets, keyboard navigation, date-fns + react-day-picker |
 | **Time Picker** | ✅ Complete | `TimePicker`, `InlineTimePicker` | 12h/24h format, scrollable hour/minute/second selectors, minute steps, AM/PM toggle |
 | **Date Time Picker** | ✅ Complete | `DateTimePicker` | Combined date+time selection, tabs/side-by-side layouts, integrates DatePicker + TimePicker |
-| **Multi-Select** | ✅ Complete | `MultiSelect`, `MultiSelectGroup`, `MultiSelectItem`, `MultiSelectSeparator` | Virtualized multi-select with tags, infinite scroll, search filtering, grouped/nested options |
+| **Multi-Select** | ✅ Complete | `MultiSelect`, `MultiSelectGroup`, `MultiSelectItem`, `MultiSelectSeparator` | Virtualized multi-select with configurable chip variants/colors, infinite scroll, search filtering, grouped/nested options |
+| **Data Table** | ✅ Complete | `DataTable`, `DataTableColumnHeader`, `DataTableToolbar`, `DataTablePagination`, `DataTableRowActions` | Sortable, filterable, paginated, selectable table with virtualization powered by TanStack Table |
 | **Scroll Area** | ✅ Complete | `ScrollArea`, `ScrollAreaViewport`, `ScrollBar` | Custom scrollbar container with infinite scroll (auto/manual modes), RTL support, size variants | Radix Scroll Area |
 
 ### Planned
 
 | Component | Priority | Description | Dependencies |
 |-----------|----------|-------------|--------------|
-| **Data Table** | 🔴 High | Sortable, filterable, paginated table with virtualization | TanStack Table |
 | **Command Palette** | 🟢 Low | Searchable command menu (⌘K) for power users | cmdk |
-| **Dropdown Menu** | 🟡 Medium | Dropdown/action menus with complex variants | Radix Dropdown Menu |
 | **Progress (advanced)** | 🟡 Medium | Complex/segmented determinate progress | - |
 | **Collapsible** | 🟢 Low | Expandable section | Radix Collapsible |
 | **Toggle Group** | 🟢 Low | Single/multi toggle selection | Radix Toggle Group |

@@ -16,6 +16,7 @@
 - [x] Chip
 - [x] Container
 - [x] Context Menu
+- [x] Dropdown Menu
 - [x] Dialog
 - [x] Flex
 - [x] Grid
@@ -35,6 +36,7 @@
 - [x] Spinner
 - [x] Stepper (basic)
 - [x] Switch
+- [x] Table
 - [x] Tabs
 - [x] Textarea
 - [x] Toast (basic)
@@ -45,6 +47,7 @@
 - [x] ComboBox
 - [x] Date Picker
 - [x] DateTime Picker
+- [x] Data Table
 - [x] FAB (Floating Action Button)
 - [x] Multi-Select
 - [x] Navigation Submenus
@@ -61,9 +64,6 @@
 - [ ] Typography (Headings, paragraphs, prose styling)
 
 ### Premium Components (Planned)
-- [ ] Data Table (High priority)
-- [ ] Dropdown Menu (Medium priority)
-- [ ] Hover Card (Medium priority)
 - [ ] Progress (advanced)
 - [ ] Command Palette (Low priority)
 - [ ] Collapsible (Low priority)

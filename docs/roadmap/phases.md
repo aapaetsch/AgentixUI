@@ -26,11 +26,13 @@
 - [x] Dialog / Modal (complete)
 - [x] Popover (complete)
 - [x] Tooltip (complete)
+- [x] Dropdown Menu (complete)
 - [x] Tabs (complete)
 - [x] Sheet / Drawer (complete)
 - [x] Separator (complete)
 - [x] Skeleton (complete)
 - [x] Context Menu (complete)
+- [x] Table (complete)
 
 ## Phase 3: Free Tier Extended Components
 **Goal:** Complete additional free tier components
@@ -68,7 +70,7 @@
 
 - [x] Carousel (complete)
 - [x] Multi-Select (complete)
-- [ ] Data Table (planned)
+- [x] Data Table (complete)
 - [ ] Command Palette (low priority - planned)
 
 ## Phase 7: Enterprise Templates

@@ -18,8 +18,8 @@ This overview contains the high-level roadmap context and summary metrics. For d
 
 | Tier | Implemented | Planned | Total |
 |------|-------------|---------|-------|
-| **Free** | 36 | 1 (Typography) | 37 |
-| **Premium** | 13 | 14 | 27 |
+| **Free** | 38 | 1 (Typography) | 39 |
+| **Premium** | 14 | 11 | 25 |
 | **Enterprise** | 0 | 4 | 4 |
 
 ---
