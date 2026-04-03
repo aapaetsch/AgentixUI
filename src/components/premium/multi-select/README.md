@@ -14,6 +14,7 @@ A premium multi-selection component that enables users to select multiple items 
 - ✅ **Full accessibility** compliance (ARIA, screen readers)
 - ✅ **Size variants** (xs, sm, md, lg, xl)
 - ✅ **Visual variants** (default, outlined, filled)
+- ✅ **Custom chip styling** with configurable variants and semantic colors
 - ✅ **Custom renderers** for complex option layouts
 - ✅ **Form integration** with hidden input for submission
 
@@ -175,6 +176,17 @@ const customRenderer = (option: MultiSelectOption, isSelected: boolean) => (
 />
 ```
 
+### Custom Chip Styling
+
+```tsx
+<MultiSelect
+  options={fruitOptions}
+  defaultValue={["apple", "banana"]}
+  chipVariant="suggestion"
+  chipColor="success"
+/>
+```
+
 ### Form Integration
 
 ```tsx
@@ -240,6 +252,8 @@ const customRenderer = (option: MultiSelectOption, isSelected: boolean) => (
 | `selectAllLabel`    | `string`                                                | `"Select all"`| Label for select all                 |
 | `showSelectedIcon`  | `boolean`                                               | `true`        | Show checkmark for selected items    |
 | `maxVisibleTags`    | `number`                                                | `10`          | Max tags before showing count        |
+| `chipVariant`       | `"assist" \| "filter" \| "input" \| "suggestion"` | `"input"` | Variant used for selected chips in the trigger |
+| `chipColor`         | `"default" \| "primary" \| "secondary" \| "success" \| "warning" \| "destructive"` | `"default"` | Semantic color for selected chips in the trigger |
 | `filterOption`      | `(option, search) => boolean`                           | Default       | Custom filter function               |
 | `isLoading`         | `boolean`                                               | `false`       | Loading state                        |
 | `loadMore`          | `() => Promise<void>`                                   | -             | Infinite scroll callback             |

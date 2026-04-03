@@ -42,6 +42,8 @@ A premium multi-selection component that enables users to select multiple items 
 | `selectAllLabel`    | `string`                                            | `"Select all"` | Label for select all checkbox                    |
 | `showSelectedIcon`  | `boolean`                                           | `true`         | Whether to show checkmark icon for selected items|
 | `maxVisibleTags`    | `number`                                            | `10`           | Maximum number of visible tags before count      |
+| `chipVariant`       | `"assist" \| "filter" \| "input" \| "suggestion"` | `"input"` | Chip variant used for selected values in the trigger |
+| `chipColor`         | `"default" \| "primary" \| "secondary" \| "success" \| "warning" \| "destructive"` | `"default"` | Semantic chip color for selected values in the trigger |
 | `filterOption`      | `(option: MultiSelectOption<T>, search: string) => boolean` | Default filter | Custom filter function                  |
 | `isLoading`         | `boolean`                                           | `false`        | Whether data is loading                          |
 | `loadMore`          | `() => Promise<void>`                               | `undefined`    | Callback to load more items (infinite scroll)    |
@@ -76,7 +78,7 @@ A premium multi-selection component that enables users to select multiple items 
 ### Key Styling Patterns
 
 1. **Trigger**: Uses border-2 for emphasis, rounded-[var(--radius)] for consistency
-2. **Tags**: Uses existing Chip component with `variant="input"` for dismissible tags
+2. **Tags**: Uses existing Chip component with configurable `chipVariant` and `chipColor` props for dismissible selected tags
 3. **Dropdown**: Shadow-lg elevation, backdrop-blur-sm for glassmorphism effect
 4. **Items**: Hover state uses bg-accent/50, selected uses bg-primary/10
 

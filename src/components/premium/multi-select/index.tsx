@@ -7,7 +7,7 @@ import { Check, ChevronDown, X, Search } from "lucide-react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
 import { cn } from "../../../lib/utils";
-import { Chip } from "../../free/chip";
+import { Chip, type ChipColor, type ChipVariant } from "../../free/chip";
 import { Checkbox } from "../../free/checkbox";
 import { Spinner } from "../../free/spinner";
 
@@ -282,6 +282,10 @@ interface MultiSelectProps<T = string>
   showSelectedIcon?: boolean;
   /** Maximum number of visible tags before showing count */
   maxVisibleTags?: number;
+  /** Visual variant used for selected chips rendered in the trigger */
+  chipVariant?: ChipVariant;
+  /** Semantic color used for selected chips rendered in the trigger */
+  chipColor?: ChipColor;
   /** Custom filter function */
   filterOption?: (option: MultiSelectOption<T>, search: string) => boolean;
   /** Whether data is loading */
@@ -373,6 +377,8 @@ function MultiSelectRoot<T = string>(
     selectAllLabel = "Select all",
     showSelectedIcon = true,
     maxVisibleTags = 10,
+    chipVariant = "input",
+    chipColor = "default",
     filterOption,
     isLoading = false,
     loadMore,
@@ -757,7 +763,8 @@ function MultiSelectRoot<T = string>(
                   selectedOptions.map((option) => (
                     <Chip
                       key={String(option.value)}
-                      variant="input"
+                      variant={chipVariant}
+                      color={chipColor}
                       size="sm"
                       dismissible
                       onDismiss={() => toggleOption(option.value)}
@@ -772,7 +779,8 @@ function MultiSelectRoot<T = string>(
                     {selectedOptions.slice(0, maxVisibleTags).map((option) => (
                       <Chip
                         key={String(option.value)}
-                        variant="input"
+                        variant={chipVariant}
+                        color={chipColor}
                         size="sm"
                         dismissible
                         onDismiss={() => toggleOption(option.value)}

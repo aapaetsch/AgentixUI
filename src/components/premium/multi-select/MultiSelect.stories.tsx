@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Apple, Banana, Cherry, Grape, Lemon, Users, Building, MapPin, Star } from "lucide-react";
+import { Apple, Banana, Cherry, Grape, Users, Building, MapPin, Star } from "lucide-react";
 
 import { MultiSelect, type MultiSelectOption } from ".";
 
@@ -48,6 +48,16 @@ const meta: Meta<typeof MultiSelect> = {
       control: "number",
       description: "Maximum number of visible tags before showing count",
     },
+    chipVariant: {
+      control: "select",
+      options: ["assist", "filter", "input", "suggestion"],
+      description: "Chip variant used for selected values in the trigger",
+    },
+    chipColor: {
+      control: "select",
+      options: ["default", "primary", "secondary", "success", "warning", "destructive"],
+      description: "Semantic chip color used for selected values in the trigger",
+    },
   },
   decorators: [
     (Story) => (
@@ -70,7 +80,7 @@ const fruitOptions: MultiSelectOption[] = [
   { value: "banana", label: "Banana", icon: <Banana className="size-4" /> },
   { value: "cherry", label: "Cherry", icon: <Cherry className="size-4" /> },
   { value: "grape", label: "Grape", icon: <Grape className="size-4" /> },
-  { value: "lemon", label: "Lemon", icon: <Lemon className="size-4" /> },
+  { value: "lemon", label: "Lemon", icon: <Star className="size-4" /> },
   { value: "orange", label: "Orange" },
   { value: "peach", label: "Peach" },
   { value: "pear", label: "Pear" },
@@ -240,6 +250,44 @@ export const Variants: Story = {
           options={fruitOptions.slice(0, 5)}
           placeholder={`Variant: ${variant}`}
           defaultValue={["apple"]}
+        />
+      ))}
+    </div>
+  ),
+};
+
+/**
+ * Chip variant styles for selected values
+ */
+export const ChipVariants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      {(["assist", "filter", "input", "suggestion"] as const).map((chipVariant) => (
+        <MultiSelect
+          key={chipVariant}
+          options={fruitOptions.slice(0, 5)}
+          defaultValue={["apple", "banana"]}
+          placeholder={`Chip variant: ${chipVariant}`}
+          chipVariant={chipVariant}
+        />
+      ))}
+    </div>
+  ),
+};
+
+/**
+ * Semantic chip colors for selected values
+ */
+export const ChipColors: Story = {
+  render: () => (
+    <div className="space-y-4">
+      {(["default", "primary", "secondary", "success", "warning", "destructive"] as const).map((chipColor) => (
+        <MultiSelect
+          key={chipColor}
+          options={fruitOptions.slice(0, 5)}
+          defaultValue={["apple", "banana"]}
+          placeholder={`Chip color: ${chipColor}`}
+          chipColor={chipColor}
         />
       ))}
     </div>
