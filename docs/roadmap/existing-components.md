@@ -2,7 +2,7 @@
 
 ## Existing Components
 
-### Free Components
+### Core Components
 - [x] Accordion
 - [x] Alert
 - [x] Alert Dialog
@@ -42,7 +42,7 @@
 - [x] Toast (basic)
 - [x] Tooltip
 
-### Premium Components
+### Advanced Components
 - [x] Carousel
 - [x] ComboBox
 - [x] Date Picker
@@ -60,10 +60,10 @@
 
 ## Not Yet Implemented Components
 
-### Free Components
+### Planned Core Components
 - [ ] Typography (Headings, paragraphs, prose styling)
 
-### Premium Components (Planned)
+### Planned Advanced Components
 - [ ] Progress (advanced)
 - [ ] Command Palette (Low priority)
 - [ ] Collapsible (Low priority)

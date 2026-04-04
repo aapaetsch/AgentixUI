@@ -20,10 +20,10 @@ A premium multi-selection component that enables users to select multiple items 
 
 ## Installation
 
-The component is part of the `@aidan/ui` package:
+The component is part of the `@agentix/ui` package:
 
 ```tsx
-import { MultiSelect, type MultiSelectOption } from "@aidan/ui";
+import { MultiSelect, type MultiSelectOption } from "@agentix/ui";
 ```
 
 ## Basic Usage

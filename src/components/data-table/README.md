@@ -1,6 +1,6 @@
 # DataTable
 
-A premium data table built on TanStack Table and the existing `@aidan/ui` primitives. It provides sorting, filtering, pagination, row selection, column visibility toggles, row actions, and optional virtualization for larger datasets.
+A premium data table built on TanStack Table and the existing `@agentix/ui` primitives. It provides sorting, filtering, pagination, row selection, column visibility toggles, row actions, and optional virtualization for larger datasets.
 
 ## Features
 
@@ -17,7 +17,7 @@ A premium data table built on TanStack Table and the existing `@aidan/ui` primit
 
 ```tsx
 import type { ColumnDef } from "@tanstack/react-table";
-import { DataTable, DataTableColumnHeader } from "@aidan/ui";
+import { DataTable, DataTableColumnHeader } from "@agentix/ui";
 
 type User = {
   id: string;

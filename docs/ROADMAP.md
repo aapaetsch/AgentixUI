@@ -1,4 +1,4 @@
-# @aidan/ui Component Library Roadmap
+# @agentix/ui Component Library Roadmap
 
 This file is an index to the roadmap subfiles. Open any referenced file below to view that section in full — for LLM use, fetch only the subfile(s) you need.
 

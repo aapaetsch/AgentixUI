@@ -5,10 +5,10 @@ TL;DR — Establish a consistent typographic system (scale, tokens, utilities) a
 ### Steps
 1. Audit existing typography folders and conventions referenced in `src/components` and `src/globals.css`.
 2. Define token set and add to `tailwind.config.js` (`fontSize`, `lineHeight`, `letterSpacing`, `fontFamily`) and document in `src/globals.css` where helpful.
-3. Implement `Text` at [src/components/free/text/index.tsx](src/components/free/text/index.tsx) with CVA variants: `size`, `weight`, `variant` (default, muted, lead), and `as` polymorphic prop.
-4. Implement `Heading` at [src/components/free/heading/index.tsx](src/components/free/heading/index.tsx) with `level` prop (h1..h6) and responsive size mapping.
+3. Implement `Text` at [src/components/text/index.tsx](src/components/text/index.tsx) with CVA variants: `size`, `weight`, `variant` (default, muted, lead), and `as` polymorphic prop.
+4. Implement `Heading` at [src/components/heading/index.tsx](src/components/heading/index.tsx) with `level` prop (h1..h6) and responsive size mapping.
 5. Create semantic wrappers: `Lead`, `Muted`, `Small`, `Large` in their respective folders wrapping `Text` with sensible defaults and docs.
-6. Implement `Prose` at [src/components/free/prose/index.tsx](src/components/free/prose/index.tsx) to handle long-form content using Tailwind `prose` utilities or a lightweight custom style.
+6. Implement `Prose` at [src/components/prose/index.tsx](src/components/prose/index.tsx) to handle long-form content using Tailwind `prose` utilities or a lightweight custom style.
 7. Add Storybook stories for each component (`*.stories.tsx`) showing variants, responsive behavior, and accessibility notes.
 8. Export components from `src/index.ts` and update any named exports used by other components.
 9. Add `README.md` and `agents.md` to each component folder describing props, dependencies, styling decisions, and maintenance notes.
@@ -63,7 +63,7 @@ TL;DR — Establish a consistent typographic system (scale, tokens, utilities) a
 - Run `npm run build` and Storybook dev (`npm run storybook`) locally as part of the Dev Runner workflow.
 
 ### Roadmap & Deliverables
-- Deliver component files in `src/components/free/[name]/` following project conventions.
+- Deliver component files in `src/components/[name]/` following project conventions.
 - Add `README.md` and `agents.md` for each component folder.
 - Update `docs/ROADMAP.md` to reflect completion.
 

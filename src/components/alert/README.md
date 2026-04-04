@@ -4,16 +4,16 @@ A non-modal notification element for displaying informational messages inline wi
 
 ## Installation
 
-The Alert component is part of the `@aidan/ui` package. No additional dependencies are required.
+The Alert component is part of the `@agentix/ui` package. No additional dependencies are required.
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription } from "@aidan/ui";
+import { Alert, AlertTitle, AlertDescription } from "@agentix/ui";
 ```
 
 ### Basic Alert
@@ -105,8 +105,8 @@ import { Terminal } from "lucide-react";
 ### With Action Buttons
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription, AlertAction } from "@aidan/ui";
-import { Button } from "@aidan/ui";
+import { Alert, AlertTitle, AlertDescription, AlertAction } from "@agentix/ui";
+import { Button } from "@agentix/ui";
 
 <Alert variant="warning">
   <AlertTitle>Unsaved Changes</AlertTitle>

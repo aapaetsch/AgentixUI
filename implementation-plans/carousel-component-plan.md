@@ -46,7 +46,7 @@ shadcn/ui uses `embla-carousel-react` as the foundation, providing:
 ### File Structure
 
 ```
-src/components/premium/carousel/
+src/components/carousel/
 ├── index.tsx              # Main component exports
 ├── Carousel.stories.tsx   # Storybook stories
 ├── agents.md              # AI agent context
@@ -663,7 +663,7 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-} from "@aidan/ui";
+} from "@agentix/ui";
 
 function BasicCarousel() {
   return (

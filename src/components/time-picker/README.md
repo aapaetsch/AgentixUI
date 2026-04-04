@@ -4,7 +4,7 @@ A time selection component with scrollable hour, minute, and second selectors, s
 
 ## Installation
 
-The TimePicker is part of the `@aidan/ui` package. Ensure you have the required dependencies:
+The TimePicker is part of the `@agentix/ui` package. Ensure you have the required dependencies:
 
 ```bash
 npm install date-fns
@@ -15,7 +15,7 @@ npm install date-fns
 ### Basic Usage
 
 ```tsx
-import { TimePicker, TimeValue } from "@aidan/ui";
+import { TimePicker, TimeValue } from "@agentix/ui";
 import { useState } from "react";
 
 function MyComponent() {
@@ -59,7 +59,7 @@ function MyComponent() {
 Use `InlineTimePicker` when you want the time selector embedded without a popover:
 
 ```tsx
-import { InlineTimePicker, TimeValue } from "@aidan/ui";
+import { InlineTimePicker, TimeValue } from "@agentix/ui";
 import { useState } from "react";
 
 function InlineExample() {

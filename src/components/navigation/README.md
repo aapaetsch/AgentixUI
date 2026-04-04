@@ -4,7 +4,7 @@ A comprehensive navigation system for React applications featuring Navbar, Navra
 
 ## Installation
 
-The navigation components are included in the `@aidan/ui` package. Ensure you have the required dependencies:
+The navigation components are included in the `@agentix/ui` package. Ensure you have the required dependencies:
 
 ```bash
 npm install @radix-ui/react-dialog @radix-ui/react-slot lucide-react
@@ -25,7 +25,7 @@ import {
   NavdrawerContent,
   NavItem,
   NavSection,
-} from "@aidan/ui";
+} from "@agentix/ui";
 import { Home, Settings, Users } from "lucide-react";
 
 function App() {
@@ -361,11 +361,9 @@ All components use CSS variables for theming:
 }
 ```
 
-## Premium Components
+## Navigation Submenus
 
-### Premium Navigation with Submenus (Coming Soon)
-
-Enhanced navigation components with submenu support are available in the unified library. These provide:
+Navigation components with submenu support are available in the unified library. These provide:
 
 - Expandable submenu support with smooth animations
 - Custom icons for expand/collapse states
@@ -373,37 +371,38 @@ Enhanced navigation components with submenu support are available in the unified
 - Animated chevron transitions
 - Enhanced styling variants
 
-Navigation submenu components are available from `@aidan/ui`:
+Navigation submenu components are available from `@agentix/ui`:
 
 ```tsx
 import {
-  PremiumNavItemWithSubmenu,
-  PremiumNavSection,
-} from "@aidan/ui";
+  NavItem,
+  NavItemWithSubmenu,
+  NavSection,
+} from "@agentix/ui";
 
 function NavigationWithSubmenus() {
   return (
     <Navrail>
       <NavrailContent>
-        <PremiumNavSection title="Files">
-          <PremiumNavItemWithSubmenu
+        <NavSection title="Files">
+          <NavItemWithSubmenu
             id="documents"
             label="Documents"
             icon={<Folder />}
             animated
           >
-            <PremiumNavItem
+            <NavItem
               id="reports"
               label="Reports"
               icon={<FileText />}
             />
-            <PremiumNavItem
+            <NavItem
               id="contracts"
               label="Contracts"
               icon={<FileText />}
             />
-          </PremiumNavItemWithSubmenu>
-        </PremiumNavSection>
+          </NavItemWithSubmenu>
+        </NavSection>
       </NavrailContent>
     </Navrail>
   );
@@ -422,6 +421,6 @@ import type {
   NavdrawerProps,
   NavItemProps,
   NavSectionProps,
-} from "@aidan/ui";
+} from "@agentix/ui";
 ```
 

@@ -13,157 +13,40 @@ A comprehensive navigation system with three core components: Navbar, Navrail, a
 
 ### NavigationProvider
 The root context provider that manages shared navigation state.
+# Navigation Components
 
-```tsx
-interface NavigationContextValue {
-  activeItem: string | undefined;
-  setActiveItem: (id: string) => void;
-  collapsed: boolean;
-  setCollapsed: (collapsed: boolean) => void;
-  mobileOpen: boolean;
-  setMobileOpen: (open: boolean) => void;
-}
-```
+## Title
+Navigation
 
-### Navbar (Horizontal Top Navigation)
-- **Variants:** `default`, `prominent`, `dense`, `centered`, `split`
-- **Sub-components:** `NavbarBrand`, `NavbarContent`, `NavbarActions`
-- **Features:** Sticky positioning, bordered/elevated styling, mobile menu integration
-
-### Navrail (Vertical Sidebar)
-- **Variants:** `standard`, `compact`, `mini`, `floating`, `inset`
-- **Sub-components:** `NavrailHeader`, `NavrailContent`, `NavrailFooter`, `NavrailCollapseButton`
-- **Features:** Collapsible, left/right positioning, responsive visibility (hidden on mobile)
-
-### Navdrawer (Slide-in Panel)
-- **Sizes:** `xs`, `sm`, `md`, `lg`, `xl`, `full`
-- **Anchors:** `left`, `right`
-- **Sub-components:** `NavdrawerContent`, `NavdrawerHeader`, `NavdrawerTitle`, `NavdrawerFooter`, `NavdrawerClose`
-- **Features:** Modal overlay, smooth animations, integrated with NavigationProvider
-
-### Shared Components
-- **NavItem:** Individual navigation item with icon, label, badge support
-- **NavSection:** Grouped navigation items with optional title and collapsible behavior
-- **NavDivider:** Visual separator between sections
-- **NavBadge:** Notification/status badge for nav items
-
-## Premium Components (Coming Soon)
-- **PremiumNavItemWithSubmenu:** Navigation item with expandable submenu support
-- **Enhanced PremiumNavSection:** Section component with submenu capabilities
-
-## Props Summary
-
-### NavigationProvider
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `defaultActiveItem` | `string` | - | Initial active item |
-| `activeItem` | `string` | - | Controlled active item |
-| `onActiveItemChange` | `(id: string) => void` | - | Active item change callback |
-| `defaultCollapsed` | `boolean` | `false` | Initial collapsed state |
-| `collapsed` | `boolean` | - | Controlled collapsed state |
-| `onCollapsedChange` | `(collapsed: boolean) => void` | - | Collapse change callback |
-| `defaultMobileOpen` | `boolean` | `false` | Initial mobile drawer state |
-| `mobileOpen` | `boolean` | - | Controlled mobile drawer state |
-| `onMobileOpenChange` | `(open: boolean) => void` | - | Mobile open change callback |
-
-### NavItem
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `id` | `string` | **required** | Unique identifier |
-| `label` | `string` | **required** | Display text |
-| `icon` | `ReactNode` | - | Icon element |
-| `href` | `string` | - | Link URL (renders as anchor) |
-| `badge` | `ReactNode` | - | Badge content |
-| `active` | `boolean` | - | Override active state |
-| `collapsed` | `boolean` | - | Override collapsed display |
-| `asChild` | `boolean` | `false` | Use slot pattern |
+## Props
+- `NavigationProvider`: shared controlled or uncontrolled state for `activeItem`, `collapsed`, and `mobileOpen`.
+- `Navbar`, `NavbarBrand`, `NavbarContent`, `NavbarActions`: top navigation shell with variant, sticky, bordered, elevated, and mobile-menu options.
+- `Navrail`, `NavrailHeader`, `NavrailContent`, `NavrailFooter`, `NavrailCollapseButton`: vertical rail primitives with `variant`, `position`, `collapsible`, and collapsed-state support.
+- `Navdrawer`, `NavdrawerTrigger`, `NavdrawerPortal`, `NavdrawerOverlay`, `NavdrawerContent`, `NavdrawerHeader`, `NavdrawerTitle`, `NavdrawerFooter`, `NavdrawerClose`: dialog-backed mobile or temporary drawer primitives with anchor and size variants.
+- `NavItem`, `NavSection`, `NavDivider`, `NavBadge`: layout-level shared navigation primitives exported from `layout.tsx`.
+- `NavGroup`, `NavItem`, `NavItemWithSubmenu`, `NavSection`, and `SubmenuItem`: animated item system exposed through the unified public API.
 
 ## Dependencies
-- `@radix-ui/react-dialog` - For Navdrawer modal behavior
-- `@radix-ui/react-slot` - For asChild pattern
-- `class-variance-authority` - For variant styling
-- `lucide-react` - For icons (Menu, X, ChevronLeft, ChevronRight, PanelLeft, PanelLeftClose)
+- `@radix-ui/react-dialog` for the drawer overlay and content lifecycle.
+- `@radix-ui/react-slot` for `asChild` composition in brand, item, and trigger components.
+- `class-variance-authority` for layout, drawer, rail, section, badge, and premium indicator variants.
+- `lucide-react` for menu, collapse, close, and submenu affordance icons.
+- `src/lib/utils.ts` for `cn()` class merging.
+- Internal reuse of `AnimatedChevron` and `Accordion` inside premium submenu items.
 
 ## Styling Decisions
-
-### CVA Variants
-- **Navbar:** Height variants (64px default, 48px dense, 96px prominent), sticky/bordered/elevated modifiers
-- **Navrail:** Width variants (240px standard, 72px compact, 56px mini), floating style with shadow/border-radius
-- **Navdrawer:** Size variants for width, left/right anchor positioning
-- **NavItem:** Active state with primary color, collapsed state centers icon
-
-### CSS Variables Used
-- `--motion-duration-short/medium/long` - Animation timing
-- `--motion-easing-standard` - Animation easing
-- `--radius` / `--radius-lg` - Border radius
-- `--elevation-2/3/5` - Shadow levels
-- `--border` - Border color
-- `--primary` / `--primary-foreground` - Active state colors
-- `--accent` / `--accent-foreground` - Hover state colors
-- `--muted-foreground` - Secondary text
-
-### Responsive Behavior
-- Navbar shows mobile menu button on `lg:hidden`
-- Navrail hidden on mobile with `hidden md:flex`
-- Navdrawer designed for mobile slide-in navigation
-- Collapsed state available for desktop space optimization
+- The folder is intentionally split into `layout.tsx` and `items.tsx`. `layout.tsx` owns the structural primitives and baseline nav items; `items.tsx` owns animated premium navigation groups and submenu interactions.
+- The root package aliases the premium items as the public `NavGroup`, `NavItem`, `NavItemWithSubmenu`, `NavSection`, and `SubmenuItem` exports in `src/index.ts`. Inside this folder, both the plain layout primitives and premium items still exist separately.
+- Navbar, rail, and drawer all use the same motion and surface tokens so applications can combine them without a visual seam when switching between desktop and mobile navigation patterns.
+- Premium item indicators are calculated from measured element bounds rather than fixed offsets, which is why the item layer tracks registered elements through context.
 
 ## Maintenance Notes
-
-### Known Edge Cases
-1. **Context Optional:** Components can work without `NavigationProvider` using internal state
-2. **Controlled/Uncontrolled:** All state supports both modes
-3. **Link vs Button:** `NavItem` with `href` renders as anchor, otherwise as button
-4. **Accessibility:** ARIA attributes for navigation, current page, expanded state
-
-### Animation Performance
-- Uses `transform` for slide animations (GPU accelerated)
-- `duration-[var(--motion-duration-long)]` for drawer open/close
-- `duration-[var(--motion-duration-short)]` for hover states
-
-### RTL Support
-- Uses `left-0` / `right-0` for positioning (CSS handles RTL)
-- `ChevronLeft` / `ChevronRight` icons may need mirroring for RTL
-
-## Usage Patterns
-
-### Basic Application Layout
-```tsx
-<NavigationProvider defaultActiveItem="home">
-  <Navbar>
-    <NavbarBrand>Logo</NavbarBrand>
-    <NavbarContent>...</NavbarContent>
-    <NavbarActions>...</NavbarActions>
-  </Navbar>
-  <div className="flex">
-    <Navrail>
-      <NavrailHeader>...</NavrailHeader>
-      <NavrailContent>
-        <NavSection>
-          <NavItem id="home" label="Home" icon={<Home />} />
-        </NavSection>
-      </NavrailContent>
-    </Navrail>
-    <main>Content</main>
-  </div>
-  <Navdrawer>
-    <NavdrawerContent>Mobile menu</NavdrawerContent>
-  </Navdrawer>
-</NavigationProvider>
-```
-
-### Mobile-First with Drawer
-```tsx
-<NavigationProvider>
-  <Navbar showMobileMenuButton />
-  <Navdrawer>
-    <NavdrawerContent>
-      <NavSection>
-        <NavItem id="home" label="Home" />
-      </NavSection>
-    </NavdrawerContent>
-  </Navdrawer>
-</NavigationProvider>
-```
+- `useNavigation` throws outside a provider; `useNavigationOptional` does not. Components that must work with or without provider context should use the optional hook pattern already present in the layout primitives.
+- There are two `NavItem` concepts in this folder: the plain layout export from `layout.tsx` and the premium animated export from `items.tsx`. The package root intentionally re-exports the premium version under the public `NavItem` name, so changes here must be mirrored in `src/index.ts` if the public API shifts.
+- Drawer behavior is tied to Radix Dialog semantics. If overlay, focus management, or portal structure changes, retest keyboard navigation, dismissal, and mobile menu flows together.
+- Premium submenu items depend on shared accordion behavior and measured indicator placement. Any change to item padding, border radius, or orientation logic needs Storybook coverage for horizontal groups, vertical groups, and nested submenu cases.
+- **NavBadge:** Notification/status badge for nav items
 
 
+
+## Advanced Navigation Components

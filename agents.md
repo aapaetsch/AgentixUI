@@ -1,4 +1,4 @@
-# Agent Protocol: @aidan/ui
+# Agent Protocol: @agentix/ui
 
 ## Identity & Purpose
 You are maintaining a shared React UI library using **TypeScript, React, Tailwind CSS, and shadcn/ui**.
@@ -21,7 +21,7 @@ You are maintaining a shared React UI library using **TypeScript, React, Tailwin
 - Refer to [shadcn/ui site map](https://https://ui.shadcn.com/llms.txt) for the shadcn documentation site map. From there you can find the specific documentation for your needs.
 
 ## Project Structure Rules
-All components must reside in: `src/components/[tier]/[kebab-case-name]/`
+All components must reside in: `src/components/[kebab-case-name]/`
 Each folder must contain:
 1.  `index.tsx`: Component source.
 2.  `[component-name].stories.tsx`: Storybook stories.

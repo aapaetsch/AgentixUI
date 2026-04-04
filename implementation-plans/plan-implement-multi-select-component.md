@@ -1,10 +1,10 @@
 ## Plan: Multi-Select Component Implementation
 
-Implement a Premium-tier multi-select component that enables users to select multiple items from a dropdown with tag-based display, search filtering with custom filter support, infinite scroll for async loading, virtualization, nested grouping/subgrouping support, and full accessibility compliance. Selected items remain highlighted with optional checkmarks in the dropdown, selection display switches to summary after 10 items, and the component leverages existing patterns (ComboBox, Chip, DatePicker) and `@headlessui/react` primitive following the established project architecture.
+Implement a multi-select component that enables users to select multiple items from a dropdown with tag-based display, search filtering with custom filter support, infinite scroll for async loading, virtualization, nested grouping/subgrouping support, and full accessibility compliance. Selected items remain highlighted with optional checkmarks in the dropdown, selection display switches to summary after 10 items, and the component leverages existing patterns (ComboBox, Chip, DatePicker) and `@headlessui/react` primitive following the established project architecture.
 
 ### Steps
 
-1. Create `src/components/premium/multi-select/` folder structure with `index.tsx`, `MultiSelect.stories.tsx`, `agents.md`, and `README.md`.
+1. Create `src/components/multi-select/` folder structure with `index.tsx`, `MultiSelect.stories.tsx`, `agents.md`, and `README.md`.
 
 2. Define TypeScript interfaces for component props and options, including:
    - `MultiSelectOption<T>`: `value: T`, `label: string`, `disabled?: boolean`, `icon?: React.ReactNode`, `description?: string`, `group?: string`, `subgroup?: string`
@@ -17,7 +17,7 @@ Implement a Premium-tier multi-select component that enables users to select mul
 
 5. Implement `MultiSelectTrigger` as a sub-component with click handling, focus management, keyboard navigation support (ArrowUp/Down: navigate items, Enter/Space: open dropdown, Escape: close dropdown, Tab: move focus, Ctrl+A: select all), and proper ARIA attributes (`aria-expanded`, `aria-haspopup="listbox"`, `aria-multiselectable="true"`, `aria-describedby` for error messages).
 
-6. Build `MultiSelectValue` to render selected items as dismissible tags using the existing `Chip` component from `src/components/free/chip/` with `variant="assist"` or `variant="filter"`, `dismiss` callbacks, and overflow logic:
+6. Build `MultiSelectValue` to render selected items as dismissible tags using the existing `Chip` component from `src/components/chip/` with `variant="assist"` or `variant="filter"`, `dismiss` callbacks, and overflow logic:
    - If selected items ≤ `maxVisibleTags` (default 10): display individual tags
    - If selected items > 10: display first 10 tags + "selected [count] more items" indicator
 
@@ -34,7 +34,7 @@ Implement a Premium-tier multi-select component that enables users to select mul
 
 11. Implement `MultiSelectSeparator` component with `role="separator"` and `aria-orientation="horizontal"` for visual separation between groups or sections, using `border-b border-border my-2`.
 
-12. Create `MultiSelectSelectAll` helper with styled checkbox (using existing `src/components/free/checkbox/`) to toggle all visible items in current search results, updating state and triggering `onValueChange`, displayed only when `showSelectAll={true}` and options exist.
+12. Create `MultiSelectSelectAll` helper with styled checkbox (using existing `src/components/checkbox/`) to toggle all visible items in current search results, updating state and triggering `onValueChange`, displayed only when `showSelectAll={true}` and options exist.
 
 13. Add `MultiSelectClearButton` with `X` icon (lucide `X`, `size={14}`) displayed when `value.length > 0`, positioned within trigger area after tags/summary, clearing all selections when clicked, with `aria-label="Clear all selections"`.
 
@@ -45,7 +45,7 @@ Implement a Premium-tier multi-select component that enables users to select mul
     - Proper scroll position tracking and restoration on re-opens
 
 15. Add infinite scroll support for async loading with `isLoading`, `hasMore`, `loadMore` props:
-    - Loading spinner at bottom using `src/components/free/spinner/` when `isLoading={true}`
+    - Loading spinner at bottom using `src/components/spinner/` when `isLoading={true}`
     - Scroll observer using `IntersectionObserver` or `useEffect` on scroll container to detect when user scrolls near bottom (~100px from bottom)
     - Trigger `loadMore()` when bottom reached and `hasMore={true}` and not already loading
     - "Load more" button fallback if IntersectionObserver not available
@@ -64,7 +64,7 @@ Implement a Premium-tier multi-select component that enables users to select mul
     - Arrow keys: navigate between tags within trigger
     - Maintain selection order: items displayed in order they were selected (not alphabetical)
 
-19. Export all components from `src/components/premium/multi-select/index.tsx`, update `src/index.ts` to export `MultiSelect`, `MultiSelectTrigger`, `MultiSelectValue`, `MultiSelectContent`, `MultiSelectItem`, `MultiSelectGroup`, `MultiSelectLabel`, `MultiSelectSeparator`, `MultiSelectSearchInput`, `MultiSelectSelectAll`, `MultiSelectClearButton`, and update `docs/ROADMAP.md` to change multi-select status from "Planned" to "In Progress" and track completion milestone.
+19. Export all components from `src/components/multi-select/index.tsx`, update `src/index.ts` to export `MultiSelect`, `MultiSelectTrigger`, `MultiSelectValue`, `MultiSelectContent`, `MultiSelectItem`, `MultiSelectGroup`, `MultiSelectLabel`, `MultiSelectSeparator`, `MultiSelectSearchInput`, `MultiSelectSelectAll`, `MultiSelectClearButton`, and update `docs/ROADMAP.md` to track completion milestone.
 
 20. Create comprehensive Storybook stories in `MultiSelect.stories.tsx` covering:
     - All size variants (xs, sm, md, lg, xl)
@@ -206,13 +206,13 @@ Implement a Premium-tier multi-select component that enables users to select mul
 
 3. **Design system tradeoffs**:
    - **Size variant alignment**: Multi-select must align with existing form components (Input, Select, ComboBox) for visual consistency. All use the same size scale (xs, sm, md, lg, xl) with matching heights: 24px, 32px, 40px, 48px, 64px. Using different heights would create jarring form layouts.
-   - **Tag display using Chip component**: Leverages existing `src/components/free/chip/` with `variant="assist"` or `variant="filter"` for consistency. However, chip dismiss behavior may need customization (different padding, smaller dismiss button) to fit within trigger. The tradeoff is consistent styling vs custom dismiss UX.
+  - **Tag display using Chip component**: Leverages existing `src/components/chip/` with `variant="assist"` or `variant="filter"` for consistency. However, chip dismiss behavior may need customization (different padding, smaller dismiss button) to fit within trigger. The tradeoff is consistent styling vs custom dismiss UX.
    - **Visual variants decision**: Three variants (default/flat, outlined, filled) match current component patterns. Default uses transparent background with border, outlined emphasizes border with `border-primary`, filled uses solid background with `bg-muted` or `bg-primary`. Each variant has different hover/focus state mappings using CSS variables (`--primary`, `--muted`, `--accent`).
-   - **Primitive choice tradeoff**: Using `@headlessui/react` (like existing ComboBox) vs `@radix-ui/react-select`. HeadlessUI offers better search/filter support and simpler API for complex multi-select patterns, but Radix has stronger accessibility primitives out-of-the-box. Consistency with ComboBox (HeadlessUI) was chosen for team familiarity and existing patterns in premium tier.
+  - **Primitive choice tradeoff**: Using `@headlessui/react` (like existing ComboBox) vs `@radix-ui/react-select`. HeadlessUI offers better search/filter support and simpler API for complex multi-select patterns, but Radix has stronger accessibility primitives out-of-the-box. Consistency with ComboBox (HeadlessUI) was chosen for team familiarity and existing patterns in advanced components.
    - **Group nesting depth limit**: Support for nested subgroups increases complexity (progressive indentation, keyboard navigation, screen reader announcements). Limit to 3 levels maximum to avoid UX confusion. Beyond 3 levels, users struggle to understand hierarchy visually and via screen reader.
    - **Tag display threshold decision**: 10 items was chosen as the default `maxVisibleTags`. Lower threshold (5) is too restrictive for dashboards where users need to see more selections. Higher threshold (15+) causes performance issues and visual clutter. 10 is a reasonable compromise for most use cases with ability to customize.
    - **Selected item visibility decision**: Selected items remain visible in dropdown with checkmark indicator (when `showSelectedIcon={true}`). Alternative (hiding selected items) was rejected because users need to deselect items easily and see which items are already selected. The tradeoff is longer dropdown lists, but this is acceptable because of the search filter and virtualization.
-   - **Infinite scroll vs "Load more" button**: Infinite scroll provides better UX for power users (less friction) but is more complex to implement (IntersectionObserver, loading state management, scroll position tracking). "Load more" button is simpler but interrupts flow. Infinite scroll was chosen for premium tier complexity expectations.
+  - **Infinite scroll vs "Load more" button**: Infinite scroll provides better UX for power users (less friction) but is more complex to implement (IntersectionObserver, loading state management, scroll position tracking). "Load more" button is simpler but interrupts flow. Infinite scroll was chosen because the component targets advanced, data-heavy use cases.
 
 ### Required Clarifications (one round only)
 

@@ -1,4 +1,4 @@
-# Premium Stepper
+# Stepper
 ## Important Notes
 - Follow **shadcn/ui** design patterns and conventions closely, call the mcp server for component examples when adding new components and see how they are implemented in shadcn/ui.
 - You should always create a **TODO LIST** by calling the todo list tool whenever you are given a new task to work on. You should update the TODO LIST as you make progress on the task. You will never forget to create or update the TODO LIST and you will not stop until the task and the TODO LIST is complete.
@@ -8,20 +8,20 @@
 
 ## Component Overview
 
-The Premium Stepper extends the basic stepper with advanced features including vertical orientation, non-linear navigation, inline collapsible content, custom connectors, and async validation.
+The Stepper extends the base stepper API with advanced features including vertical orientation, non-linear navigation, inline collapsible content, custom connectors, and async validation.
 
 ## Architecture
 
 ### Sub-components
 
-- `PremiumStepper` - Root container with context provider
-- `PremiumStepperList` - Container for step items
-- `PremiumStepperItem` - Individual step with Radix Collapsible support
-- `PremiumStepperTrigger` - Clickable step header
-- `PremiumStepperIndicator` - Visual indicator (number/icon/check)
-- `PremiumStepperLabel` - Step title and description
-- `PremiumStepperConnector` - Custom connector with variants
-- `PremiumStepperContent` - Inline collapsible or external content
+- `Stepper` - Root container with context provider
+- `StepperList` - Container for step items
+- `StepperItem` - Individual step with Radix Collapsible support
+- `StepperTrigger` - Clickable step header
+- `StepperIndicator` - Visual indicator (number/icon/check)
+- `StepperLabel` - Step title and description
+- `StepperConnector` - Custom connector with variants
+- `StepperContent` - Inline collapsible or external content
 
 ## Dependencies
 
@@ -37,19 +37,19 @@ The Premium Stepper extends the basic stepper with advanced features including v
 Vertical layout with inline collapsible content powered by Radix Collapsible primitive.
 
 ```tsx
-<PremiumStepper orientation="vertical">
-  <PremiumStepperList>
-    <PremiumStepperItem value="step1">
-      <PremiumStepperTrigger>
-        <PremiumStepperIndicator />
-        <PremiumStepperLabel>Step 1</PremiumStepperLabel>
-      </PremiumStepperTrigger>
-      <PremiumStepperContent>
+<Stepper orientation="vertical">
+  <StepperList>
+    <StepperItem value="step1">
+      <StepperTrigger>
+        <StepperIndicator />
+        <StepperLabel>Step 1</StepperLabel>
+      </StepperTrigger>
+      <StepperContent>
         Inline content appears here
-      </PremiumStepperContent>
-    </PremiumStepperItem>
-  </PremiumStepperList>
-</PremiumStepper>
+      </StepperContent>
+    </StepperItem>
+  </StepperList>
+</Stepper>
 ```
 
 ### 2. Non-Linear Navigation
@@ -57,9 +57,9 @@ Vertical layout with inline collapsible content powered by Radix Collapsible pri
 Allow users to navigate to any step regardless of order.
 
 ```tsx
-<PremiumStepper nonLinear>
+<Stepper nonLinear>
   {/* Users can click any step */}
-</PremiumStepper>
+</Stepper>
 ```
 
 ### 3. Async Validation
@@ -72,9 +72,9 @@ const handleValidate = async (step: number) => {
   return isValid;
 };
 
-<PremiumStepper onStepValidate={handleValidate}>
+<Stepper onStepValidate={handleValidate}>
   {/* Steps */}
-</PremiumStepper>
+</Stepper>
 ```
 
 ### 4. Custom Connectors
@@ -85,7 +85,7 @@ Three built-in connector variants:
 - `gradient` - Gradient effect
 
 ```tsx
-<PremiumStepperConnector variant="dashed" />
+<StepperConnector variant="dashed" />
 ```
 
 ### 5. Branching Flows
@@ -95,23 +95,23 @@ Conditionally render steps based on user choices.
 ```tsx
 const [accountType, setAccountType] = useState<"personal" | "business">(null);
 
-<PremiumStepper orientation="vertical" nonLinear>
-  <PremiumStepperItem value="choose-type">
+<Stepper orientation="vertical" nonLinear>
+  <StepperItem value="choose-type">
     {/* User selects accountType */}
-  </PremiumStepperItem>
+  </StepperItem>
   
   {accountType === "personal" && (
-    <PremiumStepperItem value="personal-details">
+    <StepperItem value="personal-details">
       {/* Personal form */}
-    </PremiumStepperItem>
+    </StepperItem>
   )}
   
   {accountType === "business" && (
-    <PremiumStepperItem value="business-details">
+    <StepperItem value="business-details">
       {/* Business form */}
-    </PremiumStepperItem>
+    </StepperItem>
   )}
-</PremiumStepper>
+</Stepper>
 ```
 
 ## Styling Decisions
@@ -142,49 +142,42 @@ Vertical orientation is particularly well-suited for mobile viewports as it:
 - `role="tabpanel"` on StepperContent
 - `aria-selected` for active state
 - `aria-disabled` for disabled steps
-- Collapsible content properly hidden from screen readers when collapsed
+# Stepper
 
-## Performance Considerations
+## Title
+Stepper
 
-- Collapsible content is unmounted when closed (controlled by Radix)
-- Use `forceMount` prop if content must stay in DOM
-- Async validation can be throttled/debounced if needed
+## Props
+- `Stepper`: root container with controlled or uncontrolled `activeStep`, `linear` and `nonLinear` navigation rules, `orientation`, `variant`, `size`, `alternativeLabel`, optional `connector`, and async `onStepValidate` support.
+- `StepperList`: flex wrapper for the registered step items.
+- `StepperItem`: requires a stable `value`; also accepts `disabled`, `optional`, `completed`, and `error` flags that feed the shared context.
+- `StepperTrigger`: step activation control with optional `asChild`; reads active, completed, disabled, and error state from context.
+- `StepperIndicator`: visual indicator for number, circle, or completion and error icons; inherits step state and supports size and variant styling.
+- `StepperLabel`: title and optional description wrapper for each step label.
+- `StepperConnector`: connector line between steps with built-in `solid`, `dashed`, and `gradient` variants.
+- `StepperContent`: step body area; in vertical mode it renders through Radix Collapsible and supports `forceMount`.
+- `useStepperNavigation` and `useStepperContext`: helper hooks for advanced orchestration.
+
+## Dependencies
+- `@radix-ui/react-collapsible` for vertical inline content.
+- `@radix-ui/react-slot` for `asChild` trigger composition.
+- `class-variance-authority` for root, item, trigger, indicator, label, connector, and content variants.
+- `lucide-react` for `Check`, `Circle`, `AlertCircle`, and `ChevronRight` icons.
+- `src/lib/utils.ts` for `cn()` class merging.
+
+## Styling Decisions
+- The public package exports the canonical `Stepper` and related `Stepper*` names from `src/index.ts`. Prefer those names in docs and examples.
+- Horizontal and vertical layouts share the same registration and state model. Vertical mode uses collapsible content and indented connectors; horizontal mode keeps content separate and focuses on label alignment.
+- Indicator, connector, and label variants are split into separate CVA definitions so consumers can swap size or visual emphasis without rewriting the whole stepper shell.
+- Motion relies on the same accordion and standard easing tokens used elsewhere in the library so expansion, activation, and connector transitions stay consistent with dialogs and accordions.
 
 ## Maintenance Notes
-
-### Adding New Connector Variants
-
-Add to `premiumStepperConnectorVariants` in CVA:
-
-```typescript
-variant: {
-  solid: "...",
-  dashed: "...",
-  gradient: "...",
-  custom: "your-custom-classes",
-}
-```
-
-### Extending Validation
-
-The `onStepValidate` callback can be extended to:
-- Call APIs
-- Check form validity
-- Show loading states
-- Display error messages
-
-### Known Edge Cases
-
-1. **Vertical + Horizontal Mix**: Not supported - orientation applies to all steps
+- Step registration is order-based. Dynamic insertion or removal can change indexes, so consumer code should key steps by a stable `value` and avoid reshuffling mounted items unless that behavior is intentional.
+- `onStepValidate` runs before navigation and may be async. Rapid repeated clicks can produce overlapping validations, so loading guards or debouncing belong in the consuming flow if the validation is expensive.
+- `StepperItem` state is inferred from context unless explicitly overridden through item props. If completion logic changes, update both the item registration data and the helper predicates in the root context.
+- If you add new connector or indicator variants, update both the CVA exports and the root package aliases in `src/index.ts` so the public `stepper*Variants` surface remains complete.
 2. **Dynamic Step Insertion**: Steps must be registered on mount; dynamic insertion may cause re-indexing issues
+
 3. **Async Race Conditions**: Multiple rapid clicks during validation may cause state conflicts - consider debouncing
-
-## Future Enhancements
-
-- Progress bar overlay
-- Step completion percentages
-- Mobile-optimized gestures (swipe navigation)
-- Step history/undo functionality
-- Keyboard shortcuts (Ctrl+Arrow to skip steps)
 
 

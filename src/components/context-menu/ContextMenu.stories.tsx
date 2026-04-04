@@ -70,7 +70,7 @@ import {
  *   ContextMenuContent,
  *   ContextMenuItem,
  *   ContextMenuShortcut,
- * } from '@aidan/ui';
+ * } from '@agentix/ui';
  *
  * <ContextMenu>
  *   <ContextMenuTrigger>

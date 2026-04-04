@@ -1,22 +1,22 @@
-# Premium Sheet 💎
+# Sheet
 
-The Sheet component includes advanced gesture support, spring animations, snap points, and enhanced customization for mobile-first interfaces that require fluid, physics-based interactions.
+The Sheet component includes gesture support, spring animations, snap points, and enhanced customization for mobile-first interfaces that require fluid, physics-based interactions.
 
 ## Installation
 
-The Sheet component is available from the unified `@aidan/ui` package.
+The Sheet component is available from the unified `@agentix/ui` package.
 
 ```tsx
 import {
-  PremiumSheet,
-  PremiumSheetTrigger,
-  PremiumSheetContent,
-  PremiumSheetHeader,
-  PremiumSheetFooter,
-  PremiumSheetTitle,
-  PremiumSheetDescription,
-  PremiumSheetClose,
-} from "@aidan/ui";
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+  SheetClose,
+} from "@agentix/ui";
 ```
 
 ## Features
@@ -54,22 +54,22 @@ import {
 ### Basic Swipe-to-Dismiss
 
 ```tsx
-<PremiumSheet>
-  <PremiumSheetTrigger asChild>
+<Sheet>
+  <SheetTrigger asChild>
     <Button>Open Sheet</Button>
-  </PremiumSheetTrigger>
-  <PremiumSheetContent>
-    <PremiumSheetHeader>
-      <PremiumSheetTitle>Swipeable Sheet</PremiumSheetTitle>
-      <PremiumSheetDescription>
+  </SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Swipeable Sheet</SheetTitle>
+      <SheetDescription>
         Swipe right to close this sheet.
-      </PremiumSheetDescription>
-    </PremiumSheetHeader>
+      </SheetDescription>
+    </SheetHeader>
     <div className="flex-1 px-6 py-4">
       Your content here
     </div>
-  </PremiumSheetContent>
-</PremiumSheet>
+  </SheetContent>
+</Sheet>
 ```
 
 ### With Snap Points
@@ -77,11 +77,11 @@ import {
 Create a bottom sheet with multiple snap positions:
 
 ```tsx
-<PremiumSheet>
-  <PremiumSheetTrigger asChild>
+<Sheet>
+  <SheetTrigger asChild>
     <Button>Open Drawer</Button>
-  </PremiumSheetTrigger>
-  <PremiumSheetContent
+  </SheetTrigger>
+  <SheetContent
     position="bottom"
     size="lg"
     showHandle
@@ -89,17 +89,17 @@ Create a bottom sheet with multiple snap positions:
     defaultSnapPoint={3}
     onSnapPointChange={(index) => console.log(`Snapped to ${index}`)}
   >
-    <PremiumSheetHeader>
-      <PremiumSheetTitle>Expandable Drawer</PremiumSheetTitle>
-      <PremiumSheetDescription>
+    <SheetHeader>
+      <SheetTitle>Expandable Drawer</SheetTitle>
+      <SheetDescription>
         Drag up/down to snap to different positions.
-      </PremiumSheetDescription>
-    </PremiumSheetHeader>
+      </SheetDescription>
+    </SheetHeader>
     <div className="flex-1 overflow-auto px-6 py-4">
       Scrollable content
     </div>
-  </PremiumSheetContent>
-</PremiumSheet>
+  </SheetContent>
+</Sheet>
 ```
 
 ### Animation Types
@@ -108,19 +108,19 @@ Try different animation feels:
 
 ```tsx
 // Bounce animation - playful
-<PremiumSheetContent animationType="bounce">
+<SheetContent animationType="bounce">
   {/* Content */}
-</PremiumSheetContent>
+</SheetContent>
 
 // Elastic animation - springy
-<PremiumSheetContent animationType="elastic">
+<SheetContent animationType="elastic">
   {/* Content */}
-</PremiumSheetContent>
+</SheetContent>
 
 // Stiff animation - quick
-<PremiumSheetContent animationType="stiff">
+<SheetContent animationType="stiff">
   {/* Content */}
-</PremiumSheetContent>
+</SheetContent>
 ```
 
 ### Custom Spring Configuration
@@ -128,7 +128,7 @@ Try different animation feels:
 Fine-tune the animation physics:
 
 ```tsx
-<PremiumSheetContent
+<SheetContent
   springConfig={{
     tension: 150,  // Lower = slower
     friction: 8,   // Lower = more bouncy
@@ -136,7 +136,7 @@ Fine-tune the animation physics:
   }}
 >
   {/* Content */}
-</PremiumSheetContent>
+</SheetContent>
 ```
 
 ### Gesture Sensitivity
@@ -145,33 +145,33 @@ Customize how easily the sheet closes:
 
 ```tsx
 // Easy to close - light swipes dismiss
-<PremiumSheetContent
+<SheetContent
   gestureSensitivity={{
     velocityThreshold: 0.2,
     distanceThreshold: 0.15,
   }}
 >
   {/* Content */}
-</PremiumSheetContent>
+</SheetContent>
 
 // Hard to close - requires more force
-<PremiumSheetContent
+<SheetContent
   gestureSensitivity={{
     velocityThreshold: 1.0,
     distanceThreshold: 0.5,
   }}
 >
   {/* Content */}
-</PremiumSheetContent>
+</SheetContent>
 
 // Disable swipe gestures entirely
-<PremiumSheetContent
+<SheetContent
   gestureSensitivity={{
     enableSwipe: false,
   }}
 >
   {/* Content */}
-</PremiumSheetContent>
+</SheetContent>
 ```
 
 ### All Positions with Gestures
@@ -179,23 +179,23 @@ Customize how easily the sheet closes:
 ```tsx
 <div className="flex gap-4">
   {["top", "right", "bottom", "left"].map((position) => (
-    <PremiumSheet key={position}>
-      <PremiumSheetTrigger asChild>
+    <Sheet key={position}>
+      <SheetTrigger asChild>
         <Button>{position}</Button>
-      </PremiumSheetTrigger>
-      <PremiumSheetContent
+      </SheetTrigger>
+      <SheetContent
         position={position}
         showHandle={position === "top" || position === "bottom"}
         animationType="elastic"
       >
-        <PremiumSheetHeader>
-          <PremiumSheetTitle>{position} Sheet</PremiumSheetTitle>
-        </PremiumSheetHeader>
+        <SheetHeader>
+          <SheetTitle>{position} Sheet</SheetTitle>
+        </SheetHeader>
         <div className="flex-1 px-6 py-4">
           Swipe to close
         </div>
-      </PremiumSheetContent>
-    </PremiumSheet>
+      </SheetContent>
+    </Sheet>
   ))}
 </div>
 ```
@@ -205,11 +205,11 @@ Customize how easily the sheet closes:
 iOS/Android style action sheet:
 
 ```tsx
-<PremiumSheet>
-  <PremiumSheetTrigger asChild>
+<Sheet>
+  <SheetTrigger asChild>
     <Button>Share</Button>
-  </PremiumSheetTrigger>
-  <PremiumSheetContent
+  </SheetTrigger>
+  <SheetContent
     position="bottom"
     size="sm"
     showHandle
@@ -227,12 +227,12 @@ iOS/Android style action sheet:
         <span>💬</span> Share to Slack
       </Button>
       <Separator className="my-2" />
-      <PremiumSheetClose asChild>
+      <SheetClose asChild>
         <Button variant="ghost">Cancel</Button>
-      </PremiumSheetClose>
+      </SheetClose>
     </div>
-  </PremiumSheetContent>
-</PremiumSheet>
+  </SheetContent>
+</Sheet>
 ```
 
 ### Music Player Style
@@ -240,11 +240,11 @@ iOS/Android style action sheet:
 Bottom sheet with expandable content:
 
 ```tsx
-<PremiumSheet>
-  <PremiumSheetTrigger asChild>
+<Sheet>
+  <SheetTrigger asChild>
     <Button>Now Playing</Button>
-  </PremiumSheetTrigger>
-  <PremiumSheetContent
+  </SheetTrigger>
+  <SheetContent
     position="bottom"
     size="lg"
     showHandle
@@ -254,13 +254,13 @@ Bottom sheet with expandable content:
     showCloseButton={false}
   >
     {/* Album art, track info, controls */}
-  </PremiumSheetContent>
-</PremiumSheet>
+  </SheetContent>
+</Sheet>
 ```
 
 ## Props
 
-### PremiumSheet
+### Sheet
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -268,7 +268,7 @@ Bottom sheet with expandable content:
 | `onOpenChange` | `(open: boolean) => void` | - | Callback when state changes |
 | `defaultOpen` | `boolean` | `false` | Default open state (uncontrolled) |
 
-### PremiumSheetContent
+### SheetContent
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -331,7 +331,7 @@ Example: `snapPoints={[0.25, 0.5, 1]}` creates three snap positions at quarter, 
 
 - **Focus Management**: Focus is trapped within the sheet when open
 - **Keyboard Navigation**: `Tab` cycles through focusable elements, `Escape` closes (unless `preventBackgroundClose`)
-- **Screen Readers**: Proper ARIA labels via PremiumSheetTitle and PremiumSheetDescription
+- **Screen Readers**: Proper ARIA labels via SheetTitle and SheetDescription
 - **Focus Restoration**: Focus returns to trigger element on close
 - **Touch Targets**: Drag handles are sized for easy touch interaction
 
