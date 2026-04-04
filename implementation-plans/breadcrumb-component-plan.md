@@ -1,6 +1,6 @@
 # Implementation Plan: Breadcrumb Component
 
-This document outlines the implementation plan for adding a Breadcrumb component to the @aidan/ui library, following shadcn/ui patterns and the project's existing component structure.
+This document outlines the implementation plan for adding a Breadcrumb component to the @agentix/ui library, following shadcn/ui patterns and the project's existing component structure.
 
 ## TL;DR
 
@@ -8,14 +8,14 @@ The Breadcrumb component will be implemented following shadcn/ui patterns as a c
 
 ### Steps
 
-1. Create the folder structure at `src/components/free/breadcrumb/`
-2. Implement the Breadcrumb component and sub-components in `src/components/free/breadcrumb/index.tsx`
+1. Create the folder structure at `src/components/breadcrumb/`
+2. Implement the Breadcrumb component and sub-components in `src/components/breadcrumb/index.tsx`
    - Include responsive behavior with dropdown for desktop and drawer for mobile
    - Implement BreadcrumbEllipsis component for collapsed states
    - Support custom separators beyond the default slash
-3. Create Storybook stories in `src/components/free/breadcrumb/Breadcrumb.stories.tsx`
-4. Write agent documentation in `src/components/free/breadcrumb/agents.md`
-5. Write user documentation in `src/components/free/breadcrumb/README.md`
+3. Create Storybook stories in `src/components/breadcrumb/Breadcrumb.stories.tsx`
+4. Write agent documentation in `src/components/breadcrumb/agents.md`
+5. Write user documentation in `src/components/breadcrumb/README.md`
 6. Export the component in `src/index.ts`
 7. Update the roadmap status in `docs/ROADMAP.md`
 8. Run the Dev Runner subagent to verify the build and Storybook

@@ -1,11 +1,11 @@
 ## Plan: Implement Hover Card Component
 
-Create a shadcn/ui-inspired hover card component using Radix UI primitives that displays rich content on hover with smooth transitions and flexible positioning. The component will follow the project's established patterns for free tier components, providing a accessible, customizable tooltip-like interface for richer content presentation.
+Create a shadcn/ui-inspired hover card component using Radix UI primitives that displays rich content on hover with smooth transitions and flexible positioning. The component will follow the project's established patterns, providing an accessible, customizable tooltip-like interface for richer content presentation.
 
 ### Steps
 
 1. Install dependency `@radix-ui/react-hover-card` if not already present in package.json
-2. Create component directory structure at `src/components/free/hover-card/`
+2. Create component directory structure at `src/components/hover-card/`
 3. Implement `HoverCard` index.tsx with Radix UI `@radix-ui/react-hover-card` primitive, exporting subcomponents: `HoverCardRoot`, `HoverCardTrigger`, `HoverCardContent`, `HoverCardArrow`, and optionally `HoverCardCloseButton`
 4. Use `class-variance-authority` (cva) to define size variant system aligning with existing Card component: xs, sm, md (default), lg, xl
 5. Configure proper forwardRefs and TypeScript interfaces for all subcomponents with comprehensive JSDoc comments

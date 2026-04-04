@@ -1,7 +1,9 @@
 # Technical Specification: Navigation Submenu Implementation
 
 ## Overview
-This document provides a detailed technical specification for implementing submenu support in the navigation components as a premium feature. The implementation will extend the existing premium navigation components to support hierarchical navigation structures.
+This document provides a detailed technical specification for implementing submenu support in the navigation components. The implementation extends the existing navigation components to support hierarchical navigation structures.
+
+**Note:** Internal component names use the "Premium" prefix for historical reasons, but all components are unified in a single library.
 
 ## Component Architecture
 
@@ -87,19 +89,18 @@ interface PremiumNavItemWithSubmenuProps
 ```
 src/
   components/
-    premium/
-      navigation/
-        index.tsx          # Updated to include submenu components
-        Submenus.stories.tsx # Additional stories for submenu functionality
-        agents.md          # Updated documentation
-        README.md          # Updated documentation
+    navigation/
+      index.tsx          # Updated to include submenu components
+      Submenus.stories.tsx # Additional stories for submenu functionality
+      agents.md          # Updated documentation
+      README.md          # Updated documentation
 ```
 
 ## Dependencies
-- `@radix-ui/react-accordion` (already used in free Accordion)
+- `@radix-ui/react-accordion` (already used in Accordion)
 - `lucide-react` (for icon components)
 - `class-variance-authority` (for variant management)
-- Existing premium navigation components
+- Existing navigation components
 
 ## Testing Requirements
 1. Unit tests for component rendering and behavior

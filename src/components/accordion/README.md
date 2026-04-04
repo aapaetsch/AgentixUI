@@ -5,7 +5,7 @@ A comprehensive accordion system built on Radix UI primitives, featuring custom 
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent
-} from '@aidan/ui';
+} from '@agentix/ui';
 
 // Basic accordion
 <Accordion type="single" collapsible>
@@ -148,7 +148,7 @@ Uses existing Tailwind accordion animations:
 You can use the AnimatedChevron component in your accordion:
 
 ```tsx
-import { AnimatedChevron } from '@aidan/ui';
+import { AnimatedChevron } from '@agentix/ui';
 
 // Note: You'd need to manage the open state to pass to AnimatedChevron
 <AccordionTrigger icon={<AnimatedChevron open={isOpen} />}>
@@ -169,7 +169,7 @@ import { AnimatedChevron } from '@aidan/ui';
 - `@radix-ui/react-accordion` - Accessible accordion primitives
 - `class-variance-authority` - Variant management
 - `lucide-react` - Fallback ChevronDown icon
-- `@aidan/ui/lib/utils` - `cn()` utility
+- `@agentix/ui/lib/utils` - `cn()` utility
 
 ## License
 

@@ -6,21 +6,21 @@ Implement a context menu component following shadcn/ui patterns and project conv
 
 1. Install `@radix-ui/react-context-menu` dependency and add it to [package.json](package.json).
 
-2. Create component directory structure at `src/components/free/context-menu/` with required files: index.tsx, Context Menu.stories.tsx, agents.md, README.md.
+2. Create component directory structure at `src/components/context-menu/` with required files: index.tsx, Context Menu.stories.tsx, agents.md, README.md.
 
-3. Implement base component in [index.tsx](src/components/free/context-menu/index.tsx) with Radix ContextMenu primitive, defining subcomponents (ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem, ContextMenuCheckboxItem, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuSub, ContextMenuSubTrigger, ContextMenuSubContent, ContextMenuShortcut). Support custom positioning API (x/y coordinates) with automatic collision detection as default, icon display with left-aligned Lucide icons, right-aligned keyboard shortcuts, unbounded submenu nesting, and configurable close delay (delayClose prop).
+3. Implement base component in [index.tsx](src/components/context-menu/index.tsx) with Radix ContextMenu primitive, defining subcomponents (ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem, ContextMenuCheckboxItem, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuSub, ContextMenuSubTrigger, ContextMenuSubContent, ContextMenuShortcut). Support custom positioning API (x/y coordinates) with automatic collision detection as default, icon display with left-aligned Lucide icons, right-aligned keyboard shortcuts, unbounded submenu nesting, and configurable close delay (delayClose prop).
 
 4. Create CVA variants for ContextMenuContent (animation states), ContextMenuItem (size, inset, variant), ContextMenuSeparator, ContextMenuLabel, ContextMenuSubTrigger, using MD3 motion tokens and design system values from [src/globals.css](src/globals.css).
 
-5. Apply consistent styling patterns from [popover](src/components/free/popover/index.tsx), [select](src/components/free/select/index.tsx), [dialog](src/components/free/dialog/index.tsx) for animations, shadows (elevation-2), rounded corners (--radius), and transitions (--motion-duration-medium).
+5. Apply consistent styling patterns from [popover](src/components/popover/index.tsx), [select](src/components/select/index.tsx), [dialog](src/components/dialog/index.tsx) for animations, shadows (elevation-2), rounded corners (--radius), and transitions (--motion-duration-medium).
 
-6. Storybook stories in [Context Menu.stories.tsx](src/components/free/context-menu/Context Menu.stories.tsx) covering: basic usage, disabled items, shortcuts, submenus (unbounded depth), checkbox items, radio groups, destructive variant, custom positioning (x/y), close delay variations, pre-configured presets (file actions: copy, paste, delete, rename; text editor actions: cut, copy, paste, select all, find), with Lucide icon patterns (left icon, text center, right shortcut).
+6. Storybook stories in [Context Menu.stories.tsx](src/components/context-menu/Context Menu.stories.tsx) covering: basic usage, disabled items, shortcuts, submenus (unbounded depth), checkbox items, radio groups, destructive variant, custom positioning (x/y), close delay variations, pre-configured presets (file actions: copy, paste, delete, rename; text editor actions: cut, copy, paste, select all, find), with Lucide icon patterns (left icon, text center, right shortcut).
 
-7. Write [agents.md](src/components/free/context-menu/agents.md) documenting props, dependencies, styling decisions, maintenance notes (Radix API, keyboard navigation, z-index layering).
+7. Write [agents.md](src/components/context-menu/agents.md) documenting props, dependencies, styling decisions, maintenance notes (Radix API, keyboard navigation, z-index layering).
 
-8. Write [README.md](src/components/free/context-menu/README.md) with usage examples, API documentation, accessibility features, and common patterns.
+8. Write [README.md](src/components/context-menu/README.md) with usage examples, API documentation, accessibility features, and common patterns.
 
-9. Export components in [src/index.ts](src/index.ts) under Free Tier Components section.
+9. Export components in [src/index.ts](src/index.ts).
 
 10. Update ROADMAP status in [docs/ROADMAP.md](docs/ROADMAP.md) to mark Context Menu as ✅ Complete.
 

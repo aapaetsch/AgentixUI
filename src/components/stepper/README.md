@@ -16,58 +16,58 @@ npm install @radix-ui/react-collapsible @radix-ui/react-slot class-variance-auth
 
 ```tsx
 import {
-  PremiumStepper,
-  PremiumStepperList,
-  PremiumStepperItem,
-  PremiumStepperTrigger,
-  PremiumStepperIndicator,
-  PremiumStepperLabel,
-  PremiumStepperConnector,
-  PremiumStepperContent,
-} from "@aidan/ui";
+  Stepper,
+  StepperList,
+  StepperItem,
+  StepperTrigger,
+  StepperIndicator,
+  StepperLabel,
+  StepperConnector,
+  StepperContent,
+} from "@agentix/ui";
 
 function VerticalStepperExample() {
   return (
-    <PremiumStepper orientation="vertical" defaultActiveStep={0}>
-      <PremiumStepperList>
-        <PremiumStepperItem value="step1">
-          <PremiumStepperTrigger>
-            <PremiumStepperIndicator />
-            <PremiumStepperLabel>Account Setup</PremiumStepperLabel>
-          </PremiumStepperTrigger>
-          <PremiumStepperContent>
+    <Stepper orientation="vertical" defaultActiveStep={0}>
+      <StepperList>
+        <StepperItem value="step1">
+          <StepperTrigger>
+            <StepperIndicator />
+            <StepperLabel>Account Setup</StepperLabel>
+          </StepperTrigger>
+          <StepperContent>
             {/* Inline content - appears below the trigger */}
             <Input placeholder="Email" />
             <Input placeholder="Password" type="password" />
-          </PremiumStepperContent>
-        </PremiumStepperItem>
+          </StepperContent>
+        </StepperItem>
 
-        <PremiumStepperConnector />
+        <StepperConnector />
 
-        <PremiumStepperItem value="step2">
-          <PremiumStepperTrigger>
-            <PremiumStepperIndicator />
-            <PremiumStepperLabel>Profile Details</PremiumStepperLabel>
-          </PremiumStepperTrigger>
-          <PremiumStepperContent>
+        <StepperItem value="step2">
+          <StepperTrigger>
+            <StepperIndicator />
+            <StepperLabel>Profile Details</StepperLabel>
+          </StepperTrigger>
+          <StepperContent>
             <Input placeholder="Full Name" />
             <Textarea placeholder="Bio" />
-          </PremiumStepperContent>
-        </PremiumStepperItem>
+          </StepperContent>
+        </StepperItem>
 
-        <PremiumStepperConnector />
+        <StepperConnector />
 
-        <PremiumStepperItem value="step3">
-          <PremiumStepperTrigger>
-            <PremiumStepperIndicator />
-            <PremiumStepperLabel>Review & Submit</PremiumStepperLabel>
-          </PremiumStepperTrigger>
-          <PremiumStepperContent>
+        <StepperItem value="step3">
+          <StepperTrigger>
+            <StepperIndicator />
+            <StepperLabel>Review & Submit</StepperLabel>
+          </StepperTrigger>
+          <StepperContent>
             <Button>Complete Setup</Button>
-          </PremiumStepperContent>
-        </PremiumStepperItem>
-      </PremiumStepperList>
-    </PremiumStepper>
+          </StepperContent>
+        </StepperItem>
+      </StepperList>
+    </Stepper>
   );
 }
 ```
@@ -75,9 +75,9 @@ function VerticalStepperExample() {
 ### Non-Linear Navigation
 
 ```tsx
-<PremiumStepper orientation="vertical" nonLinear>
+<Stepper orientation="vertical" nonLinear>
   {/* Users can click any step to navigate */}
-</PremiumStepper>
+</Stepper>
 ```
 
 ### With Async Validation
@@ -95,9 +95,9 @@ function ValidatedStepper() {
   };
 
   return (
-    <PremiumStepper onStepValidate={handleValidate}>
+    <Stepper onStepValidate={handleValidate}>
       {/* Steps */}
-    </PremiumStepper>
+    </Stepper>
   );
 }
 ```
@@ -105,9 +105,9 @@ function ValidatedStepper() {
 ### Custom Connectors
 
 ```tsx
-<PremiumStepperConnector variant="dashed" />
-<PremiumStepperConnector variant="gradient" />
-<PremiumStepperConnector variant="solid" animated />
+<StepperConnector variant="dashed" />
+<StepperConnector variant="gradient" />
+<StepperConnector variant="solid" animated />
 ```
 
 ### Branching Flow
@@ -117,53 +117,53 @@ function BranchingExample() {
   const [userType, setUserType] = useState<"student" | "professional" | null>(null);
 
   return (
-    <PremiumStepper orientation="vertical" nonLinear>
-      <PremiumStepperItem value="type-selection">
-        <PremiumStepperTrigger>
-          <PremiumStepperIndicator />
-          <PremiumStepperLabel>Select User Type</PremiumStepperLabel>
-        </PremiumStepperTrigger>
-        <PremiumStepperContent>
+    <Stepper orientation="vertical" nonLinear>
+      <StepperItem value="type-selection">
+        <StepperTrigger>
+          <StepperIndicator />
+          <StepperLabel>Select User Type</StepperLabel>
+        </StepperTrigger>
+        <StepperContent>
           <Button onClick={() => setUserType("student")}>Student</Button>
           <Button onClick={() => setUserType("professional")}>Professional</Button>
-        </PremiumStepperContent>
-      </PremiumStepperItem>
+        </StepperContent>
+      </StepperItem>
 
-      <PremiumStepperConnector />
+      <StepperConnector />
 
       {userType === "student" && (
-        <PremiumStepperItem value="student-info">
-          <PremiumStepperTrigger>
-            <PremiumStepperIndicator />
-            <PremiumStepperLabel>Student Information</PremiumStepperLabel>
-          </PremiumStepperTrigger>
-          <PremiumStepperContent>
+        <StepperItem value="student-info">
+          <StepperTrigger>
+            <StepperIndicator />
+            <StepperLabel>Student Information</StepperLabel>
+          </StepperTrigger>
+          <StepperContent>
             <Input placeholder="School Name" />
             <Input placeholder="Graduation Year" />
-          </PremiumStepperContent>
-        </PremiumStepperItem>
+          </StepperContent>
+        </StepperItem>
       )}
 
       {userType === "professional" && (
-        <PremiumStepperItem value="professional-info">
-          <PremiumStepperTrigger>
-            <PremiumStepperIndicator />
-            <PremiumStepperLabel>Professional Information</PremiumStepperLabel>
-          </PremiumStepperTrigger>
-          <PremiumStepperContent>
+        <StepperItem value="professional-info">
+          <StepperTrigger>
+            <StepperIndicator />
+            <StepperLabel>Professional Information</StepperLabel>
+          </StepperTrigger>
+          <StepperContent>
             <Input placeholder="Company" />
             <Input placeholder="Job Title" />
-          </PremiumStepperContent>
-        </PremiumStepperItem>
+          </StepperContent>
+        </StepperItem>
       )}
-    </PremiumStepper>
+    </Stepper>
   );
 }
 ```
 
 ## Props
 
-### PremiumStepper
+### Stepper
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -178,7 +178,7 @@ function BranchingExample() {
 | `alternativeLabel` | `boolean` | `false` | Place labels below indicators (horizontal only) |
 | `onStepValidate` | `(step: number) => Promise<boolean> \| boolean` | - | Async validation before step change |
 
-### PremiumStepperItem
+### StepperItem
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -188,7 +188,7 @@ function BranchingExample() {
 | `completed` | `boolean` | - | Override completion state |
 | `error` | `boolean` | `false` | Show error state |
 
-### PremiumStepperConnector
+### StepperConnector
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -196,7 +196,7 @@ function BranchingExample() {
 | `animated` | `boolean` | `false` | Animate connector |
 | `completed` | `boolean` | - | Override completion state |
 
-### PremiumStepperContent
+### StepperContent
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -204,7 +204,7 @@ function BranchingExample() {
 | `forceMount` | `boolean` | `false` | Keep mounted when inactive |
 | `transitionDuration` | `number` | - | Transition duration in ms |
 
-## Hook: `usePremiumStepperNavigation`
+## Hook: `useStepperNavigation`
 
 ```tsx
 const {
@@ -218,7 +218,7 @@ const {
   isFirstStep,
   isLastStep,
   isStepCompleted,
-} = usePremiumStepperNavigation();
+} = useStepperNavigation();
 
 // Use in navigation buttons
 <Button onClick={goToPrevious} disabled={!canGoPrevious}>

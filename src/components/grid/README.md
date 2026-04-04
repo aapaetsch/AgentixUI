@@ -4,10 +4,10 @@ A flexible CSS Grid layout container with preset column counts (1-12), gap, and 
 
 ## Installation
 
-The Grid component is part of the `@aidan/ui` library. Import it directly:
+The Grid component is part of the `@agentix/ui` library. Import it directly:
 
 ```tsx
-import { Grid, GridItem } from "@aidan/ui";
+import { Grid, GridItem } from "@agentix/ui";
 ```
 
 ## Usage

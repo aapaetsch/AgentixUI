@@ -1,4 +1,4 @@
-// @aidan/ui - Shared Design System
+// @agentix/ui - Shared Design System
 // Export all components from this file
 
 // =============================================================================

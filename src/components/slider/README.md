@@ -20,7 +20,7 @@ The basic slider API is available from the unified package as `BasicSlider`.
 ### Basic Usage
 
 ```tsx
-import { Slider } from "@aidan/ui";
+import { Slider } from "@agentix/ui";
 
 // Single value slider
 <Slider defaultValue={[50]} />

@@ -1,5 +1,5 @@
 {
-  "name": "@aidan/ui",
+  "name": "@agentix/ui",
   "version": "0.0.1",
   "description": "Shared React UI library for Web and Electron",
   "author": "Aidan Paetsch",

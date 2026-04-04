@@ -5,7 +5,7 @@ A comprehensive card system following Material Design 3 patterns with elevated, 
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ import {
   CardFooter,
   SwipeableCard,
   ExpandableCard
-} from '@aidan/ui';
+} from '@agentix/ui';
 
 // Basic card
 <Card>
@@ -288,7 +288,7 @@ interface ExpandableCardProps extends CardProps {
 
 - `@radix-ui/react-slot` - Polymorphic component support
 - `class-variance-authority` - Variant management
-- `@aidan/ui/lib/utils` - `cn()` utility
+- `@agentix/ui/lib/utils` - `cn()` utility
 
 ## License
 

@@ -4,10 +4,10 @@ A popup component that displays rich content when hovering over a trigger elemen
 
 ## Installation
 
-The HoverCard component is part of the `@aidan/ui` library. Ensure you have the library installed:
+The HoverCard component is part of the `@agentix/ui` library. Ensure you have the library installed:
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ import {
   HoverCard,
   HoverCardTrigger,
   HoverCardContent,
-} from "@aidan/ui";
+} from "@agentix/ui";
 
 export function Example() {
   return (

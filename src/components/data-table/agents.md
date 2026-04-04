@@ -4,15 +4,18 @@
 DataTable
 
 ## Props
-- `columns`, `data`: TanStack column definitions and row data
-- `searchColumn`, `searchPlaceholder`: built-in text filtering hook-up for one primary search field
-- `toolbarFilters`: optional select-based column filters
-- `enableRowSelection`: injects the checkbox selection column
-- `rowActions`: static or row-derived action definitions rendered through `DropdownMenu`
-- `showColumnVisibility`, `showPagination`, `toolbarContent`: optional UI controls around the table
-- `virtualize`, `virtualizationHeight`, `virtualizationOverscan`: row virtualization controls
-- `size`, `variant`, `stickyHeader`: density and presentation settings
-- Controlled state props: `sorting`, `columnFilters`, `columnVisibility`, `rowSelection`, `pagination` plus matching change callbacks
+- `DataTable`: generic TanStack-powered table with `columns`, `data`, optional `caption`, empty-state messaging, and `tableClassName` and `className` overrides.
+- Toolbar props: `searchColumn`, `searchPlaceholder`, `toolbarFilters`, `toolbarContent`, and `showColumnVisibility`.
+- Selection and actions: `enableRowSelection`, `rowActions`, and `rowActionsLabel`.
+- Presentation controls: `size`, `variant`, `stickyHeader`, `showPagination`, `pageSizeOptions`, and `initialPageSize`.
+- Virtualization controls: `virtualize`, `virtualizationHeight`, and `virtualizationOverscan`.
+- Controlled state props: `sorting`, `columnFilters`, `columnVisibility`, `rowSelection`, and `pagination`, each with matching change callbacks and uncontrolled defaults.
+- Exported helpers: `DataTableColumnHeader`, `DataTableToolbar`, `DataTablePagination`, `DataTableRowActions`, and `dataTableSurfaceVariants`.
+
+## Internal Types
+- `DataTableRowAction<TData>` describes per-row action metadata and handlers.
+- `DataTableToolbarFilter` and `DataTableToolbarFilterOption` drive select-style toolbar filters.
+- `DataTableColumnMeta<TData>` extends TanStack column metadata with `label`, alignment, visibility, search, filter, and cell formatting hints.
 
 ## Dependencies
 - `@tanstack/react-table`
@@ -23,12 +26,12 @@ DataTable
 
 ## Styling Decisions
 - The outer surface uses the same radius, border, and background tokens as the rest of the library so it can sit beside cards, sheets, and popovers without looking foreign.
-- Toolbar controls are intentionally composed from existing free-tier inputs and buttons instead of introducing data-table-specific variants.
-- Density is managed through row and header padding classes only, which keeps the primitive table structure intact and avoids special-case layout code.
-- Row striping is optional and subtle so selection and hover states remain visually stronger than the decorative treatment.
+- Toolbar controls are composed from existing `Input`, `Button`, `Select`, and `DropdownMenu` primitives instead of data-table-specific variants, which keeps filtering and visibility controls visually aligned with the rest of the kit.
+- Density is controlled through header and cell padding helpers rather than alternate markup paths. That keeps the standard and virtualized renderers visually synchronized.
+- Striping is optional and deliberately subtle so hover, selection, and action affordances remain stronger than decorative treatment.
 
 ## Maintenance Notes
 - Keep TanStack-specific state logic in `index.tsx`; presentational helpers such as pagination and row actions should stay thin.
-- Column metadata is extended through module augmentation in `types.ts`; if new per-column behaviors are added, document them there first.
-- The virtualization path intentionally handles layout separately from the standard table path. Changes to header or cell sizing need to be tested in both modes.
-- When adding row actions, prefer static data passed in from the consumer rather than coupling the table to app-specific side effects.
+- Column metadata is extended through module augmentation in `types.ts`; if new per-column behaviors are added, document them there first so both consumer types and internal helpers stay aligned.
+- The virtualization path intentionally renders through `DataTableVirtualized` instead of the standard `TableBody` flow. Any changes to row height, header padding, or sticky behavior must be verified in both render paths.
+- Row actions are injected as an extra column and selection is injected as a leading checkbox column. Changes to either helper affect column counts, visibility handling, and empty-state colspan logic.

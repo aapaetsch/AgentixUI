@@ -242,7 +242,7 @@ ContextMenu - Right-click action menu component
 - Add keyboard shortcut component with auto-detection (e.g., display "Ctrl+C" instead of "⌘C" on Windows)
 - Max-height with scrolling for large menus
 - Mobile touch improvements (long-press feedback, touch-friendly hit areas)
-- Animation presets (slide-in, scale-up, fade) matching Premium components
+- Animation presets (slide-in, scale-up, fade) matching advanced interactive components
 - Context menu presets as exported utilities (file actions, text editor actions, etc.)
 
 

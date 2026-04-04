@@ -53,10 +53,10 @@
 - [x] FAB system (complete)
 - [x] ComboBox/Autocomplete (complete)
 - [x] Slider (advanced: range/step/icon variants) (complete)
-- [x] Premium Sheet (swipe-to-dismiss, snap points, spring animations) (complete)
-- [x] Premium Stepper (complex/non-linear variants) (complete)
+- [x] Sheet (swipe-to-dismiss, snap points, spring animations) (complete)
+- [x] Stepper (complex/non-linear variants) (complete)
 - [x] Navigation Submenus (complete)
-- [x] Premium Toast (enhanced) (complete)
+- [x] Toast (enhanced) (complete)
 
 ## Phase 5: Date & Time Components
 **Goal:** Complete date and time selection components

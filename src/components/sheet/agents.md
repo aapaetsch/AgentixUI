@@ -11,14 +11,14 @@ The Sheet component extends the basic sheet API with advanced gesture support, s
 
 ## Props Summary
 
-### PremiumSheet (Root)
+### Sheet (Root)
 - Extends `@radix-ui/react-dialog` Root props
 - `open?: boolean` - Controlled open state
 - `onOpenChange?: (open: boolean) => void` - Callback when open state changes
 - `defaultOpen?: boolean` - Uncontrolled default open state
 
-### PremiumSheetContent
-Extends the basic SheetContent API with gesture-aware features:
+### SheetContent
+Extends the SheetContent API with gesture-aware features:
 
 **Position & Size:**
 - `position?: "top" | "right" | "bottom" | "left"` - Edge from which sheet slides (default: "right")
@@ -55,8 +55,8 @@ Extends the basic SheetContent API with gesture-aware features:
 - `scrollLock?: boolean` - Enable scroll locking for nested scrollable content (default: true)
 
 ### Other Components
-- `PremiumSheetHeader`, `PremiumSheetFooter`: Standard `HTMLDivElement` props
-- `PremiumSheetTitle`, `PremiumSheetDescription`, `PremiumSheetClose`, `PremiumSheetTrigger`: Extend respective Radix Dialog primitive props
+- `SheetHeader`, `SheetFooter`: Standard `HTMLDivElement` props
+- `SheetTitle`, `SheetDescription`, `SheetClose`, `SheetTrigger`: Extend respective Radix Dialog primitive props
 
 ## Dependencies
 - `@radix-ui/react-dialog` - Core dialog/sheet primitive
@@ -119,10 +119,10 @@ Uses `@use-gesture/react`'s `useDrag` hook with:
 
 ### Relationship to the Basic Sheet API
 This Sheet implementation is a complete reimplementation with gesture support rather than a thin extension of the basic sheet API. Key differences:
-- **Animation**: CSS transitions (Free) vs. spring animations (Premium)
-- **Gestures**: None (Free) vs. full swipe/drag support (Premium)
-- **Snap Points**: Not available (Free) vs. full support (Premium)
-- **Use Case**: General purpose (Free) vs. mobile-optimized (Premium)
+- **Animation**: CSS transitions in the simpler API vs. spring animations in the full sheet implementation
+- **Gestures**: None in the simpler API vs. full swipe/drag support in the full sheet implementation
+- **Snap Points**: Not available in the simpler API vs. full support in the full sheet implementation
+- **Use Case**: General purpose vs. mobile-optimized
 
 ### Testing Considerations
 - Test all animation presets for visual quality
@@ -143,36 +143,36 @@ This Sheet implementation is a complete reimplementation with gesture support ra
 
 ### Basic Swipe-to-Dismiss
 ```tsx
-<PremiumSheet>
-  <PremiumSheetTrigger asChild>
+<Sheet>
+  <SheetTrigger asChild>
     <Button>Open Sheet</Button>
-  </PremiumSheetTrigger>
-  <PremiumSheetContent>
-    <PremiumSheetHeader>
-      <PremiumSheetTitle>Swipeable Sheet</PremiumSheetTitle>
-    </PremiumSheetHeader>
+  </SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Swipeable Sheet</SheetTitle>
+    </SheetHeader>
     <div className="flex-1 px-6 py-4">
       Content here
     </div>
-  </PremiumSheetContent>
-</PremiumSheet>
+  </SheetContent>
+</Sheet>
 ```
 
 ### With Snap Points
 ```tsx
-<PremiumSheetContent
+<SheetContent
   position="bottom"
   showHandle
   snapPoints={[0.25, 0.5, 1]}
   defaultSnapPoint={2}
 >
   {/* Content */}
-</PremiumSheetContent>
+</SheetContent>
 ```
 
 ### Custom Animation
 ```tsx
-<PremiumSheetContent
+<SheetContent
   animationType="bounce"
   springConfig={{
     tension: 150,
@@ -181,12 +181,12 @@ This Sheet implementation is a complete reimplementation with gesture support ra
   }}
 >
   {/* Content */}
-</PremiumSheetContent>
+</SheetContent>
 ```
 
 ### Custom Gesture Sensitivity
 ```tsx
-<PremiumSheetContent
+<SheetContent
   gestureSensitivity={{
     velocityThreshold: 1.0,
     distanceThreshold: 0.5,
@@ -194,7 +194,7 @@ This Sheet implementation is a complete reimplementation with gesture support ra
   }}
 >
   {/* Content */}
-</PremiumSheetContent>
+</SheetContent>
 ```
 
 

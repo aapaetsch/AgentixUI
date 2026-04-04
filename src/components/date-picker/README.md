@@ -4,7 +4,7 @@ A versatile date selection component with calendar popover, supporting single da
 
 ## Installation
 
-The DatePicker is part of the `@aidan/ui` package. Ensure you have the required dependencies:
+The DatePicker is part of the `@agentix/ui` package. Ensure you have the required dependencies:
 
 ```bash
 npm install date-fns react-day-picker
@@ -15,7 +15,7 @@ npm install date-fns react-day-picker
 ### Single Date Selection
 
 ```tsx
-import { DatePicker } from "@aidan/ui";
+import { DatePicker } from "@agentix/ui";
 import { useState } from "react";
 
 function MyComponent() {
@@ -36,7 +36,7 @@ function MyComponent() {
 ### Date Range Selection
 
 ```tsx
-import { DatePicker, DateRange } from "@aidan/ui";
+import { DatePicker, DateRange } from "@agentix/ui";
 import { useState } from "react";
 
 function DateRangeExample() {
@@ -57,7 +57,7 @@ function DateRangeExample() {
 ### Multiple Date Selection
 
 ```tsx
-import { DatePicker } from "@aidan/ui";
+import { DatePicker } from "@agentix/ui";
 import { useState } from "react";
 
 function MultiSelectExample() {
@@ -122,7 +122,7 @@ Restrict selectable dates with min/max bounds or disable specific dates:
 Add quick selection buttons with built-in or custom presets:
 
 ```tsx
-import { DatePicker, getDatePresets } from "@aidan/ui";
+import { DatePicker, getDatePresets } from "@agentix/ui";
 
 // Use built-in presets
 <DatePicker showDefaultPresets />

@@ -1,16 +1,16 @@
-# Plan: Adding Submenu Support to Navigation Components (Premium Feature)
+# Plan: Adding Submenu Support to Navigation Components
 
-This plan outlines the implementation of submenu support for the free tier navigation components (Navbar, Navrail, Navdrawer) as a premium enhancement. The approach involves creating premium submenu components that extend the free navigation components, following the patterns already established in the PremiumNavSection and PremiumNavItemWithSubmenu components.
+This plan outlines the implementation of submenu support for the navigation components (Navbar, Navrail, Navdrawer). The approach involves creating submenu components that extend the navigation components, following the patterns established for hierarchical navigation structures.
 
 ## Steps
-1. Create a `PremiumNavItemWithSubmenu` component in the free navigation package by adapting the existing premium implementation to work with free-tier components
+1. Create a `NavItemWithSubmenu` component in the navigation package by adapting the existing submenu implementation to the unified public API
 2. Extend the `PremiumNavSection` component to support nested submenu items 
-3. Add new styling variants for submenu items with proper indentation and visual hierarchy that matches the premium aesthetic
+3. Add new styling variants for submenu items with proper indentation and visual hierarchy that matches the established navigation aesthetic
 4. Implement keyboard navigation support for nested menu items with proper focus management
-5. Create storybook examples demonstrating submenu functionality in Navbar, Navrail, and Navdrawer using the premium components
-6. Update documentation files for the navigation components to indicate submenu support as a premium feature
+5. Create storybook examples demonstrating submenu functionality in Navbar, Navrail, and Navdrawer
+6. Update documentation files for the navigation components to indicate submenu support
 7. Ensure the submenu components integrate properly with the existing NavigationProvider context
-8. Add the new submenu components to the index.ts export file in the premium navigation section
+8. Add the new submenu components to the index.ts export file in the navigation section
 
 ## Component Spacing, Sizing, Effects & Animation Guidelines
 **MANDATORY for any UI / component / layout / styling task.**
@@ -42,11 +42,11 @@ This plan outlines the implementation of submenu support for the free tier navig
 2. **Performance**: Use React.memo for submenu components to prevent unnecessary re-renders in large navigation trees
 3. **Theming**: Maintain consistency with existing CSS variables for colors, radii, and motion
 4. **Responsive**: Submenus should adapt to mobile views by collapsing when parent navigation is in collapsed state
-5. **Compatibility**: Ensure submenu components work seamlessly with existing free-tier navigation components while providing enhanced visual feedback and animations
+5. **Compatibility**: Ensure submenu components work seamlessly with the existing navigation components while providing enhanced visual feedback and animations
 
 ## Required Clarifications (one round only)
 1. Should the submenu implementation utilize the existing PremiumNavSection component or create a new variant specifically for submenu support?
 
 2. How should the submenu components handle different orientation contexts (horizontal vs vertical navigation) to ensure consistent behavior across Navbar and Navrail?
 
-3. Should we implement both controlled and uncontrolled state management patterns for the submenu components, similar to the existing premium navigation components?
+3. Should we implement both controlled and uncontrolled state management patterns for the submenu components, similar to the existing advanced navigation components?

@@ -4,7 +4,7 @@ A comprehensive set of progress indicators for displaying completion status, ski
 
 ## Installation
 
-The Progress components are part of the `@aidan/ui` library. Import them from the main package:
+The Progress components are part of the `@agentix/ui` library. Import them from the main package:
 
 ```tsx
 import { 
@@ -14,7 +14,7 @@ import {
   ProgressGroup,
   valueFormatters,
   useAnimatedProgress
-} from "@aidan/ui";
+} from "@agentix/ui";
 ```
 
 ## Components
@@ -140,7 +140,7 @@ A container for grouping multiple progress indicators with consistent spacing.
 Customize how values are displayed using built-in or custom formatters:
 
 ```tsx
-import { valueFormatters } from "@aidan/ui";
+import { valueFormatters } from "@agentix/ui";
 
 // Percentage (default): "75%"
 <LinearProgress value={75} showValue valueFormatter={valueFormatters.percentage} />
@@ -260,7 +260,7 @@ The `useAnimatedProgress` hook creates animated progress values with easing, loo
 ### Basic Animated Loading Bar
 
 ```tsx
-import { useAnimatedProgress, LinearProgress } from "@aidan/ui";
+import { useAnimatedProgress, LinearProgress } from "@agentix/ui";
 
 function LoadingBar() {
   const { value } = useAnimatedProgress({

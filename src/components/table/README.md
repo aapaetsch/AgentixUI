@@ -18,7 +18,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@aidan/ui";
+} from "@agentix/ui";
 
 <Table>
   <TableHeader>

@@ -5,7 +5,7 @@ Loading placeholder components that display animated placeholders while content 
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import {
   SkeletonAvatar, 
   SkeletonButton, 
   SkeletonInput 
-} from '@aidan/ui';
+} from '@agentix/ui';
 
 // Basic skeleton
 <Skeleton className="w-32 h-8" />
@@ -253,7 +253,7 @@ All skeleton components include proper accessibility attributes:
 ## Dependencies
 
 - `class-variance-authority` - Variant management
-- `@aidan/ui/lib/utils` - `cn()` utility
+- `@agentix/ui/lib/utils` - `cn()` utility
 
 ## License
 

@@ -7,13 +7,13 @@ Built on top of Radix UI Radio Group primitive with full accessibility support.
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
 
 ```tsx
-import { RadioGroup, RadioGroupItem } from '@aidan/ui';
+import { RadioGroup, RadioGroupItem } from '@agentix/ui';
 
 // Basic usage
 <RadioGroup defaultValue="option1">

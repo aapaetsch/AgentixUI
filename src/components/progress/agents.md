@@ -195,7 +195,7 @@ Hook for creating animated progress values with easing, looping, and manual cont
 ### Animated Progress Examples
 
 ```tsx
-import { useAnimatedProgress, LinearProgress, CircularProgress } from "@aidan/ui";
+import { useAnimatedProgress, LinearProgress, CircularProgress } from "@agentix/ui";
 
 // Auto-looping loading bar
 function LoadingBar() {

@@ -5,13 +5,13 @@ A flexible, accessible textarea component with optional auto-resize, character c
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
 
 ```tsx
-import { Textarea, TextareaWithCounter } from '@aidan/ui';
+import { Textarea, TextareaWithCounter } from '@agentix/ui';
 
 // Basic usage
 <Textarea placeholder="Enter your message..." />
@@ -153,7 +153,7 @@ Extends all `TextareaProps` plus:
 ## Dependencies
 
 - `class-variance-authority` - Variant management
-- `@aidan/ui/lib/utils` - Class name merging
+- `@agentix/ui/lib/utils` - Class name merging
 
 ## License
 
