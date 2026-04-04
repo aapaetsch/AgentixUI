@@ -2,6 +2,16 @@
   "name": "@aidan/ui",
   "version": "0.0.1",
   "description": "Shared React UI library for Web and Electron",
+  "author": "Aidan Paetsch",
+   "keywords": [
+    "react",
+    "ui",
+    "component-library",
+    "tailwindcss",
+    "radix-ui",
+    "electron",
+    "typescript"
+  ],
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
