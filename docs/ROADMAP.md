@@ -6,12 +6,12 @@ This file is an index to the roadmap subfiles. Open any referenced file below to
 
 - Overview: short context and summary 
   - FILE: `docs/roadmap/overview.md`
-- Free Tier Components: base/layout/utility lists 
-  - FILE: `docs/roadmap/free-components.md`
-- Premium Tier Components: implemented & planned 
-  - FILE: `docs/roadmap/premium-components.md`
-- Enterprise Tier: templates & enterprise items 
-  - FILE: `docs/roadmap/enterprise.md`
+- Components: core/layout/utility lists 
+  - FILE: `docs/roadmap/components.md`
+- Advanced Components: implemented & planned 
+  - FILE: `docs/roadmap/advanced-components.md`
+- Templates: page layouts and application shells 
+  - FILE: `docs/roadmap/templates.md`
 - Development Phases: phase checklist & progress 
   - FILE: `docs/roadmap/phases.md`
 - Guidelines & Notes: complexity criteria and decisions 

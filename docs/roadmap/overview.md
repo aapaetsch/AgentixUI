@@ -1,14 +1,14 @@
 # Roadmap — Overview
 
-> **Business Model:** Freemium component library with Free, Premium, and Enterprise tiers.
+> **Roadmap Model:** Single-tier component library with shared components, advanced component families, and planned templates.
 
-## Tier Definitions
+## Roadmap Categories
 
-| Tier | Price | Target Audience | Component Types |
-|------|-------|-----------------|-----------------|
-| **Free** | $0 | Hobbyists, students, OSS projects | Core UI primitives, basic components |
-| **Premium** | $XX/mo or $XX one-time | Professional developers, startups | Advanced components, complex patterns |
-| **Enterprise** | $XXX+ | Teams, agencies | Templates, page layouts, admin dashboards |
+| Category | Scope | Focus |
+|----------|-------|-------|
+| **Components** | Broadly reusable primitives | Base controls, layout, feedback, navigation |
+| **Advanced Components** | Richer APIs and interaction models | Complex patterns, gesture-heavy UI, data-rich flows |
+| **Templates** | Full application shells and page layouts | Real-world composition patterns |
 
 ---
 
@@ -16,17 +16,17 @@ This overview contains the high-level roadmap context and summary metrics. For d
 
 ## Summary
 
-| Tier | Implemented | Planned | Total |
-|------|-------------|---------|-------|
-| **Free** | 38 | 1 (Typography) | 39 |
-| **Premium** | 14 | 11 | 25 |
-| **Enterprise** | 0 | 4 | 4 |
+| Category | Implemented | Planned | Total |
+|----------|-------------|---------|-------|
+| **Components** | 38 | 1 (Typography) | 39 |
+| **Advanced Components** | 14 | 11 | 25 |
+| **Templates** | 0 | 4 | 4 |
 
 ---
 
-<!-- LLM-REF: docs/roadmap/free-components.md -->
-<!-- LLM-REF: docs/roadmap/premium-components.md -->
-<!-- LLM-REF: docs/roadmap/enterprise.md -->
+<!-- LLM-REF: docs/roadmap/components.md -->
+<!-- LLM-REF: docs/roadmap/advanced-components.md -->
+<!-- LLM-REF: docs/roadmap/templates.md -->
 <!-- LLM-REF: docs/roadmap/phases.md -->
 <!-- LLM-REF: docs/roadmap/guidelines.md -->
 <!-- LLM-REF: docs/roadmap/changelog.md -->
