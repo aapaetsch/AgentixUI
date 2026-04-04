@@ -164,7 +164,7 @@ The AccordionTrigger uses a **rotating ChevronDown icon** by default, which is d
 
 If you want the morphing chevron animation in your accordion, you can pass the AnimatedChevron as a custom icon:
 ```tsx
-import { AnimatedChevron } from '@aidan/ui';
+import { AnimatedChevron } from '@agentix/ui';
 
 // Note: You'd need to manage the open state to pass to AnimatedChevron
 <AccordionTrigger icon={<AnimatedChevron open={isOpen} />}>

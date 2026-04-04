@@ -18,10 +18,10 @@ Chips are compact elements that represent an input, attribute, or action. They a
 
 ## Installation
 
-The Chip component is part of the `@aidan/ui` package:
+The Chip component is part of the `@agentix/ui` package:
 
 ```tsx
-import { Chip, ChipGroup } from "@aidan/ui";
+import { Chip, ChipGroup } from "@agentix/ui";
 ```
 
 ## Usage

@@ -4,7 +4,7 @@ The Premium Sheet extends the base Sheet component with advanced gesture support
 
 ## Installation
 
-The Premium Sheet component is part of the `@aidan/ui` Premium tier.
+The Premium Sheet component is part of the `@agentix/ui` Premium tier.
 
 ```tsx
 import {
@@ -16,7 +16,7 @@ import {
   PremiumSheetTitle,
   PremiumSheetDescription,
   PremiumSheetClose,
-} from "@aidan/ui/premium";
+} from "@agentix/ui/premium";
 ```
 
 ## Features

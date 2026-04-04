@@ -5,13 +5,13 @@ An animated loading indicator component with support for classic circular spinne
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
 
 ```tsx
-import { Spinner } from '@aidan/ui';
+import { Spinner } from '@agentix/ui';
 
 // Default circular spinner
 <Spinner />
@@ -174,7 +174,7 @@ Sizes follow Material Design 3 specifications (24dp - 240dp):
 ## Dependencies
 
 - `class-variance-authority` - Variant management
-- `@aidan/ui/lib/utils` - `cn()` utility
+- `@agentix/ui/lib/utils` - `cn()` utility
 
 ## License
 

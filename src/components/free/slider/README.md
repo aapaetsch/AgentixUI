@@ -20,7 +20,7 @@ The Slider component is part of the free tier and is included in the base packag
 ### Basic Usage
 
 ```tsx
-import { Slider } from "@aidan/ui";
+import { Slider } from "@agentix/ui";
 
 // Single value slider
 <Slider defaultValue={[50]} />

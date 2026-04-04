@@ -5,7 +5,7 @@ A premium slider component for selecting values from a range, following Material
 ## Tier Architecture
 
 ### Free Tier
-The free tier slider (`@aidan/ui` Slider) provides:
+The free tier slider (`@agentix/ui` Slider) provides:
 - **Sizes**: xs, sm, md (16dp, 24dp, 40dp track heights)
 - **Handle**: Bar shape only (MD3 default)
 - **Features**: Press animation, gap styling, range support
@@ -29,9 +29,9 @@ npm install @radix-ui/react-slider
 ## Usage
 
 ```tsx
-import { PremiumSlider } from "@aidan/ui";
+import { PremiumSlider } from "@agentix/ui";
 // or for backward compatibility:
-// import { Slider } from "@aidan/ui";
+// import { Slider } from "@agentix/ui";
 
 // Basic usage
 <PremiumSlider defaultValue={[50]} />

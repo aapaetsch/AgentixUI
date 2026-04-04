@@ -1,6 +1,6 @@
 # Sheet and Drawer Component Implementation Plan
 
-This plan outlines the implementation of both Sheet and Drawer components for the @aidan/ui React component library with comprehensive gesture support including swipe-to-dismiss and edge-pull gestures.
+This plan outlines the implementation of both Sheet and Drawer components for the @agentix/ui React component library with comprehensive gesture support including swipe-to-dismiss and edge-pull gestures.
 
 ## Key Decisions
 

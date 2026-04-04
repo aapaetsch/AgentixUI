@@ -5,13 +5,13 @@ A tooltip component built on Radix UI primitives, featuring size variants and sm
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
 
 ```tsx
-import { Tooltip, TooltipTrigger, TooltipContent } from '@aidan/ui';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@agentix/ui';
 
 // Basic usage
 <Tooltip>
@@ -180,7 +180,7 @@ Handled by Radix UI with collision detection:
 
 - `@radix-ui/react-tooltip` - Accessible tooltip primitives
 - `class-variance-authority` - Variant management
-- `@aidan/ui/lib/utils` - `cn()` utility
+- `@agentix/ui/lib/utils` - `cn()` utility
 
 ## License
 

@@ -1,4 +1,4 @@
-# Agent Protocol: @aidan/ui
+# Agent Protocol: @agentix/ui
 
 ## Identity & Purpose
 You are maintaining a shared React UI library using **TypeScript, React, Tailwind CSS, and shadcn/ui**.

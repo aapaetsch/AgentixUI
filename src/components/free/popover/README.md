@@ -29,7 +29,7 @@ import {
   Popover, 
   PopoverTrigger, 
   PopoverContent 
-} from "@aidan/ui";
+} from "@agentix/ui";
 
 <Popover>
   <PopoverTrigger asChild>
@@ -87,7 +87,7 @@ Control alignment within the positioned side:
 ### With Close Button
 
 ```tsx
-import { PopoverClose } from "@aidan/ui";
+import { PopoverClose } from "@agentix/ui";
 
 <Popover>
   <PopoverTrigger asChild>

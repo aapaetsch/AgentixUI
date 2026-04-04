@@ -98,7 +98,7 @@ import {
   PremiumNavItemWithSubmenu, 
   PremiumSubmenuItem, 
   NavigationProvider 
-} from "@aidan/ui";
+} from "@agentix/ui";
 import { Folder, FileText, Image } from "lucide-react";
 
 <NavigationProvider defaultActiveItem="documents">

@@ -21,7 +21,7 @@ import { Separator } from "../../free/separator";
  *
  * ## Usage
  * ```tsx
- * import { ScrollArea, ScrollBar } from "@aidan/ui";
+ * import { ScrollArea, ScrollBar } from "@agentix/ui";
  *
  * <ScrollArea className="h-72 w-48 rounded-md border">
  *   <div className="p-4">

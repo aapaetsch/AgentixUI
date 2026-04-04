@@ -129,7 +129,7 @@ type ToastStoreListener = (toasts: ToastState[]) => void;
  * @example
  * ```tsx
  * // In a non-React file (e.g., API utility)
- * import { toast } from '@aidan/ui';
+ * import { toast } from '@agentix/ui';
  *
  * async function fetchData() {
  *   try {
@@ -817,7 +817,7 @@ export interface ToastProviderProps {
  * @example
  * ```tsx
  * // In your app root
- * import { ToastProvider } from '@aidan/ui';
+ * import { ToastProvider } from '@agentix/ui';
  *
  * function App() {
  *   return (

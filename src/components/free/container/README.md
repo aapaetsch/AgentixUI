@@ -4,10 +4,10 @@ A responsive layout wrapper for page content that provides consistent max-width 
 
 ## Installation
 
-The Container component is included in the `@aidan/ui` package.
+The Container component is included in the `@agentix/ui` package.
 
 ```tsx
-import { Container } from "@aidan/ui";
+import { Container } from "@agentix/ui";
 ```
 
 ## Usage

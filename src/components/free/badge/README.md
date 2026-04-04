@@ -5,13 +5,13 @@ A comprehensive badge system following Material Design 3 patterns with shadcn/ui
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
 
 ```tsx
-import { Badge, BadgeAnchor, AnimatedBadge } from '@aidan/ui';
+import { Badge, BadgeAnchor, AnimatedBadge } from '@agentix/ui';
 
 // Standard badge
 <Badge>Default</Badge>
@@ -152,7 +152,7 @@ Hide badge when destination selected (MD3 guideline):
 
 - `@radix-ui/react-slot` - Polymorphic component (asChild prop)
 - `class-variance-authority` - Variant management
-- `@aidan/ui/lib/utils` - `cn()` utility
+- `@agentix/ui/lib/utils` - `cn()` utility
 
 ## License
 

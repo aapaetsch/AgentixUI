@@ -5,13 +5,13 @@ A switch component that follows Material Design 3 patterns with optional icon su
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
 
 ```tsx
-import { Switch } from '@aidan/ui';
+import { Switch } from '@agentix/ui';
 
 // Basic usage
 <Switch />
@@ -107,7 +107,7 @@ interface SwitchProps extends React.ComponentPropsWithoutRef<typeof SwitchPrimit
 
 - `@radix-ui/react-switch` - Core switch primitive for accessibility
 - `class-variance-authority` - Variant management
-- `@aidan/ui/lib/utils` - `cn()` utility for class merging
+- `@agentix/ui/lib/utils` - `cn()` utility for class merging
 
 ## License
 

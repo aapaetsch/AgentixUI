@@ -663,7 +663,7 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-} from "@aidan/ui";
+} from "@agentix/ui";
 
 function BasicCarousel() {
   return (

@@ -2,12 +2,12 @@
 
 Floating Action Buttons for primary screen actions following Material Design 3 specifications.
 
-> ⭐ This is a Premium component available in the @aidan/ui Premium package.
+> ⭐ This is a Premium component available in the @agentix/ui Premium package.
 
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install @aidan/ui
 ### FAB
 
 ```tsx
-import { FAB } from '@aidan/ui';
+import { FAB } from '@agentix/ui';
 
 // Basic FAB
 <FAB icon={<PlusIcon />} label="Add item" />
@@ -34,7 +34,7 @@ import { FAB } from '@aidan/ui';
 ### ExtendedFAB
 
 ```tsx
-import { ExtendedFAB } from '@aidan/ui';
+import { ExtendedFAB } from '@agentix/ui';
 
 // Extended FAB with label
 <ExtendedFAB icon={<PlusIcon />} label="Create new" />
@@ -50,7 +50,7 @@ import { ExtendedFAB } from '@aidan/ui';
 ### FABMenu
 
 ```tsx
-import { FABMenu } from '@aidan/ui';
+import { FABMenu } from '@agentix/ui';
 
 const menuItems = [
   { id: "1", icon: <FileIcon />, label: "New file", onClick: () => console.log("New file") },
@@ -191,7 +191,7 @@ interface FABMenuProps {
 
 - `class-variance-authority` - Variant management
 - `lucide-react` - Icons (used in stories)
-- `@aidan/ui/lib/utils` - `cn()` utility
+- `@agentix/ui/lib/utils` - `cn()` utility
 
 ## License
 

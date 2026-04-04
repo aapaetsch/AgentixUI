@@ -15,7 +15,7 @@ A multi-step workflow component for guiding users through sequential processes l
 
 ## Installation
 
-The Stepper component is part of the `@aidan/ui` package:
+The Stepper component is part of the `@agentix/ui` package:
 
 ```tsx
 import {
@@ -29,7 +29,7 @@ import {
   StepperContent,
   StepperNavigation,
   useStepperNavigation,
-} from "@aidan/ui";
+} from "@agentix/ui";
 ```
 
 ## Basic Usage

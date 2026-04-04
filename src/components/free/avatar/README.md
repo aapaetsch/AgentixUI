@@ -5,7 +5,7 @@ A comprehensive avatar system with size and shape variants, group stacking, stat
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import {
   AvatarGroup, 
   AvatarBadge, 
   AnimatedAvatar 
-} from '@aidan/ui';
+} from '@agentix/ui';
 
 // Basic avatar
 <Avatar>
@@ -213,7 +213,7 @@ interface AnimatedAvatarProps extends AvatarProps {
 
 - `@radix-ui/react-avatar` - Avatar primitive for image loading states
 - `class-variance-authority` - Variant management
-- `@aidan/ui/lib/utils` - `cn()` utility
+- `@agentix/ui/lib/utils` - `cn()` utility
 
 ## License
 

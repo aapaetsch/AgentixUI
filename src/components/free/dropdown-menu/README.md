@@ -19,7 +19,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@aidan/ui";
+} from "@agentix/ui";
 
 <DropdownMenu>
   <DropdownMenuTrigger asChild>

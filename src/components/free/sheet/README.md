@@ -4,7 +4,7 @@ A Sheet is a slide-out panel that displays content from the edge of the screen. 
 
 ## Installation
 
-The Sheet component is part of the `@aidan/ui` package and is available in the Free tier.
+The Sheet component is part of the `@agentix/ui` package and is available in the Free tier.
 
 ```tsx
 import {
@@ -16,7 +16,7 @@ import {
   SheetTitle,
   SheetDescription,
   SheetClose,
-} from "@aidan/ui";
+} from "@agentix/ui";
 ```
 
 ## Usage

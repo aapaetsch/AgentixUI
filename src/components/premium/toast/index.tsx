@@ -97,7 +97,7 @@ export interface PremiumToastProviderProps {
  * 
  * @example
  * ```tsx
- * import { PremiumToastProvider } from '@aidan/ui';
+ * import { PremiumToastProvider } from '@agentix/ui';
  * 
  * function App() {
  *   return (
@@ -308,7 +308,7 @@ export function usePremiumToast() {
  * 
  * @example
  * ```tsx
- * import { premiumToast } from '@aidan/ui';
+ * import { premiumToast } from '@agentix/ui';
  * 
  * // In any file, even non-React
  * premiumToast.success({

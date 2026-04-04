@@ -15,7 +15,7 @@ Enhanced toast notifications with promise-based loading states, undo functionali
 ## Installation
 
 ```bash
-npm install @aidan/ui
+npm install @agentix/ui
 ```
 
 ## Quick Start
@@ -23,7 +23,7 @@ npm install @aidan/ui
 ### 1. Add Provider
 
 ```tsx
-import { PremiumToastProvider } from '@aidan/ui';
+import { PremiumToastProvider } from '@agentix/ui';
 
 function App() {
   return (
@@ -37,7 +37,7 @@ function App() {
 ### 2. Use in Components
 
 ```tsx
-import { usePremiumToast } from '@aidan/ui';
+import { usePremiumToast } from '@agentix/ui';
 
 function MyComponent() {
   const { toast } = usePremiumToast();
@@ -235,7 +235,7 @@ toast.update(id, { title: 'Complete!', variant: 'success' });
 Use outside React components:
 
 ```tsx
-import { premiumToast } from '@aidan/ui';
+import { premiumToast } from '@agentix/ui';
 
 // In any file
 premiumToast.success({
@@ -350,10 +350,10 @@ Premium toast is a drop-in replacement:
 
 ```tsx
 // Before (Free tier)
-import { ToastProvider, useToast } from '@aidan/ui';
+import { ToastProvider, useToast } from '@agentix/ui';
 
 // After (Premium tier)
-import { PremiumToastProvider, usePremiumToast } from '@aidan/ui';
+import { PremiumToastProvider, usePremiumToast } from '@agentix/ui';
 
 // All free tier features still work
 const { toast } = usePremiumToast();
@@ -386,5 +386,5 @@ import type {
   PromiseOptions,
   ToastPriority,
   PromiseState
-} from '@aidan/ui';
+} from '@agentix/ui';
 ```

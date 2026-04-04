@@ -306,7 +306,7 @@ export const WithCode: Story = {
         <AlertDescription>
           Run the following command to install the package:
           <pre className="mt-2 bg-muted p-2 rounded-md font-mono text-xs">
-            npm install @aidan/ui
+            npm install @agentix/ui
           </pre>
         </AlertDescription>
       </>

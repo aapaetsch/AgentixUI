@@ -29,7 +29,7 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-} from "@aidan/ui";
+} from "@agentix/ui";
 
 function MyCarousel() {
   return (
@@ -207,7 +207,7 @@ function AutoplayCarousel() {
 
 ```tsx
 import { useState, useEffect } from "react";
-import { Carousel, CarouselApi } from "@aidan/ui";
+import { Carousel, CarouselApi } from "@agentix/ui";
 
 function ControlledCarousel() {
   const [api, setApi] = useState<CarouselApi>();

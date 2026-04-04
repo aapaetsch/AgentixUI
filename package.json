@@ -1,7 +1,7 @@
 {
-  "name": "@aidan/ui",
+  "name": "@agentix/ui",
   "version": "0.0.1",
-  "description": "Shared React UI library for Web and Electron",
+  "description": "Modern React UI library with free and premium components, built with TypeScript, Tailwind CSS, and shadcn/ui patterns",
   "author": "Aidan Paetsch",
    "keywords": [
     "react",

@@ -24,7 +24,7 @@ import {
   PremiumStepperLabel,
   PremiumStepperConnector,
   PremiumStepperContent,
-} from "@aidan/ui/premium/stepper";
+} from "@agentix/ui/premium/stepper";
 
 function VerticalStepperExample() {
   return (

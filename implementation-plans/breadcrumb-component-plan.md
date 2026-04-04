@@ -1,6 +1,6 @@
 # Implementation Plan: Breadcrumb Component
 
-This document outlines the implementation plan for adding a Breadcrumb component to the @aidan/ui library, following shadcn/ui patterns and the project's existing component structure.
+This document outlines the implementation plan for adding a Breadcrumb component to the @agentix/ui library, following shadcn/ui patterns and the project's existing component structure.
 
 ## TL;DR
 
