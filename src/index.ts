@@ -81,10 +81,223 @@ export type {
   DateFormatOptions,
 } from "./lib/date-utils";
 
+// -----------------------------------------------------------------------------
+// Finance Utilities
+// Shared formatting and theming helpers used across finance surfaces.
+// -----------------------------------------------------------------------------
+
+export {
+  formatCurrency,
+  formatPercent,
+  formatNumber,
+  formatCompact,
+  formatBasisPoints,
+  formatSigned,
+  roundToTick,
+  type NumericFormat,
+} from "./lib/number-utils";
+
+export {
+  formatRelativeTime,
+  formatRelativeTimeShort,
+  formatDuration,
+} from "./lib/time-utils";
+
+export {
+  pnlColorClass,
+  sentimentColor,
+  resolveToken,
+} from "./lib/color-utils";
+
+// -----------------------------------------------------------------------------
+// Finance Types
+// Shared domain shapes used by finance widgets and composed templates.
+// -----------------------------------------------------------------------------
+
+export type {
+  OrderBookLevel,
+  TradeFlag,
+  Trade,
+  WatchlistItem,
+  HoldingRow,
+} from "./lib/finance-types";
+
 // =============================================================================
 // COMPONENTS
 // Core primitives and shared building blocks.
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Typography
+// -----------------------------------------------------------------------------
+export {
+  Typography,
+  NumericText,
+  typographyVariants,
+  numericTextVariants,
+} from "./components/typography";
+export type {
+  TypographyProps,
+  NumericTextProps,
+  NumericTextOptions,
+} from "./components/typography";
+
+// -----------------------------------------------------------------------------
+// AnimatedNumber
+// -----------------------------------------------------------------------------
+export {
+  AnimatedNumber,
+  animatedNumberVariants,
+} from "./components/animated-number";
+export type { AnimatedNumberProps } from "./components/animated-number";
+
+// -----------------------------------------------------------------------------
+// ToggleGroup
+// -----------------------------------------------------------------------------
+export {
+  ToggleGroup,
+  ToggleGroupItem,
+  toggleGroupVariants,
+  toggleGroupItemVariants,
+} from "./components/toggle-group";
+export type {
+  ToggleGroupProps,
+  ToggleGroupItemProps,
+} from "./components/toggle-group";
+
+// -----------------------------------------------------------------------------
+// Resizable
+// -----------------------------------------------------------------------------
+export {
+  Resizable,
+  ResizablePanel,
+  ResizableHandle,
+  ResizablePanelGroup,
+  resizableHandleVariants,
+} from "./components/resizable";
+export type {
+  ResizableProps,
+  ResizablePanelProps,
+  ResizableHandleProps,
+  LayoutStorage,
+  Layout,
+  LayoutChangedMeta,
+} from "./components/resizable";
+
+// -----------------------------------------------------------------------------
+// CommandPalette
+// -----------------------------------------------------------------------------
+export {
+  CommandPalette,
+  CommandPaletteTrigger,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandLoading,
+  CommandGroup,
+  CommandItem,
+  CommandSeparator,
+  useCommandPalette,
+} from "./components/command-palette";
+export type {
+  CommandPaletteProps,
+  CommandInputProps,
+  CommandListProps,
+  CommandGroupProps,
+  CommandItemProps,
+  CommandPaletteTriggerProps,
+} from "./components/command-palette";
+
+// -----------------------------------------------------------------------------
+// Toolbar
+// -----------------------------------------------------------------------------
+export {
+  Toolbar,
+  ToolbarButton,
+  ToolbarToggle,
+  ToolbarToggleGroup,
+  ToolbarToggleItem,
+  ToolbarSeparator,
+  ToolbarLabel,
+  toolbarVariants,
+  toolbarButtonVariants,
+} from "./components/toolbar";
+export type {
+  ToolbarProps,
+  ToolbarButtonProps,
+  ToolbarToggleProps,
+  ToolbarToggleGroupProps,
+  ToolbarToggleItemProps,
+  ToolbarSeparatorProps,
+  ToolbarLabelProps,
+} from "./components/toolbar";
+
+// -----------------------------------------------------------------------------
+// OrderBook
+// -----------------------------------------------------------------------------
+export {
+  OrderBook,
+  OrderBookSide,
+  OrderBookRow,
+  OrderBookSpread,
+  OrderBookHeader,
+  OrderBookSkeleton,
+  orderBookRowVariants,
+  orderBookSideVariants,
+} from "./components/order-book";
+export type {
+  OrderBookProps,
+  OrderBookRowProps,
+  OrderBookSideProps,
+  OrderBookSpreadProps,
+} from "./components/order-book";
+
+// -----------------------------------------------------------------------------
+// TimeAndSales
+// -----------------------------------------------------------------------------
+export {
+  TimeAndSales,
+  TimeAndSalesRow,
+  TimeAndSalesHeader,
+  timeAndSalesRowVariants,
+} from "./components/time-and-sales";
+export type {
+  TimeAndSalesProps,
+  TimeAndSalesRowProps,
+} from "./components/time-and-sales";
+
+// =============================================================================
+// INVESTMENT-OPS TEMPLATES
+// Composed blocks for an investment-ops dashboard. Templates compose
+// existing primitives; they MUST NOT become a second primitive system.
+// =============================================================================
+
+export {
+  StatTile,
+  AccountSummary,
+  Watchlist,
+  HoldingsTable,
+  OrderTicket,
+  AllocationBreakdown,
+  NewsFeed,
+  InvestmentOpsDashboard,
+} from "./templates/investment-ops";
+export type {
+  StatTileProps,
+  AccountSummaryProps,
+  WatchlistProps,
+  HoldingsTableProps,
+  OrderTicketProps,
+  OrderSide,
+  OrderType,
+  TimeInForce,
+  AllocationBreakdownProps,
+  BreakdownRow,
+  AllocationView,
+  NewsFeedProps,
+  NewsItem,
+  InvestmentOpsDashboardProps,
+} from "./templates/investment-ops";
 
 // -----------------------------------------------------------------------------
 // Accordion

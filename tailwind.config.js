@@ -52,6 +52,16 @@ module.exports = {
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
         },
+        positive: {
+          DEFAULT: "hsl(var(--positive))",
+          foreground: "hsl(var(--positive-foreground))",
+          muted: "hsl(var(--positive-muted))",
+        },
+        negative: {
+          DEFAULT: "hsl(var(--negative))",
+          foreground: "hsl(var(--negative-foreground))",
+          muted: "hsl(var(--negative-muted))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
