@@ -25,13 +25,15 @@
 
 | Component | Priority | Description | Dependencies |
 |-----------|----------|-------------|--------------|
-| **Command Palette** | 🟢 Low | Searchable command menu (⌘K) for power users | cmdk |
+| **Command Palette** | ✅ Complete | `CommandPalette`, `CommandPaletteTrigger`, `CommandInput`, `CommandList`, `CommandEmpty`, `CommandLoading`, `CommandGroup`, `CommandItem`, `CommandSeparator`, `useCommandPalette` | Searchable command menu (⌘K) for power users, Dialog + ScrollArea integration, flat groups, async search support; nested sub-actions deferred per v1 plan | cmdk |
+| **Toggle Group** | ✅ Complete | `ToggleGroup`, `ToggleGroupItem`, `toggleGroupVariants`, `toggleGroupItemVariants` | Single/multi segmented control, default/outline variants, xs/sm/md/lg sizes | Radix Toggle Group |
+| **Toolbar** | ✅ Complete | `Toolbar`, `ToolbarButton`, `ToolbarToggle`, `ToolbarToggleGroup`, `ToolbarToggleItem`, `ToolbarSeparator`, `ToolbarLabel`, `toolbarVariants`, `toolbarButtonVariants` | Dense action strip, horizontal/vertical orientation, roving tabindex, toggle-group composes Phase 1 `ToggleGroup` | Radix Toolbar |
+| **Resizable** | ✅ Complete | `Resizable` (alias `ResizablePanelGroup`), `ResizablePanel`, `ResizableHandle`, `resizableHandleVariants` | Draggable collapsible multi-pane layouts, keyboard resize (Arrow + Shift), `autoSaveId` persistence (SSR-safe), line/bar/grip handle variants | react-resizable-panels |
+| **OrderBook** | ✅ Complete | `OrderBook`, `OrderBookSide`, `OrderBookRow`, `OrderBookSpread`, `OrderBookHeader`, `OrderBookSkeleton`, `orderBookRowVariants`, `orderBookSideVariants` | Level-2 depth ladder with bid/ask depth bars + spread; memoized rows; throttled SR summary; exports from `./finance` secondary entrypoint | - |
+| **TimeAndSales** | ✅ Complete | `TimeAndSales`, `TimeAndSalesRow`, `TimeAndSalesHeader`, `timeAndSalesRowVariants` | Streaming recent-trades tape, rolling window, autoscroll unless scrolled up, throttled SR summary; exports from `./finance` secondary entrypoint | - |
 | **Progress (advanced)** | 🟡 Medium | Complex/segmented determinate progress | - |
 | **Collapsible** | 🟢 Low | Expandable section | Radix Collapsible |
-| **Toggle Group** | 🟢 Low | Single/multi toggle selection | Radix Toggle Group |
-| **Toolbar** | 🟢 Low | Action toolbar | Radix Toolbar |
 | **Menubar** | 🟢 Low | Application menu bar with Electron/desktop enhancements | Radix Menubar |
-| **Resizable** | 🟢 Low | Resizable panels | react-resizable-panels |
 | **Color Picker** | 🟢 Low | Color selection with advanced variants | - |
 | **File Upload** | 🟢 Low | Drag & drop uploads; resumable and advanced flows | - |
 | **Rich Text Editor** | 🟢 Low | WYSIWYG editor | Tiptap or Slate |

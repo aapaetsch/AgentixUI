@@ -38,6 +38,16 @@
 - [x] Switch
 - [x] Table
 - [x] Tabs
+- [x] Typography (composed template support; polymorphic text scale)
+- [x] NumericText (finance numeric renderer with semantic P&L coloring)
+- [x] AnimatedNumber (rAF-based value transitions, reduced-motion aware)
+- [x] ToggleGroup (single/multi segmented control, composes inside Toolbar)
+- [x] Resizable (wraps react-resizable-panels v3; `autoSaveId` persistence, SSR-safe)
+- [x] CommandPalette (cmdk + Dialog + ScrollArea; `useCommandPalette` hook)
+- [x] Toolbar (Radix Toolbar + composition of ToggleGroup; horizontal/vertical)
+- [x] OrderBook (finance widget; exports from `./finance`)
+- [x] TimeAndSales (finance widget; exports from `./finance`)
+- [x] Investment-ops templates (StatTile, AccountSummary, Watchlist, HoldingsTable, OrderTicket, AllocationBreakdown, NewsFeed, InvestmentOpsDashboard; exports from `./templates/investment-ops`)
 - [x] Textarea
 - [x] Toast (basic)
 - [x] Tooltip

@@ -71,12 +71,26 @@
 - [x] Carousel (complete)
 - [x] Multi-Select (complete)
 - [x] Data Table (complete)
-- [ ] Command Palette (low priority - planned)
+- [x] Command Palette (complete — moved up, blocker for investment-ops dashboard)
+- [x] Toggle Group (complete — blocker for investment-ops dashboard)
+- [x] Toolbar (complete — blocker for investment-ops dashboard)
+- [x] Resizable (complete — blocker for investment-ops dashboard)
 
-## Phase 7: Templates
-**Goal:** Full page layouts and templates
+## Phase 7: Investment-Ops Finance Widgets
+**Goal:** Finance-specific streaming widgets for the dashboard right rail
 
-- [ ] Admin Dashboard Layout
-- [ ] Auth Pages
-- [ ] Settings Page
-- [ ] Data Dashboard
+- [x] OrderBook (complete — exports from `./finance`)
+- [x] TimeAndSales (complete — exports from `./finance`)
+
+## Phase 8: Investment-Ops Templates
+**Goal:** Composed presentational + interaction-focused blocks under `src/templates/investment-ops/`
+
+- [x] StatTile
+- [x] AccountSummary
+- [x] Watchlist
+- [x] HoldingsTable
+- [x] OrderTicket (simple equity flow; multi-leg options deferred)
+- [x] AllocationBreakdown
+- [x] NewsFeed
+- [x] InvestmentOpsDashboard (composed shell; integration showcase)
+- [x] Secondary entrypoints (`./finance`, `./templates/investment-ops`) wired in `tsup.config.ts` + `package.json` `exports`
