@@ -14,7 +14,12 @@
 | **Checkbox** | ✅ Complete | Single checkbox with indeterminate support | Basic form control |
 | **Textarea** | ✅ Complete | Multi-line text input with auto-resize | - |
 | **Radio** | ✅ Complete | Radio group with variants | Radix Radio Group |
-| **Typography** | 📋 Planned | Headings, paragraphs, prose styling | - |
+| **Typography** | ✅ Complete | `Typography`, `typographyVariants`, `NumericText`, `numericTextVariants` | Headings/prose with MD3 type scale; `NumericText` is the finance-grade colorized-number renderer |
+| **Label** | ✅ Complete | `Label` | Plain `<label>` per shadcn (no Radix Label dependency) |
+| **Field** | ✅ Complete | `Field`, `FieldLabel`, `FieldDescription`, `FieldError`, `FieldContent` | Flat-composition form wrapper (label + description + error + content). v1 is context-free; consumer wires `aria-invalid`/`aria-describedby` |
+| **TrendIndicator** | ✅ Complete | `TrendIndicator`, `trendIndicatorVariants` | Signed value + up/down/minus arrow (`lucide-react`) + `text-positive`/`text-negative`/`text-muted-foreground` colorization via existing `pnlColorClass` |
+| **Kbd** | ✅ Complete | `Kbd` | Inline `<kbd>` key indicator for shortcut documentation |
+| **VisuallyHidden** | ✅ Complete | `VisuallyHidden` | sr-only a11y primitive with `focus:not-sr-only` reveal; polymorphic `as` prop |
 | **Badge** | ✅ Complete | `Badge`, `BadgeAnchor`, `AnimatedBadge` | Notification badges |
 | **Chip** | ✅ Complete | `Chip`, `ChipGroup`, `ClosableChip` | Removable tags, filters, and status chips |
 | **Avatar** | ✅ Complete | `Avatar`, `AvatarImage`, `AvatarFallback`, `AvatarGroup`, `AvatarBadge`, `AnimatedAvatar` | User representation |
@@ -52,6 +57,11 @@
 | **Sheet / Drawer** | ✅ Complete | `Sheet`, `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetFooter`, `SheetTitle`, `SheetDescription`, `SheetClose` | Canonical sheet API includes gesture-aware interactions |
 | **Skeleton** | ✅ Complete | `Skeleton`, `SkeletonText`, `SkeletonCard`, `SkeletonAvatar`, `SkeletonButton`, `SkeletonInput` | Loading placeholders with pulse/shimmer animations |
 | **Progress** | ✅ Complete | `LinearProgress`, `CircularProgress`, `SkillBar`, `ProgressGroup`, `valueFormatters` | Horizontal/vertical bars, circular, gradients, indeterminate mode |
+| **Gauge** | ✅ Complete | `Gauge`, `gaugeVariants`; sizes sm/md/lg; variants semicircle/full; threshold zones | Radial dial sibling of `Progress`. Pure SVG, optional animated needle |
+| **SegmentedProgress** | ✅ Complete | `SegmentedProgress`, `segmentedProgressVariants`, `Segment` type | Multi-segment range bar (siblings of `LinearProgress`); horizontal/vertical, optional value labels, `--chart-1`…`--chart-5` palette fallback |
+| **Sparkline** | ✅ Complete | `Sparkline`, `sparklineContainerVariants`; variants line/area/bar | Dependency-free inline SVG micro-chart; drop-in for `StatTile.sparklineRenderSlot`. Closes the `@agentix/charts` boundary case (`docs/chart-library-strategy.md`) |
+| **MiniBars** | ✅ Complete | `MiniBars`, `miniBarsContainerVariants` | One-row SVG divergent histogram; sibling of `Sparkline` |
+| **EmptyState** | ✅ Complete | `EmptyState`, `emptyStateIconVariants`, `emptyStateTitleVariants` | Zero/empty-state composer (muted icon + title + description + CTA `action` slot). Default `lucide-react` `Inbox` icon |
 
 ### Internal/Utility
 

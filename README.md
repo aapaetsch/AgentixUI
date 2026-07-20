@@ -123,6 +123,36 @@ Richer APIs and interaction models for complex use cases.
 | `DataTable` | Sortable, filterable, paginated table with virtualization |
 | `ScrollArea` | Custom scrollbar with infinite scroll support |
 
+## Component Library Architecture
+
+`@agentix/ui` is intentionally **UI‑only**. It contains primitives, layout, form, navigation, disclosure, overlays, and small inline‑SVG data‑viz primitives (`Sparkline`‑class components, `NumericText`, `TrendIndicator`, `Gauge`, `SegmentedProgress`). It deliberately **does not** ship general‑purpose chart components (line, bar, candlestick, heatmap with axes/legends, etc.).
+
+**Why:** Real charting brings heavy dependencies (D3 modules, `visx`, `lightweight-charts`, possibly Canvas/WebGL) and a faster release cadence than the UI kit. Bundling them would force every consumer — settings pages, auth flows, marketing forms — to ship megabytes they may never use. See `docs/chart-library-strategy.md` for the full decision record and the boundary contract.
+
+**Boundary contract:**
+
+```
+@agentix/charts  ->  @agentix/ui   (charts consumes ui primitives, tokens, cn())
+@agentix/ui      ✗   @agentix/charts  (ui MUST NOT depend on charts)
+```
+
+`@agentix/charts` (planned, separate package in this monorepo) will ship the charting surface: `LineChart`, `AreaChart`, `BarChart`, `Histogram`, `ScatterPlot`, `BoxPlot`, `Treemap`, full `Heatmap`/`DonutChart` with axes/legends, `CandlestickChart`, `DepthChart`, plus the quant domain widgets (`EquityCurve`, `DrawdownCurve`, `CorrelationMatrix`, `SignalHeatmap`, `ICBars`, `QuantileSpreadChart`, etc.). Composed dashboards (`BacktestTearsheet`, `RiskDashboard`, `SymbolDetailPage`) will likely live in a third `@agentix/templates` package and consume both.
+
+`globals.css` remains the **single source of truth** for theming across both packages — `@agentix/charts` reads UI kit tokens and defines no visual identity of its own.
+
+## Roadmap — Financial & Quant Components
+
+A consolidated, ranked gap analysis of financial dashboard and quant‑workspace components is captured in `docs/finance-quant-component-roadmap.md`. It covers 145 components across six sections:
+
+1. **Foundational charting & data‑viz primitives**
+2. **Form & text primitives**
+3. **Layout & shell (finance‑flavored)**
+4. **Financial dashboard components** (microstructure, portfolio, news/research)
+5. **Quant dashboard components** (charts, signal research, risk, backtest management, infra UI)
+6. **Composed templates** (BacktestTearsheet, AlphaTearsheet, RiskDashboard, SymbolDetailPage …)
+
+Each row is ranked P0–P4, tagged with effort (XS–XL), and assigned a destination 🟦 `@agentix/ui` / 🟧 `@agentix/charts` / ⬜ templates. A 10‑phase build order (A–J) explicitly schedules UI‑in‑scope work first and chart work after the `@agentix/charts` package is scaffolded.
+
 ## Theming
 
 The library uses CSS variables for theming. Customize by overriding the following variables:
@@ -200,4 +230,6 @@ MIT � Aidan
 - [Documentation](./docs/ROADMAP.md)
 - [Roadmap](./docs/roadmap/overview.md)
 - [Changelog](./docs/roadmap/changelog.md)
+- [Chart Library Strategy](./docs/chart-library-strategy.md)
+- [Financial & Quant Component Roadmap](./docs/finance-quant-component-roadmap.md)
 

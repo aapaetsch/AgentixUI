@@ -143,6 +143,30 @@ export type {
 } from "./components/typography";
 
 // -----------------------------------------------------------------------------
+// TrendIndicator
+// -----------------------------------------------------------------------------
+export {
+  TrendIndicator,
+  trendIndicatorVariants,
+} from "./components/trend-indicator";
+export type {
+  TrendIndicatorProps,
+  TrendDirection,
+} from "./components/trend-indicator";
+
+// -----------------------------------------------------------------------------
+// Kbd
+// -----------------------------------------------------------------------------
+export { Kbd } from "./components/kbd";
+export type { KbdProps } from "./components/kbd";
+
+// -----------------------------------------------------------------------------
+// VisuallyHidden
+// -----------------------------------------------------------------------------
+export { VisuallyHidden } from "./components/visually-hidden";
+export type { VisuallyHiddenProps } from "./components/visually-hidden";
+
+// -----------------------------------------------------------------------------
 // AnimatedNumber
 // -----------------------------------------------------------------------------
 export {
@@ -554,6 +578,30 @@ export { Checkbox, checkboxVariants } from "./components/checkbox";
 export type { CheckboxProps } from "./components/checkbox";
 
 // -----------------------------------------------------------------------------
+// Label
+// -----------------------------------------------------------------------------
+export { Label } from "./components/label";
+export type { LabelProps } from "./components/label";
+
+// -----------------------------------------------------------------------------
+// Field
+// -----------------------------------------------------------------------------
+export {
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+  FieldContent,
+} from "./components/field";
+export type {
+  FieldProps,
+  FieldLabelProps,
+  FieldDescriptionProps,
+  FieldErrorProps,
+  FieldContentProps,
+} from "./components/field";
+
+// -----------------------------------------------------------------------------
 // Dialog
 // -----------------------------------------------------------------------------
 export {
@@ -703,6 +751,16 @@ export type {
   SkeletonButtonProps,
   SkeletonInputProps,
 } from "./components/skeleton";
+
+// -----------------------------------------------------------------------------
+// EmptyState
+// -----------------------------------------------------------------------------
+export {
+  EmptyState,
+  emptyStateIconVariants,
+  emptyStateTitleVariants,
+} from "./components/empty-state";
+export type { EmptyStateProps } from "./components/empty-state";
 
 // -----------------------------------------------------------------------------
 // Switch
@@ -1093,6 +1151,55 @@ export type {
   UseAnimatedProgressOptions,
   UseAnimatedProgressReturn,
 } from "./components/progress";
+
+// -----------------------------------------------------------------------------
+// Sparkline
+// -----------------------------------------------------------------------------
+export {
+  Sparkline,
+  sparklineContainerVariants,
+} from "./components/sparkline";
+export type {
+  SparklineProps,
+  SparklineVariant,
+} from "./components/sparkline";
+
+// -----------------------------------------------------------------------------
+// MiniBars
+// -----------------------------------------------------------------------------
+export {
+  MiniBars,
+  miniBarsContainerVariants,
+} from "./components/mini-bars";
+export type {
+  MiniBarsProps,
+} from "./components/mini-bars";
+
+// -----------------------------------------------------------------------------
+// Gauge
+// -----------------------------------------------------------------------------
+export {
+  Gauge,
+  gaugeVariants,
+} from "./components/gauge";
+export type {
+  GaugeProps,
+  GaugeVariant,
+  GaugeSize,
+  GaugeThreshold,
+} from "./components/gauge";
+
+// -----------------------------------------------------------------------------
+// SegmentedProgress
+// -----------------------------------------------------------------------------
+export {
+  SegmentedProgress,
+  segmentedProgressVariants,
+} from "./components/segmented-progress";
+export type {
+  SegmentedProgressProps,
+  Segment,
+} from "./components/segmented-progress";
 
 // -----------------------------------------------------------------------------
 // Flex
