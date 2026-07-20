@@ -46,6 +46,8 @@ export interface WatchlistItem {
   change: number;
   changePercent: number;
   volume?: number;
+  /** Optional ticker/issuer logo URL (e.g. brand mark shown beside the symbol). */
+  logoUrl?: string;
 }
 
 /**
@@ -61,4 +63,6 @@ export interface HoldingRow {
   unrealizedPnLPercent: number;
   weightPercent?: number;
   dayChange?: number;
+  /** Optional ticker/issuer logo URL (e.g. brand mark shown beside the symbol). */
+  logoUrl?: string;
 }

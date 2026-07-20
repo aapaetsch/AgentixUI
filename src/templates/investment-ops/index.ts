@@ -7,7 +7,11 @@
  * instead.
  */
 
-export { StatTile, type StatTileProps } from "./stat-tile";
+export { StatTile, type StatTileProps, type StatTileAlign } from "./stat-tile";
+export {
+  TickerImage,
+  type TickerImageProps,
+} from "./ticker-image";
 export { AccountSummary, type AccountSummaryProps } from "./account-summary";
 export { Watchlist, type WatchlistProps } from "./watchlist";
 export { HoldingsTable, type HoldingsTableProps } from "./holdings-table";

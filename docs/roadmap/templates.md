@@ -15,7 +15,7 @@ Folder: `src/templates/investment-ops/` (secondary entrypoint `@agentix/ui/templ
 | **NewsFeed** | ✅ Complete | Filterable feed (`MultiSelect` + `ToggleGroup`) + `ScrollArea`, `Avatar`, `Badge`, `Chip` |
 | **InvestmentOpsDashboard** | ✅ Complete | Composed dashboard shell: `Navbar` + `NavItem` rail + `Tabs` + `Resizable` + `OrderBook` + `TimeAndSales` + `OrderTicket` via `ExtendedFAB` |
 
-Note: The generic `Data Dashboard` placeholder is superseded by this concrete investment-ops set.
+Note: The generic `Data Dashboard` placeholder is superseded by this concrete investment-ops set. Storybook stories exist for all 8 blocks under `Templates/Investment-Ops/*` (added 2026-07-20).
 
 ## Generic Templates (Planned)
 

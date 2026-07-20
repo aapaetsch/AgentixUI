@@ -16,6 +16,8 @@ import {
   type NumericFormat,
 } from "../../lib/number-utils";
 
+export type StatTileAlign = "left" | "center" | "right";
+
 export interface StatTileProps {
   /** Label shown as the stat title (e.g. "Portfolio Value"). */
   label: string;
@@ -37,6 +39,12 @@ export interface StatTileProps {
   sparkline?: React.ReactNode;
   /** Loading state: renders Skeletons for value and delta. */
   loading?: boolean;
+  /**
+   * Horizontal alignment of the tile's content (label, value, delta row, and
+   * sparkline). When `"center"`, the period badge still anchors inline with
+   * the label. @default "left"
+   */
+  align?: StatTileAlign;
   /** Click handler. When provided, the Card becomes interactive. */
   onClick?: () => void;
   className?: string;
@@ -67,6 +75,7 @@ export function StatTile({
   icon,
   sparkline,
   loading = false,
+  align = "left",
   onClick,
   className,
   currency = "USD",
@@ -84,6 +93,20 @@ export function StatTile({
   ) : deltaIsNegative ? (
     <ArrowDown className="size-3.5 text-negative" aria-hidden />
   ) : null;
+
+  const alignClass =
+    align === "center"
+      ? "items-center text-center justify-center"
+      : align === "right"
+      ? "items-end text-right justify-end"
+      : "items-start text-left justify-start";
+
+  const headerJustify =
+    align === "center"
+      ? "justify-center"
+      : align === "right"
+      ? "justify-end"
+      : "justify-between";
 
   return (
     <Card
@@ -103,7 +126,7 @@ export function StatTile({
           : undefined
       }
     >
-      <CardHeader className="flex items-center justify-between gap-2 px-4 pt-4 pb-1">
+      <CardHeader className={cn("flex items-center gap-2 px-4 pt-4 pb-1", headerJustify)}>
         <Typography as="div" variant="overline" className="flex items-center gap-1.5">
           {icon ? <Slot>{icon}</Slot> : null}
           {label}
@@ -111,7 +134,7 @@ export function StatTile({
         {period ? <Badge variant="secondary">{period}</Badge> : null}
       </CardHeader>
 
-      <CardContent className="flex flex-col gap-1 px-4 pb-4 pt-1">
+      <CardContent className={cn("flex flex-col gap-1 px-4 pb-4 pt-1", alignClass)}>
         <div className="text-2xl font-semibold tabular-nums">
           {loading ? (
             <span className="inline-block h-7 w-28 animate-pulse rounded bg-muted" />
@@ -137,7 +160,7 @@ export function StatTile({
       </CardContent>
 
       {sparkline ? (
-        <div className="px-4 pb-4">{sparkline}</div>
+        <div className={cn("px-4 pb-4 flex", alignClass)}>{sparkline}</div>
       ) : null}
     </Card>
   );

@@ -8,12 +8,20 @@ import { NumericText } from "../../components/typography";
 import { Card } from "../../components/card";
 import { Alert, AlertDescription } from "../../components/alert";
 import { Button } from "../../components/button";
+import { TickerImage } from "./ticker-image";
 import type { WatchlistItem } from "../../lib/finance-types";
 
 export interface WatchlistProps {
   items: WatchlistItem[];
   /** Chart-lib sparkline render slot per row. */
   sparkline?: (item: WatchlistItem) => React.ReactNode;
+  /**
+   * When true, prepend a brand-mark avatar to the symbol column (sourced from
+   * each item's optional `logoUrl` field; falls back to symbol initials).
+ * Mirrors the ticker image shown next to a watchlist entry in apps like
+   * Wealthsimple. @default false
+   */
+  showTickerImage?: boolean;
   onRowSelect?: (item: WatchlistItem) => void;
   /** Optional context menu node per row (rendered by the consumer's ContextMenu). */
   contextMenu?: (item: WatchlistItem) => React.ReactNode;
@@ -27,16 +35,18 @@ export interface WatchlistProps {
  *
  * Renders a `DataTable` with columns: Symbol | Last | Change | Change % | Volume | Sparkline.
  * The sparkline column delegates to a chart lib via the `sparkline(item)` render slot — the
- * template does not own the chart.
+ * template does not own the chart. Pass `showTickerImage` to prepend a brand-mark avatar
+ * (from each item's optional `logoUrl`) beside the symbol.
  *
  * @example
  * ```tsx
- * <Watchlist items={items} sparkline={(item) => <Sparkline data={item.history} />} />
+ * <Watchlist items={items} showTickerImage sparkline={(item) => <Sparkline data={item.history} />} />
  * ```
  */
 export function Watchlist({
   items,
   sparkline,
+  showTickerImage = false,
   loading = false,
   emptyAction,
   className,
@@ -49,6 +59,9 @@ export function Watchlist({
         header: "Symbol",
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
+            {showTickerImage ? (
+              <TickerImage symbol={row.original.symbol} src={row.original.logoUrl} />
+            ) : null}
             <span className="font-medium">{row.original.symbol}</span>
             <Badge variant="secondary">EQ</Badge>
           </div>
@@ -118,7 +131,7 @@ export function Watchlist({
           ]
         : []),
     ],
-    [sparkline]
+    [sparkline, showTickerImage]
   );
 
   if (!loading && items.length === 0) {

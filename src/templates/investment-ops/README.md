@@ -20,11 +20,14 @@ import {
 
 ## Blocks
 
-- **StatTile** — KPI tile composing `Card` + `Badge` + `AnimatedNumber` + a sparkline render slot.
+- **StatTile** — KPI tile composing `Card` + `Badge` + `AnimatedNumber` + a sparkline render slot. Supports an `align` prop (`left` | `center` | `right`) for content alignment.
 - **AccountSummary** — Grid of `StatTile`s + optional warning `Alert`.
 - **Watchlist** — `DataTable` of watchlist symbols with colorized P&L via `NumericText` and an
-  optional sparkline render slot.
-- **HoldingsTable** — `DataTable` of holdings with colorized P&L columns and row actions.
+  optional sparkline render slot. Pass `showTickerImage` to prepend a brand-mark avatar beside each
+  symbol (sourced from each item's optional `logoUrl`).
+- **HoldingsTable** — `DataTable` of holdings with colorized P&L columns and row actions. Pass
+  `showTickerImage` to prepend a brand-mark avatar beside each symbol (sourced from each holding's
+  optional `logoUrl`).
 - **OrderTicket** — Right-docked `Sheet` form for simple equity order entry. Uses `ToggleGroup`,
   `InputIncrementor`, `Select`, `AlertDialog`, and `toast.promise`. Multi-leg options deferred.
 - **AllocationBreakdown** — `Card` + `Tabs` of Sector / Asset Class / Holding with a chart render

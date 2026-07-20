@@ -3,11 +3,11 @@ import type { ColumnDef } from "@tanstack/react-table";
 
 import { cn } from "../../lib/utils";
 import { DataTable, type DataTableRowAction } from "../../components/data-table";
-import { Badge } from "../../components/badge";
 import { NumericText } from "../../components/typography";
 import { Card } from "../../components/card";
 import { Alert, AlertDescription } from "../../components/alert";
 import { Button } from "../../components/button";
+import { TickerImage } from "./ticker-image";
 import type { HoldingRow } from "../../lib/finance-types";
 
 export interface HoldingsTableProps {
@@ -15,6 +15,12 @@ export interface HoldingsTableProps {
   onRowAction?: (action: string, holding: HoldingRow) => void;
   /** Optional P&L tooltip content per row (rendered by consumer's Tooltip). */
   pnlTooltip?: (holding: HoldingRow) => React.ReactNode;
+  /**
+   * When true, prepend a Ticker column showing the instrument's brand mark
+   * (uses `logoUrl` from each holding when available; falls back to symbol
+   * initials via `AvatarFallback`). @default false
+   */
+  showTickerImage?: boolean;
   loading?: boolean;
   virtualize?: boolean;
   className?: string;
@@ -23,19 +29,24 @@ export interface HoldingsTableProps {
 /**
  * HoldingsTable - Composed template for a holdings/positions table.
  *
- * Columns: Symbol (+sector Badge) | Quantity | Avg Cost | Last | Mkt Value |
- * Unrealized P&L $ | Unrealized P&L % | Weight % | Day Change. P&L columns are
- * colorized via `NumericText colorize`. Row actions render via the
+ * Columns: [Ticker image when `showTickerImage`] Symbol | Quantity | Avg Cost |
+ * Last | Mkt Value | Unrealized P&L $ | Unrealized P&L % | Weight % | Day Change.
+ * P&L columns are colorized via `NumericText colorize`. Row actions render via the
  * DropdownMenu exposed by `DataTable`'s `rowActions`.
+ *
+ * Pass `showTickerImage` to prepend a compact brand-mark avatar (sourced from
+ * each holding's optional `logoUrl` field) beside the symbol — mirroring the
+ * ticker image shown next to a holding in apps like Wealthsimple.
  *
  * @example
  * ```tsx
- * <HoldingsTable holdings={positions} onRowAction={handleAction} />
+ * <HoldingsTable holdings={positions} onRowAction={handleAction} showTickerImage />
  * ```
  */
 export function HoldingsTable({
   holdings,
   onRowAction,
+  showTickerImage = false,
   loading = false,
   virtualize = false,
   className,
@@ -59,6 +70,9 @@ export function HoldingsTable({
         header: "Symbol",
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
+            {showTickerImage ? (
+              <TickerImage symbol={row.original.symbol} src={row.original.logoUrl} />
+            ) : null}
             <span className="font-medium">{row.original.symbol}</span>
           </div>
         ),
@@ -160,7 +174,7 @@ export function HoldingsTable({
           ) : null,
       },
     ],
-    []
+    [showTickerImage]
   );
 
   if (!loading && holdings.length === 0) {
