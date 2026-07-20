@@ -23,6 +23,13 @@ export interface VisuallyHiddenProps
  * This mirrors the Radix `VisuallyHidden` utility but stays dependency-free:
  * the clip + focus-reveal pattern is driven purely by Tailwind utilities.
  *
+ * @remarks
+ * `ref` is typed as `HTMLElement` because the rendered element is polymorphic
+ * (via `as`). For `as="a"` use sites that need anchor-specific API access
+ * (`HTMLAnchorElement` methods/properties), cast the ref via
+ * `as HTMLAnchorElement`. A generic refactor that types the ref as
+ * `React.ElementRef<T>` is tracked as a future improvement.
+ *
  * @example
  * ```tsx
  * <VisuallyHidden as="label" htmlFor="search">Search</VisuallyHidden>
@@ -31,15 +38,16 @@ export interface VisuallyHiddenProps
  */
 export const VisuallyHidden = React.forwardRef<HTMLElement, VisuallyHiddenProps>(
   ({ as: Comp = "span", className, ...rest }, ref) => {
-    const Component = Comp as React.ElementType;
     return (
-      <Component
+      <Comp
         ref={ref}
         className={cn(
           // Base: visually clip the element while keeping it in the a11y tree.
-          "absolute w-[1px] h-[1px] overflow-hidden p-0 m-[-1px] border-0 clip-[rect(0,0,0,0)] whitespace-nowrap",
+          // `sr-only` uses Tailwind's built-in `clip-path: inset(50%)` pattern,
+          // paired with `focus:not-sr-only` to reveal on focus (skip-link).
+          "sr-only absolute",
           // Reveal on focus so the primitive works for skip-link patterns.
-          "focus:absolute focus:w-auto focus:h-auto focus:p-2 focus:m-0 focus:overflow-visible focus:whitespace-normal focus:clip-auto",
+          "focus:not-sr-only focus:absolute focus:w-auto focus:h-auto focus:p-2 focus:m-0 focus:overflow-visible focus:whitespace-normal",
           className
         )}
         {...rest}

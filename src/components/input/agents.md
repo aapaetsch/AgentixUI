@@ -11,6 +11,11 @@ A versatile input component offering two distinct visual styles:
 1. **Input (Shadcn variant)**: Standard shadcn/ui styled input with optional static label
 2. **OutlinedInput (MD3 variant)**: Material Design 3 outlined text field with floating label animation
 
+Note: The base `inputVariants` class includes `peer`, which enables the shadcn
+`peer-disabled:*` pattern on sibling components (e.g. `<Label>` renders
+`peer-disabled:cursor-not-allowed peer-disabled:opacity-70`). Keep `peer` on the
+input element so the pattern stays active for every Label paired with Input.
+
 ## Props
 
 ### Input (Shadcn Variant)

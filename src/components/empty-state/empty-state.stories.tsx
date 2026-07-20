@@ -90,6 +90,18 @@ export const WithoutIcon: Story = {
   },
 };
 
+/**
+ * `icon={false}` mirrors the documented `icon={null}` behavior — both hide
+ * the icon slot. Story guards against regression of the falsy branch.
+ */
+export const WithoutIconFalse: Story = {
+  args: {
+    icon: false,
+    title: "No notifications",
+    description: "You're all caught up.",
+  },
+};
+
 export const CustomIcon: Story = {
   args: {
     icon: <Search className="h-10 w-10 text-muted-foreground" />,

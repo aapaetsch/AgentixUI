@@ -16,7 +16,9 @@ import { cn } from "../../lib/utils";
 const inputVariants = cva(
   [
     // Base styles
-    "flex w-full",
+    // `peer` enables the shadcn `peer-disabled:*` pattern on sibling labels
+    // (e.g. <Label>), matching the convention used elsewhere in this kit.
+    "flex w-full peer",
     "bg-transparent",
     "text-foreground placeholder:text-muted-foreground",
     // Disabled state

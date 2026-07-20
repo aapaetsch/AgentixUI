@@ -17,9 +17,9 @@ export interface MiniBarsProps
     VariantProps<typeof miniBarsContainerVariants> {
   /** The numeric series to visualize as vertical bars. Length 1..N. */
   data: number[];
-  /** viewBox width. @default 100 */
+  /** viewBox width. The SVG element is sized via the viewBox and Tailwind/inline `w-*`/`h-*` classes; the `width` prop no longer sets an inline style that would override those classes. @default 100 */
   width?: number;
-  /** viewBox height. @default 16 */
+  /** viewBox height. See {@link MiniBarsProps.width}. @default 16 */
   height?: number;
   /** Gap between bars, in viewBox units. @default 2 */
   gap?: number;
@@ -31,9 +31,10 @@ export interface MiniBarsProps
    */
   color?: string;
   /**
-   * Optional positive bar color. When both `positiveColor` and
-   * `negativeColor` are provided, bars at or above 0 use `positiveColor` and
-   * bars below 0 use `negativeColor`.
+   * Optional positive bar color. When **both** `positiveColor` and
+   * `negativeColor` are provided, bars at or above 0 use `positiveColor`
+   * and bars below 0 use `negativeColor`. A partial pair (only one set) is
+   * ignored and both sides fall back to `color` — provide both or neither.
    */
   positiveColor?: string;
   /** Optional negative bar color. See {@link MiniBarsProps.positiveColor}. */
@@ -151,7 +152,7 @@ export const MiniBars = React.forwardRef<SVGSVGElement, MiniBarsProps>(
     const bars: { x: number; y: number; h: number; fill: string }[] = [];
     for (let i = 0; i < total; i++) {
       const v = points[i]!;
-      const x = i * slot + (slot - barWidth) / 2;
+      const x = i * slot + Math.max((slot - barWidth) / 2, 0);
       const valueHeight = Math.abs(v) * scale;
       if (v >= 0) {
         bars.push({
@@ -180,7 +181,7 @@ export const MiniBars = React.forwardRef<SVGSVGElement, MiniBarsProps>(
         role="img"
         aria-label={svgProps["aria-label"] ?? "histogram"}
         className={cn(miniBarsContainerVariants(), className)}
-        style={{ width, height, ...style }}
+        style={style}
         {...svgProps}
       >
         {bars.map((bar, i) => (

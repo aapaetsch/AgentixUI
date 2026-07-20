@@ -114,9 +114,9 @@ function buildChartPalette(): string[] {
 
 const chartPalette = buildChartPalette();
 
-function resolveSegmentColor(index: number, explicit?: string): string {
+function resolveSegmentColor(palette: string[], index: number, explicit?: string): string {
   if (explicit) return explicit;
-  return chartPalette[index % chartPalette.length] || "currentColor";
+  return palette[index % palette.length] || "currentColor";
 }
 
 // ============================================================================
@@ -167,8 +167,51 @@ export const SegmentedProgress = React.forwardRef<
   ) => {
     const safeSegments = segments ?? [];
     const sum = safeSegments.reduce((acc, s) => acc + Math.max(0, s.value), 0);
+
+    // M5: `max < sum` historically silently dropped `max` and used `sum`. We
+    // now warn in dev so consumers notice the invalid configuration, while
+    // preserving the existing visual behaviour (bar fills completely; no
+    // remainder). Use `max > sum` for the remainder case as before.
+    if (
+      process.env.NODE_ENV !== "production" &&
+      max != null &&
+      max > 0 &&
+      max < sum
+    ) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[SegmentedProgress] max (${max}) is less than the segment sum (${sum}). ` +
+          "`max` is effectively ignored — segments fill the bar with no remainder."
+      );
+    }
+
     const total = max != null && max > sum ? max : sum;
     const hasRemainder = max != null && max > sum;
+
+    // M6: Recompute the chart palette per mount so that late-loading CSS
+    // (the tokens resolve to "" before paint) and runtime theme switches
+    // are reflected. The MutationObserver watches `document.documentElement`
+    // for class/data-theme changes and invalidates the memo.
+    const [paletteVersion, setPaletteVersion] = React.useState(0);
+    React.useEffect(() => {
+      if (typeof document === "undefined") return;
+      const observer = new MutationObserver(() => setPaletteVersion((v) => v + 1));
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class", "data-theme"],
+      });
+      return () => observer.disconnect();
+    }, []);
+    const palette = React.useMemo(
+      () => buildChartPalette(),
+      // `paletteVersion` is the only thing that changes at runtime; the
+      // palette rebuild reads the freshly-resolved tokens.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [paletteVersion]
+    );
+
+    const resolveColor = (index: number, explicit?: string) =>
+      resolveSegmentColor(palette, index, explicit);
 
     const withLabels = showValues && safeSegments.length > 0;
     const isVertical = orientation === "vertical";
@@ -187,10 +230,14 @@ export const SegmentedProgress = React.forwardRef<
       <div
         ref={ref}
         className={cn("flex", containerFlex, className)}
-        role="meter"
-        aria-valuetext={safeSegments
-          .map((s) => `${s.label ?? ""}: ${s.value}`)
-          .join(", ")}
+        role="presentation"
+        aria-label={
+          safeSegments.length > 0
+            ? safeSegments
+                .map((s) => `${s.label ?? ""}: ${s.value}`)
+                .join(", ")
+            : undefined
+        }
         {...rest}
       >
         {withLabels && (
@@ -198,6 +245,7 @@ export const SegmentedProgress = React.forwardRef<
             segments={safeSegments}
             total={total}
             isVertical={isVertical}
+            palette={palette}
           />
         )}
         <div
@@ -220,7 +268,7 @@ export const SegmentedProgress = React.forwardRef<
             <div className="flex-1 bg-muted" />
           ) : (
             safeSegments.map((seg, i) => {
-              const color = resolveSegmentColor(i, seg.color);
+              const color = resolveColor(i, seg.color);
               const proportion = total > 0 ? Math.max(0, seg.value) / total : 0;
               return (
                 <div
@@ -243,7 +291,7 @@ export const SegmentedProgress = React.forwardRef<
               );
             })
           )}
-          {hasRemainder && total > 0 && (
+          {hasRemainder && safeSegments.length > 0 && total > 0 && (
             <div
               className={cn(
                 "shrink-0 bg-muted/60",
@@ -272,9 +320,10 @@ interface SegmentLabelsProps {
   segments: Segment[];
   total: number;
   isVertical: boolean;
+  palette: string[];
 }
 
-function SegmentLabels({ segments, total, isVertical }: SegmentLabelsProps) {
+function SegmentLabels({ segments, total, isVertical, palette }: SegmentLabelsProps) {
   return (
     <div
       className={cn(
@@ -285,7 +334,7 @@ function SegmentLabels({ segments, total, isVertical }: SegmentLabelsProps) {
     >
       {segments.map((seg, i) => {
         const proportion = total > 0 ? Math.max(0, seg.value) / total : 0;
-        const color = resolveSegmentColor(i, seg.color);
+        const color = resolveSegmentColor(palette, i, seg.color);
         return (
           <div
             key={i}

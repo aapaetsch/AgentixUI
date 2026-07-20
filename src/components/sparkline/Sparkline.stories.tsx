@@ -17,7 +17,7 @@ const meta: Meta<typeof Sparkline> = {
     width: { control: { type: "number", min: 32, max: 320 } },
     height: { control: { type: "number", min: 12, max: 120 } },
     strokeWidth: { control: { type: "number", min: 0.5, max: 6, step: 0.5 } },
-    variant: { control: { select: ["line", "area", "bar"] } },
+    variant: { options: ["line", "area", "bar"], control: { type: "select" } },
     fill: { control: "boolean" },
     color: { control: "color" },
   },

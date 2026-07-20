@@ -142,14 +142,17 @@ export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
       <div
         ref={ref}
         className={cn(
-          "flex flex-col items-center justify-center gap-2 p-6 text-center",
+          // Outer container: `gap-4` aligns with the spec's description→action
+          // spacing while leaving enough breathing room around the icon. The
+          // title/description cluster below tightens to `gap-1`.
+          "flex flex-col items-center justify-center gap-4 p-6 text-center",
           className
         )}
         {...props}
       >
         {iconNode}
 
-        {/* Tighter spacing between title/description */}
+        {/* Tighter spacing between title/description (spec: title→description = 1). */}
         <div className="flex flex-col items-center gap-1">
           <h3
             className={cn(emptyStateTitleVariants({ size }))}
@@ -161,8 +164,8 @@ export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
           ) : null}
         </div>
 
-        {/* Looser spacing before the CTA */}
-        {action ? <div className="mt-2">{action}</div> : null}
+        {/* CTA sits one `gap-4` from the cluster above (spec: description→action = 4). */}
+        {action ? action : null}
       </div>
     );
   }

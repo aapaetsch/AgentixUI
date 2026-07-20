@@ -41,15 +41,19 @@ No new packages introduced.
   (vertical). Each segment uses `flexGrow: value / total` and `flexBasis: 0`
   so segments always sum to the full bar width regardless of `value` magnitudes.
 - **Default palette**: segments without an explicit `color` rotate through
-  `--chart-1` … `--chart-5` defined in `src/globals.css`. We resolved this at
-  module-load time via `resolveToken()` and wrap each token in `hsl(...)`.
-  When the tokens are unavailable (SSR before paint, custom theme without
-  them) the segments fall back to `currentColor`, letting a consumer colorize
-  via a parent text color.
-- **Remainder segment**: when `max` is greater than the sum of segment values,
-  an empty `bg-muted/60` segment is appended so the bar visually fills the
-  full `max`. This is the standard "allocated vs. unallocated" pattern in
-  portfolio / capacity dashboards.
+  `--chart-1` … `--chart-5` defined in `src/globals.css`. The palette is
+  resolved inside the component via `useMemo` (rebuilding on mount when the
+  CSS has painted, and on runtime theme switches via a `MutationObserver`
+  on `document.documentElement`). When the tokens are unavailable (SSR before
+  paint, custom theme without them) the segments fall back to
+  `currentColor`, letting a consumer colorize via a parent text color.
+- **`max` semantics**: when `max` is greater than the sum of segment
+  values, an empty `bg-muted/60` remainder segment is appended so the bar
+  visually fills the full `max` (the standard "allocated vs. unallocated"
+  pattern). When `max` is **less** than the sum, `max` is effectively
+  ignored — segments fill the bar completely with no remainder. A dev-mode
+  `console.warn` is emitted in that case so callers notice the invalid
+  configuration.
 - **Rounding**: the outer wrapper uses `rounded-full overflow-hidden`, so when
   `rounded` is true the corners follow the bar ends naturally. Inner segments
   only round on the outermost ends to avoid color bleed past the container.
@@ -70,9 +74,18 @@ No new packages introduced.
   proportion calculation; this is documented behavior, not an error.
 - `gap` is in pixels because flex gap units don't compose cleanly with our
   `flexBasis: 0` approach in all browsers when using relative units.
-- The default chart palette is resolved lazily on first import. If a theme is
-  applied after import (rare, but possible in HMR scenarios) the palette will
-  not re-resolve; consumers should pass explicit `color` in those cases.
+- The chart palette is resolved inside the component (not at module load) and
+  is recomputed on mount and whenever the theme toggles (via a
+  `MutationObserver` on the root element's `class`/`data-theme`). Consumers
+  can also pass explicit `color` per segment to bypass the palette entirely.
+- The outer container uses `role="presentation"` with an `aria-label`
+  summarizing the segments. `meter` was misleading because an aggregate of
+  segments is not a single meter reading and ARIA `meter` expects
+  `aria-valuenow/min/max` that don't map cleanly onto a multi-segment bar.
+- Empty `segments` with `max > 0` renders a single muted bar (handled by
+  the empty-state branch). The remainder segment is gated on
+  `safeSegments.length > 0` so the empty state never renders two
+  overlapping muted divs.
 
 ## Related
 

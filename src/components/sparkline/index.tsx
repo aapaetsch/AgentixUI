@@ -15,6 +15,13 @@ import { cn } from "../../lib/utils";
  * - `line` renders a single stroked polyline.
  * - `area` renders the line plus a translucent gradient fill beneath it.
  * - `bar` renders vertical bars spaced across the width.
+ *
+ * @remarks
+ * For the `bar` variant, values are normalized into `[0, 1]` against the
+ * domain — negative values therefore clamp to `0` and render as minimum-height
+ * bars at the baseline. For divergent data with a meaningful zero crossing,
+ * prefer `MiniBars`, which draws positives upward and negatives downward from
+ * the zero line.
  */
 export type SparklineVariant = "line" | "bar" | "area";
 
@@ -26,9 +33,9 @@ export interface SparklineProps
     VariantProps<typeof sparklineContainerVariants> {
   /** The numeric series to visualize. Must contain at least one value. */
   data: number[];
-  /** viewBox width. Rendered element is sized via the `width`/`height` attributes. @default 100 */
+  /** viewBox width. The SVG element is sized via the viewBox and Tailwind/inline `w-*`/`h-*` classes; the `width` prop no longer sets an inline style that would override those classes. @default 100 */
   width?: number;
-  /** viewBox height. @default 30 */
+  /** viewBox height. See {@link SparklineProps.width}. @default 30 */
   height?: number;
   /** Stroke width (in viewBox units) for the line/area variants. @default 1.5 */
   strokeWidth?: number;
@@ -73,9 +80,11 @@ export const sparklineContainerVariants = cva(
 
 /** Generate a stable gradient id per component instance. */
 function useGradientId(prefix: string): string {
+  // `useId()` must be called unconditionally — see B1 in bugfix-handoff-phase-a.md.
+  const raw = React.useId();
   const idRef = React.useRef<string | null>(null);
   if (idRef.current === null) {
-    idRef.current = `${prefix}-${React.useId().replace(/[:]/g, "")}`;
+    idRef.current = `${prefix}-${raw.replace(/[:]/g, "")}`;
   }
   return idRef.current;
 }
@@ -234,8 +243,6 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(
     }
 
     const containerStyle: React.CSSProperties = {
-      width,
-      height,
       marginRight: gap > 0 ? gap : undefined,
       ...style,
     };
@@ -258,7 +265,14 @@ export const Sparkline = React.forwardRef<SVGSVGElement, SparklineProps>(
             {resolvedVariant === "area" && areaPath && (
               <>
                 <defs>
-                  <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient
+                    id={gradientId}
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2={height}
+                    gradientUnits="userSpaceOnUse"
+                  >
                     <stop offset="0%" stopColor={color} stopOpacity={0.2} />
                     <stop offset="100%" stopColor={color} stopOpacity={0} />
                   </linearGradient>

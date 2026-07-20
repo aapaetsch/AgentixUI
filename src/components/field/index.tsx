@@ -64,7 +64,8 @@ export type FieldLabelProps = LabelProps;
  */
 const FieldLabel = React.forwardRef<HTMLLabelElement, FieldLabelProps>(
   ({ className, ...props }, ref) => (
-    <Label ref={ref} className={cn(className)} {...props} />
+    // `Label` already merges `className` via `cn()`, so pass it through directly.
+    <Label ref={ref} className={className} {...props} />
   )
 );
 FieldLabel.displayName = "FieldLabel";

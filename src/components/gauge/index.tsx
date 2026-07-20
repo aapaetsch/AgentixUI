@@ -147,6 +147,12 @@ function describeArc(
   startAngle: number,
   endAngle: number
 ): string {
+  // NOTE: variable names are inverted relative to the angle parameters — this
+  // is intentional. The arc is drawn from `endAngle` back to `startAngle`
+  // (sweep-flag = 0 in our coordinate system), so the SVG `M` (move-to) point
+  // is the endpoint located at `endAngle`, and the `A` (arc-to) point is the
+  // start located at `startAngle`. Don't "fix" the names without updating the
+  // sweep flag.
   const start = polarToCartesian(cx, cy, r, endAngle);
   const end = polarToCartesian(cx, cy, r, startAngle);
   const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
@@ -236,7 +242,8 @@ function buildThresholdSegments(
   thresholds: GaugeThreshold[] | undefined,
   min: number,
   max: number,
-  arc: ArcConfig
+  arc: ArcConfig,
+  trackColor: string
 ): ArcSegment[] {
   if (!thresholds || thresholds.length === 0) return [];
   // Sort thresholds by value ascending, then build segments between min and each
@@ -253,10 +260,14 @@ function buildThresholdSegments(
     });
     lo = hi;
   }
-  // If the last boundary didn't reach max, append a final segment.
+  // If the last boundary didn't reach max, append a final segment using
+  // `trackColor` rather than the last threshold's color. Previously this used
+  // the last threshold's color, which was counter-intuitive — users expecting
+  // "below 50 green, above 50 default" got the upper region in green instead
+  // of the track color.
   if (lo < max) {
     segments.push({
-      color: sorted[sorted.length - 1]?.color ?? "hsl(var(--muted))",
+      color: trackColor,
       startAngle: clampAngle(valueToAngle(lo, min, max, arc), arc),
       endAngle: clampAngle(valueToAngle(max, min, max, arc), arc),
     });
@@ -357,18 +368,18 @@ export const Gauge = React.forwardRef<HTMLDivElement, GaugeProps>(
     const needleAngle = activeAngle;
 
     const zoneSegments = React.useMemo(
-      () => buildThresholdSegments(thresholds, min, max, arc),
-      [thresholds, min, max, arc]
+      () => buildThresholdSegments(thresholds, min, max, arc, trackColor),
+      [thresholds, min, max, arc, trackColor]
     );
 
     const defaultLabel = React.useMemo(() => {
       if (label) return label;
       if (valueFormat === "percent") {
-        const pct = ((clampedValue - min) / (max - min || 1)) * 100;
+        const pct = ((displayValue - min) / (max - min || 1)) * 100;
         return formatPercent(pct, { precision: 0 });
       }
-      return formatNumber(clampedValue, { precision: 2 });
-    }, [label, valueFormat, clampedValue, min, max]);
+      return formatNumber(displayValue, { precision: 2 });
+    }, [label, valueFormat, displayValue, min, max]);
 
     const needleLen = arc.r * needleLength;
     const needleTip = polarToCartesian(arc.cx, arc.cy, needleLen, needleAngle);

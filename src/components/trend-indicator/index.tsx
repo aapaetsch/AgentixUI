@@ -16,9 +16,7 @@ import { pnlColorClass } from "../../lib/color-utils";
  * table cells, stat tiles, and tooltips.
  */
 export const trendIndicatorVariants = cva(
-  ["inline-flex items-center gap-1 font-medium tabular-nums leading-none"].join(
-    " "
-  ),
+  "inline-flex items-center gap-1 font-medium tabular-nums leading-none",
   {
     variants: {
       size: {
@@ -115,12 +113,16 @@ export const TrendIndicator = React.forwardRef<
 
     const text =
       displayValue ??
-      defaultFormat(value, signed && resolved === "up");
+      // m1: gate `+` on the value's sign, not the resolved direction, so a
+      // forced-opposite direction (e.g. positive value with direction="down")
+      // still renders the signed prefix on positive values.
+      defaultFormat(value, signed && value > 0);
 
     // Color: reuse the semantic P&L palette so trends stay visually consistent
-    // with `NumericText`. Zero / NaN falls back to muted foreground.
+    // with `NumericText`. Zero / NaN falls back to `text-foreground` to match
+    // `NumericText colorize`, which renders `0` as `text-foreground`.
     const colorClass =
-      resolved === "neutral" ? "text-muted-foreground" : pnlColorClass(value);
+      resolved === "neutral" ? "text-foreground" : pnlColorClass(value);
 
     const Icon =
       resolved === "up" ? ArrowUp : resolved === "down" ? ArrowDown : Minus;
