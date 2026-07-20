@@ -8,13 +8,17 @@ import { Badge } from "../badge";
 import { Skeleton } from "../skeleton";
 import type { Trade, TradeFlag } from "../../lib/finance-types";
 
+const timeAndSalesColumnLayout =
+  "grid-cols-[4.5rem_minmax(0,1fr)_minmax(4.5rem,5.5rem)_4rem]";
+
 /* -------------------------------------------------------------------------------------------------
  * Variants
  * ------------------------------------------------------------------------------------------------*/
 
 export const timeAndSalesRowVariants = cva(
   [
-    "relative flex items-center text-xs font-mono px-2 py-0.5",
+    "relative grid items-center gap-2 text-xs font-mono px-2 py-0.5",
+    timeAndSalesColumnLayout,
     "cursor-pointer hover:bg-accent/30",
     "transition-colors duration-75",
   ].join(" "),
@@ -86,22 +90,22 @@ export const TimeAndSalesRow = React.memo(function TimeAndSalesRow({
       <span aria-hidden className={cn("absolute inset-y-0 left-0 w-0.5", sideClass)} />
 
       {/* Time */}
-      <span className="relative z-10 w-16 text-muted-foreground tabular-nums">
+      <span className="relative z-10 min-w-0 text-left text-muted-foreground tabular-nums">
         {formatTime(new Date(trade.time), "24")}
       </span>
 
       {/* Price */}
-      <span className={cn("relative z-10 flex-1 text-right tabular-nums", priceClass)}>
+      <span className={cn("relative z-10 min-w-0 text-right tabular-nums", priceClass)}>
         <NumericText value={trade.price} format="currency" precision={precision} align="right" />
       </span>
 
       {/* Size */}
-      <span className="relative z-10 w-16 text-right tabular-nums text-foreground">
+      <span className="relative z-10 min-w-0 text-right tabular-nums text-foreground">
         <NumericText value={trade.size} format="number" align="right" />
       </span>
 
       {/* Flags */}
-      <span className="relative z-10 ml-2 flex items-center gap-1">
+      <span className="relative z-10 flex min-w-0 items-center justify-end gap-1">
         {trade.flags?.map((flag) => (
           <FlagBadge key={flag} flag={flag} />
         ))}
@@ -139,7 +143,8 @@ export function TimeAndSalesHeader({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "grid grid-cols-[4rem_1fr_4rem_auto] gap-2 px-2 py-1 text-[0.6875rem] font-medium uppercase tracking-wider text-muted-foreground",
+        "grid gap-2 px-2 py-1 text-[0.6875rem] font-medium uppercase tracking-wider text-muted-foreground",
+        timeAndSalesColumnLayout,
         className
       )}
     >

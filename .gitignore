@@ -22,6 +22,9 @@ lerna-debug.log*
 .env
 .env.local
 .env.*.local
+.keys/
+.keys/ollama.txt
+.playwright-mcp/
 
 # ---------------------------------------------------------
 # Editor-specific
@@ -53,3 +56,5 @@ storybook-static/
 # ---------------------------------------------------------
 Thumbs.db
 package-lock.json
+agentixUI.code-workspace
+.keys/ollama.txt
