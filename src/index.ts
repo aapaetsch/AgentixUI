@@ -120,7 +120,29 @@ export type {
   Trade,
   WatchlistItem,
   HoldingRow,
+  OptionType,
+  OptionPositionStatus,
+  Greeks,
+  OptionContract,
+  OptionPosition,
+  OptionChainRow,
+  OptionLeg,
+  PayoffPoint,
 } from "./lib/finance-types";
+
+// -----------------------------------------------------------------------------
+// Finance Utilities (options helpers)
+// Pure, dependency-free helpers used by options components and stories.
+// -----------------------------------------------------------------------------
+
+export {
+  computePayoffAtExpiry,
+  breakevensAtExpiry,
+  maxProfitAtExpiry,
+  maxLossAtExpiry,
+  netPremium,
+  priceGrid,
+} from "./lib/finance-utils";
 
 // =============================================================================
 // COMPONENTS
@@ -290,6 +312,107 @@ export type {
   TimeAndSalesRowProps,
 } from "./components/time-and-sales";
 
+// -----------------------------------------------------------------------------
+// OptionSymbolBadge
+// -----------------------------------------------------------------------------
+export { OptionSymbolBadge } from "./components/option-symbol-badge";
+export type { OptionSymbolBadgeProps } from "./components/option-symbol-badge";
+
+// -----------------------------------------------------------------------------
+// ExpiryBadge
+// -----------------------------------------------------------------------------
+export {
+  ExpiryBadge,
+  DEFAULT_EXPIRY_THRESHOLDS,
+} from "./components/expiry-badge";
+export type {
+  ExpiryBadgeProps,
+  ExpiryBadgeBand,
+} from "./components/expiry-badge";
+
+// -----------------------------------------------------------------------------
+// GreeksDisplay
+// -----------------------------------------------------------------------------
+export {
+  GreeksDisplay,
+  DEFAULT_GREEK_GLOSSARY,
+} from "./components/greeks-display";
+export type {
+  GreeksDisplayProps,
+  GreeksDisplayLayout,
+} from "./components/greeks-display";
+
+// -----------------------------------------------------------------------------
+// BreakevenBadges
+// -----------------------------------------------------------------------------
+export { BreakevenBadges } from "./components/breakeven-badges";
+export type { BreakevenBadgesProps } from "./components/breakeven-badges";
+
+// -----------------------------------------------------------------------------
+// PayoffDiagram
+// -----------------------------------------------------------------------------
+export { PayoffDiagram, payoffContainerVariants } from "./components/payoff-diagram";
+export type {
+  PayoffDiagramProps,
+  PayoffDiagramVariant,
+} from "./components/payoff-diagram";
+
+// -----------------------------------------------------------------------------
+// GreeksDecayChart
+// -----------------------------------------------------------------------------
+export {
+  GreeksDecayChart,
+  greeksDecayContainerVariants,
+} from "./components/greeks-decay-chart";
+export type {
+  GreeksDecayChartProps,
+  GreeksDecaySeriesKey,
+} from "./components/greeks-decay-chart";
+
+// -----------------------------------------------------------------------------
+// IVChart
+// -----------------------------------------------------------------------------
+export { IVChart, ivChartContainerVariants } from "./components/iv-chart";
+export type {
+  IVChartProps,
+  IVChartVariant,
+  IVTermPoint,
+  IVSurfaceCell,
+} from "./components/iv-chart";
+
+// -----------------------------------------------------------------------------
+// StrikesNavigator
+// -----------------------------------------------------------------------------
+export {
+  StrikesNavigator,
+  strikesNavigatorVariants,
+} from "./components/strikes-navigator";
+export type {
+  StrikesNavigatorProps,
+  StrikeMoneyness,
+} from "./components/strikes-navigator";
+
+// -----------------------------------------------------------------------------
+// LegBuilderRow
+// -----------------------------------------------------------------------------
+export {
+  LegBuilderRow,
+  legBuilderRowVariants,
+} from "./components/leg-builder-row";
+export type { LegBuilderRowProps } from "./components/leg-builder-row";
+
+// -----------------------------------------------------------------------------
+// SpreadTypeSelector
+// -----------------------------------------------------------------------------
+export {
+  SpreadTypeSelector,
+  DEFAULT_SPREAD_OPTIONS,
+} from "./components/spread-type-selector";
+export type {
+  SpreadTypeSelectorProps,
+  SpreadType,
+} from "./components/spread-type-selector";
+
 // =============================================================================
 // INVESTMENT-OPS TEMPLATES
 // Composed blocks for an investment-ops dashboard. Templates compose
@@ -305,6 +428,12 @@ export {
   AllocationBreakdown,
   NewsFeed,
   InvestmentOpsDashboard,
+  OptionsPositionsTable,
+  AggregateGreeksStrip,
+  OptionPositionCard,
+  OptionsChain,
+  PayoffBundleCard,
+  MultiLegOrderTicket,
 } from "./templates/investment-ops";
 export type {
   StatTileProps,
@@ -321,6 +450,12 @@ export type {
   NewsFeedProps,
   NewsItem,
   InvestmentOpsDashboardProps,
+  OptionsPositionsTableProps,
+  AggregateGreeksStripProps,
+  OptionPositionCardProps,
+  OptionsChainProps,
+  PayoffBundleCardProps,
+  MultiLegOrderTicketProps,
 } from "./templates/investment-ops";
 
 // -----------------------------------------------------------------------------

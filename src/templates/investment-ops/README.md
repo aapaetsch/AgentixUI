@@ -15,6 +15,12 @@ import {
   AllocationBreakdown,
   NewsFeed,
   InvestmentOpsDashboard,
+  OptionsPositionsTable,
+  AggregateGreeksStrip,
+  OptionPositionCard,
+  OptionsChain,
+  PayoffBundleCard,
+  MultiLegOrderTicket,
 } from "@agentix/ui/templates/investment-ops";
 ```
 
@@ -29,12 +35,28 @@ import {
   `showTickerImage` to prepend a brand-mark avatar beside each symbol (sourced from each holding's
   optional `logoUrl`).
 - **OrderTicket** — Right-docked `Sheet` form for simple equity order entry. Uses `ToggleGroup`,
-  `InputIncrementor`, `Select`, `AlertDialog`, and `toast.promise`. Multi-leg options deferred.
+  `InputIncrementor`, `Select`, `AlertDialog`, and `toast.promise`.
 - **AllocationBreakdown** — `Card` + `Tabs` of Sector / Asset Class / Holding with a chart render
   slot and a breakdown `DataTable` beside the chart.
 - **NewsFeed** — `Card` filterable feed using `MultiSelect`, `ToggleGroup` sentiments, `ScrollArea`,
   per-item `Avatar`, ticker `Badge`s, sentiment `Chip`s, and relative time.
 - **InvestmentOpsDashboard** — Composed dashboard shell that composes ALL of the above.
+
+### Options (Phase J-open)
+
+- **OptionsPositionsTable** — Open option contracts blotter (`DataTable` of `OptionPosition`s with `OptionSymbolBadge`, `ExpiryBadge`, signed Qty, Net Δ$, Θ/day, P&L). Row actions: Roll / Close / Exercise.
+- **AggregateGreeksStrip** — Net portfolio Greeks row (Net Δ [or Δ$ when `spot` is given], Γ, Θ/day, ν per 1% IV). Built directly on `Card` + `NumericText` + `Badge`.
+- **OptionPositionCard** — Single open-position summary card with mini `PayoffDiagram`, breakevens, max P/L, and inline `GreeksDisplay`.
+- **OptionsChain** — Calls/puts chain by strike × expiry with `Tabs` expiry cycle, strike-center `DataTable`, and a `StrikesNavigator`. Click a bid/ask → `onAddLeg(side, type, strike, expiry)`.
+- **PayoffBundleCard** — Multi-leg risk snapshot card (`PayoffDiagram` + net debit/credit `Badge` + max P/L + `BreakevenBadges`). Companion to `MultiLegOrderTicket`.
+- **MultiLegOrderTicket** — Multi-leg option order builder: `Sheet` with a `SpreadTypeSelector` that pre-fills a dynamic list of `LegBuilderRow`s, live `PayoffBundleCard` preview, net debit/credit display, and an `AlertDialog`-confirmed submit that fires `toast.promise(onSubmit(legs))`. Mirrors `OrderTicket`'s interaction pattern.
+
+These templates compose the new `@agentix/ui` options primitives
+(`OptionSymbolBadge`, `ExpiryBadge`, `GreeksDisplay`, `BreakevenBadges`,
+`PayoffDiagram`, `GreeksDecayChart`, `IVChart`, `StrikesNavigator`,
+`LegBuilderRow`, `SpreadTypeSelector`) and the pure helpers in
+`@agentix/ui/finance` (`computePayoffAtExpiry`, `breakevensAtExpiry`,
+`maxProfit/LossAtExpiry`, `netPremium`, `priceGrid`).
 
 ## Design Philosophy
 

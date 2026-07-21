@@ -40,4 +40,21 @@ export type {
   Trade,
   WatchlistItem,
   HoldingRow,
+  OptionType,
+  OptionPositionStatus,
+  Greeks,
+  OptionContract,
+  OptionPosition,
+  OptionChainRow,
+  OptionLeg,
+  PayoffPoint,
 } from "./lib/finance-types";
+
+export {
+  computePayoffAtExpiry,
+  breakevensAtExpiry,
+  maxProfitAtExpiry,
+  maxLossAtExpiry,
+  netPremium,
+  priceGrid,
+} from "./lib/finance-utils";

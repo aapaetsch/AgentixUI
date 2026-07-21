@@ -33,3 +33,26 @@ export {
   InvestmentOpsDashboard,
   type InvestmentOpsDashboardProps,
 } from "./dashboard-shell";
+
+// --- Options (Phase J-open) ------------------------------------------------
+export {
+  OptionsPositionsTable,
+  type OptionsPositionsTableProps,
+} from "./options-positions-table";
+export {
+  AggregateGreeksStrip,
+  type AggregateGreeksStripProps,
+} from "./aggregate-greeks-strip";
+export {
+  OptionPositionCard,
+  type OptionPositionCardProps,
+} from "./option-position-card";
+export { OptionsChain, type OptionsChainProps } from "./options-chain";
+export {
+  PayoffBundleCard,
+  type PayoffBundleCardProps,
+} from "./payoff-bundle-card";
+export {
+  MultiLegOrderTicket,
+  type MultiLegOrderTicketProps,
+} from "./multi-leg-order-ticket";

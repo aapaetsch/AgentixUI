@@ -31,6 +31,21 @@
 | **Resizable** | ✅ Complete | `Resizable` (alias `ResizablePanelGroup`), `ResizablePanel`, `ResizableHandle`, `resizableHandleVariants` | Draggable collapsible multi-pane layouts, keyboard resize (Arrow + Shift), `autoSaveId` persistence (SSR-safe), line/bar/grip handle variants | react-resizable-panels |
 | **OrderBook** | ✅ Complete | `OrderBook`, `OrderBookSide`, `OrderBookRow`, `OrderBookSpread`, `OrderBookHeader`, `OrderBookSkeleton`, `orderBookRowVariants`, `orderBookSideVariants` | Level-2 depth ladder with bid/ask depth bars + spread; memoized rows; throttled SR summary; exports from `./finance` secondary entrypoint | - |
 | **TimeAndSales** | ✅ Complete | `TimeAndSales`, `TimeAndSalesRow`, `TimeAndSalesHeader`, `timeAndSalesRowVariants` | Streaming recent-trades tape, rolling window, autoscroll unless scrolled up, throttled SR summary; exports from `./finance` secondary entrypoint | - |
+
+### Options (Phase J-open) — ✅ Complete
+
+| Component | Status | Variants/Sub-components | Notes |
+|-----------|--------|------------------------|-------|
+| **OptionSymbolBadge** | ✅ Complete | `OptionSymbolBadge` | Compact `ROOT MM/DD/YY STRIKE{C\|P}` token composing `Badge` (`success`→call, `destructive`→put). |
+| **ExpiryBadge** | ✅ Complete | `ExpiryBadge`, `DEFAULT_EXPIRY_THRESHOLDS`, `ExpiryBadgeBand` | Color-graded DTE pill (far/near/imminent/expiring) → `Badge` variants; optional pulse on `<1d`. |
+| **GreeksDisplay** | ✅ Complete | `GreeksDisplay`, `DEFAULT_GREEK_GLOSSARY` | Δ/Γ/Θ/ν/ρ cluster via `NumericText` + per-cell glossary `Tooltip`. `grid` \| `inline` layouts. |
+| **BreakevenBadges** | ✅ Complete | `BreakevenBadges` | Pill row of breakeven prices via `Badge variant="outline"` + `NumericText`. |
+| **PayoffDiagram** | ✅ Complete | `PayoffDiagram`, `payoffContainerVariants` | Inline-SVG hockey-stick payoff curve (line/area), spot marker, breakeven dots, zero baseline. Mirrors `Sparkline` precedent. |
+| **GreeksDecayChart** | ✅ Complete | `GreeksDecayChart`, `greeksDecayContainerVariants` | Inline-SVG mini multi-line chart of Δ/Γ/Θ/ν over DTE. Per-Greek Tailwind text-color tokens. |
+| **IVChart** | ✅ Complete | `IVChart`, `ivChartContainerVariants` | Inline-SVG IV term-structure (`Sparkline`-like) + ≤~100-cell IV surface heatmap. |
+| **StrikesNavigator** | ✅ Complete | `StrikesNavigator`, `strikesNavigatorVariants` | Virtualized strike ladder with ITM/ATM/OTM striping + quick-jump input. Windowed slice. |
+| **LegBuilderRow** | ✅ Complete | `LegBuilderRow`, `legBuilderRowVariants` | One reversible Buy/Sell × Call/Put × strike (`ComboBox`) × qty (`InputIncrementor`) row. |
+| **SpreadTypeSelector** | ✅ Complete | `SpreadTypeSelector`, `DEFAULT_SPREAD_OPTIONS`, `SpreadType` | Spread template picker (single/vertical/calendar/straddle/strangle/iron-condor/butterfly) composing `ToggleGroup`. |
 | **Progress (advanced)** | 🟡 Medium | Complex/segmented determinate progress | - |
 | **Collapsible** | 🟢 Low | Expandable section | Radix Collapsible |
 | **Menubar** | 🟢 Low | Application menu bar with Electron/desktop enhancements | Radix Menubar |
