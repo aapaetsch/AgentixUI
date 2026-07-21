@@ -10,7 +10,7 @@ import { cn } from "../../lib/utils";
 
 export const toggleGroupVariants = cva(
   [
-    "flex items-start rounded-md border border-border bg-background",
+    "flex items-stretch rounded-md border border-border bg-background",
     "overflow-hidden",
   ].join(" "),
   {
@@ -36,6 +36,7 @@ export const toggleGroupVariants = cva(
 export const toggleGroupItemVariants = cva(
   [
     "inline-flex items-center justify-center gap-1.5 px-3 font-medium",
+    "h-full flex-1",
     "transition-colors",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
     "disabled:pointer-events-none disabled:opacity-50",
