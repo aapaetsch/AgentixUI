@@ -93,7 +93,11 @@ export function OptionsPositionsTable({
         header: "Status",
         cell: ({ row }) =>
           row.original.status ? (
-            <Badge variant="outline" size="medium" className="capitalize">
+            <Badge
+              variant={row.original.status === "open" ? "success" : row.original.status === "assigned" || row.original.status === "exercised" ? "warning" : "secondary"}
+              size="medium"
+              className="capitalize"
+            >
               {row.original.status}
             </Badge>
           ) : null,
@@ -108,6 +112,7 @@ export function OptionsPositionsTable({
             value={row.original.contracts}
             format="number"
             signed
+            colorize
             align="right"
           />
         ),

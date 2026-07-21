@@ -27,6 +27,8 @@ export interface OptionPositionCardProps {
   spotPrice?: number;
   /** Show the inline payoff diagram. @default true */
   showPayoff?: boolean;
+  /** Show a tracked dot and price/P&L tooltip over the payoff curve. @default false */
+  showHoverDetails?: boolean;
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -50,6 +52,7 @@ export function OptionPositionCard({
   position,
   spotPrice,
   showPayoff = true,
+  showHoverDetails = false,
   className,
 }: OptionPositionCardProps) {
   const spot = spotPrice ?? position.markPrice;
@@ -94,7 +97,14 @@ export function OptionPositionCard({
   );
 
   return (
-    <Card variant="elevated" className={cn("w-full", className)}>
+    <Card
+      variant="elevated"
+      className={cn(
+        "w-full overflow-hidden border-l-4",
+        position.type === "call" ? "border-l-positive" : "border-l-negative",
+        className
+      )}
+    >
       <CardHeader className="flex-row items-center justify-between gap-2 space-y-0">
         <div className="flex items-center gap-2">
           <OptionSymbolBadge contract={position} />
@@ -113,12 +123,15 @@ export function OptionPositionCard({
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
         {showPayoff && (
-          <div className="w-full text-primary">
+          <div className="w-full rounded-md bg-muted/20 p-2">
             <PayoffDiagram
               points={points}
               spotPrice={spot}
               currentPnL={position.unrealizedPnL}
               breakevens={breakevens}
+              positiveColor="hsl(var(--positive))"
+              negativeColor="hsl(var(--negative))"
+              showHoverDetails={showHoverDetails}
               width={320}
               height={120}
               className="w-full"
@@ -128,8 +141,8 @@ export function OptionPositionCard({
 
         <BreakevenBadges values={breakevens} />
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          <div className="flex flex-col gap-0.5">
+        <div className="grid grid-cols-2 overflow-hidden rounded-md border border-border bg-muted/10 sm:grid-cols-4 sm:divide-x sm:divide-border">
+          <div className="flex flex-col gap-0.5 p-2.5">
             <Typography variant="overline">Max Profit</Typography>
             <NumericText
               value={maxProfit ?? 0}
@@ -139,7 +152,7 @@ export function OptionPositionCard({
               align="left"
             />
           </div>
-          <div className="flex flex-col gap-0.5">
+          <div className="flex flex-col gap-0.5 p-2.5">
             <Typography variant="overline">Max Loss</Typography>
             <NumericText
               value={maxLoss ?? 0}
@@ -149,7 +162,7 @@ export function OptionPositionCard({
               align="left"
             />
           </div>
-          <div className="flex flex-col gap-0.5">
+          <div className={cn("flex flex-col gap-0.5 p-2.5", position.unrealizedPnL >= 0 ? "bg-positive/5" : "bg-negative/5")}>
             <Typography variant="overline">P&L</Typography>
             <NumericText
               value={position.unrealizedPnL}
@@ -159,7 +172,7 @@ export function OptionPositionCard({
               align="left"
             />
           </div>
-          <div className="flex flex-col gap-0.5">
+          <div className="flex flex-col gap-0.5 p-2.5">
             <Typography variant="overline">Qty</Typography>
             <NumericText
               value={position.contracts}

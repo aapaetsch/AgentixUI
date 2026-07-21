@@ -13,7 +13,12 @@ export {
   type TickerImageProps,
 } from "./ticker-image";
 export { AccountSummary, type AccountSummaryProps } from "./account-summary";
-export { Watchlist, type WatchlistProps } from "./watchlist";
+export {
+  Watchlist,
+  DEFAULT_WATCHLIST_COLUMNS,
+  type WatchlistColumn,
+  type WatchlistProps,
+} from "./watchlist";
 export { HoldingsTable, type HoldingsTableProps } from "./holdings-table";
 export {
   OrderTicket,

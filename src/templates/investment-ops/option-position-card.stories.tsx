@@ -8,6 +8,7 @@ const meta: Meta<typeof OptionPositionCard> = {
   component: OptionPositionCard,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
+  argTypes: { showHoverDetails: { control: "boolean" } },
 };
 export default meta;
 type Story = StoryObj<typeof OptionPositionCard>;
@@ -30,7 +31,7 @@ const longCall: OptionPosition = {
 };
 
 export const LongCall: Story = {
-  args: { position: longCall, spotPrice: 410 },
+  args: { position: longCall, spotPrice: 410, showHoverDetails: true },
   render: (args) => <div className="w-[28rem]"><OptionPositionCard {...args} /></div>,
 };
 

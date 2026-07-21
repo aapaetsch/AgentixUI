@@ -9,6 +9,7 @@ A premium data table built on TanStack Table and the existing `@agentix/ui` prim
 - Built-in pagination controls with page-size selection
 - Optional row selection with checkbox column
 - Optional row actions using the shared `DropdownMenu`
+- Optional consumer-rendered expanded detail rows
 - Column visibility toggles
 - Virtualized row rendering for large datasets
 - Controlled or uncontrolled state for sorting, filters, visibility, selection, and pagination
@@ -95,6 +96,8 @@ const columns: ColumnDef<User>[] = [
 ```
 
 ## Notes
+
+Use `renderSubRow` with `isRowExpanded` when a consumer needs a full-width detail panel beneath a row. Supplying a subrow renderer disables virtualization because expanded content has a variable height.
 
 - Use `meta.searchable` and `meta.label` in your column definitions to improve the built-in toolbar and visibility toggle labels.
 - The component uses page-level selection for the header checkbox, which mirrors the common TanStack + shadcn data-table pattern.

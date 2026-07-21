@@ -60,6 +60,10 @@ export interface DataTableProps<TData, TValue = unknown> {
   enableRowSelection?: boolean;
   rowActions?: DataTableRowAction<TData>[] | ((row: TData) => DataTableRowAction<TData>[]);
   rowActionsLabel?: string;
+  /** Optional detail row rendered directly below matching data rows. */
+  renderSubRow?: (row: TData) => React.ReactNode;
+  /** Returns whether the optional detail row is expanded. */
+  isRowExpanded?: (row: TData) => boolean;
   showColumnVisibility?: boolean;
   showPagination?: boolean;
   virtualize?: boolean;

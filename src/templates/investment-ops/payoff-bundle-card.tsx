@@ -29,6 +29,8 @@ export interface PayoffBundleCardProps {
   title?: React.ReactNode;
   /** Show the breakeven badges row. @default true */
   showBreakevens?: boolean;
+  /** Show a tracked dot and price/P&L tooltip over the payoff curve. @default false */
+  showHoverDetails?: boolean;
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -52,6 +54,7 @@ export function PayoffBundleCard({
   netDebitCredit,
   title = "Payoff at Expiry",
   showBreakevens = true,
+  showHoverDetails = false,
   className,
 }: PayoffBundleCardProps) {
   const prices = React.useMemo(
@@ -105,12 +108,15 @@ export function PayoffBundleCard({
         )}
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
-        <div className="w-full text-primary">
+        <div className="w-full rounded-md bg-muted/20 p-2">
           <PayoffDiagram
             points={points}
             spotPrice={spotPrice}
             currentPnL={currentPnL}
             breakevens={breakevens}
+            positiveColor="hsl(var(--positive))"
+            negativeColor="hsl(var(--negative))"
+            showHoverDetails={showHoverDetails}
             width={360}
             height={160}
             className="w-full"
@@ -119,8 +125,8 @@ export function PayoffBundleCard({
 
         {showBreakevens && <BreakevenBadges values={breakevens} />}
 
-        <div className="grid grid-cols-2 gap-3">
-          <div className="flex flex-col gap-0.5">
+        <div className="grid grid-cols-2 overflow-hidden rounded-md border border-border bg-muted/10">
+          <div className="flex flex-col gap-0.5 border-r border-border px-3 py-2">
             <Typography variant="overline">Max Profit</Typography>
             <NumericText
               value={maxProfit ?? 0}
@@ -130,7 +136,7 @@ export function PayoffBundleCard({
               align="left"
             />
           </div>
-          <div className="flex flex-col gap-0.5">
+          <div className="flex flex-col gap-0.5 px-3 py-2">
             <Typography variant="overline">Max Loss</Typography>
             <NumericText
               value={maxLoss ?? 0}

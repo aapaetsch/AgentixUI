@@ -39,7 +39,7 @@ export interface LegBuilderRowProps
 
 export const legBuilderRowVariants = cva(
   [
-    "flex items-center gap-2 rounded-md border border-border bg-background p-2",
+    "flex items-center gap-2 rounded-md border border-border bg-background p-2 transition-[border-color,background-color,box-shadow] focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20",
   ].join(" "),
   {
     variants: { compact: { true: "p-1.5", false: "" } },
@@ -101,7 +101,15 @@ export function LegBuilderRow({
   );
 
   return (
-    <div className={cn(legBuilderRowVariants({ compact }), className)}>
+    <div
+      data-side={value.side}
+      data-option-type={value.type}
+      className={cn(
+        legBuilderRowVariants({ compact }),
+        value.type === "call" ? "border-l-4 border-l-positive/70" : "border-l-4 border-l-negative/70",
+        className
+      )}
+    >
       {/* Buy / Sell */}
       <ToggleGroup
         type="single"

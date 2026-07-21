@@ -58,6 +58,12 @@ These templates compose the new `@agentix/ui` options primitives
 `@agentix/ui/finance` (`computePayoffAtExpiry`, `breakevensAtExpiry`,
 `maxProfit/LossAtExpiry`, `netPremium`, `priceGrid`).
 
+## Recent API Additions
+
+- `Watchlist` accepts ordered `visibleColumns`, optional ticker/name/type metadata, richer quote fields, and controlled or uncontrolled accordion detail rows through `renderExpandedRow`.
+- `PayoffBundleCard` and `OptionPositionCard` forward `showHoverDetails` for a tracked dot and price/P&L tooltip.
+- Options chains, position cards, leg rows, and payoff surfaces use the shared semantic call/put, buy/sell, and profit/loss palette.
+
 ## Design Philosophy
 
 - Templates compose — do NOT invent new primitives here.

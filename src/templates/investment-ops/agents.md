@@ -14,7 +14,7 @@ to the relevant earlier phase (Streams 1–4) instead.
 ## Blocks
 - `StatTile` — KPI tile (`Card` + `Badge` + `AnimatedNumber` + sparkline slot).
 - `AccountSummary` — grid of `StatTile`s + optional warning `Alert`.
-- `Watchlist` — `DataTable` + `NumericText` + sparkline slot.
+- `Watchlist` — `DataTable` + `NumericText` + sparkline slot, ordered `visibleColumns`, and optional controlled/uncontrolled expanded detail subrows.
 - `HoldingsTable` — `DataTable` + colorized `NumericText` P&L + row-action dropdown.
 - `OrderTicket` — `Sheet` + `ToggleGroup` + `InputIncrementor` + `Select` + `AlertDialog` + `toast.promise` (single-leg equity flow).
 - `AllocationBreakdown` — `Card` + `Tabs` + chart slot + `DataTable` breakdown.
@@ -23,10 +23,10 @@ to the relevant earlier phase (Streams 1–4) instead.
 
 ### Options (Phase J-open) — composed templates
 - `OptionsPositionsTable` — `DataTable` of open `OptionPosition`s; columns: `OptionSymbolBadge`, `ExpiryBadge`, status `Badge`, signed Qty, Mark, Mkt Value, Net Δ$, Θ/day, P&L. Row actions: Roll/Close/Exercise. Mirrors `HoldingsTable`.
-- `AggregateGreeksStrip` — net portfolio Greeks as a tight `Card` strip. Built on `Card` + `NumericText` + `Badge` directly (no `StatTile` coupling, per the templates-compose-primitives-only rule).
+- `AggregateGreeksStrip` — net portfolio Greeks as a tight `Card` strip. Built on `Card` + `NumericText` + `Badge` + `Skeleton` directly (no `StatTile` coupling, per the templates-compose-primitives-only rule). Props: `layout` (`horizontal` | `vertical` | `grid` | `compact`), `size` (`comfortable` | `compact`), `deltaMode` (`auto` | `delta` | `deltaDollars`), `showHeader`, `headerRight` slot, `colorize` (default true), and `loading`/`loadingCount` for skeleton states.
 - `OptionPositionCard` — single-position summary card (`Card` + `OptionSymbolBadge` + `ExpiryBadge` + `PayoffDiagram` + `BreakevenBadges` + `GreeksDisplay` + `NumericText` max P/L grid). The leg built from `OptionPosition` normalizes `averageCost` with `Math.abs` for `limitPrice` (direction carried by `side`), so short-credit semantics in `netPremium` are correct whether the consuming app records shorts as a positive or negative per-share cost.
 - `OptionsChain` — calls/puts chain (`Tabs` expiry cycle + strike-center `DataTable` + `StrikesNavigator`). Header shows the underlying ticker as plain mono text + the active expiry cycle label (no `OptionSymbolBadge` — the C/P badge is misleading for a combined call+put chain header). Click a bid/ask cell → `onAddLeg(side, type, strike, expiry)`. Bid/ask buttons carry `aria-label`s like "Sell call at strike 400" for SR clarity.
-- `PayoffBundleCard` — multi-leg risk snapshot (`Card` + `PayoffDiagram` + net debit/credit `Badge` + max P/L + `BreakevenBadges`). Companion to `MultiLegOrderTicket`.
+- `PayoffBundleCard` — multi-leg risk snapshot (`Card` + interactive `PayoffDiagram` + net debit/credit `Badge` + max P/L + `BreakevenBadges`). Companion to `MultiLegOrderTicket`.
 - `MultiLegOrderTicket` — `Sheet` + `SpreadTypeSelector` + dynamic `LegBuilderRow` list + per-leg `GreeksDisplay` (via row) + `PayoffBundleCard` preview + `AlertDialog` confirm + `toast.promise(onSubmit(legs))`. Mirrors `OrderTicket`. The submit handler wraps `toast.promise` in try/catch and swallows rejections (the toast already surfaces the error), so the sheet stays open on rejection and no unhandled-promise-rejection warning fires. A `useEffect` clears any stale validation error whenever `legs` changes.
 
 New primitives these templates compose (live in `src/components/`, not here):

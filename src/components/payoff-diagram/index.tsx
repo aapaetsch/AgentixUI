@@ -61,6 +61,14 @@ export interface PayoffDiagramProps
   breakevens?: number[];
   /** Render the zero (break-even) horizontal baseline. @default true */
   showZeroLine?: boolean;
+  /** Show a tracked point and price/P&L tooltip while hovering or dragging. @default false */
+  showHoverDetails?: boolean;
+  /** Format the underlying price in the hover tooltip. */
+  formatHoverPrice?: (price: number) => string;
+  /** Format the payoff value in the hover tooltip. */
+  formatHoverValue?: (value: number) => string;
+  /** Called when the tracked payoff point changes. */
+  onHoverPointChange?: (point: PayoffPoint | null) => void;
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -123,6 +131,18 @@ function computeDomain(points: PayoffPoint[]): Domain | null {
   return { priceMin, priceMax, valueMin, valueMax };
 }
 
+function closestPoint(points: PayoffPoint[], price: number): PayoffPoint {
+  return points.reduce((closest, point) =>
+    Math.abs(point.price - price) < Math.abs(closest.price - price) ? point : closest
+  );
+}
+
+const defaultHoverPrice = (price: number) =>
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(price);
+
+const defaultHoverValue = (value: number) =>
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", signDisplay: "always", maximumFractionDigits: 2 }).format(value);
+
 /**
  * PayoffDiagram — inline-SVG at-expiry payoff curve.
  *
@@ -153,13 +173,21 @@ export const PayoffDiagram = React.forwardRef<SVGSVGElement, PayoffDiagramProps>
       currentPnL,
       breakevens,
       showZeroLine = true,
+      showHoverDetails = false,
+      formatHoverPrice = defaultHoverPrice,
+      formatHoverValue = defaultHoverValue,
+      onHoverPointChange,
       className,
       style,
+      onPointerMove,
+      onPointerLeave,
       ...svgProps
     },
     ref
   ) {
     const gradientId = useGradientId("payoff-grad");
+    const [hoveredPoint, setHoveredPoint] = React.useState<PayoffPoint | null>(null);
+    const hoveredPointRef = React.useRef<PayoffPoint | null>(null);
     warnIfUnsorted(points);
     const domain = computeDomain(points);
 
@@ -200,6 +228,29 @@ export const PayoffDiagram = React.forwardRef<SVGSVGElement, PayoffDiagramProps>
     const yFor = (value: number) =>
       height - ((value - valueMin) / valueSpan) * height;
     const zeroY = yFor(0);
+
+    const handlePointerMove = (event: React.PointerEvent<SVGSVGElement>) => {
+      onPointerMove?.(event);
+      if (!showHoverDetails) return;
+      const rect = event.currentTarget.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / Math.max(rect.width, 1)));
+      const next = closestPoint(points, priceMin + ratio * priceSpan);
+      if (hoveredPointRef.current !== next) {
+        hoveredPointRef.current = next;
+        setHoveredPoint(next);
+        onHoverPointChange?.(next);
+      }
+    };
+
+    const handlePointerLeave = (event: React.PointerEvent<SVGSVGElement>) => {
+      onPointerLeave?.(event);
+      if (!showHoverDetails) return;
+      if (hoveredPointRef.current) {
+        hoveredPointRef.current = null;
+        setHoveredPoint(null);
+        onHoverPointChange?.(null);
+      }
+    };
 
     // Single-point branch: a single `M` segment would produce nothing visible,
     // and `preserveAspectRatio="none"` would distort a `<circle>`. Render a
@@ -283,7 +334,8 @@ export const PayoffDiagram = React.forwardRef<SVGSVGElement, PayoffDiagramProps>
     // via fill + clip-path: not strictly necessary; instead we rely on a
     // single area with the zero line drawn over it.
 
-    const lineStroke = color ?? positiveColor;
+    const zeroOffset = `${Math.min(100, Math.max(0, (zeroY / height) * 100)).toFixed(2)}%`;
+    const lineStroke = color ?? `url(#${gradientId}-line)`;
 
     const aria =
       svgProps["aria-label"] ??
@@ -300,11 +352,17 @@ export const PayoffDiagram = React.forwardRef<SVGSVGElement, PayoffDiagramProps>
         preserveAspectRatio="none"
         role="img"
         aria-label={aria}
-        className={cn(payoffContainerVariants(), className)}
+        className={cn(payoffContainerVariants(), showHoverDetails && "cursor-crosshair touch-none", className)}
         style={style}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
         {...svgProps}
       >
         <defs>
+          <linearGradient id={`${gradientId}-line`} x1="0" y1="0" x2="0" y2={height} gradientUnits="userSpaceOnUse">
+            <stop offset={zeroOffset} stopColor={positiveColor} />
+            <stop offset={zeroOffset} stopColor={negativeColor} />
+          </linearGradient>
           <linearGradient
             id={`${gradientId}-pos`}
             x1="0"
@@ -457,6 +515,27 @@ export const PayoffDiagram = React.forwardRef<SVGSVGElement, PayoffDiagramProps>
                 );
               })()}
             </>
+          );
+        })()}
+
+        {showHoverDetails && hoveredPoint && (() => {
+          const cx = xFor(hoveredPoint.price);
+          const cy = yFor(hoveredPoint.value);
+          const tooltipWidth = 104;
+          const tooltipHeight = 34;
+          const tooltipX = Math.min(Math.max(cx + 8, 2), width - tooltipWidth - 2);
+          const tooltipY = Math.min(Math.max(cy - tooltipHeight - 8, 2), height - tooltipHeight - 2);
+          const markerColor = hoveredPoint.value >= 0 ? positiveColor : negativeColor;
+          return (
+            <g role="status" aria-label={`Underlying ${formatHoverPrice(hoveredPoint.price)}, payoff ${formatHoverValue(hoveredPoint.value)}`}>
+              <line x1={cx} y1={0} x2={cx} y2={height} stroke={markerColor} strokeWidth={0.75} strokeOpacity={0.35} strokeDasharray="2 3" vectorEffect="non-scaling-stroke" />
+              <circle cx={cx} cy={cy} r={3.5} fill="hsl(var(--background))" stroke={markerColor} strokeWidth={2} vectorEffect="non-scaling-stroke" />
+              <g className="pointer-events-none">
+                <rect x={tooltipX} y={tooltipY} width={tooltipWidth} height={tooltipHeight} rx={4} fill="hsl(var(--popover))" stroke="hsl(var(--border))" strokeWidth={0.75} vectorEffect="non-scaling-stroke" />
+                <text x={tooltipX + 7} y={tooltipY + 13} fill="hsl(var(--muted-foreground))" fontSize={8.5}>{formatHoverPrice(hoveredPoint.price)}</text>
+                <text x={tooltipX + 7} y={tooltipY + 27} fill={markerColor} fontSize={9.5} fontWeight={600}>{formatHoverValue(hoveredPoint.value)}</text>
+              </g>
+            </g>
           );
         })()}
       </svg>

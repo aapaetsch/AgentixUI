@@ -28,6 +28,10 @@ const points = computePayoffAtExpiry(legs, priceGrid(legs, 400));
 | `currentPnL` | `number` | — | P&L dot at the spot. |
 | `breakevens` | `number[]` | — | Dots on the zero line. |
 | `showZeroLine` | `boolean` | `true` | Draw the zero baseline. |
+| `showHoverDetails` | `boolean` | `false` | Track the nearest point and show a dot with a price/P&L tooltip. |
+| `formatHoverPrice` | `(price: number) => string` | USD currency | Format hover prices. |
+| `formatHoverValue` | `(value: number) => string` | signed USD currency | Format hover payoff values. |
+| `onHoverPointChange` | `(point: PayoffPoint \| null) => void` | — | Observe tracked-point changes. |
 | `className` | `string` | — | Merged last via `cn()`. |
 
 ## Behavior notes
@@ -50,6 +54,6 @@ const points = computePayoffAtExpiry(legs, priceGrid(legs, 400));
 
 ## Stories
 
-`LongCall`, `ShortPut`, `Iron Condor`, `Empty`, `SinglePoint`,
+`LongCall`, `InteractiveHover`, `ShortPut`, `Iron Condor`, `Empty`, `SinglePoint`,
 `UnsortedPoints` (dev warning), `AllPositive`, `AllNegative`, `LineVariant`,
 `FillDisabled`.

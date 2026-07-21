@@ -168,7 +168,9 @@ function renderStandardRows<TData>(
   columnsLength: number,
   emptyMessage: string,
   size: DataTableSize,
-  variant: DataTableVariant
+  variant: DataTableVariant,
+  renderSubRow?: (row: TData) => React.ReactNode,
+  isRowExpanded?: (row: TData) => boolean
 ) {
   if (!rows.length) {
     return (
@@ -184,30 +186,44 @@ function renderStandardRows<TData>(
 
   return (
     <TableBody>
-      {rows.map((row, index) => (
-        <TableRow
-          key={row.id}
-          data-state={row.getIsSelected() ? "selected" : undefined}
-          className={cn(variant === "striped" && index % 2 === 1 && "bg-muted/20")}
-        >
-          {row.getVisibleCells().map((cell) => {
-            const align = cell.column.columnDef.meta?.align ?? "left";
-            return (
-              <TableCell
-                key={cell.id}
-                className={cn(
-                  getCellPadding(size),
-                  align === "center" && "text-center",
-                  align === "right" && "text-right",
-                  cell.column.columnDef.meta?.cellClassName
-                )}
-              >
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </TableCell>
-            );
-          })}
-        </TableRow>
-      ))}
+      {rows.map((row, index) => {
+        const expanded = Boolean(renderSubRow && isRowExpanded?.(row.original));
+        return (
+          <React.Fragment key={row.id}>
+            <TableRow
+              data-state={row.getIsSelected() ? "selected" : undefined}
+              className={cn(
+                variant === "striped" && index % 2 === 1 && "bg-muted/20",
+                expanded && "border-b-0 bg-muted/15"
+              )}
+            >
+              {row.getVisibleCells().map((cell) => {
+                const align = cell.column.columnDef.meta?.align ?? "left";
+                return (
+                  <TableCell
+                    key={cell.id}
+                    className={cn(
+                      getCellPadding(size),
+                      align === "center" && "text-center",
+                      align === "right" && "text-right",
+                      cell.column.columnDef.meta?.cellClassName
+                    )}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+            {expanded ? (
+              <TableRow className="bg-muted/10 hover:bg-muted/10">
+                <TableCell colSpan={columnsLength} className="border-t-0 p-0">
+                  {renderSubRow?.(row.original)}
+                </TableCell>
+              </TableRow>
+            ) : null}
+          </React.Fragment>
+        );
+      })}
     </TableBody>
   );
 }
@@ -226,6 +242,8 @@ function DataTableInner<TData, TValue = unknown>({
   enableRowSelection = false,
   rowActions,
   rowActionsLabel = "Open row actions",
+  renderSubRow,
+  isRowExpanded,
   showColumnVisibility = true,
   showPagination = true,
   virtualize,
@@ -319,7 +337,7 @@ function DataTableInner<TData, TValue = unknown>({
     },
   } as TableOptions<TData>);
 
-  const shouldVirtualize = virtualize ?? data.length > 100;
+  const shouldVirtualize = renderSubRow ? false : (virtualize ?? data.length > 100);
   const showToolbar = Boolean(resolvedSearchColumn || toolbarFilters.length || toolbarContent || showColumnVisibility);
   const visibleColumnCount = table.getVisibleLeafColumns().length;
 
@@ -375,7 +393,15 @@ function DataTableInner<TData, TValue = unknown>({
               </TableRow>
             ))}
           </TableHeader>
-          {renderStandardRows(table.getRowModel().rows, visibleColumnCount, emptyMessage, size, variant)}
+          {renderStandardRows(
+            table.getRowModel().rows,
+            visibleColumnCount,
+            emptyMessage,
+            size,
+            variant,
+            renderSubRow,
+            isRowExpanded
+          )}
         </Table>
       )}
 

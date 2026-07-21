@@ -8,7 +8,7 @@ Folder: `src/templates/investment-ops/` (secondary entrypoint `@agentix/ui/templ
 |------|--------|-------------|
 | **StatTile** | ✅ Complete | KPI tile (`Card` + `Badge` + `AnimatedNumber` + sparkline render slot) |
 | **AccountSummary** | ✅ Complete | Grid of `StatTile`s + optional warning `Alert` |
-| **Watchlist** | ✅ Complete | `DataTable` + colorized `NumericText` + sparkline render slot |
+| **Watchlist** | ✅ Complete | Ordered `visibleColumns`, expanded detail subrows, ticker/name/type controls, colorized `NumericText`, and sparkline render slot. |
 | **HoldingsTable** | ✅ Complete | `DataTable` + colorized P&L columns + row-action dropdown |
 | **OrderTicket** | ✅ Complete | Right-docked `Sheet` form, simple equity flow only; multi-leg options deferred |
 | **AllocationBreakdown** | ✅ Complete | `Card` + `Tabs` (Sector/Asset Class/Holding) + chart render slot + breakdown `DataTable` |
@@ -21,9 +21,9 @@ Folder: `src/templates/investment-ops/` (secondary entrypoint `@agentix/ui/templ
 |------|--------|-------------|
 | **OptionsPositionsTable** | ✅ Complete | `DataTable` of open `OptionPosition`s: `OptionSymbolBadge` + `ExpiryBadge` + signed Qty + Mark + Mkt Value + Net Δ$ + Θ/day + P&L. Row actions Roll/Close/Exercise. |
 | **AggregateGreeksStrip** | ✅ Complete | Net portfolio Greeks strip (Net Δ [or Δ$ when `spot` given] / Γ / Θ-day / ν per 1% IV). Built on `Card` + `NumericText` + `Badge` (no `StatTile` coupling). |
-| **OptionPositionCard** | ✅ Complete | Single-position card: `OptionSymbolBadge` + `ExpiryBadge` + mini `PayoffDiagram` + `BreakevenBadges` + max P/L + `GreeksDisplay`. |
-| **OptionsChain** | ✅ Complete | Calls/puts chain by strike × expiry: `Tabs` expiry cycle + strike-center `DataTable` + `StrikesNavigator`. Click bid/ask → `onAddLeg`. |
-| **PayoffBundleCard** | ✅ Complete | Multi-leg risk snapshot: `PayoffDiagram` + net debit/credit `Badge` + max P/L + `BreakevenBadges`. Companion to `MultiLegOrderTicket`. |
+| **OptionPositionCard** | ✅ Complete | Color-coded call/put accent, semantic P/L surface, mini interactive `PayoffDiagram`, `BreakevenBadges`, max P/L, and `GreeksDisplay`. |
+| **OptionsChain** | ✅ Complete | Color-coded calls/puts chain by strike × expiry with actionable bid/ask cells, expiry `Tabs`, `DataTable`, and `StrikesNavigator`. |
+| **PayoffBundleCard** | ✅ Complete | Multi-leg risk snapshot with optional hover details, semantic profit/loss chart colors, net debit/credit `Badge`, max P/L, and `BreakevenBadges`. |
 | **MultiLegOrderTicket** | ✅ Complete | `Sheet` + `SpreadTypeSelector` + dynamic `LegBuilderRow` list + `PayoffBundleCard` preview + `AlertDialog` confirm + `toast.promise(onSubmit(legs))`. |
 
 Note: The generic `Data Dashboard` placeholder is superseded by this concrete investment-ops set. Storybook stories exist for all 8 blocks under `Templates/Investment-Ops/*`, plus 6 options blocks under `Templates/Options/*` (added 2026-07-20).

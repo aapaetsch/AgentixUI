@@ -42,10 +42,20 @@ export interface Trade {
  */
 export interface WatchlistItem {
   symbol: string;
+  /** Optional instrument or issuer name shown beside the symbol. */
+  name?: string;
+  /** Optional short asset classification, e.g. `Equity`, `ETF`, or `Crypto`. */
+  assetType?: string;
   last: number;
   change: number;
   changePercent: number;
   volume?: number;
+  bid?: number;
+  ask?: number;
+  dayHigh?: number;
+  dayLow?: number;
+  previousClose?: number;
+  marketCap?: number;
   /** Optional ticker/issuer logo URL (e.g. brand mark shown beside the symbol). */
   logoUrl?: string;
 }

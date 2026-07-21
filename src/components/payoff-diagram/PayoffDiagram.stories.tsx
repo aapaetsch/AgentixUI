@@ -16,6 +16,7 @@ const meta: Meta<typeof PayoffDiagram> = {
     variant: { options: ["line", "area"], control: { type: "radio" } },
     width: { control: { type: "number", min: 120, max: 480 } },
     height: { control: { type: "number", min: 80, max: 240 } },
+    showHoverDetails: { control: "boolean" },
   },
 };
 export default meta;
@@ -237,4 +238,18 @@ export const FillDisabled: Story = {
       <PayoffDiagram {...args} />
     </div>
   ),
+};
+
+export const InteractiveHover: Story = {
+  args: {
+    points: longCallPoints,
+    spotPrice: 400,
+    breakevens: [405.5],
+    width: 360,
+    height: 180,
+    positiveColor: "hsl(var(--positive))",
+    negativeColor: "hsl(var(--negative))",
+    showHoverDetails: true,
+  },
+  render: (args) => <div className="w-96"><PayoffDiagram {...args} /></div>,
 };

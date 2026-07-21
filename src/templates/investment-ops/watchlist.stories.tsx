@@ -31,7 +31,7 @@ type Story = StoryObj<typeof Watchlist>;
 // ============================================================================
 
 const items: WatchlistItem[] = [
-  { symbol: "AAPL", last: 187.32, change: 2.14, changePercent: 1.16, volume: 52_300_000, logoUrl: "https://logo.clearbit.com/apple.com" },
+  { symbol: "AAPL", name: "Apple Inc.", assetType: "Equity", last: 187.32, change: 2.14, changePercent: 1.16, bid: 187.30, ask: 187.34, dayLow: 184.82, dayHigh: 188.15, previousClose: 185.18, volume: 52_300_000, marketCap: 2_870_000_000_000, logoUrl: "https://logo.clearbit.com/apple.com" },
   { symbol: "MSFT", last: 412.65, change: -1.23, changePercent: -0.3, volume: 21_400_000, logoUrl: "https://logo.clearbit.com/microsoft.com" },
   { symbol: "NVDA", last: 1024.55, change: 18.42, changePercent: 1.83, volume: 38_900_000, logoUrl: "https://logo.clearbit.com/nvidia.com" },
   { symbol: "GOOGL", last: 167.81, change: 0.45, changePercent: 0.27, volume: 18_700_000, logoUrl: "https://logo.clearbit.com/google.com" },
@@ -128,4 +128,32 @@ export const Loading: Story = {
 
 export const SingleRow: Story = {
   render: () => <Watchlist items={items.slice(0, 1)} />,
+};
+
+export const ConfigurableColumns: Story = {
+  render: () => (
+    <Watchlist
+      items={items}
+      visibleColumns={["symbol", "bid", "ask", "dayRange", "previousClose", "marketCap"]}
+      showTickerImage
+      showInstrumentName
+    />
+  ),
+};
+
+export const ExpandableDetails: Story = {
+  render: () => (
+    <Watchlist
+      items={items}
+      showInstrumentName
+      defaultExpandedSymbols={["AAPL"]}
+      renderExpandedRow={(item) => (
+        <div className="grid gap-3 sm:grid-cols-3">
+          <div><span className="text-xs text-muted-foreground">Session range</span><div className="font-mono text-sm">{item.dayLow?.toFixed(2) ?? "—"} – {item.dayHigh?.toFixed(2) ?? "—"}</div></div>
+          <div><span className="text-xs text-muted-foreground">Previous close</span><div className="font-mono text-sm">{item.previousClose?.toFixed(2) ?? "—"}</div></div>
+          <div><span className="text-xs text-muted-foreground">Note</span><div className="text-sm">Consumer-rendered alerts, positions, or research can live here.</div></div>
+        </div>
+      )}
+    />
+  ),
 };

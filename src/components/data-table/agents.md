@@ -7,6 +7,7 @@ DataTable
 - `DataTable`: generic TanStack-powered table with `columns`, `data`, optional `caption`, empty-state messaging, and `tableClassName` and `className` overrides.
 - Toolbar props: `searchColumn`, `searchPlaceholder`, `toolbarFilters`, `toolbarContent`, and `showColumnVisibility`.
 - Selection and actions: `enableRowSelection`, `rowActions`, and `rowActionsLabel`.
+- Detail rows: `renderSubRow` and `isRowExpanded` render consumer-controlled expanded content below standard rows.
 - Presentation controls: `size`, `variant`, `stickyHeader`, `showPagination`, `pageSizeOptions`, and `initialPageSize`.
 - Virtualization controls: `virtualize`, `virtualizationHeight`, and `virtualizationOverscan`.
 - Controlled state props: `sorting`, `columnFilters`, `columnVisibility`, `rowSelection`, and `pagination`, each with matching change callbacks and uncontrolled defaults.
@@ -29,6 +30,7 @@ DataTable
 - Toolbar controls are composed from existing `Input`, `Button`, `Select`, and `DropdownMenu` primitives instead of data-table-specific variants, which keeps filtering and visibility controls visually aligned with the rest of the kit.
 - Density is controlled through header and cell padding helpers rather than alternate markup paths. That keeps the standard and virtualized renderers visually synchronized.
 - Striping is optional and deliberately subtle so hover, selection, and action affordances remain stronger than decorative treatment.
+- Expanded subrows span all visible columns. Virtualization is disabled when a subrow renderer is supplied because row heights become variable.
 
 ## Maintenance Notes
 - Keep TanStack-specific state logic in `index.tsx`; presentational helpers such as pagination and row actions should stay thin.

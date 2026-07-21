@@ -89,7 +89,7 @@ export function OptionsChain({
           if (!c || c.bid == null) return null;
           return (
             <button
-              className="hover:bg-accent/40 rounded px-1 tabular-nums"
+              className="rounded border border-transparent bg-negative/5 px-1.5 py-0.5 tabular-nums transition-colors hover:border-negative/20 hover:bg-negative/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => onAddLeg?.("sell", "call", row.original.strike, activeExpiry)}
               aria-label={`Sell call at strike ${row.original.strike}`}
             >
@@ -107,7 +107,7 @@ export function OptionsChain({
           if (!c || c.ask == null) return null;
           return (
             <button
-              className="hover:bg-accent/40 rounded px-1 tabular-nums"
+              className="rounded border border-transparent bg-positive/5 px-1.5 py-0.5 tabular-nums transition-colors hover:border-positive/20 hover:bg-positive/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => onAddLeg?.("buy", "call", row.original.strike, activeExpiry)}
               aria-label={`Buy call at strike ${row.original.strike}`}
             >
@@ -132,7 +132,7 @@ export function OptionsChain({
         cell: ({ row }) => {
           const d = row.original.call?.delta ?? row.original.call?.greeks?.delta;
           return d != null ? (
-            <NumericText value={d} format="number" precision={2} align="right" />
+            <NumericText value={d} format="number" precision={2} colorize align="right" />
           ) : null;
         },
       },
@@ -149,7 +149,7 @@ export function OptionsChain({
         cell: ({ row }) => {
           const d = row.original.put?.delta ?? row.original.put?.greeks?.delta;
           return d != null ? (
-            <NumericText value={d} format="number" precision={2} align="right" />
+            <NumericText value={d} format="number" precision={2} colorize align="right" />
           ) : null;
         },
       },
@@ -171,7 +171,7 @@ export function OptionsChain({
           if (!p || p.bid == null) return null;
           return (
             <button
-              className="hover:bg-accent/40 rounded px-1 tabular-nums"
+              className="rounded border border-transparent bg-negative/5 px-1.5 py-0.5 tabular-nums transition-colors hover:border-negative/20 hover:bg-negative/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => onAddLeg?.("sell", "put", row.original.strike, activeExpiry)}
               aria-label={`Sell put at strike ${row.original.strike}`}
             >
@@ -189,7 +189,7 @@ export function OptionsChain({
           if (!p || p.ask == null) return null;
           return (
             <button
-              className="hover:bg-accent/40 rounded px-1 tabular-nums"
+              className="rounded border border-transparent bg-positive/5 px-1.5 py-0.5 tabular-nums transition-colors hover:border-positive/20 hover:bg-positive/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => onAddLeg?.("buy", "put", row.original.strike, activeExpiry)}
               aria-label={`Buy put at strike ${row.original.strike}`}
             >
@@ -229,8 +229,8 @@ export function OptionsChain({
 
   return (
     <Card variant="outlined" className={cn("flex flex-col gap-3 p-3", className)}>
-      <div className="flex items-center justify-between gap-2">
-        <span className="font-mono font-medium">{underlying}</span>
+      <div className="flex items-center justify-between gap-3 rounded-md bg-muted/30 px-3 py-2">
+        <span className="font-mono text-base font-semibold tracking-tight">{underlying}</span>
         <span className="text-xs text-muted-foreground">{cycleLabel(activeExpiry)}</span>
         <span className="text-xs text-muted-foreground">Spot</span>
         <NumericText value={spot} format="currency" align="right" />
@@ -253,7 +253,13 @@ export function OptionsChain({
         </TabsList>
       </Tabs>
 
-      <div className="grid grid-cols-[1fr_8rem_1fr] gap-2">
+      <div className="grid grid-cols-[1fr_8rem_1fr] gap-2 text-center text-xs font-semibold uppercase tracking-wider">
+        <span className="rounded-sm bg-positive/10 py-1 text-positive">Calls</span>
+        <span className="py-1 text-muted-foreground">Strike</span>
+        <span className="rounded-sm bg-negative/10 py-1 text-negative">Puts</span>
+      </div>
+
+      <div className="grid min-w-[44rem] grid-cols-[1fr_8rem_1fr] gap-2 overflow-x-auto">
         <DataTable
           columns={callColumns}
           data={visibleRows}

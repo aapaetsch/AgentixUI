@@ -8,6 +8,7 @@ const meta: Meta<typeof PayoffBundleCard> = {
   component: PayoffBundleCard,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
+  argTypes: { showHoverDetails: { control: "boolean" } },
 };
 export default meta;
 type Story = StoryObj<typeof PayoffBundleCard>;
@@ -24,7 +25,7 @@ const longCall: OptionLeg[] = [
 ];
 
 export const IronCondor: Story = {
-  args: { legs: ironCondor, spotPrice: 400, currentPnL: 80 },
+  args: { legs: ironCondor, spotPrice: 400, currentPnL: 80, showHoverDetails: true },
   render: (args) => <div className="w-[28rem]"><PayoffBundleCard {...args} /></div>,
 };
 

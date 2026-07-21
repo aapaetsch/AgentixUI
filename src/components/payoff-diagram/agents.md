@@ -11,6 +11,8 @@ Inline-SVG at-expiry payoff curve.
 - `spotPrice?`, `currentPnL?` — spot marker + P&L dot.
 - `breakevens?: number[]` — dots on the zero line.
 - `showZeroLine?: boolean` — @default `true`.
+- `showHoverDetails?: boolean` — opt-in tracked point and tooltip. @default `false`.
+- `formatHoverPrice?`, `formatHoverValue?`, `onHoverPointChange?` — hover customization.
 - `className?: string`.
 
 ## Dependencies
@@ -42,6 +44,7 @@ Inline-SVG at-expiry payoff curve.
   because a lone `M` segment is a zero-length path with no visible output.
 - **Empty points**: renders a mid-height dashed placeholder line.
 - Spot/breakeven markers outside the price domain are silently dropped.
+- Hover tracking selects the closest supplied point; it does not interpolate payoff values.
 - The `aria-label` defaults to
   `"payoff at expiry, spot {spotPrice}, {n} breakevens"` (segments omitted
   when the corresponding prop is unset); consumers can override via the

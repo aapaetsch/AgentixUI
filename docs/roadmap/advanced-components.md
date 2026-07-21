@@ -40,7 +40,7 @@
 | **ExpiryBadge** | ✅ Complete | `ExpiryBadge`, `DEFAULT_EXPIRY_THRESHOLDS`, `ExpiryBadgeBand` | Color-graded DTE pill (far/near/imminent/expiring) → `Badge` variants; optional pulse on `<1d`. |
 | **GreeksDisplay** | ✅ Complete | `GreeksDisplay`, `DEFAULT_GREEK_GLOSSARY` | Δ/Γ/Θ/ν/ρ cluster via `NumericText` + per-cell glossary `Tooltip`. `grid` \| `inline` layouts. |
 | **BreakevenBadges** | ✅ Complete | `BreakevenBadges` | Pill row of breakeven prices via `Badge variant="outline"` + `NumericText`. |
-| **PayoffDiagram** | ✅ Complete | `PayoffDiagram`, `payoffContainerVariants` | Inline-SVG hockey-stick payoff curve (line/area), spot marker, breakeven dots, zero baseline. Mirrors `Sparkline` precedent. |
+| **PayoffDiagram** | ✅ Complete | `PayoffDiagram`, `payoffContainerVariants` | Inline-SVG payoff curve (line/area), semantic profit/loss colors, spot/breakeven markers, and opt-in tracked hover dot + tooltip. |
 | **GreeksDecayChart** | ✅ Complete | `GreeksDecayChart`, `greeksDecayContainerVariants` | Inline-SVG mini multi-line chart of Δ/Γ/Θ/ν over DTE. Per-Greek Tailwind text-color tokens. |
 | **IVChart** | ✅ Complete | `IVChart`, `ivChartContainerVariants` | Inline-SVG IV term-structure (`Sparkline`-like) + ≤~100-cell IV surface heatmap. |
 | **StrikesNavigator** | ✅ Complete | `StrikesNavigator`, `strikesNavigatorVariants` | Virtualized strike ladder with ITM/ATM/OTM striping + quick-jump input. Windowed slice. |
