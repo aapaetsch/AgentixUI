@@ -10,37 +10,55 @@ import { cn } from "../../lib/utils";
 
 export const toggleGroupVariants = cva(
   [
-    "flex items-stretch rounded-md border border-border bg-background",
+    "group/toggle flex items-stretch rounded-md border border-border bg-background",
     "overflow-hidden",
   ].join(" "),
   {
     variants: {
+      // No `min-h-*` here: height is driven by item vertical padding so the
+      // bar hugs its content. `items-stretch` keeps all items equal height,
+      // and the container grows naturally when an item wraps to two lines.
       size: {
-        xs: "h-6 text-xs",
-        sm: "h-7 text-xs",
-        md: "h-8 text-sm",
-        lg: "h-9 text-sm",
+        xs: "text-xs",
+        sm: "text-xs",
+        md: "text-sm",
+        lg: "text-sm",
       },
       variant: {
         default: "",
         outline: "bg-transparent",
       },
+      // `lines` advertises the expected maximum number of wrapped text lines
+      // so items can opt into wrapping typography via the `group/toggle`
+      // named group. It does NOT reserve extra vertical space — the container
+      // grows naturally to fit the tallest item's content, and `items-stretch`
+      // keeps all items uniformly tall. This avoids whitespace under
+      // single-line toggles when `lines={2}` is set but content fits on one line.
+      lines: {
+        1: "",
+        2: "",
+      },
     },
     defaultVariants: {
       size: "md",
       variant: "default",
+      lines: 1,
     },
   }
 );
 
 export const toggleGroupItemVariants = cva(
   [
-    "inline-flex items-center justify-center gap-1.5 px-3 font-medium",
-    "h-full flex-1",
+    "inline-flex items-center justify-center gap-1.5 font-medium",
+    "flex-1 text-center leading-tight whitespace-nowrap",
     "transition-colors",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
     "disabled:pointer-events-none disabled:opacity-50",
     "border-r border-border last:border-r-0",
+    // When the parent ToggleGroup opts into two-line wrapping, switch to
+    // `pre-line` so explicit newlines (`iron\ncondor`) and natural wraps both
+    // render on a second row. Height is driven by content, not a forced min-h.
+    "group-data-[lines=2]/toggle:whitespace-pre-line",
   ].join(" "),
   {
     variants: {
@@ -54,11 +72,14 @@ export const toggleGroupItemVariants = cva(
           "data-[state=on]:border-primary data-[state=on]:bg-accent/30 data-[state=on]:text-foreground",
         ].join(" "),
       },
+      // Vertical padding sets the item height (content-driven). The group
+      // container hugs the tallest item via `items-stretch`, so there is no
+      // extra whitespace inside the bar.
       size: {
-        xs: "text-xs px-2",
-        sm: "text-xs px-2.5",
-        md: "text-sm px-3",
-        lg: "text-sm px-4",
+        xs: "text-xs px-2 py-1",
+        sm: "text-xs px-2.5 py-1.5",
+        md: "text-sm px-3 py-2",
+        lg: "text-sm px-4 py-2.5",
       },
     },
     defaultVariants: {
@@ -80,6 +101,12 @@ export interface ToggleGroupProps
   onValueChange?: (value: string | string[] | undefined) => void;
   disabled?: boolean;
   loop?: boolean;
+  /**
+   * Expected maximum number of stacked text lines per item. When set to `2`,
+   * items enable text wrapping (e.g. "iron" / "condor") and the group grows
+   * to fit the wrapped content. Defaults to `1`.
+   */
+  lines?: 1 | 2;
   className?: string;
   children?: React.ReactNode;
 }
@@ -114,6 +141,7 @@ export const ToggleGroup = React.forwardRef<
       loop,
       variant,
       size,
+      lines,
       className,
       children,
       ...props
@@ -135,7 +163,10 @@ export const ToggleGroup = React.forwardRef<
     return (
       <ToggleGroupPrimitive.Root
         ref={ref}
-        className={cn(toggleGroupVariants({ variant, size }), className)}
+        // `data-lines` is read by the item variant via `group-data-[lines=2]`
+        // so items opt into wrapping typography only when the group expects it.
+        data-lines={lines ?? 1}
+        className={cn(toggleGroupVariants({ variant, size, lines }), className)}
         {...rootProps}
       >
         {children}

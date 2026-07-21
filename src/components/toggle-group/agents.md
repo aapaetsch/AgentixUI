@@ -20,6 +20,7 @@
 - `disabled`, `loop`
 - `variant`: `"default" | "outline"`
 - `size`: `"xs" | "sm" | "md" | "lg"`
+- `lines`: `1 | 2` — enable per-item text wrapping for up to two stacked rows (default `1`)
 - `className`, `children`
 
 ### ToggleGroupItem
@@ -41,8 +42,14 @@
 - Active item (`default` variant): `bg-primary text-primary-foreground`.
 - Active item (`outline` variant): `border-primary bg-accent/30 text-foreground`.
 - Inactive items: `bg-transparent text-muted-foreground hover:bg-accent`.
-- Sizes align with existing Button/Toolbar sizes (xs=24px, sm=28px, md=32px, lg=36px) so they
-  compose cleanly inside a `Toolbar`.
+- Sizes align with existing Button/Toolbar sizes (xs/sm/md/lg) so they compose cleanly inside a
+  `Toolbar`. Toggle height is content-driven: the container has no `min-h-*`, and items set
+  their own height via `py-*` vertical padding. `items-stretch` keeps all items equal height,
+  and the group grows naturally when an item wraps to two lines.
+- Multi-line text: set `lines={2}` on the `ToggleGroup` to switch items to `whitespace-pre-line`
+  (via `group-data-[lines=2]/toggle`). Explicit newlines (e.g. `"iron\ncondor"`) and natural
+  word wraps both render correctly, and the group height grows to fit the tallest item. With
+  `lines={1}` (default) items use `whitespace-nowrap`.
 
 ## Maintenance Notes
 

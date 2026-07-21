@@ -10,6 +10,7 @@ const meta: Meta<typeof ToggleGroup> = {
     type: { control: "radio", options: ["single", "multiple"] },
     variant: { control: "radio", options: ["default", "outline"] },
     size: { control: "radio", options: ["xs", "sm", "md", "lg"] },
+    lines: { control: "radio", options: [1, 2] },
     disabled: { control: "boolean" },
     loop: { control: "boolean" },
   },
@@ -19,8 +20,9 @@ export default meta;
 type Story = StoryObj<typeof ToggleGroup>;
 
 export const Default: Story = {
+  args: { lines: 1 },
   render: (args) => (
-    <ToggleGroup type="single" defaultValue="1D" {...args}>
+    <ToggleGroup type="single" defaultValue="1D" lines={1} {...args}>
       <ToggleGroupItem value="1D">1D</ToggleGroupItem>
       <ToggleGroupItem value="1W">1W</ToggleGroupItem>
       <ToggleGroupItem value="1M">1M</ToggleGroupItem>
@@ -135,5 +137,54 @@ export const Controlled: Story = {
         </div>
       </div>
     );
+  },
+};
+
+export const StackedText: Story = {
+  name: "Two-Line Stacked Text (lines=2)",
+  render: () => (
+    <div className="flex flex-col gap-4 p-6 w-fit">
+      <ToggleGroup type="single" defaultValue="iron-condor" lines={2} size="md">
+        <ToggleGroupItem value="long-call">Long Call</ToggleGroupItem>
+        <ToggleGroupItem value="iron-condor">iron
+condor</ToggleGroupItem>
+        <ToggleGroupItem value="butterfly">bull put
+butterfly</ToggleGroupItem>
+        <ToggleGroupItem value="calendar">Calendar</ToggleGroupItem>
+      </ToggleGroup>
+      <ToggleGroup
+        type="single"
+        defaultValue="iron-condor"
+        lines={2}
+        size="md"
+        variant="outline"
+      >
+        <ToggleGroupItem value="long-call" variant="outline">
+          Long Call
+        </ToggleGroupItem>
+        <ToggleGroupItem value="iron-condor" variant="outline">
+          {"iron\ncondor"}
+        </ToggleGroupItem>
+        <ToggleGroupItem value="butterfly" variant="outline">
+          {"bull put\nbutterfly"}
+        </ToggleGroupItem>
+      </ToggleGroup>
+      <div className="text-xs text-muted-foreground">
+        Compare the same group without <code>lines</code>:
+      </div>
+      <ToggleGroup type="single" defaultValue="iron-condor" size="md">
+        <ToggleGroupItem value="long-call">Long Call</ToggleGroupItem>
+        <ToggleGroupItem value="iron-condor">iron condor</ToggleGroupItem>
+        <ToggleGroupItem value="butterfly">bull put butterfly</ToggleGroupItem>
+      </ToggleGroup>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Set `lines={2}` on the group to enable text wrapping per item (e.g. `iron\ncondor`). The group grows to fit the tallest item; single-line items stay tight with no extra whitespace.",
+      },
+    },
   },
 };
