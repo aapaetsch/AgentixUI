@@ -19,9 +19,10 @@ interface TrendIndicatorProps extends React.HTMLAttributes<HTMLSpanElement>,
   value: number;                 // Number used to derive direction
   displayValue?: string;         // Optional pre-formatted text; falls back to Intl.NumberFormat
   direction?: "up" | "down" | "auto";  // auto derives from sign(value). default "auto"
-  size?: "xs" | "sm" | "md";      // default "sm"
+  size?: "xs" | "sm" | "md" | "lg" | "xl";      // default "sm"
   showArrow?: boolean;           // default true
   signed?: boolean;               // prefix "+" on positives (only when displayValue is not supplied)
+  weight?: "normal" | "medium" | "semibold" | "bold";  // default "medium"
 }
 ```
 

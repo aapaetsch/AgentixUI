@@ -16,17 +16,31 @@ import { pnlColorClass } from "../../lib/color-utils";
  * table cells, stat tiles, and tooltips.
  */
 export const trendIndicatorVariants = cva(
-  "inline-flex items-center gap-1 font-medium tabular-nums leading-none",
+  "inline-flex items-center gap-1 tabular-nums leading-none",
   {
     variants: {
       size: {
         xs: "text-[0.6875rem] [&>svg]:size-3",
         sm: "text-xs [&>svg]:size-3.5",
         md: "text-sm [&>svg]:size-4",
+        lg: "text-base [&>svg]:size-5",
+        xl: "text-lg [&>svg]:size-6",
+      },
+      /**
+       * Font-weight variants. `medium` matches the previous default so existing
+       * usage is unchanged; `semibold` / `bold` add emphasis for stat tiles and
+       * hero metrics, while `normal` is useful inside dense data tables.
+       */
+      weight: {
+        normal: "font-normal",
+        medium: "font-medium",
+        semibold: "font-semibold",
+        bold: "font-bold",
       },
     },
     defaultVariants: {
       size: "sm",
+      weight: "medium",
     },
   }
 );
@@ -47,6 +61,8 @@ export interface TrendIndicatorProps
   showArrow?: boolean;
   /** When true, prefix `+` on positive values (only when `displayValue` is not supplied). @default false */
   signed?: boolean;
+  /** Font weight of the label. @default "medium" */
+  weight?: "normal" | "medium" | "semibold" | "bold";
 }
 
 /**
@@ -102,6 +118,7 @@ export const TrendIndicator = React.forwardRef<
       displayValue,
       direction = "auto",
       size = "sm",
+      weight = "medium",
       showArrow = true,
       signed = false,
       className,
@@ -130,7 +147,11 @@ export const TrendIndicator = React.forwardRef<
     return (
       <span
         ref={ref}
-        className={cn(trendIndicatorVariants({ size }), colorClass, className)}
+        className={cn(
+          trendIndicatorVariants({ size, weight }),
+          colorClass,
+          className
+        )}
         {...rest}
       >
         {showArrow ? <Icon aria-hidden="true" /> : null}

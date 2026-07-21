@@ -14,7 +14,11 @@ const meta: Meta<typeof TrendIndicator> = {
     },
     size: {
       control: "select",
-      options: ["xs", "sm", "md"],
+      options: ["xs", "sm", "md", "lg", "xl"],
+    },
+    weight: {
+      control: "select",
+      options: ["normal", "medium", "semibold", "bold"],
     },
     showArrow: { control: "boolean" },
     signed: { control: "boolean" },
@@ -45,12 +49,26 @@ export const Values: Story = {
 };
 
 export const Sizes: Story = {
-  name: "Sizes (xs / sm / md)",
+  name: "Sizes (xs / sm / md / lg / xl)",
   render: () => (
     <div className="flex flex-col gap-3 p-6">
       <TrendIndicator value={1.24} signed size="xs" />
       <TrendIndicator value={1.24} signed size="sm" />
       <TrendIndicator value={1.24} signed size="md" />
+      <TrendIndicator value={1.24} signed size="lg" />
+      <TrendIndicator value={1.24} signed size="xl" />
+    </div>
+  ),
+};
+
+export const Weights: Story = {
+  name: "Weights (normal / medium / semibold / bold)",
+  render: () => (
+    <div className="flex flex-col gap-3 p-6">
+      <TrendIndicator value={1.24} signed weight="normal" />
+      <TrendIndicator value={1.24} signed weight="medium" />
+      <TrendIndicator value={1.24} signed weight="semibold" />
+      <TrendIndicator value={1.24} signed weight="bold" />
     </div>
   ),
 };
@@ -105,6 +123,12 @@ export const VariantsReference: Story = {
       <span className={trendIndicatorVariants({ size: "xs" })}>xs</span>
       <span className={trendIndicatorVariants({ size: "sm" })}>sm</span>
       <span className={trendIndicatorVariants({ size: "md" })}>md</span>
+      <span className={trendIndicatorVariants({ size: "lg" })}>lg</span>
+      <span className={trendIndicatorVariants({ size: "xl" })}>xl</span>
+      <span className={trendIndicatorVariants({ weight: "normal" })}>normal</span>
+      <span className={trendIndicatorVariants({ weight: "medium" })}>medium</span>
+      <span className={trendIndicatorVariants({ weight: "semibold" })}>semibold</span>
+      <span className={trendIndicatorVariants({ weight: "bold" })}>bold</span>
     </div>
   ),
 };
