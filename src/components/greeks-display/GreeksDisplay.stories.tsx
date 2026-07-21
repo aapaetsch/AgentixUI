@@ -9,6 +9,19 @@ const meta: Meta<typeof GreeksDisplay> = {
   tags: ["autodocs"],
   argTypes: {
     layout: { options: ["grid", "inline"], control: { type: "radio" } },
+    labelStyle: {
+      options: ["symbol", "text", "both"],
+      control: { type: "radio" },
+    },
+    labelPosition: {
+      options: ["leading", "stacked"],
+      control: { type: "radio" },
+    },
+    labelCase: {
+      options: ["upper", "lower", "title"],
+      control: { type: "radio" },
+    },
+    size: { options: ["sm", "md", "lg"], control: { type: "radio" } },
   },
 };
 export default meta;
@@ -85,4 +98,103 @@ export const InlineNoTooltips: Story = {
     colorize: true,
     showTooltips: false,
   },
+};
+
+/* -------------------------------------------------------------------------- *
+ * Label style variants
+ * -------------------------------------------------------------------------- */
+
+export const LabelSymbol: Story = {
+  name: "Label style: symbol",
+  args: { greeks: fullGreeks, labelStyle: "symbol" },
+};
+
+export const LabelText: Story = {
+  name: "Label style: text",
+  args: { greeks: fullGreeks, labelStyle: "text", labelCase: "title" },
+};
+
+export const LabelTextUpper: Story = {
+  name: "Label style: text (UPPER)",
+  args: { greeks: fullGreeks, labelStyle: "text", labelCase: "upper" },
+};
+
+export const LabelBoth: Story = {
+  name: "Label style: both (symbol + name)",
+  args: { greeks: fullGreeks, labelStyle: "both" },
+};
+
+/* -------------------------------------------------------------------------- *
+ * Label position variants
+ * -------------------------------------------------------------------------- */
+
+export const StackedGrid: Story = {
+  name: "Stacked grid (stat-tile row)",
+  args: {
+    greeks: fullGreeks,
+    labelPosition: "stacked",
+    showTooltips: false,
+  },
+  render: (args) => <div className="w-[24rem]"><GreeksDisplay {...args} /></div>,
+};
+
+export const StackedInline: Story = {
+  name: "Stacked inline (compact tiles)",
+  args: {
+    greeks: fullGreeks,
+    layout: "inline",
+    labelPosition: "stacked",
+    colorize: true,
+    signed: true,
+  },
+  render: (args) => <div className="w-[28rem]"><GreeksDisplay {...args} /></div>,
+};
+
+export const StackedBoth: Story = {
+  name: "Stacked + labelStyle=both",
+  args: {
+    greeks: fullGreeks,
+    labelStyle: "both",
+    labelPosition: "stacked",
+    size: "lg",
+  },
+  render: (args) => <div className="w-[32rem]"><GreeksDisplay {...args} /></div>,
+};
+
+/* -------------------------------------------------------------------------- *
+ * Size scale + contrast
+ * -------------------------------------------------------------------------- */
+
+export const SizeSm: Story = {
+  name: "Size sm (dense row)",
+  args: { greeks: fullGreeks, size: "sm" },
+};
+
+export const SizeLg: Story = {
+  name: "Size lg (headline readout)",
+  args: { greeks: fullGreeks, size: "lg", labelStyle: "both" },
+};
+
+export const LabelNotMuted: Story = {
+  name: "Label not muted (full foreground contrast)",
+  args: { greeks: fullGreeks, labelMuted: false, labelStyle: "both" },
+};
+
+/* -------------------------------------------------------------------------- *
+ * Combination: high-readout mode
+ * -------------------------------------------------------------------------- */
+
+export const HighReadability: Story = {
+  name: "High-readability preset",
+  args: {
+    greeks: fullGreeks,
+    layout: "inline",
+    labelStyle: "both",
+    labelPosition: "stacked",
+    size: "md",
+    colorize: true,
+    signed: true,
+    labelCase: "upper",
+  },
+  render: (args) => <div className="w-[32rem]"><GreeksDisplay {...args} /></div>,
 };
