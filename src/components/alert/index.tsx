@@ -95,10 +95,10 @@ const alertDescriptionVariants = cva(
  */
 const alertCloseVariants = cva(
   [
-    "absolute right-3 top-3",
+    "absolute right-1 top-1 flex size-11 items-center justify-center",
     "rounded-[var(--radius-sm)] p-1",
     "opacity-70 transition-opacity",
-    "hover:opacity-100",
+    "hover:opacity-100 active:opacity-100",
     "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
     "disabled:pointer-events-none",
   ].join(" ")

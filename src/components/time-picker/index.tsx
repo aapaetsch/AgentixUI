@@ -48,9 +48,9 @@ const timePickerTriggerVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-[1.75rem] px-3 text-sm [&_svg]:size-4",
-        md: "h-[2rem] px-3 text-sm [&_svg]:size-4",
-        lg: "h-[2.25rem] px-4 text-base [&_svg]:size-5",
+        sm: "h-10 px-3 text-sm [&_svg]:size-4",
+        md: "h-11 px-3 text-sm [&_svg]:size-4",
+        lg: "h-12 px-4 text-base [&_svg]:size-5",
       },
       error: {
         true: "border-destructive focus-visible:border-destructive",
@@ -70,7 +70,7 @@ const timePickerTriggerVariants = cva(
 const timeColumnVariants = cva(
   [
     "flex flex-col items-center",
-    "overflow-y-auto",
+    "overflow-y-auto overscroll-contain touch-pan-y snap-y snap-mandatory [-webkit-overflow-scrolling:touch]",
     "scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent",
     "px-1", // Padding to prevent active state clipping
   ].join(" "),
@@ -94,7 +94,7 @@ const timeColumnVariants = cva(
 const timeItemVariants = cva(
   [
     "flex items-center justify-center",
-    "w-full rounded-[var(--radius)]",
+    "w-full min-h-11 snap-start rounded-[var(--radius)]",
     "cursor-pointer select-none",
     "transition-all duration-[var(--motion-duration-short)] ease-[var(--motion-easing-standard)]",
     "hover:bg-accent hover:text-accent-foreground",
@@ -103,9 +103,9 @@ const timeItemVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-7 text-xs",
-        md: "h-8 text-sm",
-        lg: "h-10 text-base",
+        sm: "h-11 text-sm",
+        md: "h-11 text-sm",
+        lg: "h-12 text-base",
       },
       selected: {
         true: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
@@ -387,7 +387,7 @@ function TimePicker({
 
         <PopoverContent
           className={cn(
-            "w-auto p-0",
+            "w-auto max-w-[calc(100vw-1rem)] p-0 pb-[env(safe-area-inset-bottom)]",
             contentClassName
           )}
           align="start"

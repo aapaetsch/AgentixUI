@@ -17,7 +17,7 @@ import { buttonVariants } from "../button";
  */
 const alertDialogOverlayVariants = cva(
   [
-    "fixed inset-0 z-50",
+    "fixed inset-0 z-50 overscroll-contain touch-none",
     "bg-black/50 backdrop-blur-sm",
     // M3 Motion for open/close
     "data-[state=open]:animate-in data-[state=closed]:animate-out",
@@ -38,10 +38,10 @@ const alertDialogContentVariants = cva(
     "shadow-[var(--elevation-5)]",
     "outline-none",
     // Positioning
-    "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+    "left-1/2 top-[50dvh] -translate-x-1/2 -translate-y-1/2",
     // Sizing
-    "max-w-[calc(100%-2rem)] sm:max-w-lg",
-    "rounded-[var(--radius-lg)] p-6",
+    "max-h-[calc(100dvh-2rem)] max-w-[calc(100%-2rem)] overflow-y-auto overscroll-contain sm:max-w-lg",
+    "rounded-[var(--radius-lg)] px-[max(1.5rem,env(safe-area-inset-left))] pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]",
     // M3 Motion for open/close
     "data-[state=open]:animate-in data-[state=closed]:animate-out",
     "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
@@ -65,7 +65,7 @@ const alertDialogHeaderVariants = cva(
  */
 const alertDialogFooterVariants = cva(
   [
-    "flex flex-col-reverse gap-2",
+    "flex flex-col-reverse gap-3",
     "sm:flex-row sm:justify-end",
   ].join(" ")
 );

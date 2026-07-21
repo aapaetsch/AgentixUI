@@ -48,7 +48,7 @@ export function DataTableVirtualized<TData>({
   const virtualRows = rowVirtualizer.getVirtualItems();
 
   return (
-    <div ref={parentRef} className="overflow-auto" style={{ maxHeight: height }}>
+    <div ref={parentRef} className="overflow-auto overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch]" style={{ maxHeight: height }}>
       <table className="w-full table-fixed caption-bottom text-sm">
         <TableHeader className={cn(stickyHeader && "sticky top-0 z-10 bg-background") as string}>
           {table.getHeaderGroups().map((headerGroup) => (

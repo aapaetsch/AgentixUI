@@ -20,7 +20,7 @@ const dropdownMenuContentVariants = cva(
 
 const dropdownMenuItemVariants = cva(
   [
-    "relative flex cursor-pointer select-none items-center gap-2 rounded-[var(--radius-sm)] px-2 py-1.5 text-sm outline-none",
+    "relative flex min-h-11 cursor-pointer select-none items-center gap-2 rounded-[var(--radius-sm)] px-2 py-2.5 text-sm outline-none touch-manipulation",
     "transition-colors duration-[var(--motion-duration-short)] ease-[var(--motion-easing-standard)]",
     "focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground",
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
@@ -57,7 +57,7 @@ const dropdownMenuLabelVariants = cva("px-2 py-1.5 text-xs font-semibold upperca
 });
 
 const dropdownMenuSeparatorVariants = cva("-mx-1 my-1 h-px bg-border");
-const dropdownMenuShortcutVariants = cva("ml-auto text-[0.6875rem] tracking-[0.12em] text-muted-foreground");
+const dropdownMenuShortcutVariants = cva("ml-auto text-[0.6875rem] tracking-[0.12em] text-muted-foreground [@media(hover:none)]:hidden");
 const dropdownMenuSubTriggerVariants = dropdownMenuItemVariants;
 
 export interface DropdownMenuProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root> {}

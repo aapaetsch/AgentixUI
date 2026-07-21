@@ -22,7 +22,8 @@ import { cn } from "../../lib/utils";
 
 export const resizableHandleVariants = cva(
   [
-    "relative flex items-center justify-center shrink-0 select-none",
+    "group relative flex items-center justify-center shrink-0 select-none touch-none",
+    "before:absolute before:content-['']",
     "transition-[background-color,width,height] duration-[var(--motion-duration-short)]",
     "ease-[var(--motion-easing-standard)]",
     "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
@@ -36,8 +37,8 @@ export const resizableHandleVariants = cva(
         grip: "bg-border hover:bg-accent/40 data-[active]:bg-accent/20",
       },
       direction: {
-        horizontal: "w-px h-full cursor-col-resize data-[active]:w-0.5",
-        vertical: "h-px w-full cursor-row-resize data-[active]:h-0.5",
+        horizontal: "w-px h-full cursor-col-resize before:-inset-x-[1.375rem] before:inset-y-0 data-[active]:w-0.5",
+        vertical: "h-px w-full cursor-row-resize before:inset-x-0 before:-inset-y-[1.375rem] data-[active]:h-0.5",
       },
     },
     compoundVariants: [
@@ -219,7 +220,7 @@ export function ResizableHandle({
       {...props}
     >
       {variant === "grip" ? (
-        <span className="text-muted-foreground/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        <span className="text-muted-foreground/60 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100 group-data-[active=true]:opacity-100 flex items-center justify-center">
           {direction === "horizontal" ? (
             <GripVertical className="size-3.5" />
           ) : (

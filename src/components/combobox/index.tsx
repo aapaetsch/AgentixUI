@@ -53,10 +53,10 @@ const comboboxInputVariants = cva(
        * Size variants - reduced heights compared to MD3
        */
       size: {
-        xs: "h-[1.5rem] px-2.5 py-1 text-xs",
-        sm: "h-[1.75rem] px-3 py-1.5 text-sm",
-        md: "h-[2rem] px-3 py-2 text-sm",
-        lg: "h-[2.25rem] px-4 py-2.5 text-base",
+        xs: "h-9 px-2.5 py-1 text-base",
+        sm: "h-10 px-3 py-1.5 text-base",
+        md: "h-11 px-3 py-2 text-base",
+        lg: "h-12 px-4 py-2.5 text-base",
         xl: "h-[2.75rem] px-5 py-3 text-lg",
       },
     },
@@ -232,7 +232,7 @@ const comboboxFloatingLabelVariants = cva(
  */
 const comboboxOptionsVariants = cva(
   [
-    "z-50 overflow-auto",
+    "z-50 overflow-auto overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch]",
     "w-[var(--input-width)]",
     "max-h-60",
     "rounded-[var(--radius)]",
@@ -477,6 +477,9 @@ function ComboBoxInner<T = string>(
           <div className="relative">
             <HeadlessComboboxInput
               data-invalid={invalid || undefined}
+              inputMode="search"
+              enterKeyHint="search"
+              autoComplete="off"
               className={cn(
                 comboboxInputVariants({ size }),
                 // Add padding for the button/clear icon

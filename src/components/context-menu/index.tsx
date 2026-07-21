@@ -44,7 +44,7 @@ const contextMenuItemVariants = cva(
     "relative flex w-full cursor-pointer select-none",
     "items-center gap-2",
     "rounded-[var(--radius-sm)]",
-    "px-2 py-1.5",
+    "min-h-11 px-2 py-2.5",
     "text-sm outline-none",
     // Focus styles
     "focus:bg-accent focus:text-accent-foreground",
@@ -99,7 +99,7 @@ const contextMenuLabelVariants = cva(
   [
     "px-2 py-1.5",
     "text-xs font-semibold",
-    "text-muted-foreground",
+    "text-muted-foreground [@media(hover:none)]:hidden",
   ].join(" "),
   {
     variants: {
@@ -135,7 +135,7 @@ const contextMenuSubTriggerVariants = cva(
     "relative flex w-full cursor-pointer select-none",
     "items-center gap-2",
     "rounded-[var(--radius-sm)]",
-    "px-2 py-1.5",
+    "min-h-11 px-2 py-2.5",
     "text-sm outline-none",
     // Focus styles
     "focus:bg-accent focus:text-accent-foreground",

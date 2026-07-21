@@ -141,14 +141,14 @@ const sliderRangeVariants = cva(
  */
 const sliderThumbVariants = cva(
   [
-    "relative block",
+    "relative block before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
     // MD3: Primary filled handle
     "bg-primary",
     // Tightly rounded capsule shape - smaller radius for tighter corners
     "rounded-[0.125rem]", // 2px radius for tighter top/bottom corners
     "ring-offset-background",
     // Focus ring - no ring when focused, handle gets narrower on focus
-    "focus:outline-none focus-visible:outline-none",
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
     // Remove all focus ring styles
     "disabled:pointer-events-none disabled:opacity-50",
     // MD3 Motion - handle narrows on press

@@ -17,9 +17,9 @@ const timeAndSalesColumnLayout =
 
 export const timeAndSalesRowVariants = cva(
   [
-    "relative grid items-center gap-2 text-xs font-mono px-2 py-0.5",
+    "relative grid min-h-11 items-center gap-2 text-xs font-mono px-2 py-1",
     timeAndSalesColumnLayout,
-    "cursor-pointer hover:bg-accent/30",
+    "cursor-pointer hover:bg-accent/30 active:bg-accent/50 touch-manipulation",
     "transition-colors duration-75",
   ].join(" "),
   {
@@ -259,7 +259,7 @@ export function TimeAndSales({
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-auto max-h-96"
+        className="flex-1 overflow-auto overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch] max-h-96"
       >
         {visible.map((trade) => (
           <TimeAndSalesRow

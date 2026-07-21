@@ -73,8 +73,8 @@ const accordionTriggerVariants = cva(
   [
     "flex flex-1 items-center justify-between py-4",
     "text-sm font-medium text-left",
-    "transition-all",
-    "hover:underline",
+    "min-h-11 transition-[color,background-color] touch-manipulation",
+    "hover:underline active:underline",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
   ].join(" "),
   {

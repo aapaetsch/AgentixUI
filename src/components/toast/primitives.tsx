@@ -564,8 +564,8 @@ const toastVariants = cva(
  */
 const toastViewportVariants = cva(
   [
-    "fixed z-[100] flex flex-col gap-2 p-4",
-    "max-h-screen w-full",
+    "fixed z-[100] flex max-h-[100dvh] flex-col gap-2 overflow-y-auto overscroll-contain",
+    "w-full px-[max(1rem,env(safe-area-inset-left))] pt-[max(1rem,env(safe-area-inset-top))] pr-[max(1rem,env(safe-area-inset-right))] pb-[max(1rem,env(safe-area-inset-bottom))]",
     "md:max-w-[420px]",
     // Pointer events only on children
     "pointer-events-none",
@@ -766,9 +766,9 @@ const ToastClose = React.forwardRef<
     ref={ref}
     data-slot="toast-close"
     className={cn(
-      "absolute right-2 top-2 rounded-[var(--radius-sm)] p-1",
-      "opacity-0 transition-opacity",
-      "group-hover:opacity-100",
+      "absolute right-1 top-1 flex size-11 items-center justify-center rounded-[var(--radius-sm)]",
+      "opacity-100 transition-opacity sm:opacity-0",
+      "sm:group-hover:opacity-100 active:opacity-100",
       "focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
       // Default variant
       "group-[.default]:text-background/50 group-[.default]:hover:text-background",

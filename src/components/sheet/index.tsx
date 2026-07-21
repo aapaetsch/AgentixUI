@@ -61,7 +61,7 @@ const animationPresets: Record<AnimationType, SpringConfigOptions> = {
  */
 const premiumSheetOverlayVariants = cva(
   [
-    "fixed inset-0 z-50",
+    "fixed inset-0 z-50 overscroll-contain touch-none",
     "bg-black/50 backdrop-blur-sm",
     "overflow-hidden", // Prevent content from showing outside viewport during bounce
   ].join(" ")
@@ -78,7 +78,8 @@ const premiumSheetContentVariants = cva(
     "border border-border bg-background",
     "shadow-[var(--elevation-5)]",
     "outline-none",
-    "touch-none", // Prevent default touch behaviors for gesture handling
+    "touch-none overscroll-contain", // Prevent default touch behaviors for gesture handling
+    "pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]",
     // Add pseudo-element for overshoot coverage
     "before:content-[''] before:absolute before:bg-background",
   ].join(" "),
@@ -126,26 +127,26 @@ const premiumSheetContentVariants = cva(
       { position: "right", size: "md", className: "w-[360px] sm:w-[400px]" },
       { position: "right", size: "lg", className: "w-[400px] sm:w-[480px]" },
       { position: "right", size: "xl", className: "w-[480px] sm:w-[600px]" },
-      { position: "right", size: "full", className: "w-full" },
+      { position: "right", size: "full", className: "w-dvw" },
       { position: "left", size: "xs", className: "w-[280px]" },
       { position: "left", size: "sm", className: "w-[320px] sm:w-[360px]" },
       { position: "left", size: "md", className: "w-[360px] sm:w-[400px]" },
       { position: "left", size: "lg", className: "w-[400px] sm:w-[480px]" },
       { position: "left", size: "xl", className: "w-[480px] sm:w-[600px]" },
-      { position: "left", size: "full", className: "w-full" },
+      { position: "left", size: "full", className: "w-dvw" },
       // Top/Bottom positions - control height
       { position: "top", size: "xs", className: "h-[200px]" },
       { position: "top", size: "sm", className: "h-[280px]" },
       { position: "top", size: "md", className: "h-[360px]" },
       { position: "top", size: "lg", className: "h-[480px]" },
       { position: "top", size: "xl", className: "h-[600px]" },
-      { position: "top", size: "full", className: "h-full" },
+      { position: "top", size: "full", className: "h-dvh" },
       { position: "bottom", size: "xs", className: "h-[200px]" },
       { position: "bottom", size: "sm", className: "h-[280px]" },
       { position: "bottom", size: "md", className: "h-[360px]" },
       { position: "bottom", size: "lg", className: "h-[480px]" },
       { position: "bottom", size: "xl", className: "h-[600px]" },
-      { position: "bottom", size: "full", className: "h-full" },
+      { position: "bottom", size: "full", className: "h-dvh" },
     ],
     defaultVariants: {
       position: "right",
@@ -201,13 +202,13 @@ const premiumSheetDescriptionVariants = cva(
  */
 const premiumSheetCloseVariants = cva(
   [
-    "absolute right-4 top-4",
+    "absolute right-2 top-2 flex size-11 items-center justify-center",
     "rounded-[var(--radius-sm)]",
     "opacity-70 ring-offset-background",
     "transition-opacity",
     "duration-[var(--motion-duration-short)]",
     "ease-[var(--motion-easing-standard)]",
-    "hover:opacity-100",
+    "hover:opacity-100 active:opacity-100",
     "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
     "disabled:pointer-events-none",
     "data-[state=open]:bg-secondary",
@@ -221,9 +222,9 @@ const premiumSheetCloseVariants = cva(
 const premiumSheetHandleVariants = cva(
   [
     "mx-auto",
-    "h-1.5 w-12",
+    "relative h-11 w-20 before:absolute before:left-1/2 before:top-1/2 before:h-1.5 before:w-12 before:-translate-x-1/2 before:-translate-y-1/2",
     "shrink-0 rounded-full",
-    "bg-muted-foreground/30",
+    "before:rounded-full before:bg-muted-foreground/30",
     "cursor-grab active:cursor-grabbing",
   ].join(" "),
   {

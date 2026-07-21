@@ -146,7 +146,7 @@ const premiumSliderRangeVariants = cva(
  */
 const premiumSliderThumbVariants = cva(
   [
-    "relative block",
+    "relative block before:absolute before:left-1/2 before:top-1/2 before:size-11 before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']",
     "bg-primary",
     "rounded-[0.125rem]",
     "ring-offset-background",

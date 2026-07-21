@@ -5,7 +5,18 @@
 > **Target devices:** iPad / iPhone / touch devices (iOS Safari + touch-input devices)
 > **Method:** Read-only audit by parallel subagents against a 13-point touch-friendliness checklist (tap-target size, hover-only affordances, drag/cursor assumptions, keyboard-only paths, input usability, scroll behavior, gestures, long-press, focus rings, fixed positioning, performance, viewport assumptions).
 >
-> **This document is an audit + remediation plan. No code was modified.** Each finding lists concrete, actionable fixes (Tailwind classes to add, props to wire, code changes to make). A separate implementation pass should pick up the Priority Roadmap below.
+> **Remediation status:** Implemented 2026-07-20. The primary P0/P1 findings are now addressed in shared primitives and affected finance widgets. Compact variants remain available where they are part of the public API, while default interaction surfaces, touch scrolling, dynamic viewport handling, and safe-area behavior were upgraded without changing controlled/uncontrolled state contracts.
+
+## Implementation summary (2026-07-20)
+
+- Raised default action, menu, picker, pagination, tab, stepper, toolbar, data-table, order-book, and time-and-sales targets to touch-safe dimensions; enlarged slider, carousel, close, resize, and sheet-handle hit regions without enlarging their visual glyphs.
+- Prevented iOS focus zoom in shared inputs, textareas, comboboxes, multi-select search, command palette search, and data-table search; search controls now expose mobile keyboard hints and disable unwanted autocomplete.
+- Added dynamic viewport sizing, safe-area padding, contained overscroll, momentum scrolling, and directional touch-action rules across dialogs, sheets, navigation drawers, popovers, toasts, tables, pickers, and scrolling market widgets.
+- Replaced date and date-time clear pseudo-buttons with independent native buttons, avoiding nested interactive controls; the date-time picker now stacks its side-by-side layout on narrow screens without changing the requested layout mode.
+- Added pointer-driven checkbox/radio ripples, touch-visible pressed states, keyboard semantics for interactive cards, `matchMedia` breadcrumb responsiveness, and accessible toolbar labels derived from tooltip text.
+- Scoped frequently used motion transitions and added touch-visible states while retaining the existing component APIs, variants, callbacks, and keyboard interactions.
+
+The detailed findings below are retained as the historical audit baseline and rationale for the implementation.
 
 ---
 

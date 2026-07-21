@@ -42,7 +42,7 @@ export function DataTableRowActions<TData>({
           colorStyle="ghost"
           size="sm"
           iconOnly
-          className="h-8 w-8"
+          className="size-11"
           aria-label={label}
         >
           <MoreHorizontal className="size-4" />

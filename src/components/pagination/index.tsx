@@ -35,7 +35,7 @@ const paginationVariants = cva([
  * PaginationContent variants using CVA
  */
 const paginationContentVariants = cva([
-  "flex flex-row items-center gap-1",
+  "flex flex-row items-center gap-2",
 ]);
 
 /**
@@ -93,8 +93,8 @@ const paginationLinkVariants = cva(
       size: {
         small: "h-7 min-w-7 px-1.5 text-xs [&_svg]:size-3",
         sm: "h-8 min-w-8 px-2 text-xs [&_svg]:size-3.5",
-        md: "h-9 min-w-9 px-3 text-sm [&_svg]:size-4",
-        lg: "h-10 min-w-10 px-3.5 text-base [&_svg]:size-5",
+        md: "h-11 min-w-11 px-3 text-sm [&_svg]:size-4",
+        lg: "h-12 min-w-12 px-3.5 text-base [&_svg]:size-5",
       },
       /**
        * Shape variants

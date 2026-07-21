@@ -17,7 +17,7 @@ import { cn } from "../../lib/utils";
  */
 const dialogOverlayVariants = cva(
   [
-    "fixed inset-0 z-50",
+    "fixed inset-0 z-50 overscroll-contain touch-none",
     "bg-black/50 backdrop-blur-sm",
     // M3 Motion for open/close
     "data-[state=open]:animate-in data-[state=closed]:animate-out",
@@ -64,7 +64,7 @@ const dialogContentVariants = cva(
        */
       position: {
         center: [
-          "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+          "left-1/2 top-[50dvh] max-h-[calc(100dvh-2rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overscroll-contain",
           "rounded-[var(--radius-lg)] p-6",
           // Scale animation for centered
           "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
@@ -77,7 +77,7 @@ const dialogContentVariants = cva(
         ].join(" "),
         fullscreen: [
           "inset-0",
-          "h-full max-h-none max-w-none",
+          "h-dvh max-h-none max-w-none pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]",
           "rounded-none p-0",
           // Fade animation only for fullscreen
           "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
@@ -134,13 +134,13 @@ const dialogDescriptionVariants = cva(
  */
 const dialogCloseVariants = cva(
   [
-    "absolute right-4 top-4",
+    "absolute right-2 top-2 flex size-11 items-center justify-center",
     "rounded-[var(--radius-sm)]",
     "opacity-70 ring-offset-background",
     "transition-opacity",
     "duration-[var(--motion-duration-short)]",
     "ease-[var(--motion-easing-standard)]",
-    "hover:opacity-100",
+    "hover:opacity-100 active:opacity-100",
     "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
     "disabled:pointer-events-none",
     "data-[state=open]:bg-accent data-[state=open]:text-muted-foreground",

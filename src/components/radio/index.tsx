@@ -99,7 +99,7 @@ const radioGroupItemVariants = cva(
     "border-2 border-muted-foreground/70",
     "bg-transparent",
     // Disabled state
-    "disabled:opacity-38",
+    "disabled:opacity-[0.38]",
   ].join(" "),
   {
     variants: {
@@ -309,7 +309,7 @@ const RadioElement = React.forwardRef<
           // State layer colors - MD3 interaction states (8% hover, 10% focus/press)
           getStateLayerHoverClass(),
           // Disabled
-          disabled && "opacity-38 pointer-events-none"
+          disabled && "opacity-[0.38] pointer-events-none"
         )}
       >
         {/* Ripple animation element - positioned absolutely to cover the entire state layer */}
@@ -328,7 +328,7 @@ const RadioElement = React.forwardRef<
           value={value}
           disabled={disabled}
           className={radioClasses}
-          onMouseDown={onTriggerRipple}
+          onPointerDown={onTriggerRipple}
           {...props}
         >
           <RadioGroupPrimitive.Indicator

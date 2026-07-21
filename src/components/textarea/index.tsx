@@ -40,8 +40,8 @@ const textareaVariants = cva(
        * sm: compact, md: default, lg: larger touch targets
        */
       size: {
-        sm: "min-h-[4rem] px-2.5 py-1.5 text-sm",
-        md: "min-h-[5rem] px-3 py-2 text-sm",
+        sm: "min-h-[4rem] px-2.5 py-1.5 text-base",
+        md: "min-h-[5rem] px-3 py-2 text-base",
         lg: "min-h-[6rem] px-4 py-2.5 text-base",
       },
       /**

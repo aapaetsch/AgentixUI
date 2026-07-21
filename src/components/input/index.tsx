@@ -56,9 +56,9 @@ const inputVariants = cva(
        * sm: compact, md: default, lg: larger touch targets
        */
       size: {
-        sm: "h-[1.75rem] px-2.5 text-sm",
-        md: "h-[2rem] px-3 text-sm",
-        lg: "h-[2.5rem] px-4 text-base",
+        sm: "h-10 px-2.5 text-base",
+        md: "h-11 px-3 text-base",
+        lg: "h-12 px-4 text-base",
       },
       /**
        * Error state - destructive border color

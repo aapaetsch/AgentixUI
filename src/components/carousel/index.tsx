@@ -147,8 +147,8 @@ const carouselItemVariants = cva(
 
 const carouselIndicatorVariants = cva(
   [
-    "cursor-pointer",
-    "transition-all",
+    "flex size-11 cursor-pointer items-center justify-center touch-manipulation before:content-['']",
+    "transition-[color,background-color,transform]",
     "duration-[var(--motion-duration-medium)]",
     "ease-[var(--motion-easing-standard)]",
   ].join(" "),
@@ -156,17 +156,17 @@ const carouselIndicatorVariants = cva(
     variants: {
       variant: {
         dots: [
-          "size-2 rounded-full bg-muted-foreground/30",
-          "hover:bg-muted-foreground/50",
-          "data-[active=true]:bg-primary data-[active=true]:scale-125",
+          "before:size-2 before:rounded-full before:bg-muted-foreground/30",
+          "hover:before:bg-muted-foreground/50 active:before:bg-muted-foreground/70",
+          "data-[active=true]:before:bg-primary data-[active=true]:scale-125",
         ].join(" "),
         lines: [
-          "h-1 w-6 rounded-full bg-muted-foreground/30",
-          "hover:bg-muted-foreground/50",
-          "data-[active=true]:bg-primary data-[active=true]:w-8",
+          "before:h-1 before:w-6 before:rounded-full before:bg-muted-foreground/30",
+          "hover:before:bg-muted-foreground/50 active:before:bg-muted-foreground/70",
+          "data-[active=true]:before:w-8 data-[active=true]:before:bg-primary",
         ].join(" "),
         numbers: [
-          "size-6 rounded-full text-xs font-medium",
+          "rounded-full text-xs font-medium",
           "flex items-center justify-center",
           "bg-muted text-muted-foreground",
           "hover:bg-muted/80",

@@ -12,7 +12,7 @@ const stateLayerVariants = cva(
   [
     "absolute rounded-full pointer-events-none",
     // Smooth transition for hover/focus state changes
-    "transition-all",
+    "transition-[opacity,background-color]",
     "duration-[var(--motion-duration-medium)]",
     "ease-[var(--motion-easing-standard)]",
   ].join(" "),
@@ -41,7 +41,7 @@ const switchTrackVariants = cva(
     "border-2 border-transparent",
     "outline-none",
     // No ring on track - MD3 uses state layer on handle for focus
-    "transition-all",
+    "transition-[background-color,border-color]",
     "duration-[var(--motion-duration-medium)]",
     "ease-[var(--motion-easing-standard)]",
     // Disabled state
@@ -89,7 +89,7 @@ const switchThumbVariants = cva(
     "shadow-md",
     "ring-0",
     // MD3 Motion for handle movement
-    "transition-all",
+    "transition-[transform,width,height,background-color]",
     "duration-[var(--motion-duration-medium)]",
     "ease-[var(--motion-easing-standard)]",
     // Unchecked: muted foreground color (outline color)

@@ -84,7 +84,7 @@ const checkboxVariants = cva(
     // Indeterminate state - same as checked
     "data-[state=indeterminate]:border-0 data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground",
     // Disabled state
-    "disabled:opacity-38",
+    "disabled:opacity-[0.38]",
   ].join(" "),
   {
     variants: {
@@ -202,7 +202,7 @@ const CheckboxElement = React.forwardRef<
           // State layer colors - MD3 interaction states (8% hover, 10% focus/press)
           getStateLayerHoverClass(),
           // Disabled
-          disabled && "opacity-38 pointer-events-none"
+          disabled && "opacity-[0.38] pointer-events-none"
         )}
       >
         {/* Ripple animation element - positioned absolutely to cover the entire state layer */}
@@ -223,7 +223,7 @@ const CheckboxElement = React.forwardRef<
           className={cn(checkboxClasses, "group")}
           data-error={error ? true : undefined}
           {...props}
-          onMouseDown={onTriggerRipple}
+          onPointerDown={onTriggerRipple}
         >
           <CheckboxPrimitive.Indicator
             className={cn(

@@ -65,7 +65,7 @@ export const fabVariants = cva(
        * sm: 40px, md: 56px (default), lg: 96px
        */
       size: {
-        sm: "size-10 [&_svg]:size-5",
+        sm: "size-11 [&_svg]:size-5",
         md: "size-14 [&_svg]:size-6",
         lg: "size-24 [&_svg]:size-9",
       },
@@ -85,10 +85,10 @@ export const fabVariants = cva(
        */
       position: {
         none: "",
-        "bottom-right": "fixed bottom-4 right-4 z-50",
-        "bottom-left": "fixed bottom-4 left-4 z-50",
-        "top-right": "fixed top-4 right-4 z-50",
-        "top-left": "fixed top-4 left-4 z-50",
+        "bottom-right": "fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-50",
+        "bottom-left": "fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-[max(1rem,env(safe-area-inset-left))] z-50",
+        "top-right": "fixed top-[max(1rem,env(safe-area-inset-top))] right-[max(1rem,env(safe-area-inset-right))] z-50",
+        "top-left": "fixed top-[max(1rem,env(safe-area-inset-top))] left-[max(1rem,env(safe-area-inset-left))] z-50",
       },
     },
     compoundVariants: [

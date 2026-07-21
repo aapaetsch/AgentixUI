@@ -100,7 +100,7 @@ const buttonVariants = cva(
       size: {
         xs: "h-[1.75rem] px-2.5 text-xs [&_svg]:size-3.5",
         sm: "h-[2rem] px-3 text-sm [&_svg]:size-4",
-        md: "h-[2.25rem] px-4 text-sm [&_svg]:size-4",
+        md: "h-11 px-4 text-sm [&_svg]:size-4",
         lg: "h-[2.75rem] px-5 text-base [&_svg]:size-5",
         xl: "h-[3.25rem] px-6 text-lg [&_svg]:size-6",
       },

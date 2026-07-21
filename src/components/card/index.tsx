@@ -393,6 +393,10 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       dragged,
       disabled,
       asChild = false,
+      onClick,
+      onKeyDown,
+      role,
+      tabIndex,
       ...props
     },
     ref
@@ -403,10 +407,20 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <Comp
         ref={ref}
         data-slot="card"
+        role={role ?? (interactive ? "button" : undefined)}
+        tabIndex={tabIndex ?? (interactive && !disabled ? 0 : undefined)}
         className={cn(
           cardVariants({ variant, size, interactive, dragged, disabled }),
           className
         )}
+        onClick={disabled ? undefined : onClick}
+        onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+          if (interactive && !disabled && (event.key === "Enter" || event.key === " ")) {
+            event.preventDefault();
+            event.currentTarget.click();
+          }
+          onKeyDown?.(event);
+        }}
         {...props}
       />
     );

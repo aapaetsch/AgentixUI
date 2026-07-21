@@ -26,8 +26,8 @@ export const orderBookSideVariants = cva(
 
 export const orderBookRowVariants = cva(
   [
-    "relative grid grid-cols-3 items-center px-2 py-0.5",
-    "cursor-pointer hover:bg-accent/30",
+    "relative grid min-h-11 grid-cols-3 items-center px-2 py-1",
+    "cursor-pointer hover:bg-accent/30 active:bg-accent/50 touch-manipulation",
     "transition-colors duration-75",
   ].join(" "),
   {

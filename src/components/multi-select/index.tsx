@@ -68,9 +68,9 @@ const multiSelectTriggerVariants = cva(
   {
     variants: {
       size: {
-        xs: "min-h-[1.5rem] px-2 py-1 text-xs",
-        sm: "min-h-[2rem] px-3 py-1.5 text-sm",
-        md: "min-h-[2.5rem] px-3 py-2 text-sm",
+        xs: "min-h-9 px-2 py-1 text-base",
+        sm: "min-h-10 px-3 py-1.5 text-base",
+        md: "min-h-11 px-3 py-2 text-base",
         lg: "min-h-[3rem] px-4 py-2.5 text-base",
         xl: "min-h-[3.5rem] px-5 py-3 text-lg",
       },
@@ -144,9 +144,9 @@ const multiSelectItemVariants = cva(
   {
     variants: {
       size: {
-        xs: "py-1 px-2 text-xs min-h-[28px]",
-        sm: "py-1.5 px-2.5 text-sm min-h-[32px]",
-        md: "py-2 px-3 text-sm min-h-[40px]",
+        xs: "py-1 px-2 text-sm min-h-11",
+        sm: "py-1.5 px-2.5 text-sm min-h-11",
+        md: "py-2 px-3 text-sm min-h-11",
         lg: "py-2.5 px-3.5 text-base min-h-[48px]",
         xl: "py-3 px-4 text-lg min-h-[56px]",
       },
@@ -217,9 +217,9 @@ const multiSelectSearchInputVariants = cva(
   {
     variants: {
       size: {
-        xs: "h-7 text-xs",
-        sm: "h-8 text-sm",
-        md: "h-9 text-sm",
+        xs: "h-9 text-base",
+        sm: "h-10 text-base",
+        md: "h-11 text-base",
         lg: "h-10 text-base",
         xl: "h-11 text-lg",
       },
@@ -856,6 +856,9 @@ function MultiSelectRoot<T = string>(
                 <input
                   ref={searchInputRef}
                   type="text"
+                  inputMode="search"
+                  enterKeyHint="search"
+                  autoComplete="off"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={searchPlaceholder}
@@ -899,7 +902,7 @@ function MultiSelectRoot<T = string>(
               {/* Options list */}
               <div
                 ref={scrollContainerRef}
-                className="max-h-[300px] overflow-y-auto"
+                className="max-h-[300px] overflow-y-auto overscroll-contain touch-pan-y [-webkit-overflow-scrolling:touch]"
                 role="listbox"
                 aria-multiselectable="true"
               >

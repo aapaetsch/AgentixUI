@@ -46,10 +46,10 @@ const selectTriggerVariants = cva(
        * xs: 1.5rem (24px), sm: 1.75rem (28px), md: 2rem (32px), lg: 2.25rem (36px), xl: 2.75rem (44px)
        */
       size: {
-        xs: "h-[1.5rem] px-2.5 text-xs [&_svg]:size-3.5",
-        sm: "h-[1.75rem] px-3 text-sm [&_svg]:size-4",
-        md: "h-[2rem] px-3 text-sm [&_svg]:size-4",
-        lg: "h-[2.25rem] px-4 text-base [&_svg]:size-5",
+        xs: "h-9 px-2.5 text-sm [&_svg]:size-3.5",
+        sm: "h-10 px-3 text-sm [&_svg]:size-4",
+        md: "h-11 px-3 text-sm [&_svg]:size-4",
+        lg: "h-12 px-4 text-base [&_svg]:size-5",
         xl: "h-[2.75rem] px-5 text-lg [&_svg]:size-6",
       },
     },
@@ -101,7 +101,7 @@ const selectItemVariants = cva(
   [
     // Base styles
     "relative flex w-full cursor-pointer select-none items-center gap-2",
-    "rounded-[var(--radius-sm)] py-1.5 pl-2 pr-8",
+    "min-h-11 rounded-[var(--radius-sm)] py-2.5 pl-2 pr-8 touch-manipulation",
     "text-sm outline-none",
     // Focus styles
     "focus:bg-accent focus:text-accent-foreground",

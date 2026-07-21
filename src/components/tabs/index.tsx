@@ -443,7 +443,7 @@ TabsList.displayName = "TabsList";
  */
 const tabsTriggerVariants = cva(
   [
-    "inline-flex items-center justify-center gap-2",
+    "inline-flex min-h-11 items-center justify-center gap-2 touch-manipulation",
     "whitespace-nowrap font-medium",
     "select-none cursor-pointer",
     "outline-none relative z-10",
@@ -470,7 +470,7 @@ const tabsTriggerVariants = cva(
           // Active state - MD3 primary color
           "data-[state=active]:text-primary",
           // Hover state with subtle background and smooth transition
-          "hover:text-foreground hover:bg-accent/30 transition-colors",
+          "hover:text-foreground hover:bg-accent/30 active:bg-accent/50 transition-colors",
         ].join(" "),
         secondary: [
           "px-6",
@@ -478,7 +478,7 @@ const tabsTriggerVariants = cva(
           // Active state - MD3 on-surface color
           "data-[state=active]:text-foreground",
           // Hover state with subtle background and smooth transition
-          "hover:text-foreground hover:bg-accent/30 transition-colors",
+          "hover:text-foreground hover:bg-accent/30 active:bg-accent/50 transition-colors",
         ].join(" "),
         pills: [
           "px-4 py-0.5 rounded-md",

@@ -55,9 +55,9 @@ const datePickerTriggerVariants = cva(
        * Size variants
        */
       size: {
-        sm: "h-[1.75rem] px-3 text-sm [&_svg]:size-4",
-        md: "h-[2rem] px-3 text-sm [&_svg]:size-4",
-        lg: "h-[2.25rem] px-4 text-base [&_svg]:size-5",
+        sm: "h-10 px-3 text-sm [&_svg]:size-4",
+        md: "h-11 px-3 text-sm [&_svg]:size-4",
+        lg: "h-12 px-4 text-base [&_svg]:size-5",
       },
       /**
        * Error state
@@ -493,47 +493,41 @@ function DatePicker({
         )}
 
         <Popover open={isOpen} onOpenChange={handleOpenChange}>
-          <PopoverTrigger asChild>
-            <button
-              type="button"
-              disabled={disabled}
-              className={cn(
-                datePickerTriggerVariants({ size, error: hasError }),
-                className
-              )}
-              aria-label={label || placeholder}
-              aria-invalid={hasError ? "true" : undefined}
-            >
-              <span
+          <div className="relative">
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                disabled={disabled}
                 className={cn(
-                  "flex-1 text-left truncate",
-                  !hasValue && "text-muted-foreground"
+                  datePickerTriggerVariants({ size, error: hasError }),
+                  showClearButton && hasValue && !disabled && "pr-20",
+                  className
                 )}
+                aria-label={label || placeholder}
+                aria-invalid={hasError ? "true" : undefined}
               >
-                {getDisplayValue() || placeholder}
-              </span>
-
-              <div className="flex items-center gap-1">
-                {showClearButton && hasValue && !disabled && (
-                  <span
-                    role="button"
-                    tabIndex={0}
-                    className="rounded-full p-0.5 hover:bg-accent transition-colors"
-                    onClick={handleClear}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        handleClear(e as unknown as React.MouseEvent);
-                      }
-                    }}
-                    aria-label="Clear date"
-                  >
-                    <X className="size-3.5 opacity-50" />
-                  </span>
-                )}
+                <span
+                  className={cn(
+                    "flex-1 text-left truncate",
+                    !hasValue && "text-muted-foreground"
+                  )}
+                >
+                  {getDisplayValue() || placeholder}
+                </span>
                 <CalendarIcon className="opacity-50" />
-              </div>
-            </button>
-          </PopoverTrigger>
+              </button>
+            </PopoverTrigger>
+            {showClearButton && hasValue && !disabled && (
+              <button
+                type="button"
+                className="absolute right-9 top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground active:bg-accent/80"
+                onClick={handleClear}
+                aria-label="Clear date"
+              >
+                <X className="size-4" />
+              </button>
+            )}
+          </div>
 
           <PopoverContent
             className={cn(

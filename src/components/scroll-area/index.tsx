@@ -73,7 +73,7 @@ const scrollBarVariants = cva(
         auto: "opacity-0 hover:opacity-100 data-[state=visible]:opacity-100",
         always: "opacity-100",
         scroll: "opacity-0 data-[state=visible]:opacity-100",
-        hover: "opacity-0 group-hover:opacity-100",
+        hover: "opacity-0 group-hover:opacity-100 active:opacity-100 data-[state=visible]:opacity-100 [@media(hover:none)]:opacity-100",
       },
     },
     compoundVariants: [

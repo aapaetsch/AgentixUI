@@ -130,7 +130,7 @@ function NavigationProvider({
 
 const navbarVariants = cva(
   [
-    "flex items-center w-full",
+    "flex items-center w-full pt-[env(safe-area-inset-top)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]",
     "bg-background",
     "transition-all duration-[var(--motion-duration-medium)] ease-[var(--motion-easing-standard)]",
   ].join(" "),
@@ -204,7 +204,7 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
             type="button"
             className={cn(
               "inline-flex items-center justify-center",
-              "size-10 rounded-[var(--radius)]",
+              "size-11 rounded-[var(--radius)]",
               "text-foreground",
               "hover:bg-accent hover:text-accent-foreground",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
@@ -474,7 +474,7 @@ const NavrailCollapseButton = React.forwardRef<HTMLButtonElement, NavrailCollaps
         data-slot="navrail-collapse-button"
         className={cn(
           "inline-flex items-center justify-center",
-          "size-8 rounded-[var(--radius)]",
+          "size-11 rounded-[var(--radius)]",
           "text-muted-foreground",
           "hover:bg-accent hover:text-accent-foreground",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
@@ -504,7 +504,7 @@ NavrailCollapseButton.displayName = "NavrailCollapseButton";
 
 const navdrawerOverlayVariants = cva(
   [
-    "fixed inset-0 z-50",
+    "fixed inset-0 z-50 overscroll-contain touch-none",
     "bg-black/50 backdrop-blur-sm",
     "data-[state=open]:animate-in data-[state=closed]:animate-out",
     "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
@@ -513,7 +513,7 @@ const navdrawerOverlayVariants = cva(
 
 const navdrawerContentVariants = cva(
   [
-    "fixed z-50 inset-y-0",
+    "fixed z-50 inset-y-0 h-dvh overscroll-contain pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]",
     "flex flex-col",
     "bg-background",
     "shadow-[var(--elevation-5)]",
@@ -670,7 +670,7 @@ const NavdrawerContent = React.forwardRef<
             className={cn(
               "absolute right-4 top-4",
               "inline-flex items-center justify-center",
-              "size-8 rounded-[var(--radius)]",
+              "size-11 rounded-[var(--radius)]",
               "text-muted-foreground",
               "hover:bg-accent hover:text-accent-foreground",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",

@@ -133,7 +133,8 @@ export function CommandPalette({
             <DialogContent
               className={cn(
                 "fixed left-1/2 top-[18%] z-50 -translate-x-1/2 translate-y-0",
-                "w-[90vw] max-w-xl p-0",
+                "w-[calc(100vw-1rem)] max-w-xl max-h-[calc(100dvh-1rem)] overflow-hidden p-0",
+                "pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]",
                 "rounded-md border bg-popover text-popover-foreground shadow-lg",
                 "focus:outline-none",
                 className
@@ -176,8 +177,11 @@ export const CommandInput = React.forwardRef<
       <Search className="size-4 text-muted-foreground" />
       <CommandPrimitive.Input
         ref={ref}
+        inputMode="search"
+        enterKeyHint="search"
+        autoComplete="off"
         className={cn(
-          "h-8 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground",
+          "h-11 flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground",
           className
         )}
         {...props}
@@ -295,7 +299,7 @@ export const CommandItem = React.forwardRef<HTMLDivElement, CommandItemProps>(
         disabled={disabled}
         onSelect={onSelect}
         className={cn(
-          "flex items-center gap-2 rounded-md px-2 py-1.5 text-sm",
+          "flex min-h-11 items-center gap-2 rounded-md px-2 py-2.5 text-sm",
           "data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground",
           "data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
           "cursor-default",
@@ -307,7 +311,7 @@ export const CommandItem = React.forwardRef<HTMLDivElement, CommandItemProps>(
         <span className="flex-1 text-foreground">{children ?? label}</span>
         {metadata ? <span className="text-xs text-muted-foreground">{metadata}</span> : null}
         {shortcut ? (
-          <span className="ml-auto text-xs text-muted-foreground">{shortcut}</span>
+          <span className="ml-auto text-xs text-muted-foreground [@media(hover:none)]:hidden">{shortcut}</span>
         ) : null}
       </CommandPrimitive.Item>
     );
@@ -342,12 +346,13 @@ export interface CommandPaletteTriggerProps
 export const CommandPaletteTrigger = React.forwardRef<
   HTMLButtonElement,
   CommandPaletteTriggerProps
->(function CommandPaletteTrigger({ onClick, children, ...props }, ref) {
+>(function CommandPaletteTrigger({ onClick, children, className, ...props }, ref) {
   const { setOpen } = useCommandPalette();
   return (
     <button
       ref={ref}
       type="button"
+      className={cn("min-h-11 touch-manipulation", className)}
       onClick={(e) => {
         setOpen(true);
         onClick?.(e);

@@ -37,7 +37,7 @@ export function DataTableColumnHeader<TData, TValue>({
         type="button"
         colorStyle="ghost"
         size="sm"
-        className="-ml-2 h-8 px-2 text-sm"
+        className="-ml-2 min-h-11 px-2 text-sm"
         onClick={() => column.toggleSorting(sorted === "asc")}
       >
         <span className="truncate">{title}</span>

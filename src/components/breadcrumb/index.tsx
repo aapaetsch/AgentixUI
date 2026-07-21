@@ -36,7 +36,7 @@ const breadcrumbVariants = cva(["relative"]);
  */
 const breadcrumbListVariants = cva([
   "flex flex-wrap items-center",
-  "gap-1.5",
+  "gap-2 overscroll-x-contain touch-pan-x",
   "break-words",
   "text-sm text-muted-foreground",
   "sm:gap-2.5",
@@ -54,8 +54,9 @@ const breadcrumbItemVariants = cva([
  * Styling for navigable breadcrumb links
  */
 const breadcrumbLinkVariants = cva([
+  "inline-flex min-h-11 items-center py-2 touch-manipulation",
   "transition-colors duration-[var(--motion-duration-short)]",
-  "hover:text-foreground",
+  "hover:text-foreground active:text-foreground",
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
   "focus-visible:ring-offset-2 focus-visible:rounded-sm",
 ]);
@@ -96,7 +97,7 @@ const breadcrumbSeparatorVariants = cva([
  */
 const breadcrumbEllipsisVariants = cva([
   "flex items-center justify-center",
-  "h-9 w-9",
+  "size-11",
 ]);
 
 // ============================================================================
@@ -209,14 +210,15 @@ export function useResponsiveBreadcrumb(breakpoint: number = 768) {
   const [isDesktop, setIsDesktop] = React.useState(false);
 
   React.useEffect(() => {
-    const checkDesktop = () => {
-      setIsDesktop(window.innerWidth >= breakpoint);
+    const query = window.matchMedia(`(min-width: ${breakpoint}px)`);
+    const checkDesktop = (event: MediaQueryListEvent | MediaQueryList) => {
+      setIsDesktop(event.matches);
     };
 
-    // Initial check
-    checkDesktop();
-    window.addEventListener("resize", checkDesktop);
-    return () => window.removeEventListener("resize", checkDesktop);
+    checkDesktop(query);
+    const handleChange = (event: MediaQueryListEvent) => checkDesktop(event);
+    query.addEventListener("change", handleChange);
+    return () => query.removeEventListener("change", handleChange);
   }, [breakpoint]);
 
   return { isDesktop };

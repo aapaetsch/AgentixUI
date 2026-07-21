@@ -17,7 +17,7 @@ import { cn } from "../../lib/utils";
 const popoverContentVariants = cva(
   [
     // Base styles
-    "z-50",
+    "z-50 max-h-[85dvh] max-w-[calc(100vw-1rem)] overflow-auto overscroll-contain [-webkit-overflow-scrolling:touch]",
     "rounded-[var(--radius)]",
     "border border-border bg-popover text-popover-foreground",
     "shadow-md",
@@ -45,7 +45,7 @@ const popoverContentVariants = cva(
         sm: "w-52 p-3",
         md: "w-72 p-4",
         lg: "w-80 p-4",
-        xl: "w-96 p-5",
+        xl: "w-96 max-w-[calc(100vw-1rem)] p-5",
         auto: "w-auto p-4",
       },
     },

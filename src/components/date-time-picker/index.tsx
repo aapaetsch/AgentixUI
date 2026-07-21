@@ -56,9 +56,9 @@ const dateTimePickerTriggerVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-[1.75rem] px-3 text-sm [&_svg]:size-4",
-        md: "h-[2rem] px-3 text-sm [&_svg]:size-4",
-        lg: "h-[2.25rem] px-4 text-base [&_svg]:size-5",
+        sm: "h-10 px-3 text-sm [&_svg]:size-4",
+        md: "h-11 px-3 text-sm [&_svg]:size-4",
+        lg: "h-12 px-4 text-base [&_svg]:size-5",
       },
       error: {
         true: "border-destructive focus-visible:border-destructive",
@@ -487,51 +487,45 @@ function DateTimePicker({
       )}
 
       <Popover open={isOpen} onOpenChange={handleOpenChange}>
-        <PopoverTrigger asChild>
-          <button
-            type="button"
-            disabled={disabled}
-            className={cn(
-              dateTimePickerTriggerVariants({ size, error: hasError }),
-              className
-            )}
-            aria-label={label || placeholder}
-            aria-invalid={hasError ? "true" : undefined}
-          >
-            <span
+        <div className="relative">
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              disabled={disabled}
               className={cn(
-                "flex-1 text-left truncate",
-                !hasValue && "text-muted-foreground"
+                dateTimePickerTriggerVariants({ size, error: hasError }),
+                showClearButton && hasValue && !disabled && "pr-20",
+                className
               )}
+              aria-label={label || placeholder}
+              aria-invalid={hasError ? "true" : undefined}
             >
-              {getDisplayValue() || placeholder}
-            </span>
-
-            <div className="flex items-center gap-1">
-              {showClearButton && hasValue && !disabled && (
-                <span
-                  role="button"
-                  tabIndex={0}
-                  className="rounded-full p-0.5 hover:bg-accent transition-colors"
-                  onClick={handleClear}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      handleClear(e as unknown as React.MouseEvent);
-                    }
-                  }}
-                  aria-label="Clear datetime"
-                >
-                  <X className="size-3.5 opacity-50" />
-                </span>
-              )}
+              <span
+                className={cn(
+                  "flex-1 text-left truncate",
+                  !hasValue && "text-muted-foreground"
+                )}
+              >
+                {getDisplayValue() || placeholder}
+              </span>
               <CalendarIcon className="opacity-50" />
-            </div>
-          </button>
-        </PopoverTrigger>
+            </button>
+          </PopoverTrigger>
+          {showClearButton && hasValue && !disabled && (
+            <button
+              type="button"
+              className="absolute right-9 top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground active:bg-accent/80"
+              onClick={handleClear}
+              aria-label="Clear datetime"
+            >
+              <X className="size-4" />
+            </button>
+          )}
+        </div>
 
         <PopoverContent
           className={cn(
-            "w-auto p-0",
+            "w-auto max-w-[calc(100vw-1.5rem)] p-0",
             contentClassName
           )}
           align="start"
@@ -577,9 +571,9 @@ function DateTimePicker({
               </Tabs>
             ) : (
               // Side-by-side layout
-              <div className="flex gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row">
                 <div className="flex-1">{renderCalendarContent()}</div>
-                <div className="border-l border-border pl-4">
+                <div className="border-t border-border pt-4 sm:border-l sm:border-t-0 sm:pl-4 sm:pt-0">
                   {renderTimeContent()}
                 </div>
               </div>

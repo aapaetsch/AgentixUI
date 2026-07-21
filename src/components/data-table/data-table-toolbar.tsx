@@ -45,6 +45,10 @@ export function DataTableToolbar<TData>({
         {searchColumn ? (
           <Input
             size="md"
+            type="search"
+            inputMode="search"
+            enterKeyHint="search"
+            autoComplete="off"
             placeholder={searchPlaceholder}
             value={searchValue}
             onChange={(event) => table.getColumn(searchColumn)?.setFilterValue(event.target.value)}
@@ -84,7 +88,7 @@ export function DataTableToolbar<TData>({
             type="button"
             colorStyle="text"
             size="sm"
-            className="h-9 self-start"
+            className="h-11 self-start"
             onClick={() => table.resetColumnFilters()}
           >
             Reset

@@ -536,10 +536,10 @@ PremiumStepperItem.displayName = "PremiumStepperItem";
 
 const premiumStepperTriggerVariants = cva(
   [
-    "inline-flex items-center",
-    "cursor-pointer select-none",
+    "inline-flex min-h-11 items-center",
+    "cursor-pointer select-none touch-manipulation",
     "outline-none",
-    "transition-all",
+    "transition-[color,background-color,opacity]",
     "duration-[var(--motion-duration-medium)]",
     "ease-[var(--motion-easing-standard)]",
     // Focus state
@@ -547,7 +547,7 @@ const premiumStepperTriggerVariants = cva(
     // Disabled state
     "disabled:cursor-not-allowed disabled:opacity-50",
     // Hover state
-    "hover:opacity-80",
+    "hover:opacity-80 active:bg-accent/50",
   ].join(" "),
   {
     variants: {
