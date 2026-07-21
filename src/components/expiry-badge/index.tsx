@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { cn } from "../../lib/utils";
-import { Badge } from "../badge";
+import { Badge, type BadgeProps } from "../badge";
 import { formatDate, DATE_FORMATS } from "../../lib/date-utils";
 
 /* -------------------------------------------------------------------------------------------------
@@ -59,6 +59,12 @@ export interface ExpiryBadgeProps {
   dateFormat?: string;
   /** Add a pulse animation when in the `expiring` band. @default true */
   pulseOnExpiring?: boolean;
+  /**
+   * Badge size forwarded to the underlying `Badge`. The `small` dot size is
+   * excluded since the badge must render visible text.
+   * @default "medium"
+   */
+  size?: "medium" | "large";
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -85,6 +91,7 @@ export function ExpiryBadge({
   showDays = true,
   dateFormat = "M/d/yy",
   pulseOnExpiring = true,
+  size = "medium",
   className,
 }: ExpiryBadgeProps) {
   const dte =
@@ -111,7 +118,7 @@ export function ExpiryBadge({
   return (
     <Badge
       variant={variant}
-      size="medium"
+      size={size}
       className={cn(
         resolvedBand === "expiring" && pulseOnExpiring && "animate-pulse",
         className

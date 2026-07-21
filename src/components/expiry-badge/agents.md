@@ -20,6 +20,7 @@ Color-graded expiration pill for open option positions.
   - Both false → falls back to `"<dlabel>"` so the badge is never empty.
 - `dateFormat?: string` — `date-fns` pattern. @default `"M/d/yy"`.
 - `pulseOnExpiring?: boolean` — @default `true`.
+- `size?: "medium" | "large"` — forwarded to the underlying `Badge` (the `small` dot is excluded since the badge must render text). @default `"medium"`.
 - `className?: string` — merged last via `cn()`.
 
 ## Dependencies
@@ -28,6 +29,7 @@ Color-graded expiration pill for open option positions.
 
 ## Styling Decisions
 - Bands map to existing `Badge` variants, no new variants added.
+- Size is pluggable via the `size` prop (only `medium`/`large` are accepted; `small` is a dot-only indicator and incompatible with visible text).
 - `expiring` band uses `animate-pulse` for at-a-glance urgency (only when `pulseOnExpiring` is true).
 - Color is never the only signal — the accessible `aria-label` always announces what is visible.
 

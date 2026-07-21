@@ -28,6 +28,7 @@ Bands (`far` → `near` → `imminent` → `expiring`) auto-derive from DTE and 
 | `showDays` | `boolean` | `true` | Render `Dd` / `Dh` pill. |
 | `dateFormat` | `string` | `"M/d/yy"` | `date-fns` pattern. |
 | `pulseOnExpiring` | `boolean` | `true` | Pulse when `band === "expiring"`. |
+| `size` | `"medium" \| "large"` | `"medium"` | Badge size forwarded to `Badge`. |
 | `className` | `string` | — | Merged last via `cn()`. |
 
 ## Show flags

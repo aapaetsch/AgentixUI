@@ -13,6 +13,10 @@ const meta: Meta<typeof ExpiryBadge> = {
       options: ["far", "near", "imminent", "expiring"],
       control: { type: "select" },
     },
+    size: {
+      options: ["medium", "large"],
+      control: { type: "select" },
+    },
   },
 };
 export default meta;
@@ -101,5 +105,15 @@ export const PulseDisabled: Story = {
     daysToExpiry: 0.4,
     showDate: true,
     pulseOnExpiring: false,
+  },
+};
+
+export const LargeSize: Story = {
+  name: "size=large",
+  args: {
+    expiry: now + 14 * day,
+    daysToExpiry: 14,
+    showDate: true,
+    size: "large",
   },
 };
