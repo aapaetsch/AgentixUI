@@ -160,3 +160,28 @@ export const WideDenseSynced: Story = {
   },
   render: (args) => <div className="w-[80rem]"><OptionsChain {...args} /></div>,
 };
+
+export const ControlledAndCustomized: Story = {
+  render: () => {
+    const [expiry, setExpiry] = React.useState(expiries[0]);
+    const [strike, setStrike] = React.useState<number | undefined>(400);
+    return (
+      <div className="w-[60rem]">
+        <OptionsChain
+          rows={buildRows()}
+          underlying="SPY"
+          spot={400}
+          expiries={expiries}
+          expiry={expiry}
+          onExpiryChange={setExpiry}
+          selectedStrike={strike}
+          onSelectedStrikeChange={setStrike}
+          currency="CAD"
+          formatExpiry={(value) => new Date(value).toLocaleDateString("en-CA")}
+          labels={{ calls: "Call contracts", puts: "Put contracts", spot: "Underlying" }}
+          strikeNavigatorProps={{ hideJumpInput: true, label: "Choose strike" }}
+        />
+      </div>
+    );
+  },
+};

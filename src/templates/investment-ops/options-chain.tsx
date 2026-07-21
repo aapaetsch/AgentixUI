@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef, PaginationState } from "@tanstack/react-table";
 
 import { cn } from "../../lib/utils";
 import { DataTable } from "../../components/data-table";
@@ -7,6 +7,10 @@ import { NumericText } from "../../components/typography";
 import { Card } from "../../components/card";
 import { Tabs, TabsList, TabsTrigger } from "../../components/tabs";
 import { StrikesNavigator } from "../../components/strikes-navigator";
+import {
+  ResponsivePagination,
+  PaginationPageSizeSelector,
+} from "../../components/pagination";
 import type { OptionChainRow, OptionType } from "../../lib/finance-types";
 
 export interface OptionsChainProps {
@@ -20,8 +24,16 @@ export interface OptionsChainProps {
   expiries: number[];
   /** Initially selected expiry (epoch ms). */
   defaultExpiry?: number;
+  /** Controlled active expiry. */
+  expiry?: number;
   /** Called when the user changes the active expiry tab. */
   onExpiryChange?: (expiry: number) => void;
+  /** Controlled selected strike. */
+  selectedStrike?: number;
+  /** Initially selected strike for uncontrolled usage. */
+  defaultSelectedStrike?: number;
+  /** Called when the strike selection changes. */
+  onSelectedStrikeChange?: (strike: number) => void;
   /** Called when a chain side cell is clicked — usually opens / appends a leg. */
   onAddLeg?: (
     side: "buy" | "sell",
@@ -29,6 +41,31 @@ export interface OptionsChainProps {
     strike: number,
     expiry: number
   ) => void;
+  /**
+   * Number of strike rows shown per page across all three columns.
+   * Set to 0 to disable pagination entirely (render every strike).
+   * @default 20
+   */
+  pageSize?: number;
+  /**
+   * Page size options offered in the chain footer's page-size selector.
+   * @default [20, 50, 100]
+   */
+  pageSizeOptions?: number[];
+  /** Currency code for prices. @default "USD" */
+  currency?: string;
+  /** Format expiry-cycle labels. */
+  formatExpiry?: (expiry: number) => React.ReactNode;
+  /** Replace the standard summary header. */
+  renderHeader?: (context: { underlying: string; spot: number; expiry: number }) => React.ReactNode;
+  /** Replace any generated table column group. */
+  columns?: Partial<{ calls: ColumnDef<OptionChainRow>[]; strikes: ColumnDef<OptionChainRow>[]; puts: ColumnDef<OptionChainRow>[] }>;
+  /** Show the strike navigator below the strike table. @default true */
+  showStrikeNavigator?: boolean;
+  /** Props forwarded to `StrikesNavigator`. */
+  strikeNavigatorProps?: Omit<React.ComponentProps<typeof StrikesNavigator>, "strikes" | "atmStrike" | "selectedStrike" | "onSelectStrike">;
+  /** Override section labels. */
+  labels?: Partial<Record<"calls" | "puts" | "strike" | "spot", React.ReactNode>> & { rows?: string };
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -54,18 +91,61 @@ export function OptionsChain({
   spot,
   expiries,
   defaultExpiry,
+  expiry,
   onExpiryChange,
+  selectedStrike: selectedStrikeProp,
+  defaultSelectedStrike,
+  onSelectedStrikeChange,
   onAddLeg,
+  pageSize = 20,
+  pageSizeOptions = [20, 50, 100],
+  currency = "USD",
+  formatExpiry,
+  renderHeader,
+  columns: columnsProp,
+  showStrikeNavigator = true,
+  strikeNavigatorProps,
+  labels,
   className,
 }: OptionsChainProps) {
-  const [activeExpiry, setActiveExpiry] = React.useState<number>(
+  const [internalExpiry, setInternalExpiry] = React.useState<number>(
     defaultExpiry ?? expiries[0] ?? 0
   );
-  const [selectedStrike, setSelectedStrike] = React.useState<number | undefined>();
+  const [internalSelectedStrike, setInternalSelectedStrike] = React.useState<number | undefined>(defaultSelectedStrike);
+  const activeExpiry = expiry ?? internalExpiry;
+  const selectedStrike = selectedStrikeProp ?? internalSelectedStrike;
+
+  // Shared, synchronized pagination across all three DataTables so the Calls,
+  // Strike, and Puts columns page in lockstep and stay row-for-row aligned.
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize,
+  });
 
   React.useEffect(() => {
-    if (defaultExpiry != null) setActiveExpiry(defaultExpiry);
-  }, [defaultExpiry]);
+    if (expiry == null && defaultExpiry != null) setInternalExpiry(defaultExpiry);
+  }, [defaultExpiry, expiry]);
+
+  const selectExpiry = React.useCallback((next: number) => {
+    if (expiry == null) setInternalExpiry(next);
+    onExpiryChange?.(next);
+  }, [expiry, onExpiryChange]);
+
+  const selectStrike = React.useCallback((next: number) => {
+    if (selectedStrikeProp == null) setInternalSelectedStrike(next);
+    onSelectedStrikeChange?.(next);
+  }, [onSelectedStrikeChange, selectedStrikeProp]);
+
+  // Reset to the first page whenever the active expiry changes so the chain
+  // never strands the user on a stale, possibly out-of-range page index.
+  React.useEffect(() => {
+    setPagination((p) => ({ ...p, pageIndex: 0 }));
+  }, [activeExpiry]);
+
+  // Keep the controlled pageSize in sync if the prop changes externally.
+  React.useEffect(() => {
+    setPagination((p) => ({ ...p, pageSize }));
+  }, [pageSize]);
 
   const visibleRows = React.useMemo(
     () => rows.filter((r) => r.call?.expiry === activeExpiry ||
@@ -77,6 +157,12 @@ export function OptionsChain({
     () => visibleRows.map((r) => r.strike).sort((a, b) => a - b),
     [visibleRows]
   );
+
+  // Page-window metadata shared between the three DataTables and the footer.
+  const totalRows = visibleRows.length;
+  const totalPages = Math.max(1, Math.ceil(totalRows / pagination.pageSize));
+  const startRow = totalRows === 0 ? 0 : pagination.pageIndex * pagination.pageSize + 1;
+  const endRow = Math.min((pagination.pageIndex + 1) * pagination.pageSize, totalRows);
 
   const callColumns = React.useMemo<ColumnDef<OptionChainRow>[]>(
     () => [
@@ -93,7 +179,7 @@ export function OptionsChain({
               onClick={() => onAddLeg?.("sell", "call", row.original.strike, activeExpiry)}
               aria-label={`Sell call at strike ${row.original.strike}`}
             >
-              <NumericText value={c.bid} format="currency" precision={2} align="right" />
+              <NumericText value={c.bid} format="currency" currency={currency} precision={2} align="right" />
             </button>
           );
         },
@@ -111,7 +197,7 @@ export function OptionsChain({
               onClick={() => onAddLeg?.("buy", "call", row.original.strike, activeExpiry)}
               aria-label={`Buy call at strike ${row.original.strike}`}
             >
-              <NumericText value={c.ask} format="currency" precision={2} align="right" />
+              <NumericText value={c.ask} format="currency" currency={currency} precision={2} align="right" />
             </button>
           );
         },
@@ -137,7 +223,7 @@ export function OptionsChain({
         },
       },
     ],
-    [activeExpiry, onAddLeg]
+    [activeExpiry, currency, onAddLeg]
   );
 
   const putColumns = React.useMemo<ColumnDef<OptionChainRow>[]>(
@@ -175,7 +261,7 @@ export function OptionsChain({
               onClick={() => onAddLeg?.("sell", "put", row.original.strike, activeExpiry)}
               aria-label={`Sell put at strike ${row.original.strike}`}
             >
-              <NumericText value={p.bid} format="currency" precision={2} align="right" />
+              <NumericText value={p.bid} format="currency" currency={currency} precision={2} align="right" />
             </button>
           );
         },
@@ -193,13 +279,13 @@ export function OptionsChain({
               onClick={() => onAddLeg?.("buy", "put", row.original.strike, activeExpiry)}
               aria-label={`Buy put at strike ${row.original.strike}`}
             >
-              <NumericText value={p.ask} format="currency" precision={2} align="right" />
+              <NumericText value={p.ask} format="currency" currency={currency} precision={2} align="right" />
             </button>
           );
         },
       },
     ],
-    [activeExpiry, onAddLeg]
+    [activeExpiry, currency, onAddLeg]
   );
 
   const strikeColumns = React.useMemo<ColumnDef<OptionChainRow>[]>(
@@ -222,26 +308,30 @@ export function OptionsChain({
     []
   );
 
-  const cycleLabel = (e: number) => {
+  const cycleLabel = (e: number): React.ReactNode => {
+    if (formatExpiry) return formatExpiry(e);
     const d = new Date(e);
     return `${d.toLocaleDateString("en-US", { month: "short", day: "numeric" })} ${d.getFullYear()}`;
   };
 
   return (
     <Card variant="outlined" className={cn("flex flex-col gap-3 p-3", className)}>
-      <div className="flex items-center justify-between gap-3 rounded-md bg-muted/30 px-3 py-2">
+      {renderHeader?.({ underlying, spot, expiry: activeExpiry }) ?? <div className="flex items-center justify-between gap-3 rounded-md bg-muted/30 px-3 py-2">
         <span className="font-mono text-base font-semibold tracking-tight">{underlying}</span>
-        <span className="text-xs text-muted-foreground">{cycleLabel(activeExpiry)}</span>
-        <span className="text-xs text-muted-foreground">Spot</span>
-        <NumericText value={spot} format="currency" align="right" />
-      </div>
+        <div className="ml-auto flex items-center gap-3">
+          <span className="text-xs text-muted-foreground">{cycleLabel(activeExpiry)}</span>
+          <div className="flex items-center gap-1">
+            <span className="text-xs text-muted-foreground">{labels?.spot ?? "Spot"}</span>
+            <NumericText value={spot} format="currency" currency={currency} align="right" />
+          </div>
+        </div>
+      </div>}
 
       <Tabs
         value={String(activeExpiry)}
         onValueChange={(v) => {
           const e = Number(v);
-          setActiveExpiry(e);
-          onExpiryChange?.(e);
+          selectExpiry(e);
         }}
       >
         <TabsList className="flex-wrap">
@@ -254,47 +344,89 @@ export function OptionsChain({
       </Tabs>
 
       <div className="grid grid-cols-[1fr_8rem_1fr] gap-2 text-center text-xs font-semibold uppercase tracking-wider">
-        <span className="rounded-sm bg-positive/10 py-1 text-positive">Calls</span>
-        <span className="py-1 text-muted-foreground">Strike</span>
-        <span className="rounded-sm bg-negative/10 py-1 text-negative">Puts</span>
+        <span className="rounded-sm bg-positive/10 py-1 text-positive">{labels?.calls ?? "Calls"}</span>
+        <span className="py-1 text-muted-foreground">{labels?.strike ?? "Strike"}</span>
+        <span className="rounded-sm bg-negative/10 py-1 text-negative">{labels?.puts ?? "Puts"}</span>
       </div>
 
       <div className="grid min-w-[44rem] grid-cols-[1fr_8rem_1fr] gap-2 overflow-x-auto">
         <DataTable
-          columns={callColumns}
+          columns={columnsProp?.calls ?? callColumns}
           data={visibleRows}
           size="sm"
           variant="bordered"
           stickyHeader
+          showPagination={false}
+          pagination={pagination}
+          onPaginationChange={setPagination}
+          initialPageSize={pageSize}
           emptyMessage="No calls."
         />
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <DataTable
-            columns={strikeColumns}
+            columns={columnsProp?.strikes ?? strikeColumns}
             data={visibleRows}
             size="sm"
             variant="bordered"
             stickyHeader
+            showPagination={false}
+            pagination={pagination}
+            onPaginationChange={setPagination}
+            initialPageSize={pageSize}
           />
-          <StrikesNavigator
+          {showStrikeNavigator && <StrikesNavigator
+            {...strikeNavigatorProps}
             strikes={strikes}
             atmStrike={spot}
             selectedStrike={selectedStrike}
-            onSelectStrike={setSelectedStrike}
-            viewportRows={8}
-            rowHeight={24}
-            className="flex-1"
-          />
+            onSelectStrike={selectStrike}
+            viewportRows={strikeNavigatorProps?.viewportRows ?? 14}
+            rowHeight={strikeNavigatorProps?.rowHeight ?? 24}
+            className={cn("flex-1", strikeNavigatorProps?.className)}
+          />}
         </div>
         <DataTable
-          columns={putColumns}
+          columns={columnsProp?.puts ?? putColumns}
           data={visibleRows}
           size="sm"
           variant="bordered"
           stickyHeader
+          showPagination={false}
+          pagination={pagination}
+          onPaginationChange={setPagination}
+          initialPageSize={pageSize}
           emptyMessage="No puts."
         />
       </div>
+
+      {pagination.pageSize > 0 && totalPages > 1 && (
+        <div className="flex flex-col gap-2 rounded-md border border-border px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="text-xs text-muted-foreground">
+            Strikes {startRow}&ndash;{endRow} of {totalRows}
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <PaginationPageSizeSelector
+              pageSize={pagination.pageSize}
+              onPageSizeChange={(ps) =>
+                setPagination({ pageIndex: 0, pageSize: ps })
+              }
+              pageSizeOptions={pageSizeOptions}
+              size="sm"
+              label={labels?.rows ?? "Rows"}
+            />
+            <ResponsivePagination
+              currentPage={pagination.pageIndex + 1}
+              totalPages={totalPages}
+              onPageChange={(p) =>
+                setPagination((s) => ({ ...s, pageIndex: Math.max(0, p - 1) }))
+              }
+              siblingCount={1}
+              showFirstLast
+              size="sm"
+            />
+          </div>
+        </div>
+      )}
     </Card>
   );
 }

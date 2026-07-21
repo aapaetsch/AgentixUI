@@ -1,5 +1,7 @@
 # Investment-Ops Templates — Agent Notes
 
+Options templates expose customization through controlled state, render slots, replaceable table definitions, visibility/label/format props, and child-component prop forwarding. Prefer these composition boundaries over duplicating primitives inside templates.
+
 ## Important Notes
 - Follow **shadcn/ui** design patterns and conventions closely.
 - Always create and maintain a **TODO LIST** while working on tasks.
@@ -62,3 +64,11 @@ and `package.json` `exports` accordingly (Phase 6 packaging task).
 - Keep chart integrations slot-based so templates continue to ship independently of
   the chart library.
 - Storybook coverage must include empty, loading, and dense-data states for each block.
+- `OptionsChain` runs one synchronized `PaginationState` (`pageSize` prop, default
+  20) shared across the calls, strike, and puts `DataTable`s; each table has
+  `showPagination={false}` so the three columns page in lockstep and stay
+  row-for-row aligned. A chain-wide footer composes the existing `ResponsivePagination`
+  + `PaginationPageSizeSelector` primitives (no new footer primitive). Switching the
+  active expiry tab resets `pageIndex` to 0. Set `pageSize={0}` to disable
+  pagination entirely and render every strike. The `StrikesNavigator` retains
+  full-strike browsing and ATM anchor; it does not window the chain.
