@@ -452,6 +452,7 @@ export type {
   InvestmentOpsDashboardProps,
   OptionsPositionsTableProps,
   AggregateGreeksStripProps,
+  AggregateGreekMetric,
   OptionPositionCardProps,
   OptionsChainProps,
   PayoffBundleCardProps,

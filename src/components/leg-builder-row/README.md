@@ -4,6 +4,8 @@ A single row of a multi-leg option order ticket — Buy/Sell × Call/Put × stri
 × contracts, with optional duplicate/delete actions. Compose 1–N of these
 inside a `MultiLegOrderTicket`.
 
+The row supports optional side/type visibility, disabled state, contract min/max/step, strike and expiry formatters, user-facing label overrides, and per-slot classes. This keeps the default compact ticket useful while allowing broker terminology and lot rules to be supplied by the consuming app.
+
 ## Usage
 
 ```tsx

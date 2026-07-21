@@ -7,6 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { ScrollArea } from "../scroll-area";
 import { Input } from "../input";
+import type { OptionType } from "../../lib/finance-types";
 
 /* -------------------------------------------------------------------------------------------------
  * StrikesNavigator
@@ -41,6 +42,24 @@ export interface StrikesNavigatorProps
   rowHeight?: number;
   /** Auto-scroll the selected strike into view when it changes. @default true */
   autoScrollToSelected?: boolean;
+  /** Option side used for correct ITM/OTM classification. @default "call" */
+  optionType?: OptionType;
+  /** Hide the quick-jump input. @default false */
+  hideJumpInput?: boolean;
+  /** Disable selection and quick-jump interactions. @default false */
+  disabled?: boolean;
+  /** Format each strike value. */
+  formatStrike?: (strike: number) => React.ReactNode;
+  /** Customize the right-side moneyness content. */
+  renderMoneyness?: (moneyness: StrikeMoneyness, strike: number) => React.ReactNode;
+  /** Header label. @default "Strike" */
+  label?: React.ReactNode;
+  /** Jump-input placeholder and accessible label. @default "Jump to strike" */
+  jumpPlaceholder?: string;
+  /** Empty-list content. @default "No strikes" */
+  emptyContent?: React.ReactNode;
+  /** Accessible list name. @default "Strikes" */
+  ariaLabel?: string;
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -74,12 +93,13 @@ const rowVariants = cva(
 function classify(
   strike: number,
   atm: number,
-  tolerance: number
+  tolerance: number,
+  optionType: OptionType
 ): StrikeMoneyness {
   if (Math.abs(strike - atm) <= tolerance) return "atm";
-  // For calls ITM = strike < spot; for puts it's reversed. This navigator is
-  // type-agnostic so we use the universal "strike below spot" → itm-ish.
-  return strike < atm ? "itm" : "otm";
+  return optionType === "call"
+    ? strike < atm ? "itm" : "otm"
+    : strike > atm ? "itm" : "otm";
 }
 
 /**
@@ -103,6 +123,15 @@ export function StrikesNavigator({
   viewportRows = 20,
   rowHeight = 28,
   autoScrollToSelected = true,
+  optionType = "call",
+  hideJumpInput = false,
+  disabled = false,
+  formatStrike,
+  renderMoneyness,
+  label = "Strike",
+  jumpPlaceholder = "Jump to strike",
+  emptyContent = "No strikes",
+  ariaLabel = "Strikes",
   className,
 }: StrikesNavigatorProps) {
   const [internalSelected, setInternalSelected] = React.useState<
@@ -132,6 +161,7 @@ export function StrikesNavigator({
   }, [selected, strikes, autoScrollToSelected]);
 
   const handleJump = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (disabled) return;
     const v = parseFloat(e.target.value);
     if (!Number.isFinite(v)) return;
     // Snap to the nearest strike.
@@ -150,10 +180,11 @@ export function StrikesNavigator({
 
   const selectStrike = React.useCallback(
     (strike: number) => {
+      if (disabled) return;
       setInternalSelected(strike);
       onSelectStrike?.(strike);
     },
-    [onSelectStrike]
+    [disabled, onSelectStrike]
   );
 
   const focusRow = React.useCallback(
@@ -175,16 +206,17 @@ export function StrikesNavigator({
   return (
     <div className={cn(strikesNavigatorVariants(), className)}>
       <div className="flex items-center justify-between border-b border-border px-2 py-1 text-[0.6875rem] font-medium uppercase tracking-wider text-muted-foreground">
-        <span>Strike</span>
-        <div className="flex items-center gap-0.5">
+        <span>{label}</span>
+        {!hideJumpInput && <div className="flex items-center gap-0.5">
           <Input
             type="number"
-            placeholder="Jump to strike"
+            placeholder={jumpPlaceholder}
             className="h-6 w-24 text-xs"
             onChange={handleJump}
-            aria-label="Jump to strike"
+            aria-label={jumpPlaceholder}
+            disabled={disabled}
           />
-        </div>
+        </div>}
       </div>
       <ScrollArea
         className="h-full"
@@ -193,7 +225,7 @@ export function StrikesNavigator({
         <div
           ref={listRef}
           role="listbox"
-          aria-label="Strikes"
+          aria-label={ariaLabel}
           className="relative"
         >
           {strikes.length === 0 ? (
@@ -201,22 +233,23 @@ export function StrikesNavigator({
               className="flex items-center justify-center px-2 py-4 text-xs text-muted-foreground"
               role="status"
             >
-              No strikes
+              {emptyContent}
             </div>
           ) : (
             strikes.map((strike, idx) => {
-              const m = classify(strike, atmStrike, atmTolerance);
+              const m = classify(strike, atmStrike, atmTolerance, optionType);
               const isSel = selected === strike;
               return (
                 <div
                   key={strike}
                   role="option"
                   aria-selected={isSel}
+                  aria-disabled={disabled || undefined}
                   tabIndex={isSel || (selected == null && idx === 0) ? 0 : -1}
                   data-strike-index={idx}
                   data-strike={strike}
                   style={{ height: rowHeight }}
-                  className={cn(rowVariants({ state: m, selected: isSel }))}
+                  className={cn(rowVariants({ state: m, selected: isSel }), disabled && "cursor-not-allowed opacity-60")}
                   onClick={() => selectStrike(strike)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
@@ -238,13 +271,13 @@ export function StrikesNavigator({
                   }}
                 >
                   <span className="font-mono tabular-nums">
-                    {strike.toLocaleString("en-US", {
+                    {formatStrike?.(strike) ?? strike.toLocaleString("en-US", {
                       minimumFractionDigits: Number.isInteger(strike) ? 0 : 1,
                       maximumFractionDigits: 2,
                     })}
                   </span>
                   <span className="text-[0.625rem] uppercase tracking-wider">
-                    {m === "atm" ? (
+                    {renderMoneyness?.(m, strike) ?? (m === "atm" ? (
                       "ATM"
                     ) : m === "itm" ? (
                       <span className="inline-flex items-center gap-0.5">
@@ -254,7 +287,7 @@ export function StrikesNavigator({
                       <span className="inline-flex items-center gap-0.5">
                         <ChevronUp className="size-2.5" /> OTM
                       </span>
-                    )}
+                    ))}
                   </span>
                 </div>
               );

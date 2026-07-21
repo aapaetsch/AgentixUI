@@ -1,5 +1,9 @@
 # Investment-Ops Templates
 
+## Options template customization
+
+The six options templates expose composition boundaries instead of requiring forks: tables accept replaceable columns/actions/renderers, cards forward props to their payoff/breakeven/Greeks children, the chain supports controlled expiry and strike state, and the multi-leg ticket supports controlled spread/legs plus custom spread factories and preview rendering. Currency, labels, empty states, section visibility, and density remain configurable with backward-compatible defaults.
+
 Composed template blocks for an investment-ops dashboard. Templates compose existing
 primitives — they are NOT a second primitive system.
 

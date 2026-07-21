@@ -1,6 +1,10 @@
 # LegBuilderRow
 
+Broker-specific terminology and rules belong in the public formatters, labels, visibility flags, quantity bounds, disabled state, and slot classes—not hard-coded forks.
+
 One reversible Buy/Sell × Call/Put × strike × qty row of a multi-leg order.
+
+Broker-specific terminology and rules belong in the public formatters, labels, visibility flags, quantity bounds, disabled state, and slot classes—not hard-coded forks.
 
 ## Props
 - `value: OptionLeg` (controlled).

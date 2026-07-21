@@ -88,3 +88,19 @@ export const NoGreeks: Story = {
   args: { position: longCallNoGreeks, spotPrice: 410 },
   render: (args) => <div className="w-[28rem]"><OptionPositionCard {...args} /></div>,
 };
+
+export const CustomizedComposition: Story = {
+  args: {
+    position: longCall,
+    spotPrice: 410,
+    currency: "CAD",
+    title: "Covered call",
+    headerRight: <button type="button">Manage</button>,
+    showStatus: false,
+    labels: { maxProfit: "Upside", maxLoss: "Downside", quantity: "Contracts" },
+    payoffDiagramProps: { variant: "line", height: 150, strokeWidth: 2 },
+    breakevenProps: { label: "Break-even", precision: 1 },
+    greeksProps: { labelStyle: "both", size: "sm" },
+  },
+  render: (args) => <div className="w-[32rem]"><OptionPositionCard {...args} /></div>,
+};

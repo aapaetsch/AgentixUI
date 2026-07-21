@@ -61,3 +61,17 @@ export const LargeOverflow: Story = {
     max: 4,
   },
 };
+
+export const CustomRendering: Story = {
+  args: {
+    values: [387.5, 412.5, 425.25],
+    label: "Break-even",
+    precision: 1,
+    size: "large",
+    variant: "secondary",
+    overflowVariant: "outline",
+    max: 2,
+    ariaLabel: "Strategy break-even levels",
+    renderValue: (value) => `${value.toFixed(1)} pts`,
+  },
+};

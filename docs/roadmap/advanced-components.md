@@ -37,15 +37,15 @@
 | Component | Status | Variants/Sub-components | Notes |
 |-----------|--------|------------------------|-------|
 | **OptionSymbolBadge** | ✅ Complete | `OptionSymbolBadge` | Compact `ROOT MM/DD/YY STRIKE{C\|P}` token composing `Badge` (`success`→call, `destructive`→put). |
-| **ExpiryBadge** | ✅ Complete | `ExpiryBadge`, `DEFAULT_EXPIRY_THRESHOLDS`, `ExpiryBadgeBand` | Color-graded DTE pill (far/near/imminent/expiring) → `Badge` variants; optional pulse on `<1d`. |
+| **ExpiryBadge** | ✅ Complete | `ExpiryBadge`, `DEFAULT_EXPIRY_THRESHOLDS`, `ExpiryBadgeBand` | Color-graded DTE pill with custom thresholds, per-band variants, DTE formatter, date visibility, size, and accessible-label override. |
 | **GreeksDisplay** | ✅ Complete | `GreeksDisplay`, `DEFAULT_GREEK_GLOSSARY` | Δ/Γ/Θ/ν/ρ cluster via `NumericText` + per-cell glossary `Tooltip`. `grid` \| `inline` layouts. |
-| **BreakevenBadges** | ✅ Complete | `BreakevenBadges` | Pill row of breakeven prices via `Badge variant="outline"` + `NumericText`. |
+| **BreakevenBadges** | ✅ Complete | `BreakevenBadges` | Configurable breakeven pill row with currency/precision, size/variants, empty/overflow content, and value render slot. |
 | **PayoffDiagram** | ✅ Complete | `PayoffDiagram`, `payoffContainerVariants` | Inline-SVG payoff curve (line/area), semantic profit/loss colors, spot/breakeven markers, and opt-in tracked hover dot + tooltip. |
 | **GreeksDecayChart** | ✅ Complete | `GreeksDecayChart`, `greeksDecayContainerVariants` | Inline-SVG mini multi-line chart of Δ/Γ/Θ/ν over DTE. Per-Greek Tailwind text-color tokens. |
 | **IVChart** | ✅ Complete | `IVChart`, `ivChartContainerVariants` | Inline-SVG IV term-structure (`Sparkline`-like) + ≤~100-cell IV surface heatmap. |
-| **StrikesNavigator** | ✅ Complete | `StrikesNavigator`, `strikesNavigatorVariants` | Virtualized strike ladder with ITM/ATM/OTM striping + quick-jump input. Windowed slice. |
-| **LegBuilderRow** | ✅ Complete | `LegBuilderRow`, `legBuilderRowVariants` | One reversible Buy/Sell × Call/Put × strike (`ComboBox`) × qty (`InputIncrementor`) row. |
-| **SpreadTypeSelector** | ✅ Complete | `SpreadTypeSelector`, `DEFAULT_SPREAD_OPTIONS`, `SpreadType` | Spread template picker (single/vertical/calendar/straddle/strangle/iron-condor/butterfly) composing `ToggleGroup`. |
+| **StrikesNavigator** | ✅ Complete | `StrikesNavigator`, `strikesNavigatorVariants` | Call/put-aware strike ladder with controlled selection, configurable formatting/labels/rendering, optional jump input, and disabled state. |
+| **LegBuilderRow** | ✅ Complete | `LegBuilderRow`, `legBuilderRowVariants` | Configurable Buy/Sell × Call/Put × expiry × strike × quantity row with formatters, labels, visibility, quantity bounds, disabled state, and slot classes. |
+| **SpreadTypeSelector** | ✅ Complete | `SpreadTypeSelector`, `DEFAULT_SPREAD_OPTIONS`, `SpreadType` | Spread picker with restricted options, custom labels/rendering, size, empty content, and accessible naming. |
 | **Progress (advanced)** | 🟡 Medium | Complex/segmented determinate progress | - |
 | **Collapsible** | 🟢 Low | Expandable section | Radix Collapsible |
 | **Menubar** | 🟢 Low | Application menu bar with Electron/desktop enhancements | Radix Menubar |

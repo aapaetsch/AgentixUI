@@ -3,6 +3,10 @@
 Pick a multi-leg spread template (`single` / `vertical` / `calendar` /
 `straddle` / `strangle` / `iron-condor` / `butterfly`).
 
+Keep the selector domain-only while allowing option restriction, label/render overrides, sizing, disabled state, empty content, and accessible naming.
+
+Keep the selector domain-only while allowing option restriction, label/render overrides, sizing, disabled state, empty content, and accessible naming.
+
 ## Props
 - `value: SpreadType` (controlled).
 - `onChange: (value) => void` — called only when a *different* template is

@@ -2,7 +2,7 @@ import * as React from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { cn } from "../../lib/utils";
-import { DataTable, type DataTableRowAction } from "../../components/data-table";
+import { DataTable, type DataTableProps, type DataTableRowAction } from "../../components/data-table";
 import { NumericText } from "../../components/typography";
 import { Card } from "../../components/card";
 import { Alert, AlertDescription } from "../../components/alert";
@@ -23,6 +23,24 @@ export interface OptionsPositionsTableProps {
   showTheta?: boolean;
   /** Show the per-row IV column. @default false */
   showIv?: boolean;
+  /** Currency code used by all monetary cells. @default "USD" */
+  currency?: string;
+  /** Replace the generated columns entirely. */
+  columns?: ColumnDef<OptionPosition>[];
+  /** Append columns after the generated finance columns. */
+  additionalColumns?: ColumnDef<OptionPosition>[];
+  /** Replace the built-in Roll / Close / Exercise actions. */
+  rowActions?: DataTableProps<OptionPosition>["rowActions"];
+  /** Override the contract cell. */
+  renderContract?: (position: OptionPosition) => React.ReactNode;
+  /** Override the status cell. */
+  renderStatus?: (position: OptionPosition) => React.ReactNode;
+  /** Content rendered for the dedicated empty state. */
+  emptyContent?: React.ReactNode;
+  /** Optional action rendered below the empty-state content. */
+  emptyAction?: React.ReactNode;
+  /** Props forwarded to `DataTable`, excluding data, columns, actions and virtualization. */
+  tableProps?: Omit<DataTableProps<OptionPosition>, "data" | "columns" | "rowActions" | "virtualize">;
   /** Virtualize the table for large blotter lists. @default false */
   virtualize?: boolean;
   /** Loading state. */
@@ -53,11 +71,20 @@ export function OptionsPositionsTable({
   showDelta = true,
   showTheta = true,
   showIv = false,
+  currency = "USD",
+  columns: columnsProp,
+  additionalColumns = [],
+  rowActions: rowActionsProp,
+  renderContract,
+  renderStatus,
+  emptyContent = "No open option positions.",
+  emptyAction = <Button colorStyle="outlined">Open a position</Button>,
+  tableProps,
   virtualize = false,
   loading = false,
   className,
 }: OptionsPositionsTableProps) {
-  const rowActions = React.useMemo<DataTableRowAction<OptionPosition>[]>(
+  const defaultRowActions = React.useMemo<DataTableRowAction<OptionPosition>[]>(
     () =>
       [
         { id: "roll", label: "Roll", onSelect: (r) => onRowAction?.("roll", r) },
@@ -73,7 +100,7 @@ export function OptionsPositionsTable({
         id: "contract",
         accessorKey: "root",
         header: "Contract",
-        cell: ({ row }) => <OptionSymbolBadge contract={row.original} />,
+        cell: ({ row }) => renderContract?.(row.original) ?? <OptionSymbolBadge contract={row.original} />,
       },
       {
         id: "dte",
@@ -91,8 +118,7 @@ export function OptionsPositionsTable({
         id: "status",
         accessorKey: "status",
         header: "Status",
-        cell: ({ row }) =>
-          row.original.status ? (
+        cell: ({ row }) => renderStatus?.(row.original) ?? (row.original.status ? (
             <Badge
               variant={row.original.status === "open" ? "success" : row.original.status === "assigned" || row.original.status === "exercised" ? "warning" : "secondary"}
               size="medium"
@@ -100,7 +126,7 @@ export function OptionsPositionsTable({
             >
               {row.original.status}
             </Badge>
-          ) : null,
+          ) : null),
       },
       {
         id: "contracts",
@@ -126,6 +152,7 @@ export function OptionsPositionsTable({
           <NumericText
             value={row.original.markPrice}
             format="currency"
+            currency={currency}
             align="right"
             precision={2}
           />
@@ -140,6 +167,7 @@ export function OptionsPositionsTable({
           <NumericText
             value={row.original.marketValue}
             format="currency"
+            currency={currency}
             align="right"
           />
         ),
@@ -183,6 +211,7 @@ export function OptionsPositionsTable({
             <NumericText
               value={netTheta}
               format="currency"
+              currency={currency}
               signed
               colorize
               align="right"
@@ -219,6 +248,7 @@ export function OptionsPositionsTable({
           <NumericText
             value={row.original.unrealizedPnL}
             format="currency"
+            currency={currency}
             signed
             colorize
             align="right"
@@ -242,8 +272,11 @@ export function OptionsPositionsTable({
       }
     );
 
-    return cols;
-  }, [showDelta, showTheta, showIv]);
+    return [...cols, ...additionalColumns];
+  }, [additionalColumns, currency, renderContract, renderStatus, showDelta, showTheta, showIv]);
+
+  const resolvedColumns = columnsProp ?? columns;
+  const resolvedRowActions = rowActionsProp ?? defaultRowActions;
 
   if (!loading && positions.length === 0) {
     return (
@@ -251,8 +284,8 @@ export function OptionsPositionsTable({
         <Alert variant="default" showIcon={false}>
           <AlertDescription>
             <div className="flex flex-col items-center gap-3 text-center">
-              <span>No open option positions.</span>
-              <Button colorStyle="outlined">Open a position</Button>
+              <span>{emptyContent}</span>
+              {emptyAction}
             </div>
           </AlertDescription>
         </Alert>
@@ -263,16 +296,17 @@ export function OptionsPositionsTable({
   return (
     <div className={cn("w-full", className)}>
       <DataTable
-        columns={columns}
+        {...tableProps}
+        columns={resolvedColumns}
         data={positions}
-        rowActions={rowActions}
-        rowActionsLabel="Actions"
-        emptyMessage="No open positions."
-        size="sm"
-        variant="bordered"
-        stickyHeader
+        rowActions={resolvedRowActions}
+        rowActionsLabel={tableProps?.rowActionsLabel ?? "Actions"}
+        emptyMessage={tableProps?.emptyMessage ?? "No open positions."}
+        size={tableProps?.size ?? "sm"}
+        variant={tableProps?.variant ?? "bordered"}
+        stickyHeader={tableProps?.stickyHeader ?? true}
         virtualize={virtualize}
-        virtualizationHeight={640}
+        virtualizationHeight={tableProps?.virtualizationHeight ?? 640}
       />
     </div>
   );

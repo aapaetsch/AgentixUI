@@ -19,12 +19,12 @@ Folder: `src/templates/investment-ops/` (secondary entrypoint `@agentix/ui/templ
 
 | Block | Status | Description |
 |------|--------|-------------|
-| **OptionsPositionsTable** | ✅ Complete | `DataTable` of open `OptionPosition`s: `OptionSymbolBadge` + `ExpiryBadge` + signed Qty + Mark + Mkt Value + Net Δ$ + Θ/day + P&L. Row actions Roll/Close/Exercise. |
-| **AggregateGreeksStrip** | ✅ Complete | Net portfolio Greeks strip (Net Δ [or Δ$ when `spot` given] / Γ / Θ-day / ν per 1% IV). Built on `Card` + `NumericText` + `Badge` (no `StatTile` coupling). |
-| **OptionPositionCard** | ✅ Complete | Color-coded call/put accent, semantic P/L surface, mini interactive `PayoffDiagram`, `BreakevenBadges`, max P/L, and `GreeksDisplay`. |
-| **OptionsChain** | ✅ Complete | Color-coded calls/puts chain by strike × expiry with actionable bid/ask cells, expiry `Tabs`, `DataTable`, and `StrikesNavigator`. |
-| **PayoffBundleCard** | ✅ Complete | Multi-leg risk snapshot with optional hover details, semantic profit/loss chart colors, net debit/credit `Badge`, max P/L, and `BreakevenBadges`. |
-| **MultiLegOrderTicket** | ✅ Complete | `Sheet` + `SpreadTypeSelector` + dynamic `LegBuilderRow` list + `PayoffBundleCard` preview + `AlertDialog` confirm + `toast.promise(onSubmit(legs))`. |
+| **OptionsPositionsTable** | ✅ Complete | Extensible positions blotter with replaceable/appendable columns, custom row actions/cell renderers, currency, empty state, and forwarded `DataTable` props. |
+| **AggregateGreeksStrip** | ✅ Complete | Net Greeks strip with selectable/ordered metrics, custom labels/header/empty content, currency, layout, density, and loading controls. |
+| **OptionPositionCard** | ✅ Complete | Composable position card with section visibility, currency/labels/header slot, and forwarded payoff, breakeven, and Greeks props. |
+| **OptionsChain** | ✅ Complete | Controlled/uncontrolled expiry and strike chain with replaceable columns/header, currency/expiry formatting, labels, and configurable strike navigator. |
+| **PayoffBundleCard** | ✅ Complete | Risk snapshot with configurable price sampling, currency/labels/header slot, section visibility, and forwarded diagram/breakeven props. |
+| **MultiLegOrderTicket** | ✅ Complete | Controlled/uncontrolled spread and legs, custom spread factory/preview, labels/currency, and forwarded selector, leg-row, and payoff props. |
 
 Note: The generic `Data Dashboard` placeholder is superseded by this concrete investment-ops set. Storybook stories exist for all 8 blocks under `Templates/Investment-Ops/*`, plus 6 options blocks under `Templates/Options/*` (added 2026-07-20).
 

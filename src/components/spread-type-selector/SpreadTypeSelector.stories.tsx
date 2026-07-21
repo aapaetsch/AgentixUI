@@ -71,3 +71,19 @@ export const Empty: Story = {
     },
   },
 };
+
+export const CustomLabelsAndRenderer: Story = {
+  render: () => {
+    const [v, setV] = useState<SpreadType>("vertical");
+    return (
+      <SpreadTypeSelector
+        value={v}
+        onChange={setV}
+        options={["single", "vertical", "iron-condor"]}
+        labels={{ single: "One leg", vertical: "Debit spread", "iron-condor": "Condor" }}
+        renderOption={(option, label) => <span data-strategy={option}>{label}</span>}
+        ariaLabel="Options strategy"
+      />
+    );
+  },
+};

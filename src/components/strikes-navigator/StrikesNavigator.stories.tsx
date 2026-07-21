@@ -135,3 +135,18 @@ export const KeyboardNav: Story = {
     },
   },
 };
+
+export const PutSideCustomized: Story = {
+  render: () => (
+    <StrikesNavigator
+      strikes={[380, 390, 400, 410, 420]}
+      atmStrike={400}
+      optionType="put"
+      hideJumpInput
+      label="Put strike"
+      formatStrike={(strike) => `$${strike.toFixed(2)}`}
+      renderMoneyness={(state) => state.toUpperCase()}
+      className="w-52"
+    />
+  ),
+};

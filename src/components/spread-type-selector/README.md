@@ -4,6 +4,8 @@ Pick a multi-leg spread template (`single`, `vertical`, `calendar`, `straddle`,
 `strangle`, `iron-condor`, `butterfly`). Pure input — the parent
 `MultiLegOrderTicket` maps the chosen template into leg skeletons.
 
+Use `options` to restrict strategies, `labels` or `renderOption` to customize their presentation, and `size`, `disabled`, `ariaLabel`, or `emptyContent` to fit the selector into different ticket surfaces.
+
 ## Usage
 
 ```tsx

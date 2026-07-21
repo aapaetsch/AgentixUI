@@ -3,6 +3,8 @@
 Vertical strike ladder with ITM/ATM/OTM striping and a quick-jump input. Used
 inside an options chain or multi-leg ticket to pick the focal strike.
 
+Set `optionType` for correct call/put ITM classification. Formatting and composition are exposed through `formatStrike`, `renderMoneyness`, labels, empty content, jump-input visibility, disabled state, viewport sizing, and controlled selection.
+
 ## Usage
 
 ```tsx

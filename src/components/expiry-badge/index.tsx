@@ -65,6 +65,12 @@ export interface ExpiryBadgeProps {
    * @default "medium"
    */
   size?: "medium" | "large";
+  /** Per-band badge variant overrides. */
+  variants?: Partial<Record<ExpiryBadgeBand, BadgeProps["variant"]>>;
+  /** Override the compact DTE label (`7d`, `12h`, etc.). */
+  formatDays?: (daysToExpiry: number, band: ExpiryBadgeBand) => React.ReactNode;
+  /** Override the generated accessible label. */
+  ariaLabel?: string;
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -92,28 +98,32 @@ export function ExpiryBadge({
   dateFormat = "M/d/yy",
   pulseOnExpiring = true,
   size = "medium",
+  variants,
+  formatDays,
+  ariaLabel: ariaLabelProp,
   className,
 }: ExpiryBadgeProps) {
   const dte =
     daysToExpiry ??
     Math.max(0, (expiry - Date.now()) / 86_400_000);
   const resolvedBand = band ?? bandForDte(dte, thresholds);
-  const variant = BAND_VARIANT[resolvedBand];
+  const variant = variants?.[resolvedBand] ?? BAND_VARIANT[resolvedBand];
   const dateStr = formatDate(new Date(expiry), dateFormat);
 
-  const daysLabel =
+  const defaultDaysLabel =
     dte >= 1
       ? `${Math.floor(dte)}d`
       : dte > 0
         ? `${Math.round(dte * 24)}h`
         : "0d";
+  const daysLabel = formatDays?.(dte, resolvedBand) ?? defaultDaysLabel;
 
   // Accessible label: only announce what is actually visible.
-  const ariaLabel = showDate && showDays
-    ? `Expires ${dateStr} in ${daysLabel}`
-    : showDays
-      ? `Expires in ${daysLabel}`
-      : `Expires ${dateStr}`;
+  const ariaLabel = ariaLabelProp ?? (showDate && showDays
+    ? `Expires ${dateStr} in ${defaultDaysLabel}`
+    : showDays || !showDate
+      ? `Expires in ${defaultDaysLabel}`
+      : `Expires ${dateStr}`);
 
   return (
     <Badge

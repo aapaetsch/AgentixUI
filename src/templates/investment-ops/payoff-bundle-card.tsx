@@ -31,6 +31,24 @@ export interface PayoffBundleCardProps {
   showBreakevens?: boolean;
   /** Show a tracked dot and price/P&L tooltip over the payoff curve. @default false */
   showHoverDetails?: boolean;
+  /** Currency code used for monetary values. @default "USD" */
+  currency?: string;
+  /** Price-grid range around spot as a decimal. @default 0.25 */
+  priceRange?: number;
+  /** Number of samples in the payoff grid. @default 81 */
+  pointCount?: number;
+  /** Show the net debit/credit badge when a net value exists. @default true */
+  showNetBadge?: boolean;
+  /** Show max-profit and max-loss stats. @default true */
+  showStats?: boolean;
+  /** Optional header content rendered after the net badge. */
+  headerRight?: React.ReactNode;
+  /** Override user-facing labels. */
+  labels?: Partial<Record<"debit" | "credit" | "maxProfit" | "maxLoss", React.ReactNode>>;
+  /** Props forwarded to the payoff primitive. */
+  payoffDiagramProps?: Omit<React.ComponentProps<typeof PayoffDiagram>, "points" | "spotPrice" | "currentPnL" | "breakevens">;
+  /** Props forwarded to the breakeven primitive. */
+  breakevenProps?: Omit<React.ComponentProps<typeof BreakevenBadges>, "values">;
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -55,11 +73,20 @@ export function PayoffBundleCard({
   title = "Payoff at Expiry",
   showBreakevens = true,
   showHoverDetails = false,
+  currency = "USD",
+  priceRange = 0.25,
+  pointCount = 81,
+  showNetBadge = true,
+  showStats = true,
+  headerRight,
+  labels,
+  payoffDiagramProps,
+  breakevenProps,
   className,
 }: PayoffBundleCardProps) {
   const prices = React.useMemo(
-    () => priceGrid(legs, spotPrice, 0.25, 81),
-    [legs, spotPrice]
+    () => priceGrid(legs, spotPrice, priceRange, pointCount),
+    [legs, pointCount, priceRange, spotPrice]
   );
   const points = React.useMemo(
     () => computePayoffAtExpiry(legs, prices),
@@ -95,58 +122,65 @@ export function PayoffBundleCard({
     >
       <CardHeader className="flex-row items-center justify-between gap-2 space-y-0">
         <Typography variant="overline">{title}</Typography>
-        {net != null && Math.abs(net) > 0 && (
+        <div className="flex items-center gap-2">
+        {showNetBadge && net != null && Math.abs(net) > 0 && (
           <Badge variant={isDebit ? "destructive" : "success"} size="medium">
-            {isDebit ? "Debit" : "Credit"}{" "}
+            {isDebit ? labels?.debit ?? "Debit" : labels?.credit ?? "Credit"}{" "}
             <NumericText
               value={Math.abs(net)}
               format="currency"
+              currency={currency}
               align="left"
               className="text-white"
             />
           </Badge>
         )}
+        {headerRight}
+        </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
         <div className="w-full rounded-md bg-muted/20 p-2">
           <PayoffDiagram
+            {...payoffDiagramProps}
             points={points}
             spotPrice={spotPrice}
             currentPnL={currentPnL}
             breakevens={breakevens}
-            positiveColor="hsl(var(--positive))"
-            negativeColor="hsl(var(--negative))"
+            positiveColor={payoffDiagramProps?.positiveColor ?? "hsl(var(--positive))"}
+            negativeColor={payoffDiagramProps?.negativeColor ?? "hsl(var(--negative))"}
             showHoverDetails={showHoverDetails}
-            width={360}
-            height={160}
-            className="w-full"
+            width={payoffDiagramProps?.width ?? 360}
+            height={payoffDiagramProps?.height ?? 160}
+            className={cn("w-full", payoffDiagramProps?.className)}
           />
         </div>
 
-        {showBreakevens && <BreakevenBadges values={breakevens} />}
+        {showBreakevens && <BreakevenBadges {...breakevenProps} values={breakevens} currency={breakevenProps?.currency ?? currency} />}
 
-        <div className="grid grid-cols-2 overflow-hidden rounded-md border border-border bg-muted/10">
+        {showStats && <div className="grid grid-cols-2 overflow-hidden rounded-md border border-border bg-muted/10">
           <div className="flex flex-col gap-0.5 border-r border-border px-3 py-2">
-            <Typography variant="overline">Max Profit</Typography>
+            <Typography variant="overline">{labels?.maxProfit ?? "Max Profit"}</Typography>
             <NumericText
               value={maxProfit ?? 0}
               format="currency"
+              currency={currency}
               signed
               colorize
               align="left"
             />
           </div>
           <div className="flex flex-col gap-0.5 px-3 py-2">
-            <Typography variant="overline">Max Loss</Typography>
+            <Typography variant="overline">{labels?.maxLoss ?? "Max Loss"}</Typography>
             <NumericText
               value={maxLoss ?? 0}
               format="currency"
+              currency={currency}
               signed
               colorize
               align="left"
             />
           </div>
-        </div>
+        </div>}
       </CardContent>
     </Card>
   );

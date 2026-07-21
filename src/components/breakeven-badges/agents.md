@@ -2,6 +2,8 @@
 
 Pill row of breakeven underlying prices.
 
+Customization includes precision/currency, value and overflow badge variants/sizes, empty and accessible copy, and a `renderValue` slot.
+
 ## Props
 - `values: number[]`
 - `format?: "currency" | "number"` — @default `"currency"`.

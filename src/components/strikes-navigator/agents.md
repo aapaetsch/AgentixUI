@@ -2,6 +2,10 @@
 
 Strike ladder with ITM/ATM/OTM striping + quick-jump input.
 
+Moneyness must respect `optionType`; formatting, row metadata, copy, jump visibility, disabled state, dimensions, and controlled selection are public extension points.
+
+Moneyness must respect `optionType`; formatting, row metadata, copy, jump visibility, disabled state, dimensions, and controlled selection are public extension points.
+
 ## Props
 - `strikes: number[]` — sorted ascending.
 - `atmStrike: number` — spot/underlying for ITM/ATM/OTM classification.

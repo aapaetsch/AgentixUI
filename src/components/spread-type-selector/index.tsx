@@ -52,6 +52,16 @@ export interface SpreadTypeSelectorProps {
   options?: readonly SpreadType[];
   /** Disable the selector. */
   disabled?: boolean;
+  /** Override any built-in option label. */
+  labels?: Partial<Record<SpreadType, React.ReactNode>>;
+  /** Custom option renderer. */
+  renderOption?: (option: SpreadType, label: React.ReactNode) => React.ReactNode;
+  /** Toggle-group size. @default "sm" */
+  size?: React.ComponentProps<typeof ToggleGroup>["size"];
+  /** Accessible selector name. @default "Spread type" */
+  ariaLabel?: string;
+  /** Content rendered when `options` is empty. */
+  emptyContent?: React.ReactNode;
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -73,12 +83,17 @@ export function SpreadTypeSelector({
   onChange,
   options = DEFAULT_SPREAD_OPTIONS,
   disabled,
+  labels,
+  renderOption,
+  size = "sm",
+  ariaLabel = "Spread type",
+  emptyContent = "No spreads",
   className,
 }: SpreadTypeSelectorProps) {
   if (options.length === 0) {
     return (
       <span className={cn("text-xs text-muted-foreground", className)}>
-        No spreads
+        {emptyContent}
       </span>
     );
   }
@@ -89,13 +104,13 @@ export function SpreadTypeSelector({
       value={value}
       onValueChange={(v) => v && onChange(v as SpreadType)}
       disabled={disabled}
-      size="sm"
+      size={size}
       className={cn("flex-wrap", className)}
-      aria-label="Spread type"
+      aria-label={ariaLabel}
     >
       {options.map((opt) => (
-        <ToggleGroupItem key={opt} value={opt} size="sm">
-          {SPREAD_LABELS[opt]}
+        <ToggleGroupItem key={opt} value={opt} size={size}>
+          {renderOption?.(opt, labels?.[opt] ?? SPREAD_LABELS[opt]) ?? labels?.[opt] ?? SPREAD_LABELS[opt]}
         </ToggleGroupItem>
       ))}
     </ToggleGroup>

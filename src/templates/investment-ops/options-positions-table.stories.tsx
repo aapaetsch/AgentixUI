@@ -106,3 +106,22 @@ export const Loading: Story = {
 export const Empty: Story = {
   args: { positions: [] },
 };
+
+export const CustomizedPresentation: Story = {
+  args: {
+    positions,
+    currency: "CAD",
+    showTheta: false,
+    showIv: true,
+    renderStatus: (position) => position.status ? `Status: ${position.status}` : null,
+    tableProps: { variant: "striped", size: "md", stickyHeader: false },
+  },
+};
+
+export const CustomEmptyState: Story = {
+  args: {
+    positions: [],
+    emptyContent: "No strategies match this portfolio filter.",
+    emptyAction: <button type="button">Clear filters</button>,
+  },
+};

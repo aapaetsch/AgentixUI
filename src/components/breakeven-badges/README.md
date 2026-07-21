@@ -2,6 +2,10 @@
 
 Pill row of breakeven underlying prices, formatted with `NumericText`.
 
+## Customization
+
+Use `precision`, `currency`, `size`, `variant`, and `overflowVariant` for the standard presentation. `renderValue` replaces only the value content, while `label`, `emptyContent`, and `ariaLabel` customize surrounding copy without losing list semantics.
+
 ## Usage
 
 ```tsx

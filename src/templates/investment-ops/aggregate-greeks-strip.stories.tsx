@@ -288,3 +288,16 @@ export const DarkMode: Story = {
     </div>
   ),
 };
+
+export const SelectedMetricsAndLabels: Story = {
+  args: {
+    positions,
+    spot: 400,
+    metrics: ["delta", "theta"],
+    labels: { deltaDollars: "Directional $", theta: "Daily decay" },
+    showHeader: true,
+    headerLabel: "RISK SNAPSHOT",
+    emptyContent: "No option exposure",
+  },
+  render: (args) => <div className="w-[36rem]"><AggregateGreeksStrip {...args} /></div>,
+};

@@ -33,6 +33,43 @@ export interface LegBuilderRowProps
   disableDelete?: boolean;
   /** Compact mode for dense multi-leg tickets. @default false */
   compact?: boolean;
+  /** Disable every editable control and action. @default false */
+  disabled?: boolean;
+  /** Hide the buy/sell control. @default false */
+  hideSide?: boolean;
+  /** Hide the call/put control. @default false */
+  hideType?: boolean;
+  /** Minimum absolute contract quantity. @default 1 */
+  contractMin?: number;
+  /** Maximum absolute contract quantity. */
+  contractMax?: number;
+  /** Contract quantity step. @default 1 */
+  contractStep?: number;
+  /** Format a strike option label. */
+  formatStrike?: (strike: number) => string;
+  /** Format an expiry option label. */
+  formatExpiry?: (expiry: number) => string;
+  /** Override user-facing labels without replacing the controls. */
+  labels?: Partial<{
+    buy: React.ReactNode;
+    sell: React.ReactNode;
+    call: React.ReactNode;
+    put: React.ReactNode;
+    expiry: string;
+    strike: string;
+    contracts: string;
+    duplicate: string;
+    delete: string;
+  }>;
+  /** Classes for key internal slots. */
+  classNames?: Partial<{
+    side: string;
+    type: string;
+    expiry: string;
+    strike: string;
+    contracts: string;
+    actions: string;
+  }>;
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -70,6 +107,16 @@ export function LegBuilderRow({
   onDuplicate,
   disableDelete,
   compact = false,
+  disabled = false,
+  hideSide = false,
+  hideType = false,
+  contractMin = 1,
+  contractMax,
+  contractStep = 1,
+  formatStrike,
+  formatExpiry,
+  labels,
+  classNames,
   className,
 }: LegBuilderRowProps) {
   const strikeOptions = React.useMemo<ComboBoxOption<number>[]>(
@@ -79,25 +126,25 @@ export function LegBuilderRow({
         .sort((a, b) => a - b)
         .map((s) => ({
           value: s,
-          label: s.toLocaleString("en-US", {
+          label: formatStrike?.(s) ?? s.toLocaleString("en-US", {
             minimumFractionDigits: Number.isInteger(s) ? 0 : 1,
             maximumFractionDigits: 2,
           }),
         })),
-    [strikes]
+    [formatStrike, strikes]
   );
 
   const expiryOptions = React.useMemo(
     () =>
       expiries?.map((e) => ({
         value: String(e),
-        label: new Date(e).toLocaleDateString("en-US", {
+        label: formatExpiry?.(e) ?? new Date(e).toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
           year: "2-digit",
         }),
       })) ?? [],
-    [expiries]
+    [expiries, formatExpiry]
   );
 
   return (
@@ -111,7 +158,7 @@ export function LegBuilderRow({
       )}
     >
       {/* Buy / Sell */}
-      <ToggleGroup
+      {!hideSide && <ToggleGroup
         type="single"
         value={value.side}
         onValueChange={(v) => {
@@ -128,55 +175,58 @@ export function LegBuilderRow({
           onChange({ ...value, side: nextSide, contracts: nextContracts });
         }}
         size="sm"
-        className="shrink-0"
+        disabled={disabled}
+        className={cn("shrink-0", classNames?.side)}
       >
         <ToggleGroupItem
           value="buy"
           className="data-[state=on]:bg-positive data-[state=on]:text-white"
         >
-          Buy
+          {labels?.buy ?? "Buy"}
         </ToggleGroupItem>
         <ToggleGroupItem
           value="sell"
           className="data-[state=on]:bg-negative data-[state=on]:text-white"
         >
-          Sell
+          {labels?.sell ?? "Sell"}
         </ToggleGroupItem>
-      </ToggleGroup>
+      </ToggleGroup>}
 
       {/* Call / Put */}
-      <ToggleGroup
+      {!hideType && <ToggleGroup
         type="single"
         value={value.type}
         onValueChange={(v) =>
           v && onChange({ ...value, type: v as OptionType })
         }
         size="sm"
-        className="shrink-0"
+        disabled={disabled}
+        className={cn("shrink-0", classNames?.type)}
       >
         <ToggleGroupItem
           value="call"
           className="data-[state=on]:bg-positive data-[state=on]:text-white"
         >
-          Call
+          {labels?.call ?? "Call"}
         </ToggleGroupItem>
         <ToggleGroupItem
           value="put"
           className="data-[state=on]:bg-negative data-[state=on]:text-white"
         >
-          Put
+          {labels?.put ?? "Put"}
         </ToggleGroupItem>
-      </ToggleGroup>
+      </ToggleGroup>}
 
       {/* Expiry (optional) */}
       {expiryOptions.length > 0 && (
         <select
-          className="h-8 rounded-md border border-border bg-background px-2 text-xs"
+          className={cn("h-8 rounded-md border border-border bg-background px-2 text-xs", classNames?.expiry)}
           value={String(value.expiry)}
           onChange={(e) =>
             onChange({ ...value, expiry: Number(e.target.value) })
           }
-          aria-label="Expiration"
+          aria-label={labels?.expiry ?? "Expiration"}
+          disabled={disabled}
         >
           {expiryOptions.map((o) => (
             <option key={o.value} value={o.value}>
@@ -187,21 +237,22 @@ export function LegBuilderRow({
       )}
 
       {/* Strike */}
-      <div className="min-w-[6rem] flex-1">
+      <div className={cn("min-w-[6rem] flex-1", classNames?.strike)}>
         <ComboBox<number>
           options={strikeOptions}
           value={value.strike}
           onChange={(v) =>
             v != null && onChange({ ...value, strike: v })
           }
-          placeholder="Strike"
+          placeholder={labels?.strike ?? "Strike"}
           clearable={false}
+          disabled={disabled}
           inputClassName="h-8 text-xs"
         />
       </div>
 
       {/* Contracts */}
-      <div className="shrink-0">
+      <div className={cn("shrink-0", classNames?.contracts)}>
         <InputIncrementor
           value={Math.abs(value.contracts)}
           onValueChange={(n) =>
@@ -211,23 +262,26 @@ export function LegBuilderRow({
                 value.side === "buy" ? Math.abs(n) : -Math.abs(n),
             })
           }
-          min={1}
-          step={1}
+          min={contractMin}
+          max={contractMax}
+          step={contractStep}
+          disabled={disabled}
           size="sm"
-          aria-label="Contracts"
+          aria-label={labels?.contracts ?? "Contracts"}
         />
       </div>
 
       {/* Actions */}
       {(onDuplicate || onDelete) && (
-        <div className="flex shrink-0 items-center gap-1">
+        <div className={cn("flex shrink-0 items-center gap-1", classNames?.actions)}>
           {onDuplicate && (
             <Button
               colorStyle="text"
               size="xs"
               iconOnly
               onClick={onDuplicate}
-              aria-label="Duplicate leg"
+              disabled={disabled}
+              aria-label={labels?.duplicate ?? "Duplicate leg"}
             >
               <CopyPlus className="size-3.5" />
             </Button>
@@ -239,8 +293,8 @@ export function LegBuilderRow({
               iconOnly
               className="text-destructive hover:text-destructive"
               onClick={onDelete}
-              disabled={disableDelete}
-              aria-label="Delete leg"
+              disabled={disabled || disableDelete}
+              aria-label={labels?.delete ?? "Delete leg"}
             >
               <Trash2 className="size-3.5" />
             </Button>

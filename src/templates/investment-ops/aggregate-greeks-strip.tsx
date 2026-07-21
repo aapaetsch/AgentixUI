@@ -46,6 +46,7 @@ export type AggregateGreeksStripSize = "comfortable" | "compact";
  * - `deltaDollars` — always show Net Δ$ (= Δ × spot); requires `spot`.
  */
 export type DeltaMode = "auto" | "delta" | "deltaDollars";
+export type AggregateGreekMetric = "delta" | "gamma" | "theta" | "vega";
 
 export interface AggregateGreeksStripProps {
   /** Open option positions to aggregate. */
@@ -70,6 +71,14 @@ export interface AggregateGreeksStripProps {
   colorize?: boolean;
   /** Number of cells to render when `loading`. @default 4 */
   loadingCount?: number;
+  /** Ordered metrics to display. @default all four */
+  metrics?: readonly AggregateGreekMetric[];
+  /** Override metric labels. */
+  labels?: Partial<Record<AggregateGreekMetric | "deltaDollars", React.ReactNode>>;
+  /** Header badge content. @default "NET GREEKS" */
+  headerLabel?: React.ReactNode;
+  /** Content rendered when no positions are present. */
+  emptyContent?: React.ReactNode;
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -101,7 +110,8 @@ function aggregate(positions: OptionPosition[]): AggGreeks {
 }
 
 interface StatSpec {
-  label: string;
+  metric: AggregateGreekMetric;
+  label: React.ReactNode;
   value: number;
   format: "currency" | "number";
   precision: number | undefined;
@@ -200,6 +210,7 @@ function resolveDeltaSpec(
     if (spot == null) {
       // deltaDollars requested without spot — fall back to raw delta.
       return {
+        metric: "delta",
         label: "Net Δ",
         value: greeks.netDelta,
         format: "number",
@@ -208,6 +219,7 @@ function resolveDeltaSpec(
       };
     }
     return {
+      metric: "delta",
       label: "Net Δ$",
       value: greeks.netDelta * spot,
       format: "currency",
@@ -216,6 +228,7 @@ function resolveDeltaSpec(
     };
   }
   return {
+    metric: "delta",
     label: "Net Δ",
     value: greeks.netDelta,
     format: "number",
@@ -255,34 +268,46 @@ export function AggregateGreeksStrip({
   loading = false,
   colorize = true,
   loadingCount = 4,
+  metrics = ["delta", "gamma", "theta", "vega"],
+  labels,
+  headerLabel = "NET GREEKS",
+  emptyContent = "No open positions",
   className,
 }: AggregateGreeksStripProps) {
   const greeks = React.useMemo(() => aggregate(positions), [positions]);
 
-  const specs: StatSpec[] = [
-    resolveDeltaSpec(greeks, spot, deltaMode),
+  const deltaSpec = resolveDeltaSpec(greeks, spot, deltaMode);
+  const allSpecs: StatSpec[] = [
+    { ...deltaSpec, label: labels?.[deltaSpec.format === "currency" ? "deltaDollars" : "delta"] ?? deltaSpec.label },
     {
-      label: "Γ",
+      metric: "gamma",
+      label: labels?.gamma ?? "Γ",
       value: greeks.netGamma,
       format: "number",
       precision: 2,
       description: "Net gamma",
     },
     {
-      label: "Θ/day",
+      metric: "theta",
+      label: labels?.theta ?? "Θ/day",
       value: greeks.netTheta,
       format: "currency",
       precision: undefined,
       description: "Net theta per day",
     },
     {
-      label: "ν / 1% IV",
+      metric: "vega",
+      label: labels?.vega ?? "ν / 1% IV",
       value: greeks.netVega,
       format: "currency",
       precision: undefined,
       description: "Net vega per 1% IV",
     },
   ];
+  const specs = Array.from(new Set(metrics)).flatMap((metric) => {
+    const spec = allSpecs.find((candidate) => candidate.metric === metric);
+    return spec ? [spec] : [];
+  });
 
   const isCompact = layout === "compact";
   const isVertical = layout === "vertical";
@@ -313,7 +338,7 @@ export function AggregateGreeksStrip({
         >
           <div className="flex items-center gap-2">
             <Badge variant="secondary" size="medium">
-              NET GREEKS
+              {headerLabel}
             </Badge>
             <span className="font-mono text-[0.625rem] uppercase tracking-wider text-muted-foreground">
               {positions.length} {positions.length === 1 ? "position" : "positions"}
@@ -336,13 +361,13 @@ export function AggregateGreeksStrip({
             isCompact ? "px-2.5 py-1.5" : "px-3 py-3"
           )}
         >
-          No open positions
+          {emptyContent}
         </div>
       ) : (
         <div className={containerClass}>
           {specs.map((spec) => (
             <Stat
-              key={spec.label}
+              key={spec.metric}
               {...spec}
               layout={layout}
               size={size}

@@ -133,3 +133,33 @@ export const RejectedSubmit: Story = {
       })()
     ),
 };
+
+export const ControlledCustomized: Story = {
+  render: () =>
+    withToast(
+      (() => {
+        const [open, setOpen] = useState(true);
+        const [spread, setSpread] = useState<"single" | "vertical">("vertical");
+        return (
+          <MultiLegOrderTicket
+            open={open}
+            onOpenChange={setOpen}
+            underlying="SPY"
+            strikes={strikes}
+            expiries={expiries}
+            spot={400}
+            spread={spread}
+            onSpreadChange={(next) => {
+              if (next === "single" || next === "vertical") setSpread(next);
+            }}
+            spreadSelectorProps={{ options: ["single", "vertical"], labels: { single: "One leg", vertical: "Two legs" } }}
+            legRowProps={{ contractStep: 5, labels: { buy: "Long", sell: "Short" } }}
+            payoffBundleProps={{ showBreakevens: false, payoffDiagramProps: { variant: "line" } }}
+            currency="CAD"
+            labels={{ title: "Build an options strategy", addLeg: "Add another leg", review: "Review strategy" }}
+            onSubmit={async () => undefined}
+          />
+        );
+      })()
+    ),
+};

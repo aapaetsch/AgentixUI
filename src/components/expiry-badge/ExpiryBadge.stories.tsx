@@ -117,3 +117,14 @@ export const LargeSize: Story = {
     size: "large",
   },
 };
+
+export const CustomBandPresentation: Story = {
+  args: {
+    expiry: now + 14 * day,
+    daysToExpiry: 14,
+    showDate: true,
+    variants: { near: "secondary" },
+    formatDays: (dte) => `${Math.ceil(dte)} days left`,
+    ariaLabel: "Custom expiration status",
+  },
+};

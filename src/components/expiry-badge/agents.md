@@ -2,6 +2,8 @@
 
 Color-graded expiration pill for open option positions.
 
+Consumers may override classification, per-band variants, DTE rendering, visible date/day parts, pulse behavior, sizing, and the accessible label.
+
 ## Props
 - `expiry: number` — epoch ms.
 - `daysToExpiry?: number` — derived from `expiry` vs `Date.now()` when omitted; clamped to `>= 0`.

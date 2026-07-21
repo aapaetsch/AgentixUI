@@ -29,6 +29,30 @@ export interface OptionPositionCardProps {
   showPayoff?: boolean;
   /** Show a tracked dot and price/P&L tooltip over the payoff curve. @default false */
   showHoverDetails?: boolean;
+  /** Show expiry metadata. @default true */
+  showExpiry?: boolean;
+  /** Show position status. @default true */
+  showStatus?: boolean;
+  /** Show breakeven badges. @default true */
+  showBreakevens?: boolean;
+  /** Show the summary stat strip. @default true */
+  showStats?: boolean;
+  /** Show the Greeks readout. @default true */
+  showGreeks?: boolean;
+  /** Currency code used by monetary values. @default "USD" */
+  currency?: string;
+  /** Small header descriptor. @default "Position" */
+  title?: React.ReactNode;
+  /** Content appended to the right side of the header. */
+  headerRight?: React.ReactNode;
+  /** Override stat labels. */
+  labels?: Partial<Record<"maxProfit" | "maxLoss" | "pnl" | "quantity", React.ReactNode>>;
+  /** Props forwarded to the payoff primitive. */
+  payoffDiagramProps?: Omit<React.ComponentProps<typeof PayoffDiagram>, "points" | "spotPrice" | "currentPnL" | "breakevens">;
+  /** Props forwarded to the breakeven primitive. */
+  breakevenProps?: Omit<React.ComponentProps<typeof BreakevenBadges>, "values">;
+  /** Props forwarded to the Greeks primitive. */
+  greeksProps?: Omit<React.ComponentProps<typeof GreeksDisplay>, "greeks">;
   /** Extra classes merged last via `cn()`. */
   className?: string;
 }
@@ -53,6 +77,18 @@ export function OptionPositionCard({
   spotPrice,
   showPayoff = true,
   showHoverDetails = false,
+  showExpiry = true,
+  showStatus = true,
+  showBreakevens = true,
+  showStats = true,
+  showGreeks = true,
+  currency = "USD",
+  title = "Position",
+  headerRight,
+  labels,
+  payoffDiagramProps,
+  breakevenProps,
+  greeksProps,
   className,
 }: OptionPositionCardProps) {
   const spot = spotPrice ?? position.markPrice;
@@ -108,72 +144,85 @@ export function OptionPositionCard({
       <CardHeader className="flex-row items-center justify-between gap-2 space-y-0">
         <div className="flex items-center gap-2">
           <OptionSymbolBadge contract={position} />
-          <ExpiryBadge
+          {showExpiry && <ExpiryBadge
             expiry={position.expiry}
             daysToExpiry={position.daysToExpiry}
             showDate
-          />
-          {position.status && (
+          />}
+          {showStatus && position.status && (
             <Badge variant="outline" size="medium" className="capitalize">
               {position.status}
             </Badge>
           )}
         </div>
-        <Typography variant="overline">Position</Typography>
+        <div className="flex items-center gap-2">
+          <Typography variant="overline">{title}</Typography>
+          {headerRight}
+        </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
         {showPayoff && (
           <div className="w-full rounded-md bg-muted/20 p-2">
             <PayoffDiagram
+              {...payoffDiagramProps}
               points={points}
               spotPrice={spot}
               currentPnL={position.unrealizedPnL}
               breakevens={breakevens}
-              positiveColor="hsl(var(--positive))"
-              negativeColor="hsl(var(--negative))"
+              positiveColor={payoffDiagramProps?.positiveColor ?? "hsl(var(--positive))"}
+              negativeColor={payoffDiagramProps?.negativeColor ?? "hsl(var(--negative))"}
               showHoverDetails={showHoverDetails}
-              width={320}
-              height={120}
-              className="w-full"
+              width={payoffDiagramProps?.width ?? 320}
+              height={payoffDiagramProps?.height ?? 120}
+              className={cn("w-full", payoffDiagramProps?.className)}
             />
           </div>
         )}
 
-        <BreakevenBadges values={breakevens} />
+        {showBreakevens && (
+          <BreakevenBadges
+            {...breakevenProps}
+            values={breakevens}
+            currency={breakevenProps?.currency ?? currency}
+          />
+        )}
 
-        <div className="grid grid-cols-2 overflow-hidden rounded-md border border-border bg-muted/10 sm:grid-cols-4 sm:divide-x sm:divide-border">
+        {showStats && <div className="grid grid-cols-2 overflow-hidden rounded-md border border-border bg-muted/10 sm:grid-cols-4 sm:divide-x sm:divide-border">
           <div className="flex flex-col gap-0.5 p-2.5">
-            <Typography variant="overline">Max Profit</Typography>
+            <Typography variant="overline">{labels?.maxProfit ?? "Max Profit"}</Typography>
             <NumericText
               value={maxProfit ?? 0}
               format="currency"
+              currency={currency}
               signed
               colorize
               align="left"
             />
           </div>
           <div className="flex flex-col gap-0.5 p-2.5">
-            <Typography variant="overline">Max Loss</Typography>
+            <Typography variant="overline">{labels?.maxLoss ?? "Max Loss"}</Typography>
             <NumericText
               value={maxLoss ?? 0}
               format="currency"
+              currency={currency}
               signed
               colorize
               align="left"
             />
           </div>
           <div className={cn("flex flex-col gap-0.5 p-2.5", position.unrealizedPnL >= 0 ? "bg-positive/5" : "bg-negative/5")}>
-            <Typography variant="overline">P&L</Typography>
+            <Typography variant="overline">{labels?.pnl ?? "P&L"}</Typography>
             <NumericText
               value={position.unrealizedPnL}
               format="currency"
+              currency={currency}
               signed
               colorize
               align="left"
             />
           </div>
           <div className="flex flex-col gap-0.5 p-2.5">
-            <Typography variant="overline">Qty</Typography>
+            <Typography variant="overline">{labels?.quantity ?? "Qty"}</Typography>
             <NumericText
               value={position.contracts}
               format="number"
@@ -181,14 +230,15 @@ export function OptionPositionCard({
               align="left"
             />
           </div>
-        </div>
+        </div>}
 
-        <GreeksDisplay
+        {showGreeks && <GreeksDisplay
+          {...greeksProps}
           greeks={position.greeks ?? {}}
-          colorize
-          signed
-          layout="inline"
-        />
+          colorize={greeksProps?.colorize ?? true}
+          signed={greeksProps?.signed ?? true}
+          layout={greeksProps?.layout ?? "inline"}
+        />}
       </CardContent>
     </Card>
   );

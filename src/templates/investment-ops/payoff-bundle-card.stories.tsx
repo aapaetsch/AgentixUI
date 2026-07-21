@@ -66,3 +66,20 @@ export const Empty: Story = {
   args: { legs: [], spotPrice: 400 },
   render: (args) => <div className="w-[28rem]"><PayoffBundleCard {...args} /></div>,
 };
+
+export const CustomizedRiskSnapshot: Story = {
+  args: {
+    legs: ironCondor,
+    spotPrice: 400,
+    netDebitCredit: 400,
+    currency: "CAD",
+    priceRange: 0.4,
+    pointCount: 121,
+    title: "Risk at expiration",
+    headerRight: <button type="button">Expand</button>,
+    labels: { credit: "Premium", maxProfit: "Best case", maxLoss: "Worst case" },
+    payoffDiagramProps: { variant: "line", height: 190, strokeWidth: 2 },
+    breakevenProps: { label: "Levels", precision: 1 },
+  },
+  render: (args) => <div className="w-[32rem]"><PayoffBundleCard {...args} /></div>,
+};

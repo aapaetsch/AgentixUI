@@ -177,3 +177,34 @@ export const LongStrikesList: Story = {
     );
   },
 };
+
+export const CustomizedControls: Story = {
+  render: () => {
+    const [leg, setLeg] = useState<OptionLeg>({
+      id: "custom",
+      side: "buy",
+      type: "call",
+      strike: 400,
+      expiry: expiries[1]!,
+      contracts: 5,
+    });
+    return (
+      <div className="w-[44rem]">
+        <LegBuilderRow
+          value={leg}
+          onChange={setLeg}
+          strikes={strikes}
+          expiries={expiries}
+          contractMin={5}
+          contractMax={50}
+          contractStep={5}
+          formatStrike={(strike) => `$${strike.toFixed(2)}`}
+          labels={{ buy: "Long", sell: "Short", contracts: "Lots" }}
+          classNames={{ strike: "min-w-[8rem]", actions: "ml-2" }}
+          onDuplicate={() => undefined}
+          onDelete={() => undefined}
+        />
+      </div>
+    );
+  },
+};

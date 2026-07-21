@@ -2,6 +2,10 @@
 
 Color-graded expiration pill showing days/hours until expiry.
 
+Use `thresholds` or `band` to control classification, `variants` to remap individual bands, and `formatDays` to replace the compact DTE label. Date/day visibility, pulse behavior, size, and the generated accessible label are independently configurable.
+
+Use `thresholds` or `band` to control classification, `variants` to remap individual bands, and `formatDays` to replace the compact DTE label. Date/day visibility, pulse behavior, size, and the generated accessible label are independently configurable.
+
 Bands (`far` → `near` → `imminent` → `expiring`) auto-derive from DTE and map to existing `Badge` variants:
 - `>30d` → `outline` (neutral)
 - `7–30d` → `warning` (amber)

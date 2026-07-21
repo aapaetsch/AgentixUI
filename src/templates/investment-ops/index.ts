@@ -47,6 +47,7 @@ export {
 export {
   AggregateGreeksStrip,
   type AggregateGreeksStripProps,
+  type AggregateGreekMetric,
 } from "./aggregate-greeks-strip";
 export {
   OptionPositionCard,
