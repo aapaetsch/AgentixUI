@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { cn } from "../../lib/utils";
-import { Card, CardHeader, CardTitle, CardContent } from "../../components/card";
+import { Card, CardHeader, CardTitle } from "../../components/card";
 import { Avatar, AvatarFallback } from "../../components/avatar";
 import { Badge } from "../../components/badge";
 import { Chip } from "../../components/chip";
@@ -10,7 +10,6 @@ import { MultiSelect } from "../../components/multi-select";
 import { ToggleGroup, ToggleGroupItem } from "../../components/toggle-group";
 import { ScrollArea } from "../../components/scroll-area";
 import { Skeleton } from "../../components/skeleton";
-import { formatTime } from "../../lib/date-utils";
 import { formatRelativeTime } from "../../lib/time-utils";
 
 export interface NewsItem {
@@ -57,7 +56,6 @@ export function NewsFeed({
   tickerOptions = [],
   onFilterChange,
   onItemOpen,
-  onLoadMore,
   loading = false,
   className,
 }: NewsFeedProps) {

@@ -3,14 +3,11 @@ import * as React from "react";
 import { cn } from "../../lib/utils";
 import {
   Sheet,
-  SheetTrigger,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetDescription,
   SheetFooter,
-  SheetClose,
-  sheetContentVariants,
 } from "../../components/sheet";
 import { ToggleGroup, ToggleGroupItem } from "../../components/toggle-group";
 import { Input } from "../../components/input";
@@ -19,7 +16,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from ".
 import { Button } from "../../components/button";
 import { Alert, AlertTitle, AlertDescription } from "../../components/alert";
 import { NumericText } from "../../components/typography";
-import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel, AlertDialogFooter } from "../../components/alert-dialog";
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel, AlertDialogFooter } from "../../components/alert-dialog";
 import { usePremiumToast } from "../../components/toast/api";
 
 export type OrderSide = "buy" | "sell";

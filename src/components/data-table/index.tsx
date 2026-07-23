@@ -13,7 +13,6 @@ import {
   type OnChangeFn,
   type PaginationState,
   type Row,
-  type RowSelectionState,
   type TableOptions,
   type Updater,
 } from "@tanstack/react-table";

@@ -67,11 +67,6 @@ const DEFAULT_STOPS = {
   above: "text-positive",
 };
 
-function formatDateShort(expiry: number): string {
-  const d = new Date(expiry);
-  return `${d.getMonth() + 1}/${d.getDate()}`;
-}
-
 /**
  * IVChart — inline-SVG implied-volatility micro visualizations.
  *

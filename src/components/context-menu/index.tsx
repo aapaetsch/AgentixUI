@@ -254,8 +254,8 @@ export interface ContextMenuShortcutProps
  */
 function ContextMenu({
   children,
-  position: customPosition = null,
-  delayClose = 0,
+  position: _customPosition = null,
+  delayClose: _delayClose = 0,
   ...props
 }: ContextMenuProps) {
   return (

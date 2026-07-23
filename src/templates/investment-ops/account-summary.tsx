@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { cn } from "../../lib/utils";
 import { Grid } from "../../components/grid";
-import { Alert, AlertTitle, AlertDescription } from "../../components/alert";
+import { Alert } from "../../components/alert";
 import { StatTile, type StatTileProps } from "./stat-tile";
 
 export interface AccountSummaryProps {

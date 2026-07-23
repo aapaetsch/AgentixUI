@@ -5,7 +5,7 @@ import type { VariantProps } from "class-variance-authority";
 
 import { cn } from "../../lib/utils";
 import { Badge, badgeVariants } from "../badge";
-import { formatDate, DATE_FORMATS } from "../../lib/date-utils";
+import { formatDate } from "../../lib/date-utils";
 import type { OptionContract, OptionType } from "../../lib/finance-types";
 
 /* -------------------------------------------------------------------------------------------------

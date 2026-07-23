@@ -653,7 +653,7 @@ function OutlinedComboBoxInner<T = string>(
 ) {
   // Track focus and value state for floating label
   const [isFocused, setIsFocused] = React.useState(false);
-  const [query, setQuery] = React.useState("");
+  const [query] = React.useState("");
 
   // Get selected option for determining if label should float
   const selectedOption = React.useMemo(

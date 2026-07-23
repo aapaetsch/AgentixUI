@@ -34,11 +34,6 @@ type CarouselSize = "sm" | "md" | "lg";
  */
 type CarouselGap = "none" | "sm" | "md" | "lg";
 
-/**
- * Indicator variants
- */
-type IndicatorVariant = "dots" | "lines" | "numbers";
-
 // ============================================================================
 // Context
 // ============================================================================

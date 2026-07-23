@@ -3,18 +3,10 @@
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
-import { useSpring, animated, config as springConfig } from "@react-spring/web";
 import { useDrag } from "@use-gesture/react";
 import { X } from "lucide-react";
 
 import { cn } from "../../lib/utils";
-
-// ============================================================================
-// Animated Components
-// ============================================================================
-
-const AnimatedOverlay = animated(DialogPrimitive.Overlay);
-const AnimatedContent = animated(DialogPrimitive.Content);
 
 // ============================================================================
 // Types
@@ -51,6 +43,52 @@ const animationPresets: Record<AnimationType, SpringConfigOptions> = {
   slow: { tension: 100, friction: 30, mass: 1 },
   fast: { tension: 400, friction: 40, mass: 1 },
 };
+
+type CssAnimationTiming = {
+  durationMs: number;
+  easing: string;
+};
+
+const cssAnimationTimings: Record<AnimationType, CssAnimationTiming> = {
+  smooth: { durationMs: 220, easing: "cubic-bezier(0.2, 0, 0, 1)" },
+  stiff: { durationMs: 160, easing: "cubic-bezier(0.2, 0, 0, 1)" },
+  bounce: { durationMs: 260, easing: "cubic-bezier(0.34, 1.56, 0.64, 1)" },
+  elastic: { durationMs: 320, easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
+  slow: { durationMs: 320, easing: "cubic-bezier(0.2, 0, 0, 1)" },
+  fast: { durationMs: 140, easing: "cubic-bezier(0.2, 0, 0, 1)" },
+};
+
+function resolveAnimationTiming(
+  animationType: AnimationType,
+  springConfig?: SpringConfigOptions
+): CssAnimationTiming {
+  const preset = cssAnimationTimings[animationType];
+
+  if (!springConfig) {
+    return preset;
+  }
+
+  const tension = springConfig.tension ?? animationPresets[animationType].tension ?? 200;
+  const friction = springConfig.friction ?? animationPresets[animationType].friction ?? 26;
+  const mass = springConfig.mass ?? animationPresets[animationType].mass ?? 1;
+
+  // Preserve the public springConfig API while mapping it to deterministic CSS
+  // timing. Higher tension shortens the duration, while higher friction/mass
+  // lengthen it slightly.
+  const durationMs = Math.max(
+    120,
+    Math.min(420, Math.round(240 + friction * 3 + mass * 70 - tension * 0.25))
+  );
+
+  return {
+    durationMs,
+    easing: preset.easing,
+  };
+}
+
+function toTranslateStyle(axis: "x" | "y", percent: number): string {
+  return axis === "x" ? `translateX(${percent}%)` : `translateY(${percent}%)`;
+}
 
 // ============================================================================
 // Variants
@@ -517,6 +555,7 @@ const PremiumSheetContent = React.forwardRef<
       handleComponent,
       onInteractOutside,
       onEscapeKeyDown,
+      style,
       ...props
     },
     ref
@@ -526,7 +565,7 @@ const PremiumSheetContent = React.forwardRef<
     const [sheetDimension, setSheetDimension] = React.useState(0);
     const [currentSnapIndex, setCurrentSnapIndex] = React.useState(defaultSnapPoint ?? 0);
     const [isAnimating, setIsAnimating] = React.useState(false);
-    const closeTimeoutRef = React.useRef<NodeJS.Timeout>();
+    const closeTimeoutRef = React.useRef<number | null>(null);
 
     // Ensure position has a default value
     const resolvedPosition = position ?? "right";
@@ -538,8 +577,10 @@ const PremiumSheetContent = React.forwardRef<
       enableSwipe = true,
     } = gestureSensitivity;
 
-    // Get spring config
-    const springConfigValue = customSpringConfig || animationPresets[animationType];
+    const { durationMs, easing } = resolveAnimationTiming(
+      animationType,
+      customSpringConfig
+    );
 
     // Calculate transform axis and direction
     const axis = getTransformAxis(resolvedPosition);
@@ -550,43 +591,72 @@ const PremiumSheetContent = React.forwardRef<
       ? (1 - snapPoints[defaultSnapPoint]) * directionMultiplier * 100
       : 0;
 
-    // Spring animation for overlay
-    const [overlaySpring, overlayApi] = useSpring(() => ({
-      opacity: 0,
-      config: springConfig.default,
-    }));
+    const [overlayOpacity, setOverlayOpacity] = React.useState(0);
+    const [sheetOffsetPercent, setSheetOffsetPercent] = React.useState(
+      directionMultiplier * 100
+    );
+    const [useTransition, setUseTransition] = React.useState(false);
 
-    // Spring animation for content
-    const [contentSpring, contentApi] = useSpring(() => ({
-      [axis]: directionMultiplier * 100, // Start off-screen
-      config: springConfigValue,
-    }));
+    const animateTo = React.useCallback(
+      (targetOffsetPercent: number, targetOverlayOpacity: number, immediate = false) => {
+        setUseTransition(!immediate);
+        setSheetOffsetPercent(targetOffsetPercent);
+        setOverlayOpacity(targetOverlayOpacity);
+      },
+      []
+    );
+
+    const finishClose = React.useCallback(
+      (afterClose?: () => void) => {
+        if (closeTimeoutRef.current) {
+          window.clearTimeout(closeTimeoutRef.current);
+        }
+
+        closeTimeoutRef.current = window.setTimeout(() => {
+          setIsAnimating(false);
+          setIsOpen(false);
+          afterClose?.();
+          closeTimeoutRef.current = null;
+        }, durationMs);
+      },
+      [durationMs, setIsOpen]
+    );
+
+    const requestCloseWithAnimation = React.useCallback(
+      (afterClose?: () => void) => {
+        setIsAnimating(true);
+        animateTo(directionMultiplier * 100, 0);
+        finishClose(afterClose);
+      },
+      [animateTo, directionMultiplier, finishClose]
+    );
 
     // Animate based on isOpen state
     React.useEffect(() => {
       if (isOpen) {
-        // Clear any pending close timeout
         if (closeTimeoutRef.current) {
-          clearTimeout(closeTimeoutRef.current);
-          closeTimeoutRef.current = undefined;
+          window.clearTimeout(closeTimeoutRef.current);
+          closeTimeoutRef.current = null;
         }
-        // Animate in
-        setIsAnimating(true);
-        overlayApi.start({ opacity: 1 });
-        contentApi.start({
-          [axis]: openPosition,
-          onRest: () => setIsAnimating(false),
+
+        setIsAnimating(false);
+        setUseTransition(false);
+        setSheetOffsetPercent(directionMultiplier * 100);
+        setOverlayOpacity(0);
+
+        const frame = window.requestAnimationFrame(() => {
+          animateTo(openPosition, 1);
         });
-      } else if (!isOpen && isAnimating) {
-        // Already animating closed, do nothing
+
+        return () => window.cancelAnimationFrame(frame);
       }
-    }, [isOpen, overlayApi, contentApi, axis, openPosition, directionMultiplier, isAnimating]);
+    }, [animateTo, directionMultiplier, isOpen, openPosition]);
 
     // Cleanup timeout on unmount
     React.useEffect(() => {
       return () => {
         if (closeTimeoutRef.current) {
-          clearTimeout(closeTimeoutRef.current);
+          window.clearTimeout(closeTimeoutRef.current);
         }
       };
     }, []);
@@ -634,10 +704,11 @@ const PremiumSheetContent = React.forwardRef<
             ? normalizedMovement * 0.3
             : percentMovement;
 
-          contentApi.start({
-            [axis]: (openPosition + resistedMovement * directionMultiplier),
-            immediate: true,
-          });
+          animateTo(
+            openPosition + resistedMovement * directionMultiplier,
+            Math.max(0, Math.min(1, 1 - Math.max(0, percentMovement) * 0.9)),
+            true
+          );
         }
 
         if (last) {
@@ -654,46 +725,28 @@ const PremiumSheetContent = React.forwardRef<
               // Find next lower snap point or close
               const targetSnapIndex = currentSnapIndex - 1;
               if (targetSnapIndex < 0) {
-                // Animate out before closing
-                setIsAnimating(true);
-                overlayApi.start({ opacity: 0 });
-                contentApi.start({
-                  [axis]: directionMultiplier * 100,
-                  onRest: () => {
-                    setIsAnimating(false);
-                    setIsOpen(false);
-                  },
-                });
+                requestCloseWithAnimation();
                 return;
               }
               const targetPosition = (1 - snapPoints[targetSnapIndex]) * directionMultiplier * 100;
-              contentApi.start({ [axis]: targetPosition });
+              animateTo(targetPosition, 1);
               setCurrentSnapIndex(targetSnapIndex);
               onSnapPointChange?.(targetSnapIndex);
             } else {
               // Snap to closest point
               const targetSnapIndex = getClosestSnapPoint(normalizedMovement, snapPoints, sheetDimension);
               const targetPosition = (1 - snapPoints[targetSnapIndex]) * directionMultiplier * 100;
-              contentApi.start({ [axis]: targetPosition });
+              animateTo(targetPosition, 1);
               setCurrentSnapIndex(targetSnapIndex);
               onSnapPointChange?.(targetSnapIndex);
             }
           } else {
             // No snap points - either close or return to open
             if (shouldCloseByVelocity || shouldCloseByDistance) {
-              // Animate out before closing
-              setIsAnimating(true);
-              overlayApi.start({ opacity: 0 });
-              contentApi.start({
-                [axis]: directionMultiplier * 100,
-                onRest: () => {
-                  setIsAnimating(false);
-                  setIsOpen(false);
-                },
-              });
+              requestCloseWithAnimation();
             } else {
               // Return to open position
-              contentApi.start({ [axis]: openPosition });
+              animateTo(openPosition, 1);
             }
           }
         }
@@ -718,21 +771,12 @@ const PremiumSheetContent = React.forwardRef<
         if (preventBackgroundClose) {
           event.preventDefault();
         } else {
-          // Prevent default close and animate out first
           event.preventDefault();
-          setIsAnimating(true);
-          overlayApi.start({ opacity: 0 });
-          contentApi.start({
-            [axis]: directionMultiplier * 100,
-            onRest: () => {
-              setIsAnimating(false);
-              setIsOpen(false);
-            },
-          });
+          requestCloseWithAnimation();
         }
         onInteractOutside?.(event);
       },
-      [preventBackgroundClose, onInteractOutside, overlayApi, contentApi, axis, directionMultiplier, setIsOpen]
+      [preventBackgroundClose, onInteractOutside, requestCloseWithAnimation]
     );
 
     // Handle escape key prevention
@@ -741,62 +785,44 @@ const PremiumSheetContent = React.forwardRef<
         if (preventBackgroundClose) {
           event.preventDefault();
         } else {
-          // Prevent default close and animate out first
           event.preventDefault();
-          setIsAnimating(true);
-          overlayApi.start({ opacity: 0 });
-          contentApi.start({
-            [axis]: directionMultiplier * 100,
-            onRest: () => {
-              setIsAnimating(false);
-              setIsOpen(false);
-            },
-          });
+          requestCloseWithAnimation();
         }
         onEscapeKeyDown?.(event);
       },
-      [preventBackgroundClose, onEscapeKeyDown, overlayApi, contentApi, axis, directionMultiplier, setIsOpen]
+      [preventBackgroundClose, onEscapeKeyDown, requestCloseWithAnimation]
     );
 
     // Handle close button click
     const handleCloseClick = React.useCallback((e: React.MouseEvent) => {
       // Prevent the default DialogPrimitive.Close behavior
       e.preventDefault();
-      setIsAnimating(true);
-      overlayApi.start({ opacity: 0 });
-      contentApi.start({
-        [axis]: directionMultiplier * 100,
-        onRest: () => {
-          setIsAnimating(false);
-          setIsOpen(false);
-          onCloseClick?.();
-        },
-      });
-    }, [onCloseClick, overlayApi, contentApi, axis, directionMultiplier, setIsOpen]);
-
-    // Create transform interpolation
-    const transformStyle = (contentSpring as any)[axis].to(
-      (v: number) => axis === "x" ? `translateX(${v}%)` : `translateY(${v}%)`
-    );
+      requestCloseWithAnimation(onCloseClick);
+    }, [onCloseClick, requestCloseWithAnimation]);
 
     // Only render when open or animating to prevent blocking interactions
     const shouldRender = isOpen || isAnimating;
+
+    const transitionStyle = useTransition
+      ? `transform ${durationMs}ms ${easing}, opacity ${durationMs}ms ${easing}`
+      : "none";
 
     return (
       <PremiumSheetPortal>
         {shouldRender && (
           <>
-            <AnimatedOverlay
+            <DialogPrimitive.Overlay
               forceMount
               data-slot="premium-sheet-overlay"
               data-sheet-level={level}
               className={cn(premiumSheetOverlayVariants(), overlayClassName)}
               style={{
-                opacity: overlaySpring.opacity,
+                opacity: overlayOpacity,
+                transition: transitionStyle,
                 zIndex: 50 + (level - 1) * 10,
               }}
             />
-            <AnimatedContent
+            <DialogPrimitive.Content
               forceMount
               ref={(node) => {
                 (contentRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
@@ -815,40 +841,42 @@ const PremiumSheetContent = React.forwardRef<
                 className
               )}
               style={{
-                transform: transformStyle,
+                transform: toTranslateStyle(axis, sheetOffsetPercent),
+                transition: transitionStyle,
                 zIndex: 50 + (level - 1) * 10 + 1,
+                ...style,
               }}
               onInteractOutside={handleInteractOutside}
               onEscapeKeyDown={handleEscapeKeyDown}
               {...bind()}
               {...props}
-        >
-          {/* Handle for touch devices */}
-          {showHandle && (resolvedPosition === "top" || resolvedPosition === "bottom") && (
-            handleComponent || (
-              <div
-                data-slot="premium-sheet-handle"
-                className={cn(premiumSheetHandleVariants({ position: resolvedPosition }))}
-              />
-            )
-          )}
+            >
+              {/* Handle for touch devices */}
+              {showHandle && (resolvedPosition === "top" || resolvedPosition === "bottom") && (
+                handleComponent || (
+                  <div
+                    data-slot="premium-sheet-handle"
+                    className={cn(premiumSheetHandleVariants({ position: resolvedPosition }))}
+                  />
+                )
+              )}
 
-          {children}
+              {children}
 
-          {showCloseButton && (
-            closeButton || (
-              <button
-                type="button"
-                data-slot="premium-sheet-close-button"
-                className={cn(premiumSheetCloseVariants())}
-                onClick={handleCloseClick}
-              >
-                <X className="size-4" />
-                <span className="sr-only">Close</span>
-              </button>
-            )
-          )}
-            </AnimatedContent>
+              {showCloseButton && (
+                closeButton || (
+                  <button
+                    type="button"
+                    data-slot="premium-sheet-close-button"
+                    className={cn(premiumSheetCloseVariants())}
+                    onClick={handleCloseClick}
+                  >
+                    <X className="size-4" />
+                    <span className="sr-only">Close</span>
+                  </button>
+                )
+              )}
+            </DialogPrimitive.Content>
           </>
         )}
       </PremiumSheetPortal>

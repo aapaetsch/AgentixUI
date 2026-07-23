@@ -647,7 +647,6 @@ function DialogPages({
   pages,
   activePage,
   transition = "slide",
-  direction = "forward",
   transitionDuration = 200,
   onTransitionEnd,
   className,
