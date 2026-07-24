@@ -16,6 +16,7 @@ export default [
       "node_modules/**",
       "src/**/*.stories.tsx",
       "coverage/**",
+      "fixtures/**/.next/**",
     ],
   },
   js.configs.recommended,
@@ -68,7 +69,14 @@ export default [
   },
   {
     // Root-level tooling/config files (non-library): lighter rules.
-    files: ["*.js", "*.cjs", "*.ts", "*.mjs"],
+    files: [
+      "*.js",
+      "*.cjs",
+      "*.ts",
+      "*.mjs",
+      "scripts/**/*.mjs",
+      "fixtures/**/*.mjs",
+    ],
     languageOptions: {
       globals: {
         ...globals.node,

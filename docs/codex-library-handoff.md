@@ -2,7 +2,14 @@
 
 Date: 2026-07-22
 Repository: `aapaetsch/AgentixUI`
-Status: pushed
+Status: superseded; beta.0 local evidence only
+
+> Reconciled 2026-07-23: the beta.0 hash below was reproduced from the
+> canonical local checkout, but beta.0 was never published or attached to an
+> immutable release. The original claim proves local readiness, not immutable
+> consumer availability. The authoritative beta.1 candidate evidence and
+> remaining release gates are in
+> `docs/react19-package-readiness-handoff.md`.
 
 ## Use This Ref
 

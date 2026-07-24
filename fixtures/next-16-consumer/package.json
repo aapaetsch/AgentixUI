@@ -1,0 +1,29 @@
+{
+  "name": "agentix-ui-next-16-consumer",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": "22.17.0",
+    "npm": "10.9.2"
+  },
+  "packageManager": "npm@10.9.2",
+  "scripts": {
+    "typecheck": "tsc --noEmit --pretty false",
+    "build": "next build",
+    "verify:artifact": "node scripts/verify-artifact.mjs",
+    "verify:styles": "node scripts/verify-styles.mjs",
+    "typecheck:react-server": "tsc -p tsconfig.react-server.json --pretty false"
+  },
+  "dependencies": {
+    "@agentix/ui": "file:../../agentix-ui-0.2.0-beta.1.tgz",
+    "next": "16.2.11",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.0",
+    "@types/react": "19.2.0",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3"
+  }
+}

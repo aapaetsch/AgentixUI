@@ -8,7 +8,6 @@ export default defineConfig({
     "src/finance-server.ts",
     "src/templates/investment-ops/index.ts",
     "src/templates/investment-ops/react-server.tsx",
-    "src/globals.css",
   ],
   format: ["cjs", "esm"], // Output both CommonJS (for Electron/Node) and ESM (for Bundlers)
   dts: {
@@ -26,6 +25,10 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
+  // lucide-react 0.474.0 advertises a CommonJS file inside a type=module
+  // package. Bundle the selected icons so the documented native CommonJS
+  // entrypoints remain executable; THIRD_PARTY_NOTICES preserves its ISC text.
+  noExternal: ["lucide-react"],
   external: [
     // Never bundle peer deps.
     "react",
@@ -39,6 +42,7 @@ export default defineConfig({
     "@radix-ui/react-alert-dialog",
     "@radix-ui/react-avatar",
     "@radix-ui/react-checkbox",
+    "@radix-ui/react-collapsible",
     "@radix-ui/react-context-menu",
     "@radix-ui/react-dialog",
     "@radix-ui/react-dropdown-menu",
@@ -65,7 +69,6 @@ export default defineConfig({
     "date-fns",
     "embla-carousel-autoplay",
     "embla-carousel-react",
-    "lucide-react",
     "react-day-picker",
     "react-resizable-panels",
     "tailwind-merge",
