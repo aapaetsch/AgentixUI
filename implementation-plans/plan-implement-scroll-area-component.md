@@ -4,7 +4,7 @@ Implement a custom scrollbar container component (`ScrollArea`) using Radix UI p
 
 ### Steps
 
-1. **Create component folder structure** at `src/components/premium/scroll-area/` with files: `index.tsx`, `ScrollArea.stories.tsx`, `agents.md`, and `README.md`
+1. **Create component folder structure** at `src/components/scroll-area/` with files: `index.tsx`, `ScrollArea.stories.tsx`, `agents.md`, and `README.md`
 
 2. **Implement ScrollArea composition** using `@radix-ui/react-scroll-area` primitives with export structure: `ScrollArea`, `ScrollAreaViewport`, `ScrollBar` (with `ScrollBarOrientation`, `ScrollBarVisibility` types), following shadcn/ui compound component pattern where explicit `ScrollBar` components are required for each orientation (horizontal/vertical)
 
@@ -18,13 +18,13 @@ Implement a custom scrollbar container component (`ScrollArea`) using Radix UI p
 
 7. **Create comprehensive Storybook stories** in `ScrollArea.stories.tsx` showcasing: default vertical scroll, default horizontal scroll, both orientations combined, auto-hide scrollbars (visibility="auto"), always-visible scrollbars (visibility="always"), infinite scroll auto mode with async loading, infinite scroll manual mode with "Load more" button, nested scroll areas, custom loading indicator via renderLoading, RTL enabled examples, long content scenarios (100+ items), mobile/touch scenarios
 
-8. **Create agents.md file** following the template in `src/components/free/button/agents.md`, documenting component composition, props interfaces (including infinite scroll props: `infiniteScrollMode`, `onLoadMore`, `isLoading`, `hasMore`, `distanceFromBottom`, `renderLoading`, `rtl`), styling decisions, maintenance notes, accessibility considerations
+8. **Create agents.md file** following the template in `src/components/button/agents.md`, documenting component composition, props interfaces (including infinite scroll props: `infiniteScrollMode`, `onLoadMore`, `isLoading`, `hasMore`, `distanceFromBottom`, `renderLoading`, `rtl`), styling decisions, maintenance notes, accessibility considerations
 
 9. **Create README.md file** with overview, features list (custom scrollbars, horizontal/vertical, auto-hide, infinite scroll 2 modes, RTL support), installation code, usage examples for all variants and infinite scroll modes, API reference table with prop descriptions, accessibility information, examples section referencing Storybook stories
 
-10. **Export components** from `src/index.ts` by adding: `ScrollArea`, `ScrollAreaViewport`, `ScrollBar`, `type ScrollAreaProps`, `type ScrollBarProps`, following existing export pattern for premium components
+10. **Export components** from `src/index.ts` by adding: `ScrollArea`, `ScrollAreaViewport`, `ScrollBar`, `type ScrollAreaProps`, `type ScrollBarProps`, following existing export pattern
 
-11. **Update ROADMAP status** in `docs/ROADMAP.md` by changing ScrollArea from "Planned (🟢 Low)" to "In Progress (🔄)" in the premium components table
+11. **Update ROADMAP status** in `docs/ROADMAP.md` by changing ScrollArea status appropriately
 
 12. **Test build and Storybook** by calling `Dev Runner` subagent to run `npm run build` and `npm run storybook` commands, verifying no compilation errors and all stories render correctly with infinite scroll functionality working
 

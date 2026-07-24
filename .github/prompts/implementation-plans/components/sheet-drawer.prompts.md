@@ -6,10 +6,10 @@ This plan outlines the implementation of both Sheet and Drawer components for th
 
 1. **Single Implementation with Variants**: Both Sheet and Drawer will be implemented as a single unified component with position variants. A Drawer will simply be a bottom-positioned Sheet (Sheet with `position="bottom"`), following Material Design conventions where drawers are a subtype of sheets.
 
-2. **Tier Separation Strategy**: We'll implement the components using a shared core foundation with tier-specific extensions:
-   - **Free Tier**: Core functionality with basic variants (position, size)
-   - **Premium Tier**: Advanced gesture support, custom animations, snap points, and enhanced customization
-   - **Implementation Approach**: We'll create a base Sheet primitive with all functionality, then export simplified versions for the Free tier and fully-featured versions for Premium
+2. **Unified Implementation**: All Sheet functionality is now consolidated into a single implementation with all features available:
+   - **Core functionality**: Basic variants (position, size)
+   - **Advanced features**: Gesture support, custom animations, snap points, and enhanced customization
+   - **Implementation Approach**: Single component with full feature set, no tier separation
 
 3. **Gesture Types to Implement**:
    - Swipe-to-dismiss (all directions)
@@ -35,8 +35,7 @@ This plan outlines the implementation of both Sheet and Drawer components for th
    - (Already have `@radix-ui/react-dialog`)
 
 2. Create component directory structure:
-   - `src/components/free/sheet/` - Base implementation
-   - `src/components/premium/sheet/` - Extended implementation
+   - `src/components/sheet/` - Full implementation
    
 3. Implement base Sheet component:
    - Position variants: top, right, bottom, left
@@ -55,7 +54,7 @@ This plan outlines the implementation of both Sheet and Drawer components for th
    - Multiple animation presets
    - Transition orchestration
 
-### Phase 2: Premium Features and Enhancements
+### Phase 2: Advanced Features and Enhancements
 
 1. Add advanced gesture features:
    - Snap points support
@@ -101,39 +100,28 @@ This plan outlines the implementation of both Sheet and Drawer components for th
 TheSheet component will follow this architecture:
 
 ```tsx
-// Base Sheet component with all functionality
+// Unified Sheet component with the full feature set
 const Sheet = (props) => {
-  // Core functionality shared by all tiers
-  const { isOpen, close, ...coreProps } = useSheetCore(props)
-  
-  // Free tier only uses basic features
-  if (tier === 'free') {
-    return <SheetPrimitive {...coreProps} />
-  }
-  
-  // Premium tier adds advanced features
-  return <SheetWithGestures {...coreProps} />
+   const { isOpen, close, ...sheetProps } = useSheetCore(props)
+
+   return <SheetWithGestures {...sheetProps} />
 }
 ```
 
-### Tier Separation Implementation
+### Unified Implementation
 
-We'll use conditional exports to separate functionality:
+We'll keep a single export surface for all sheet functionality:
 
-1. **Free Tier Exports** (`src/components/free/sheet/index.tsx`):
-   - Core positioning and animation
-   - Basic variants and customization
-   - Limited API surface
-
-2. **Premium Tier Exports** (`src/components/premium/sheet/index.tsx`):
-   - Import and extend Free tier
-   - Add gesture support hooks
-   - Export extended API with premium features
+1. **Single Component Export** (`src/components/sheet/index.tsx`):
+    - Core positioning and animation
+    - Gesture support hooks
+    - Advanced customization options
+    - Full public API surface
 
 This approach avoids code duplication because:
-- Free tier components are a subset of Premium functionality
-- Premium components extend Free components rather than reimplementing
+- All sheet behavior lives in one implementation
 - Shared utilities and hooks are imported from a common location
+- Consumers use one canonical API instead of tiered variants
 
 ## Component Spacing, Sizing, Effects & Animation Guidelines
 
@@ -183,9 +171,9 @@ This approach avoids code duplication because:
 - **Stacking Context**: Use a fixed z-index increment (e.g., `1000 + index`) for nested sheets to ensure proper stacking.
 - **Focus Management**: Ensure focus trapping works correctly across nested sheets by managing `tabIndex` and `aria-hidden` attributes.
 
-## Free vs. Premium Features
+## Feature Set
 
-### Free Tier
+### Core Features
 - **Position Variants**: `top`, `right`, `bottom`, `left`.
 - **Size Variants**: `xs`, `sm`, `md`, `lg`, `xl`, `full`.
 - **Animation Types**: `smooth` (default), `stiff`.
@@ -193,7 +181,7 @@ This approach avoids code duplication because:
 - **Basic Accessibility**: Keyboard navigation, focus trapping, ARIA attributes.
 - **Responsive Behavior**: Fullscreen on mobile, partial height/width on desktop.
 
-### Premium Tier
+### Advanced Features
 - **Gestures**: Swipe-to-dismiss, edge-pull, and velocity-based closing.
 - **Snap Points**: Customizable snap points (e.g., `[0.25, 0.5, 0.75]`).
 - **Animation Types**: `bounce`, `elastic`, `slow`, `fast`, and custom spring configurations.
@@ -215,11 +203,7 @@ This approach avoids code duplication because:
 - `overlayClassName`: Custom CSS classes for the overlay.
 - `animationType`: Type of animation (`smooth` | `stiff` | `bounce` | `elastic` | `slow` | `fast`).
 
-### Free Tier Props
-- All **Shared Props** are available in the Free tier.
-
-### Premium Tier Props
-- All **Shared Props** and **Free Tier Props** are available in the Premium tier, plus:
+### Advanced Props
 - `snapPoints`: Array of numbers (e.g., `[0.25, 0.5, 0.75]`) to define snap points.
 - `gestureSensitivity`: Object to configure gesture sensitivity (e.g., `{ swipeThreshold: 100, edgePullSensitivity: 0.5 }`).
 - `springConfig`: Custom spring configuration for animations (e.g., `{ tension: 200, friction: 20 }`).
@@ -288,20 +272,27 @@ This approach avoids code duplication because:
 
 ## Export Strategy
 
-To cleanly separate Free and Premium tiers without duplication:
+Use a single canonical export:
 
-1. `src/components/free/sheet/` - Contains the core implementation with basic features
-2. `src/components/premium/sheet/` - Imports and extends the free version with premium features
-3. `src/index.ts` - Exports from appropriate locations based on tier
+1. `src/components/sheet/` - Contains the complete implementation
+2. `src/index.ts` - Re-exports the canonical sheet API
 
 ```ts
 // In src/index.ts
-export { Sheet as Sheet } from "./components/free/sheet" // Free tier
-export { Sheet as PremiumSheet } from "./components/premium/sheet" // Premium tier
+export {
+   Sheet,
+   SheetTrigger,
+   SheetPortal,
+   SheetContent,
+   SheetHeader,
+   SheetFooter,
+   SheetTitle,
+   SheetDescription,
+   SheetClose,
+} from "./components/sheet"
 ```
 
 This allows users to:
-- Import basic functionality for Free tier
-- Import enhanced functionality for Premium tier
-- Benefit from shared underlying implementation
-- Upgrade easily from Free to Premium
+- Import one canonical sheet API
+- Access both core and advanced capabilities without tiered exports
+- Benefit from a single maintained implementation

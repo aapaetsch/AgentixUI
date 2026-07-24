@@ -1,10 +1,10 @@
 # @agentix/ui
 
-A modern React UI library with **free and premium components**, built with **TypeScript**, **React**, **Tailwind CSS**, and **shadcn/ui** patterns. Designed for consumption in Web and Electron applications.
+A shared React UI library built with **TypeScript**, **React**, **Tailwind CSS**, and **shadcn/ui** patterns. Designed for consumption in Web and Electron applications.
 
 ## Features
 
-- **50+ Components** - A comprehensive set of UI components from basic primitives to advanced patterns
+- **52+ Components** - Core UI primitives and advanced components for any application
 - **TypeScript First** - Full type safety with comprehensive prop interfaces
 - **Tailwind CSS** - Utility-first styling with CSS variables for theming
 - **CVA Variants** - Consistent variant system using `class-variance-authority`
@@ -72,7 +72,7 @@ function App() {
 | `AlertDialog` | Modal confirmation dialogs |
 | `Spinner` | Loading indicator with multiple sizes |
 
-### Layout Components
+#### Layout Components
 | Component | Description |
 |-----------|-------------|
 | `Card` | Content container with media, actions, swipeable/expandable variants |
@@ -80,14 +80,7 @@ function App() {
 | `Grid` | 12-column layout utility with GridItem |
 | `Flex` | Flex layout utility with direction, wrap, gap, alignment |
 
-### Navigation Components
-| Component | Description |
-|-----------|-------------|
-| `Navigation` | Full navigation system (Navbar, Navrail, Navdrawer) |
-| `Breadcrumb` | Path navigation with responsive collapsing |
-| `Pagination` | Page navigation with smart ellipsis, responsive support |
-
-### Feedback Components
+#### Utility Components
 | Component | Description |
 |-----------|-------------|
 | `Dialog` | Modal with sizes, close button, overlay, multi-page support |
@@ -98,40 +91,67 @@ function App() {
 | `HoverCard` | Rich content preview on hover |
 | `Tabs` | Tab navigation with variants |
 | `Accordion` | Content disclosure with animated chevrons |
-| `Sheet` | Slide-out panel with position variants |
-| `Toast` | Toast notifications with imperative API |
-| `Progress` | Linear, circular, and skill bar progress indicators |
-| `Skeleton` | Loading placeholders with pulse/shimmer animations |
-
-### Data Display Components
-| Component | Description |
-|-----------|-------------|
 | `Table` | Presentational table primitive |
-| `DataTable` | Sortable, filterable, paginated table with virtualization |
-| `Separator` | Visual divider with orientation and color variants |
-
-### Form Enhancement Components
-| Component | Description |
-|-----------|-------------|
+| `Sheet` | Slide-out panel with position variants |
+| `Breadcrumb` | Path navigation with responsive collapsing |
+| `Pagination` | Page navigation with smart ellipsis, responsive support |
 | `Stepper` | Step-by-step progress indicator |
+| `Navigation` | Full navigation system (Navbar, Navrail, Navdrawer) |
+| `Skeleton` | Loading placeholders with pulse/shimmer animations |
+| `Progress` | Linear and circular progress indicators |
+| `Separator` | Visual divider with orientation and color variants |
 | `Slider` | Basic slider with sizes and range support |
-| `ComboBox` | Searchable select with virtualization, async loading |
-| `MultiSelect` | Virtualized multi-select with search and groups |
-| `DatePicker` | Single/range/multiple date selection with presets |
-| `TimePicker` | 12h/24h format with scrollable selectors |
-| `DateTimePicker` | Combined date+time selection |
 
 ### Advanced Components
+
+Richer APIs and interaction models for complex use cases.
+
 | Component | Description |
 |-----------|-------------|
 | `FAB` | Material Design floating action buttons with menu support |
+| `ComboBox` | Searchable select with virtualization, async loading |
+| `Slider` | Advanced slider with circular handles, value indicators, MD3 animations |
+| `Sheet` | Sheet with swipe-to-dismiss, snap points, spring animations |
+| `Toast` | Promise-based toasts with undo functionality |
+| `Stepper` | Vertical orientation, non-linear navigation, async validation |
+| `Navigation` | Navigation submenus with accordion expansion |
 | `Carousel` | Multiple transition effects, autoplay support |
+| `DatePicker` | Single/range/multiple date selection with presets |
+| `TimePicker` | 12h/24h format with scrollable selectors |
+| `DateTimePicker` | Combined date+time selection |
+| `MultiSelect` | Virtualized multi-select with search and groups |
+| `DataTable` | Sortable, filterable, paginated table with virtualization |
 | `ScrollArea` | Custom scrollbar with infinite scroll support |
-| `PremiumSlider` | Advanced slider with circular handles, value indicators, MD3 animations |
-| `PremiumSheet` | Sheet with swipe-to-dismiss, snap points, spring animations |
-| `PremiumToast` | Promise-based toasts with undo functionality |
-| `PremiumStepper` | Vertical orientation, non-linear navigation, async validation |
-| `PremiumNavigation` | Navigation submenus with accordion expansion |
+
+## Component Library Architecture
+
+`@agentix/ui` is intentionally **UI‑only**. It contains primitives, layout, form, navigation, disclosure, overlays, and small inline‑SVG data‑viz primitives (`Sparkline`‑class components, `NumericText`, `TrendIndicator`, `Gauge`, `SegmentedProgress`). It deliberately **does not** ship general‑purpose chart components (line, bar, candlestick, heatmap with axes/legends, etc.).
+
+**Why:** Real charting brings heavy dependencies (D3 modules, `visx`, `lightweight-charts`, possibly Canvas/WebGL) and a faster release cadence than the UI kit. Bundling them would force every consumer — settings pages, auth flows, marketing forms — to ship megabytes they may never use. See `docs/chart-library-strategy.md` for the full decision record and the boundary contract.
+
+**Boundary contract:**
+
+```
+@agentix/charts  ->  @agentix/ui   (charts consumes ui primitives, tokens, cn())
+@agentix/ui      ✗   @agentix/charts  (ui MUST NOT depend on charts)
+```
+
+`@agentix/charts` (planned, separate package in this monorepo) will ship the charting surface: `LineChart`, `AreaChart`, `BarChart`, `Histogram`, `ScatterPlot`, `BoxPlot`, `Treemap`, full `Heatmap`/`DonutChart` with axes/legends, `CandlestickChart`, `DepthChart`, plus the quant domain widgets (`EquityCurve`, `DrawdownCurve`, `CorrelationMatrix`, `SignalHeatmap`, `ICBars`, `QuantileSpreadChart`, etc.). Composed dashboards (`BacktestTearsheet`, `RiskDashboard`, `SymbolDetailPage`) will likely live in a third `@agentix/templates` package and consume both.
+
+`globals.css` remains the **single source of truth** for theming across both packages — `@agentix/charts` reads UI kit tokens and defines no visual identity of its own.
+
+## Roadmap — Financial & Quant Components
+
+A consolidated, ranked gap analysis of financial dashboard and quant‑workspace components is captured in `docs/finance-quant-component-roadmap.md`. It covers 145 components across six sections:
+
+1. **Foundational charting & data‑viz primitives**
+2. **Form & text primitives**
+3. **Layout & shell (finance‑flavored)**
+4. **Financial dashboard components** (microstructure, portfolio, news/research)
+5. **Quant dashboard components** (charts, signal research, risk, backtest management, infra UI)
+6. **Composed templates** (BacktestTearsheet, AlphaTearsheet, RiskDashboard, SymbolDetailPage …)
+
+Each row is ranked P0–P4, tagged with effort (XS–XL), and assigned a destination 🟦 `@agentix/ui` / 🟧 `@agentix/charts` / ⬜ templates. A 10‑phase build order (A–J) explicitly schedules UI‑in‑scope work first and chart work after the `@agentix/charts` package is scaffolded.
 
 ## Theming
 
@@ -178,14 +198,14 @@ npm run build-storybook
 ```
 src/
 +-- components/
-�   +-- free/          # Free tier components
-�   �   +-- [component]/
-�   �       +-- index.tsx
-�   �       +-- [component].stories.tsx
-�   �       +-- agents.md
-�   �       +-- README.md
-�   +-- premium/      # Premium tier components
-�       +-- [component]/
+�   +-- [component]/    # Unified component folders
+�   �   +-- index.tsx
+�   �   +-- [component].stories.tsx
+�   �   +-- agents.md
+�   �   +-- README.md
+
+
+
 +-- lib/              # Utilities and helpers
 �   +-- utils.ts      # cn() and other utilities
 �   +-- date-utils.ts # Date formatting and parsing
@@ -210,3 +230,6 @@ MIT � Aidan
 - [Documentation](./docs/ROADMAP.md)
 - [Roadmap](./docs/roadmap/overview.md)
 - [Changelog](./docs/roadmap/changelog.md)
+- [Chart Library Strategy](./docs/chart-library-strategy.md)
+- [Financial & Quant Component Roadmap](./docs/finance-quant-component-roadmap.md)
+

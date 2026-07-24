@@ -1,0 +1,72 @@
+# Components
+
+> Core primitives, layout helpers, and reusable utilities in the unified component library.
+
+### Base Components
+
+| Component | Status | Variants/Sub-components | Notes |
+|-----------|--------|------------------------|-------|
+| **Button** | ✅ Complete | `Button`, `IconButton`, `ToggleButton`, `ToggleIconButton`, `SplitButton`, `ButtonGroup`, `ConnectedButtonGroup` | Full button system |
+| **Input** | ✅ Complete | Text input with icons, validation states, sizes | - |
+| **InputIncrementor** | ✅ Complete | `InputIncrementor` with 3 variants (default/embedded/minimal), 3 sizes, min/max/step, precision, custom formatters | Numeric input with +/- buttons |
+| **Select** | ✅ Complete | Full Radix-based select with groups, labels, separators | Form control |
+| **Switch** | ✅ Complete | Toggle switch with size variants | Basic form control |
+| **Checkbox** | ✅ Complete | Single checkbox with indeterminate support | Basic form control |
+| **Textarea** | ✅ Complete | Multi-line text input with auto-resize | - |
+| **Radio** | ✅ Complete | Radio group with variants | Radix Radio Group |
+| **Typography** | ✅ Complete | `Typography`, `typographyVariants`, `NumericText`, `numericTextVariants` | Headings/prose with MD3 type scale; `NumericText` is the finance-grade colorized-number renderer |
+| **Label** | ✅ Complete | `Label` | Plain `<label>` per shadcn (no Radix Label dependency) |
+| **Field** | ✅ Complete | `Field`, `FieldLabel`, `FieldDescription`, `FieldError`, `FieldContent` | Flat-composition form wrapper (label + description + error + content). v1 is context-free; consumer wires `aria-invalid`/`aria-describedby` |
+| **TrendIndicator** | ✅ Complete | `TrendIndicator`, `trendIndicatorVariants` | Signed value + up/down/minus arrow (`lucide-react`) + `text-positive`/`text-negative`/`text-muted-foreground` colorization via existing `pnlColorClass` |
+| **Kbd** | ✅ Complete | `Kbd` | Inline `<kbd>` key indicator for shortcut documentation |
+| **VisuallyHidden** | ✅ Complete | `VisuallyHidden` | sr-only a11y primitive with `focus:not-sr-only` reveal; polymorphic `as` prop |
+| **Badge** | ✅ Complete | `Badge`, `BadgeAnchor`, `AnimatedBadge` | Notification badges |
+| **Chip** | ✅ Complete | `Chip`, `ChipGroup`, `ClosableChip` | Removable tags, filters, and status chips |
+| **Avatar** | ✅ Complete | `Avatar`, `AvatarImage`, `AvatarFallback`, `AvatarGroup`, `AvatarBadge`, `AnimatedAvatar` | User representation |
+| **Alert** | ✅ Complete | `Alert`, `AlertTitle`, `AlertDescription`, `AlertClose`, `AlertAction` with 5 variants (default, destructive, success, warning, info) | Inline non-modal notifications |
+| **AlertDialog** | ✅ Complete | `AlertDialog`, `AlertDialogTrigger`, `AlertDialogContent`, `AlertDialogHeader`, `AlertDialogFooter`, `AlertDialogTitle`, `AlertDialogDescription`, `AlertDialogAction`, `AlertDialogCancel` | Modal confirmation dialogs | Radix Alert Dialog |
+
+### Layout Components
+
+| Component | Status | Variants/Sub-components | Notes |
+|-----------|--------|------------------------|-------|
+| **Card** | ✅ Complete | `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter` | Content container |
+| **Container** | ✅ Complete | `Container` with maxWidth, padding, center, background variants | Page wrapper |
+| **Grid** | ✅ Complete | `Grid`, `GridItem` with cols (1-12), gap, padding, flow, alignment variants | Layout utility |
+| **Flex** | ✅ Complete | `Flex`, `FlexRow`, `FlexCol`, `FlexItem` with direction, wrap, gap, align, justify variants | Layout utility |
+
+### Utility Components
+
+| Component | Status | Variants/Sub-components | Notes |
+|-----------|--------|------------------------|-------|
+| **Dialog / Modal** | ✅ Complete | Modal with sizes, close button, overlay | Radix Dialog |
+| **Popover** | ✅ Complete | Click-triggered floating content | Radix Popover |
+| **Context Menu** | ✅ Complete | Right-click action menu with submenus, checkboxes, radios | Radix ContextMenu |
+| **Dropdown Menu** | ✅ Complete | Action menu with submenus, checkboxes, radios, and shortcut slots | Radix Dropdown Menu |
+| **Tooltip** | ✅ Complete | Hover/focus information popover | Radix Tooltip |
+| **HoverCard** | ✅ Complete | `HoverCard`, `HoverCardTrigger`, `HoverCardContent`, `HoverCardArrow`, `HoverCardClose` with size variants (xs-xl), hover/click trigger modes, touch detection, scrollable content | Rich content preview on hover |
+| **Tabs** | ✅ Complete | Tab navigation with variants | Radix Tabs |
+| **Accordion** | ✅ Complete | `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent` | Content disclosure |
+| **Table** | ✅ Complete | `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableHead`, `TableRow`, `TableCell`, `TableCaption` | Presentational table primitive |
+| **Toast / Notification (basic)** | ✅ Complete | `toast()`, `useToast()`, `ToastProvider`, 5 variants, 6 positions, Avatar/Button integration | Store pattern with imperative API |
+| **Slider (basic)** | ✅ Complete | `BasicSlider` with xs/sm/md sizes, bar handle, press animation, gap styling, range support | Smaller slider API retained alongside the full `Slider` export |
+| **Breadcrumb** | ✅ Complete | `Breadcrumb`, `BreadcrumbList`, `BreadcrumbItem`, `BreadcrumbLink`, `BreadcrumbPage`, `BreadcrumbSeparator`, `BreadcrumbEllipsis`, `ResponsiveBreadcrumb`, `useResponsiveBreadcrumb` | Path/hierarchy navigation with custom separators and responsive collapsing |
+| **Pagination** | ✅ Complete | `Pagination`, `PaginationContent`, `PaginationItem`, `PaginationLink`, `PaginationPrevious`, `PaginationNext`, `PaginationFirst`, `PaginationLast`, `PaginationEllipsis`, `PaginationPageSizeSelector`, `ResponsivePagination`, `usePaginationRange()` | Page navigation with smart ellipsis, responsive mobile indicator, size/shape/variant support |
+| **Stepper** | ✅ Complete | `Stepper`, `StepperList`, `StepperItem`, `StepperTrigger`, `StepperIndicator`, `StepperLabel`, `StepperConnector`, `StepperContent`, `useStepperNavigation()` | Canonical stepper API includes the richer interaction set |
+| **Navigation** | ✅ Complete | `NavigationProvider`, `Navbar`, `NavbarBrand`, `NavbarContent`, `NavbarActions`, `Navrail`, `NavrailHeader`, `NavrailContent`, `NavrailFooter`, `NavrailCollapseButton`, `Navdrawer`, `NavdrawerContent`, `NavdrawerHeader`, `NavdrawerTitle`, `NavdrawerFooter`, `NavItem`, `NavSection`, `NavDivider`, `NavBadge`, `useNavigation()` | Full navigation system with responsive behavior |
+| **Sheet / Drawer** | ✅ Complete | `Sheet`, `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetFooter`, `SheetTitle`, `SheetDescription`, `SheetClose` | Canonical sheet API includes gesture-aware interactions |
+| **Skeleton** | ✅ Complete | `Skeleton`, `SkeletonText`, `SkeletonCard`, `SkeletonAvatar`, `SkeletonButton`, `SkeletonInput` | Loading placeholders with pulse/shimmer animations |
+| **Progress** | ✅ Complete | `LinearProgress`, `CircularProgress`, `SkillBar`, `ProgressGroup`, `valueFormatters` | Horizontal/vertical bars, circular, gradients, indeterminate mode |
+| **Gauge** | ✅ Complete | `Gauge`, `gaugeVariants`; sizes sm/md/lg; variants semicircle/full; threshold zones | Radial dial sibling of `Progress`. Pure SVG, optional animated needle |
+| **SegmentedProgress** | ✅ Complete | `SegmentedProgress`, `segmentedProgressVariants`, `Segment` type | Multi-segment range bar (siblings of `LinearProgress`); horizontal/vertical, optional value labels, `--chart-1`…`--chart-5` palette fallback |
+| **Sparkline** | ✅ Complete | `Sparkline`, `sparklineContainerVariants`; variants line/area/bar | Dependency-free inline SVG micro-chart; drop-in for `StatTile.sparklineRenderSlot`. Closes the `@agentix/charts` boundary case (`docs/chart-library-strategy.md`) |
+| **MiniBars** | ✅ Complete | `MiniBars`, `miniBarsContainerVariants` | One-row SVG divergent histogram; sibling of `Sparkline` |
+| **EmptyState** | ✅ Complete | `EmptyState`, `emptyStateIconVariants`, `emptyStateTitleVariants` | Zero/empty-state composer (muted icon + title + description + CTA `action` slot). Default `lucide-react` `Inbox` icon |
+
+### Internal/Utility
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| **AnimatedChevron** | ✅ Complete | Multiple animation presets, used by Accordion |
+| **Spinner** | ✅ Complete | Loading indicator, multiple sizes |
+| **Separator** | ✅ Complete | Visual divider with orientation, color, and opacity |

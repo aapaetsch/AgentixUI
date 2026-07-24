@@ -1,7 +1,7 @@
 # Development Phases
 
-## Phase 1: Foundation - Free Tier Focus
-**Goal:** Complete all Free tier base components
+## Phase 1: Foundation Components
+**Goal:** Complete the base component primitives
 
 - [x] Button system (complete)
 - [x] Checkbox (complete)
@@ -16,7 +16,7 @@
 - [x] Radio (complete)
 - [ ] Typography (not implemented)
 
-## Phase 2: Layout & Utility - Free Tier Focus
+## Phase 2: Layout & Utility Components
 **Goal:** Complete layout helpers and utility components
 
 - [x] Card (complete)
@@ -34,8 +34,8 @@
 - [x] Context Menu (complete)
 - [x] Table (complete)
 
-## Phase 3: Free Tier Extended Components
-**Goal:** Complete additional free tier components
+## Phase 3: Extended Component Set
+**Goal:** Complete additional broadly reusable components
 
 - [x] Navigation (Navbar, Navrail, Navdrawer) (complete)
 - [x] Pagination (complete)
@@ -47,16 +47,16 @@
 - [x] InputIncrementor (complete)
 - [x] Chip (complete)
 
-## Phase 4: Premium Core Components
-**Goal:** High-value premium components
+## Phase 4: Advanced Interaction Components
+**Goal:** High-value advanced components
 
 - [x] FAB system (complete)
 - [x] ComboBox/Autocomplete (complete)
 - [x] Slider (advanced: range/step/icon variants) (complete)
-- [x] Premium Sheet (swipe-to-dismiss, snap points, spring animations) (complete)
-- [x] Premium Stepper (complex/non-linear variants) (complete)
+- [x] Sheet (swipe-to-dismiss, snap points, spring animations) (complete)
+- [x] Stepper (complex/non-linear variants) (complete)
 - [x] Navigation Submenus (complete)
-- [x] Premium Toast (enhanced) (complete)
+- [x] Toast (enhanced) (complete)
 
 ## Phase 5: Date & Time Components
 **Goal:** Complete date and time selection components
@@ -65,18 +65,32 @@
 - [x] Time Picker (complete)
 - [x] DateTimePicker (complete)
 
-## Phase 6: Advanced Premium Components
+## Phase 6: Data-Rich Components
 **Goal:** Advanced complex components
 
 - [x] Carousel (complete)
 - [x] Multi-Select (complete)
 - [x] Data Table (complete)
-- [ ] Command Palette (low priority - planned)
+- [x] Command Palette (complete — moved up, blocker for investment-ops dashboard)
+- [x] Toggle Group (complete — blocker for investment-ops dashboard)
+- [x] Toolbar (complete — blocker for investment-ops dashboard)
+- [x] Resizable (complete — blocker for investment-ops dashboard)
 
-## Phase 7: Enterprise Templates
-**Goal:** Full page layouts and templates
+## Phase 7: Investment-Ops Finance Widgets
+**Goal:** Finance-specific streaming widgets for the dashboard right rail
 
-- [ ] Admin Dashboard Layout
-- [ ] Auth Pages
-- [ ] Settings Page
-- [ ] Data Dashboard
+- [x] OrderBook (complete — exports from `./finance`)
+- [x] TimeAndSales (complete — exports from `./finance`)
+
+## Phase 8: Investment-Ops Templates
+**Goal:** Composed presentational + interaction-focused blocks under `src/templates/investment-ops/`
+
+- [x] StatTile
+- [x] AccountSummary
+- [x] Watchlist
+- [x] HoldingsTable
+- [x] OrderTicket (simple equity flow; multi-leg options deferred)
+- [x] AllocationBreakdown
+- [x] NewsFeed
+- [x] InvestmentOpsDashboard (composed shell; integration showcase)
+- [x] Secondary entrypoints (`./finance`, `./templates/investment-ops`) wired in `tsup.config.ts` + `package.json` `exports`

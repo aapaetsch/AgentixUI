@@ -81,10 +81,383 @@ export type {
   DateFormatOptions,
 } from "./lib/date-utils";
 
+// -----------------------------------------------------------------------------
+// Finance Utilities
+// Shared formatting and theming helpers used across finance surfaces.
+// -----------------------------------------------------------------------------
+
+export {
+  formatCurrency,
+  formatPercent,
+  formatNumber,
+  formatCompact,
+  formatBasisPoints,
+  formatSigned,
+  roundToTick,
+  type NumericFormat,
+} from "./lib/number-utils";
+
+export {
+  formatRelativeTime,
+  formatRelativeTimeShort,
+  formatDuration,
+} from "./lib/time-utils";
+
+export {
+  pnlColorClass,
+  sentimentColor,
+  resolveToken,
+} from "./lib/color-utils";
+
+// -----------------------------------------------------------------------------
+// Finance Types
+// Shared domain shapes used by finance widgets and composed templates.
+// -----------------------------------------------------------------------------
+
+export type {
+  OrderBookLevel,
+  TradeFlag,
+  Trade,
+  WatchlistItem,
+  HoldingRow,
+  OptionType,
+  OptionPositionStatus,
+  Greeks,
+  OptionContract,
+  OptionPosition,
+  OptionChainRow,
+  OptionLeg,
+  PayoffPoint,
+} from "./lib/finance-types";
+
+// -----------------------------------------------------------------------------
+// Finance Utilities (options helpers)
+// Pure, dependency-free helpers used by options components and stories.
+// -----------------------------------------------------------------------------
+
+export {
+  computePayoffAtExpiry,
+  breakevensAtExpiry,
+  maxProfitAtExpiry,
+  maxLossAtExpiry,
+  netPremium,
+  priceGrid,
+} from "./lib/finance-utils";
+
 // =============================================================================
-// FREE TIER COMPONENTS
-// Core primitives that form the foundation of any application.
+// COMPONENTS
+// Core primitives and shared building blocks.
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Typography
+// -----------------------------------------------------------------------------
+export {
+  Typography,
+  NumericText,
+  typographyVariants,
+  numericTextVariants,
+} from "./components/typography";
+export type {
+  TypographyProps,
+  NumericTextProps,
+  NumericTextOptions,
+} from "./components/typography";
+
+// -----------------------------------------------------------------------------
+// TrendIndicator
+// -----------------------------------------------------------------------------
+export {
+  TrendIndicator,
+  trendIndicatorVariants,
+} from "./components/trend-indicator";
+export type {
+  TrendIndicatorProps,
+  TrendDirection,
+} from "./components/trend-indicator";
+
+// -----------------------------------------------------------------------------
+// Kbd
+// -----------------------------------------------------------------------------
+export { Kbd } from "./components/kbd";
+export type { KbdProps } from "./components/kbd";
+
+// -----------------------------------------------------------------------------
+// VisuallyHidden
+// -----------------------------------------------------------------------------
+export { VisuallyHidden } from "./components/visually-hidden";
+export type { VisuallyHiddenProps } from "./components/visually-hidden";
+
+// -----------------------------------------------------------------------------
+// AnimatedNumber
+// -----------------------------------------------------------------------------
+export {
+  AnimatedNumber,
+  animatedNumberVariants,
+} from "./components/animated-number";
+export type { AnimatedNumberProps } from "./components/animated-number";
+
+// -----------------------------------------------------------------------------
+// ToggleGroup
+// -----------------------------------------------------------------------------
+export {
+  ToggleGroup,
+  ToggleGroupItem,
+  toggleGroupVariants,
+  toggleGroupItemVariants,
+} from "./components/toggle-group";
+export type {
+  ToggleGroupProps,
+  ToggleGroupItemProps,
+} from "./components/toggle-group";
+
+// -----------------------------------------------------------------------------
+// Resizable
+// -----------------------------------------------------------------------------
+export {
+  Resizable,
+  ResizablePanel,
+  ResizableHandle,
+  ResizablePanelGroup,
+  resizableHandleVariants,
+} from "./components/resizable";
+export type {
+  ResizableProps,
+  ResizablePanelProps,
+  ResizableHandleProps,
+  LayoutStorage,
+  Layout,
+  LayoutChangedMeta,
+} from "./components/resizable";
+
+// -----------------------------------------------------------------------------
+// CommandPalette
+// -----------------------------------------------------------------------------
+export {
+  CommandPalette,
+  CommandPaletteTrigger,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandLoading,
+  CommandGroup,
+  CommandItem,
+  CommandSeparator,
+  useCommandPalette,
+} from "./components/command-palette";
+export type {
+  CommandPaletteProps,
+  CommandInputProps,
+  CommandListProps,
+  CommandGroupProps,
+  CommandItemProps,
+  CommandPaletteTriggerProps,
+} from "./components/command-palette";
+
+// -----------------------------------------------------------------------------
+// Toolbar
+// -----------------------------------------------------------------------------
+export {
+  Toolbar,
+  ToolbarButton,
+  ToolbarToggle,
+  ToolbarToggleGroup,
+  ToolbarToggleItem,
+  ToolbarSeparator,
+  ToolbarLabel,
+  toolbarVariants,
+  toolbarButtonVariants,
+} from "./components/toolbar";
+export type {
+  ToolbarProps,
+  ToolbarButtonProps,
+  ToolbarToggleProps,
+  ToolbarToggleGroupProps,
+  ToolbarToggleItemProps,
+  ToolbarSeparatorProps,
+  ToolbarLabelProps,
+} from "./components/toolbar";
+
+// -----------------------------------------------------------------------------
+// OrderBook
+// -----------------------------------------------------------------------------
+export {
+  OrderBook,
+  OrderBookSide,
+  OrderBookRow,
+  OrderBookSpread,
+  OrderBookHeader,
+  OrderBookSkeleton,
+  orderBookRowVariants,
+  orderBookSideVariants,
+} from "./components/order-book";
+export type {
+  OrderBookProps,
+  OrderBookRowProps,
+  OrderBookSideProps,
+  OrderBookSpreadProps,
+} from "./components/order-book";
+
+// -----------------------------------------------------------------------------
+// TimeAndSales
+// -----------------------------------------------------------------------------
+export {
+  TimeAndSales,
+  TimeAndSalesRow,
+  TimeAndSalesHeader,
+  timeAndSalesRowVariants,
+} from "./components/time-and-sales";
+export type {
+  TimeAndSalesProps,
+  TimeAndSalesRowProps,
+} from "./components/time-and-sales";
+
+// -----------------------------------------------------------------------------
+// OptionSymbolBadge
+// -----------------------------------------------------------------------------
+export { OptionSymbolBadge } from "./components/option-symbol-badge";
+export type { OptionSymbolBadgeProps } from "./components/option-symbol-badge";
+
+// -----------------------------------------------------------------------------
+// ExpiryBadge
+// -----------------------------------------------------------------------------
+export {
+  ExpiryBadge,
+  DEFAULT_EXPIRY_THRESHOLDS,
+} from "./components/expiry-badge";
+export type {
+  ExpiryBadgeProps,
+  ExpiryBadgeBand,
+} from "./components/expiry-badge";
+
+// -----------------------------------------------------------------------------
+// GreeksDisplay
+// -----------------------------------------------------------------------------
+export {
+  GreeksDisplay,
+  DEFAULT_GREEK_GLOSSARY,
+} from "./components/greeks-display";
+export type {
+  GreeksDisplayProps,
+  GreeksDisplayLayout,
+} from "./components/greeks-display";
+
+// -----------------------------------------------------------------------------
+// BreakevenBadges
+// -----------------------------------------------------------------------------
+export { BreakevenBadges } from "./components/breakeven-badges";
+export type { BreakevenBadgesProps } from "./components/breakeven-badges";
+
+// -----------------------------------------------------------------------------
+// PayoffDiagram
+// -----------------------------------------------------------------------------
+export { PayoffDiagram, payoffContainerVariants } from "./components/payoff-diagram";
+export type {
+  PayoffDiagramProps,
+  PayoffDiagramVariant,
+} from "./components/payoff-diagram";
+
+// -----------------------------------------------------------------------------
+// GreeksDecayChart
+// -----------------------------------------------------------------------------
+export {
+  GreeksDecayChart,
+  greeksDecayContainerVariants,
+} from "./components/greeks-decay-chart";
+export type {
+  GreeksDecayChartProps,
+  GreeksDecaySeriesKey,
+} from "./components/greeks-decay-chart";
+
+// -----------------------------------------------------------------------------
+// IVChart
+// -----------------------------------------------------------------------------
+export { IVChart, ivChartContainerVariants } from "./components/iv-chart";
+export type {
+  IVChartProps,
+  IVChartVariant,
+  IVTermPoint,
+  IVSurfaceCell,
+} from "./components/iv-chart";
+
+// -----------------------------------------------------------------------------
+// StrikesNavigator
+// -----------------------------------------------------------------------------
+export {
+  StrikesNavigator,
+  strikesNavigatorVariants,
+} from "./components/strikes-navigator";
+export type {
+  StrikesNavigatorProps,
+  StrikeMoneyness,
+} from "./components/strikes-navigator";
+
+// -----------------------------------------------------------------------------
+// LegBuilderRow
+// -----------------------------------------------------------------------------
+export {
+  LegBuilderRow,
+  legBuilderRowVariants,
+} from "./components/leg-builder-row";
+export type { LegBuilderRowProps } from "./components/leg-builder-row";
+
+// -----------------------------------------------------------------------------
+// SpreadTypeSelector
+// -----------------------------------------------------------------------------
+export {
+  SpreadTypeSelector,
+  DEFAULT_SPREAD_OPTIONS,
+} from "./components/spread-type-selector";
+export type {
+  SpreadTypeSelectorProps,
+  SpreadType,
+} from "./components/spread-type-selector";
+
+// =============================================================================
+// INVESTMENT-OPS TEMPLATES
+// Composed blocks for an investment-ops dashboard. Templates compose
+// existing primitives; they MUST NOT become a second primitive system.
+// =============================================================================
+
+export {
+  StatTile,
+  AccountSummary,
+  Watchlist,
+  HoldingsTable,
+  OrderTicket,
+  AllocationBreakdown,
+  NewsFeed,
+  InvestmentOpsDashboard,
+  OptionsPositionsTable,
+  AggregateGreeksStrip,
+  OptionPositionCard,
+  OptionsChain,
+  PayoffBundleCard,
+  MultiLegOrderTicket,
+} from "./templates/investment-ops";
+export type {
+  StatTileProps,
+  AccountSummaryProps,
+  WatchlistProps,
+  HoldingsTableProps,
+  OrderTicketProps,
+  OrderSide,
+  OrderType,
+  TimeInForce,
+  AllocationBreakdownProps,
+  BreakdownRow,
+  AllocationView,
+  NewsFeedProps,
+  NewsItem,
+  InvestmentOpsDashboardProps,
+  OptionsPositionsTableProps,
+  AggregateGreeksStripProps,
+  AggregateGreekMetric,
+  OptionPositionCardProps,
+  OptionsChainProps,
+  PayoffBundleCardProps,
+  MultiLegOrderTicketProps,
+} from "./templates/investment-ops";
 
 // -----------------------------------------------------------------------------
 // Accordion
@@ -99,14 +472,14 @@ export {
   accordionTriggerVariants,
   accordionContentVariants,
   chevronSizeVariants,
-} from "./components/free/accordion";
+} from "./components/accordion";
 export type {
   AccordionProps,
   AccordionItemProps,
   AccordionTriggerProps,
   AccordionContentProps,
   ChevronAnimationPreset,
-} from "./components/free/accordion";
+} from "./components/accordion";
 
 // -----------------------------------------------------------------------------
 // Alert
@@ -122,7 +495,7 @@ export {
   alertDescriptionVariants,
   alertCloseVariants,
   alertActionVariants,
-} from "./components/free/alert";
+} from "./components/alert";
 export type {
   AlertProps,
   AlertTitleProps,
@@ -130,7 +503,7 @@ export type {
   AlertCloseProps,
   AlertActionProps,
   AlertVariant,
-} from "./components/free/alert";
+} from "./components/alert";
 
 // -----------------------------------------------------------------------------
 // AlertDialog
@@ -153,7 +526,7 @@ export {
   alertDialogFooterVariants,
   alertDialogTitleVariants,
   alertDialogDescriptionVariants,
-} from "./components/free/alert-dialog";
+} from "./components/alert-dialog";
 export type {
   AlertDialogProps,
   AlertDialogTriggerProps,
@@ -166,7 +539,7 @@ export type {
   AlertDialogDescriptionProps,
   AlertDialogActionProps,
   AlertDialogCancelProps,
-} from "./components/free/alert-dialog";
+} from "./components/alert-dialog";
 
 // -----------------------------------------------------------------------------
 // AnimatedChevron
@@ -174,12 +547,12 @@ export type {
 export {
   AnimatedChevron,
   animatedChevronVariants,
-} from "./components/free/animated-chevron";
+} from "./components/animated-chevron";
 export type {
   AnimatedChevronProps,
   ChevronAnimationPreset as AnimatedChevronAnimationPreset,
   ChevronDirection,
-} from "./components/free/animated-chevron";
+} from "./components/animated-chevron";
 
 // -----------------------------------------------------------------------------
 // Avatar
@@ -194,7 +567,7 @@ export {
   avatarVariants,
   avatarGroupVariants,
   avatarBadgeVariants,
-} from "./components/free/avatar";
+} from "./components/avatar";
 export type {
   AvatarProps,
   AvatarImageProps,
@@ -202,13 +575,13 @@ export type {
   AvatarGroupProps,
   AvatarBadgeProps,
   AnimatedAvatarProps,
-} from "./components/free/avatar";
+} from "./components/avatar";
 
 // -----------------------------------------------------------------------------
 // Badge
 // -----------------------------------------------------------------------------
-export { Badge, BadgeAnchor, AnimatedBadge, badgeVariants } from "./components/free/badge";
-export type { BadgeProps, BadgeAnchorProps, AnimatedBadgeProps } from "./components/free/badge";
+export { Badge, BadgeAnchor, AnimatedBadge, badgeVariants } from "./components/badge";
+export type { BadgeProps, BadgeAnchorProps, AnimatedBadgeProps } from "./components/badge";
 
 // -----------------------------------------------------------------------------
 // Breadcrumb
@@ -230,7 +603,7 @@ export {
   breadcrumbPageVariants,
   breadcrumbSeparatorVariants,
   breadcrumbEllipsisVariants,
-} from "./components/free/breadcrumb";
+} from "./components/breadcrumb";
 export type {
   BreadcrumbProps,
   BreadcrumbListProps,
@@ -241,22 +614,22 @@ export type {
   BreadcrumbEllipsisProps,
   BreadcrumbItemData,
   ResponsiveBreadcrumbProps,
-} from "./components/free/breadcrumb";
+} from "./components/breadcrumb";
 
 // -----------------------------------------------------------------------------
 // Button Components
 // -----------------------------------------------------------------------------
-export { Button, buttonVariants } from "./components/free/button";
-export type { ButtonProps } from "./components/free/button";
+export { Button, buttonVariants } from "./components/button";
+export type { ButtonProps } from "./components/button";
 
-export { IconButton, iconButtonVariants } from "./components/free/button/icon-button";
-export type { IconButtonProps } from "./components/free/button/icon-button";
+export { IconButton, iconButtonVariants } from "./components/button/icon-button";
+export type { IconButtonProps } from "./components/button/icon-button";
 
-export { ToggleButton, toggleButtonVariants } from "./components/free/button/toggle-button";
-export type { ToggleButtonProps } from "./components/free/button/toggle-button";
+export { ToggleButton, toggleButtonVariants } from "./components/button/toggle-button";
+export type { ToggleButtonProps } from "./components/button/toggle-button";
 
-export { ToggleIconButton, toggleIconButtonVariants } from "./components/free/button/toggle-icon-button";
-export type { ToggleIconButtonProps } from "./components/free/button/toggle-icon-button";
+export { ToggleIconButton, toggleIconButtonVariants } from "./components/button/toggle-icon-button";
+export type { ToggleIconButtonProps } from "./components/button/toggle-icon-button";
 
 export {
   SplitButton,
@@ -264,11 +637,11 @@ export {
   splitButtonActionVariants,
   splitButtonTriggerVariants,
   chevronVariants,
-} from "./components/free/button/split-button";
-export type { SplitButtonProps } from "./components/free/button/split-button";
+} from "./components/button/split-button";
+export type { SplitButtonProps } from "./components/button/split-button";
 
-export { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants, buttonGroupSeparatorVariants } from "./components/free/button/button-group";
-export type { ButtonGroupProps, ButtonGroupSeparatorProps, ButtonGroupTextProps } from "./components/free/button/button-group";
+export { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants, buttonGroupSeparatorVariants } from "./components/button/button-group";
+export type { ButtonGroupProps, ButtonGroupSeparatorProps, ButtonGroupTextProps } from "./components/button/button-group";
 
 export {
   ConnectedButtonGroup,
@@ -276,11 +649,11 @@ export {
   connectedButtonGroupVariants,
   connectedButtonGroupItemVariants,
   useConnectedButtonGroup,
-} from "./components/free/button/connected-button-group";
+} from "./components/button/connected-button-group";
 export type {
   ConnectedButtonGroupProps,
   ConnectedButtonGroupItemProps,
-} from "./components/free/button/connected-button-group";
+} from "./components/button/connected-button-group";
 
 // -----------------------------------------------------------------------------
 // Card
@@ -304,7 +677,7 @@ export {
   cardMediaVariants,
   cardActionsVariants,
   cardFooterVariants,
-} from "./components/free/card";
+} from "./components/card";
 export type {
   CardProps,
   CardHeaderProps,
@@ -316,7 +689,7 @@ export type {
   CardFooterProps,
   SwipeableCardProps,
   ExpandableCardProps,
-} from "./components/free/card";
+} from "./components/card";
 
 // -----------------------------------------------------------------------------
 // Chip
@@ -328,17 +701,41 @@ export {
   chipIconVariants,
   chipDismissVariants,
   chipGroupVariants,
-} from "./components/free/chip";
+} from "./components/chip";
 export type {
   ChipProps,
   ChipGroupProps,
-} from "./components/free/chip";
+} from "./components/chip";
 
 // -----------------------------------------------------------------------------
 // Checkbox
 // -----------------------------------------------------------------------------
-export { Checkbox, checkboxVariants } from "./components/free/checkbox";
-export type { CheckboxProps } from "./components/free/checkbox";
+export { Checkbox, checkboxVariants } from "./components/checkbox";
+export type { CheckboxProps } from "./components/checkbox";
+
+// -----------------------------------------------------------------------------
+// Label
+// -----------------------------------------------------------------------------
+export { Label } from "./components/label";
+export type { LabelProps } from "./components/label";
+
+// -----------------------------------------------------------------------------
+// Field
+// -----------------------------------------------------------------------------
+export {
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+  FieldContent,
+} from "./components/field";
+export type {
+  FieldProps,
+  FieldLabelProps,
+  FieldDescriptionProps,
+  FieldErrorProps,
+  FieldContentProps,
+} from "./components/field";
 
 // -----------------------------------------------------------------------------
 // Dialog
@@ -364,7 +761,7 @@ export {
   dialogTitleVariants,
   dialogDescriptionVariants,
   dialogCloseVariants,
-} from "./components/free/dialog";
+} from "./components/dialog";
 export type {
   DialogProps,
   DialogTriggerProps,
@@ -381,7 +778,7 @@ export type {
   DialogTransition,
   UseDialogPagesOptions,
   UseDialogPagesReturn,
-} from "./components/free/dialog";
+} from "./components/dialog";
 
 // -----------------------------------------------------------------------------
 // Input
@@ -393,11 +790,11 @@ export {
   inputContainerVariants,
   outlinedContainerVariants,
   floatingLabelVariants,
-} from "./components/free/input";
+} from "./components/input";
 export type {
   InputProps,
   OutlinedInputProps,
-} from "./components/free/input";
+} from "./components/input";
 
 // -----------------------------------------------------------------------------
 // InputIncrementor
@@ -407,8 +804,8 @@ export {
   inputIncrementorContainerVariants,
   inputIncrementorInputVariants,
   inputIncrementorButtonVariants,
-} from "./components/free/input-incrementor";
-export type { InputIncrementorProps } from "./components/free/input-incrementor";
+} from "./components/input-incrementor";
+export type { InputIncrementorProps } from "./components/input-incrementor";
 
 // -----------------------------------------------------------------------------
 // Radio
@@ -419,11 +816,11 @@ export {
   radioGroupVariants,
   radioGroupItemVariants,
   radioIndicatorVariants,
-} from "./components/free/radio";
+} from "./components/radio";
 export type {
   RadioGroupProps,
   RadioGroupItemProps,
-} from "./components/free/radio";
+} from "./components/radio";
 
 // -----------------------------------------------------------------------------
 // Select
@@ -444,7 +841,7 @@ export {
   selectItemVariants,
   selectLabelVariants,
   selectSeparatorVariants,
-} from "./components/free/select";
+} from "./components/select";
 export type {
   SelectProps,
   SelectTriggerProps,
@@ -456,19 +853,19 @@ export type {
   SelectSeparatorProps,
   SelectScrollUpButtonProps,
   SelectScrollDownButtonProps,
-} from "./components/free/select";
+} from "./components/select";
 
 // -----------------------------------------------------------------------------
 // Spinner
 // -----------------------------------------------------------------------------
-export { Spinner, spinnerVariants } from "./components/free/spinner";
-export type { SpinnerProps } from "./components/free/spinner";
+export { Spinner, spinnerVariants } from "./components/spinner";
+export type { SpinnerProps } from "./components/spinner";
 
 // -----------------------------------------------------------------------------
 // Separator
 // -----------------------------------------------------------------------------
-export { Separator, separatorVariants } from "./components/free/separator";
-export type { SeparatorProps } from "./components/free/separator";
+export { Separator, separatorVariants } from "./components/separator";
+export type { SeparatorProps } from "./components/separator";
 
 // -----------------------------------------------------------------------------
 // Skeleton
@@ -481,7 +878,7 @@ export {
   SkeletonButton,
   SkeletonInput,
   skeletonVariants,
-} from "./components/free/skeleton";
+} from "./components/skeleton";
 export type {
   SkeletonProps,
   SkeletonTextProps,
@@ -489,13 +886,23 @@ export type {
   SkeletonAvatarProps,
   SkeletonButtonProps,
   SkeletonInputProps,
-} from "./components/free/skeleton";
+} from "./components/skeleton";
+
+// -----------------------------------------------------------------------------
+// EmptyState
+// -----------------------------------------------------------------------------
+export {
+  EmptyState,
+  emptyStateIconVariants,
+  emptyStateTitleVariants,
+} from "./components/empty-state";
+export type { EmptyStateProps } from "./components/empty-state";
 
 // -----------------------------------------------------------------------------
 // Switch
 // -----------------------------------------------------------------------------
-export { Switch, switchTrackVariants, switchThumbVariants } from "./components/free/switch";
-export type { SwitchProps } from "./components/free/switch";
+export { Switch, switchTrackVariants, switchThumbVariants } from "./components/switch";
+export type { SwitchProps } from "./components/switch";
 
 // -----------------------------------------------------------------------------
 // Tabs
@@ -508,13 +915,13 @@ export {
   tabsListVariants,
   tabsTriggerVariants,
   tabsContentVariants,
-} from "./components/free/tabs";
+} from "./components/tabs";
 export type {
   TabsProps,
   TabsListProps,
   TabsTriggerProps,
   TabsContentProps,
-} from "./components/free/tabs";
+} from "./components/tabs";
 
 // -----------------------------------------------------------------------------
 // Textarea
@@ -524,11 +931,11 @@ export {
   TextareaWithCounter,
   textareaVariants,
   textareaContainerVariants,
-} from "./components/free/textarea";
+} from "./components/textarea";
 export type {
   TextareaProps,
   TextareaWithCounterProps,
-} from "./components/free/textarea";
+} from "./components/textarea";
 
 // -----------------------------------------------------------------------------
 // Tooltip
@@ -541,12 +948,12 @@ export {
   TooltipProvider,
   tooltipContentVariants,
   tooltipArrowVariants,
-} from "./components/free/tooltip";
+} from "./components/tooltip";
 export type {
   TooltipTriggerProps,
   TooltipContentProps,
   TooltipArrowProps,
-} from "./components/free/tooltip";
+} from "./components/tooltip";
 
 // -----------------------------------------------------------------------------
 // Popover
@@ -561,7 +968,7 @@ export {
   PopoverAnchor,
   popoverContentVariants,
   popoverArrowVariants,
-} from "./components/free/popover";
+} from "./components/popover";
 export type {
   PopoverProps,
   PopoverTriggerProps,
@@ -570,7 +977,7 @@ export type {
   PopoverArrowProps,
   PopoverCloseProps,
   PopoverAnchorProps,
-} from "./components/free/popover";
+} from "./components/popover";
 
 // -----------------------------------------------------------------------------
 // HoverCard
@@ -584,50 +991,49 @@ export {
   useHoverCardContext,
   hoverCardContentVariants,
   hoverCardArrowVariants,
-} from "./components/free/hover-card";
+} from "./components/hover-card";
 export type {
   HoverCardProps,
   HoverCardTriggerProps,
   HoverCardContentProps,
   HoverCardArrowProps,
   HoverCardCloseProps,
-} from "./components/free/hover-card";
+} from "./components/hover-card";
 
 // -----------------------------------------------------------------------------
 // Sheet / Drawer
 // -----------------------------------------------------------------------------
 export {
-  Sheet,
-  SheetTrigger,
-  SheetPortal,
-  SheetOverlay,
-  SheetContent,
-  SheetHeader,
-  SheetFooter,
-  SheetTitle,
-  SheetDescription,
-  SheetClose,
-  Drawer,
-  sheetOverlayVariants,
-  sheetContentVariants,
-  sheetHeaderVariants,
-  sheetFooterVariants,
-  sheetTitleVariants,
-  sheetDescriptionVariants,
-  sheetHandleVariants,
-} from "./components/free/sheet";
+  PremiumSheet as Sheet,
+  PremiumSheetTrigger as SheetTrigger,
+  PremiumSheetPortal as SheetPortal,
+  PremiumSheetContent as SheetContent,
+  PremiumSheetHeader as SheetHeader,
+  PremiumSheetFooter as SheetFooter,
+  PremiumSheetTitle as SheetTitle,
+  PremiumSheetDescription as SheetDescription,
+  PremiumSheetClose as SheetClose,
+  premiumSheetOverlayVariants as sheetOverlayVariants,
+  premiumSheetContentVariants as sheetContentVariants,
+  premiumSheetHeaderVariants as sheetHeaderVariants,
+  premiumSheetFooterVariants as sheetFooterVariants,
+  premiumSheetTitleVariants as sheetTitleVariants,
+  premiumSheetDescriptionVariants as sheetDescriptionVariants,
+  premiumSheetHandleVariants as sheetHandleVariants,
+  animationPresets,
+} from "./components/sheet";
 export type {
-  SheetProps,
-  SheetTriggerProps,
-  SheetPortalProps,
-  SheetOverlayProps,
-  SheetContentProps,
-  SheetHeaderProps,
-  SheetFooterProps,
-  SheetTitleProps,
-  SheetDescriptionProps,
-  DrawerProps,
-} from "./components/free/sheet";
+  PremiumSheetProps as SheetProps,
+  PremiumSheetTriggerProps as SheetTriggerProps,
+  PremiumSheetPortalProps as SheetPortalProps,
+  PremiumSheetOverlayProps as SheetOverlayProps,
+  PremiumSheetContentProps as SheetContentProps,
+  PremiumSheetHeaderProps as SheetHeaderProps,
+  PremiumSheetFooterProps as SheetFooterProps,
+  PremiumSheetTitleProps as SheetTitleProps,
+  PremiumSheetDescriptionProps as SheetDescriptionProps,
+  PremiumSheetCloseProps as SheetCloseProps,
+} from "./components/sheet";
 
 // -----------------------------------------------------------------------------
 // Container
@@ -635,10 +1041,10 @@ export type {
 export {
   Container,
   containerVariants,
-} from "./components/free/container";
+} from "./components/container";
 export type {
   ContainerProps,
-} from "./components/free/container";
+} from "./components/container";
 
 // -----------------------------------------------------------------------------
 // Context Menu
@@ -663,7 +1069,7 @@ export {
   contextMenuLabelVariants,
   contextMenuSubTriggerVariants,
   contextMenuShortcutVariants,
-} from "./components/free/context-menu";
+} from "./components/context-menu";
 export type {
   ContextMenuProps,
   ContextMenuTriggerProps,
@@ -678,7 +1084,7 @@ export type {
   ContextMenuSubTriggerProps,
   ContextMenuSubContentProps,
   ContextMenuShortcutProps,
-} from "./components/free/context-menu";
+} from "./components/context-menu";
 
 // -----------------------------------------------------------------------------
 // Dropdown Menu
@@ -705,7 +1111,7 @@ export {
   dropdownMenuSeparatorVariants,
   dropdownMenuShortcutVariants,
   dropdownMenuSubTriggerVariants,
-} from "./components/free/dropdown-menu";
+} from "./components/dropdown-menu";
 export type {
   DropdownMenuProps,
   DropdownMenuTriggerProps,
@@ -722,7 +1128,7 @@ export type {
   DropdownMenuSubTriggerProps,
   DropdownMenuSubContentProps,
   DropdownMenuShortcutProps,
-} from "./components/free/dropdown-menu";
+} from "./components/dropdown-menu";
 
 // -----------------------------------------------------------------------------
 // Table
@@ -736,29 +1142,25 @@ export {
   TableRow,
   TableCell,
   TableCaption,
-} from "./components/free/table";
-export type { TableProps } from "./components/free/table";
+} from "./components/table";
+export type { TableProps } from "./components/table";
 
 // -----------------------------------------------------------------------------
 // Navigation (Navbar, Navrail, Navdrawer)
 // -----------------------------------------------------------------------------
 export {
-  // Context & Provider
   NavigationProvider,
   useNavigation,
   useNavigationOptional,
-  // Navbar
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarActions,
-  // Navrail
   Navrail,
   NavrailHeader,
   NavrailContent,
   NavrailFooter,
   NavrailCollapseButton,
-  // Navdrawer
   Navdrawer,
   NavdrawerTrigger,
   NavdrawerPortal,
@@ -768,21 +1170,27 @@ export {
   NavdrawerTitle,
   NavdrawerFooter,
   NavdrawerClose,
-  // Shared Components
-  NavItem,
-  NavSection,
   NavDivider,
   NavBadge,
-  // Variants
   navbarVariants,
   navrailVariants,
   navdrawerOverlayVariants,
   navdrawerContentVariants,
-  navItemVariants,
   navSectionVariants,
   navSectionHeaderVariants,
   navDividerVariants,
-} from "./components/free/navigation";
+} from "./components/navigation/layout";
+export {
+  PremiumNavGroup as NavGroup,
+  PremiumNavItem as NavItem,
+  PremiumNavItemWithSubmenu as NavItemWithSubmenu,
+  PremiumNavSection as NavSection,
+  PremiumSubmenuItem as SubmenuItem,
+  premiumNavGroupVariants as navGroupVariants,
+  indicatorAnimationVariants,
+  premiumNavItemVariants as navItemVariants,
+  premiumSubmenuItemVariants as submenuItemVariants,
+} from "./components/navigation/items";
 export type {
   NavigationProviderProps,
   NavbarProps,
@@ -802,11 +1210,16 @@ export type {
   NavdrawerHeaderProps,
   NavdrawerTitleProps,
   NavdrawerFooterProps,
-  NavItemProps,
-  NavSectionProps,
   NavDividerProps,
   NavBadgeProps,
-} from "./components/free/navigation";
+} from "./components/navigation/layout";
+export type {
+  PremiumNavGroupProps as NavGroupProps,
+  PremiumNavItemProps as NavItemProps,
+  PremiumNavItemWithSubmenuProps as NavItemWithSubmenuProps,
+  PremiumNavSectionProps as NavSectionProps,
+  PremiumSubmenuItemProps as SubmenuItemProps,
+} from "./components/navigation/items";
 
 // -----------------------------------------------------------------------------
 // Pagination
@@ -829,7 +1242,7 @@ export {
   paginationItemVariants,
   paginationLinkVariants,
   paginationEllipsisVariants,
-} from "./components/free/pagination";
+} from "./components/pagination";
 export type {
   PaginationProps,
   PaginationContentProps,
@@ -842,7 +1255,7 @@ export type {
   PaginationEllipsisProps,
   PaginationPageSizeSelectorProps,
   ResponsivePaginationProps,
-} from "./components/free/pagination";
+} from "./components/pagination";
 
 // -----------------------------------------------------------------------------
 // Progress
@@ -858,7 +1271,7 @@ export {
   linearProgressBarVariants,
   circularProgressVariants,
   progressGroupGapVariants,
-} from "./components/free/progress";
+} from "./components/progress";
 export type {
   LinearProgressProps,
   CircularProgressProps,
@@ -873,7 +1286,56 @@ export type {
   CircularLineCap,
   UseAnimatedProgressOptions,
   UseAnimatedProgressReturn,
-} from "./components/free/progress";
+} from "./components/progress";
+
+// -----------------------------------------------------------------------------
+// Sparkline
+// -----------------------------------------------------------------------------
+export {
+  Sparkline,
+  sparklineContainerVariants,
+} from "./components/sparkline";
+export type {
+  SparklineProps,
+  SparklineVariant,
+} from "./components/sparkline";
+
+// -----------------------------------------------------------------------------
+// MiniBars
+// -----------------------------------------------------------------------------
+export {
+  MiniBars,
+  miniBarsContainerVariants,
+} from "./components/mini-bars";
+export type {
+  MiniBarsProps,
+} from "./components/mini-bars";
+
+// -----------------------------------------------------------------------------
+// Gauge
+// -----------------------------------------------------------------------------
+export {
+  Gauge,
+  gaugeVariants,
+} from "./components/gauge";
+export type {
+  GaugeProps,
+  GaugeVariant,
+  GaugeSize,
+  GaugeThreshold,
+} from "./components/gauge";
+
+// -----------------------------------------------------------------------------
+// SegmentedProgress
+// -----------------------------------------------------------------------------
+export {
+  SegmentedProgress,
+  segmentedProgressVariants,
+} from "./components/segmented-progress";
+export type {
+  SegmentedProgressProps,
+  Segment,
+} from "./components/segmented-progress";
 
 // -----------------------------------------------------------------------------
 // Flex
@@ -885,13 +1347,13 @@ export {
   FlexCol,
   flexVariants,
   flexItemVariants,
-} from "./components/free/flex";
+} from "./components/flex";
 export type {
   FlexProps,
   FlexItemProps,
   FlexRowProps,
   FlexColProps,
-} from "./components/free/flex";
+} from "./components/flex";
 
 // -----------------------------------------------------------------------------
 // Grid
@@ -901,17 +1363,17 @@ export {
   GridItem,
   gridVariants,
   gridItemVariants,
-} from "./components/free/grid";
+} from "./components/grid";
 export type {
   GridProps,
   GridItemProps,
-} from "./components/free/grid";
+} from "./components/grid";
 
 // -----------------------------------------------------------------------------
 // Toast
 // -----------------------------------------------------------------------------
 export {
-  ToastProvider,
+  PremiumToastProvider as ToastProvider,
   ToastViewport,
   Toast,
   ToastIcon,
@@ -920,133 +1382,108 @@ export {
   ToastDescription,
   ToastClose,
   ToastAction,
-  toast,
-  useToast,
+  premiumToast as toast,
+  usePremiumToast as useToast,
   toastVariants,
   toastViewportVariants,
-} from "./components/free/toast";
+} from "./components/toast/api";
 export type {
   ToastProps,
   ToastViewportProps,
   ToastIconProps,
-  ToastProviderProps,
   ToastPosition,
   ToastVariant,
   ToastType,
-  ToastOptions,
   ToastState,
   ToastActionConfig,
   ToastActionElement,
-  UseToastReturn,
-} from "./components/free/toast";
+} from "./components/toast/primitives";
+export type {
+  PremiumToastProviderProps as ToastProviderProps,
+  PremiumToastOptions as ToastOptions,
+  PromiseOptions,
+  PromiseMessages,
+  ToastPriority,
+  PromiseState,
+} from "./components/toast/api";
 
 // -----------------------------------------------------------------------------
 // Stepper
 // -----------------------------------------------------------------------------
 export {
-  Stepper,
-  StepperList,
-  StepperItem,
-  StepperTrigger,
-  StepperIndicator,
-  StepperLabel,
-  StepperSeparator,
-  StepperContent,
-  StepperNavigation,
-  useStepperNavigation,
-  useStepperContext,
-  stepperVariants,
-  stepperListVariants,
-  stepperItemVariants,
-  stepperTriggerVariants,
-  stepperIndicatorVariants,
-  stepperLabelVariants,
-  stepperLabelTitleVariants,
-  stepperLabelDescriptionVariants,
-  stepperSeparatorVariants,
-  stepperContentVariants,
-} from "./components/free/stepper";
+  PremiumStepper as Stepper,
+  PremiumStepperList as StepperList,
+  PremiumStepperItem as StepperItem,
+  PremiumStepperTrigger as StepperTrigger,
+  PremiumStepperIndicator as StepperIndicator,
+  PremiumStepperLabel as StepperLabel,
+  PremiumStepperConnector as StepperConnector,
+  PremiumStepperContent as StepperContent,
+  usePremiumStepperNavigation as useStepperNavigation,
+  usePremiumStepperContext as useStepperContext,
+  premiumStepperVariants as stepperVariants,
+  premiumStepperListVariants as stepperListVariants,
+  premiumStepperItemVariants as stepperItemVariants,
+  premiumStepperTriggerVariants as stepperTriggerVariants,
+  premiumStepperIndicatorVariants as stepperIndicatorVariants,
+  premiumStepperLabelVariants as stepperLabelVariants,
+  premiumStepperLabelTitleVariants as stepperLabelTitleVariants,
+  premiumStepperLabelDescriptionVariants as stepperLabelDescriptionVariants,
+  premiumStepperConnectorVariants as stepperConnectorVariants,
+  premiumStepperContentVariants as stepperContentVariants,
+} from "./components/stepper";
 export type {
-  StepperProps,
-  StepperListProps,
-  StepperItemProps,
-  StepperTriggerProps,
-  StepperIndicatorProps,
-  StepperLabelProps,
-  StepperSeparatorProps,
-  StepperContentProps,
-  StepperNavigationProps,
-} from "./components/free/stepper";
+  PremiumStepperProps as StepperProps,
+  PremiumStepperListProps as StepperListProps,
+  PremiumStepperItemProps as StepperItemProps,
+  PremiumStepperTriggerProps as StepperTriggerProps,
+  PremiumStepperIndicatorProps as StepperIndicatorProps,
+  PremiumStepperLabelProps as StepperLabelProps,
+  PremiumStepperConnectorProps as StepperConnectorProps,
+  PremiumStepperContentProps as StepperContentProps,
+} from "./components/stepper";
 
 // =============================================================================
-// PREMIUM TIER COMPONENTS
-// Advanced components with complex interactions, state management, or
-// third-party dependencies.
+// ADVANCED COMPONENTS
+// Components with richer interactions, larger APIs, or extra dependencies.
 // =============================================================================
 
 // -----------------------------------------------------------------------------
 // FAB (Floating Action Button)
 // -----------------------------------------------------------------------------
-export { FAB, fabVariants } from "./components/premium/fab";
-export type { FABProps } from "./components/premium/fab";
-export { ExtendedFAB, extendedFabVariants } from "./components/premium/fab/extended-fab";
-export type { ExtendedFABProps } from "./components/premium/fab/extended-fab";
-export { FABMenu, fabMenuItemVariants } from "./components/premium/fab/fab-menu";
-export type { FABMenuProps, FABMenuItem } from "./components/premium/fab/fab-menu";
+export { FAB, fabVariants } from "./components/fab";
+export type { FABProps } from "./components/fab";
+export { ExtendedFAB, extendedFabVariants } from "./components/fab/extended-fab";
+export type { ExtendedFABProps } from "./components/fab/extended-fab";
+export { FABMenu, fabMenuItemVariants } from "./components/fab/fab-menu";
+export type { FABMenuProps, FABMenuItem } from "./components/fab/fab-menu";
 
 // -----------------------------------------------------------------------------
-// Premium Toast
+// Slider
 // -----------------------------------------------------------------------------
 export {
-  PremiumToastProvider,
-  usePremiumToast,
-  premiumToast,
-} from "./components/premium/toast";
-export type {
-  PremiumToastOptions,
-  PromiseOptions,
-  PromiseMessages,
-  ToastPriority,
-  PromiseState,
-} from "./components/premium/toast";
-
-// -----------------------------------------------------------------------------
-// Slider (Free Tier)
-// -----------------------------------------------------------------------------
-export {
-  Slider as FreeSlider,
-  sliderVariants as freeSliderVariants,
-  sliderTrackVariants as freeSliderTrackVariants,
-  sliderRangeVariants as freeSliderRangeVariants,
-  sliderThumbVariants as freeSliderThumbVariants,
-} from "./components/free/slider";
-export type { SliderProps as FreeSliderProps } from "./components/free/slider";
-
-// -----------------------------------------------------------------------------
-// Slider (Premium Tier)
-// -----------------------------------------------------------------------------
-export {
-  // Premium Slider component
-  PremiumSlider,
-  // Premium-specific variants
-  premiumSliderVariants,
-  premiumSliderTrackVariants,
-  premiumSliderRangeVariants,
-  premiumSliderThumbVariants,
+  PremiumSlider as Slider,
+  premiumSliderVariants as sliderVariants,
+  premiumSliderTrackVariants as sliderTrackVariants,
+  premiumSliderRangeVariants as sliderRangeVariants,
+  premiumSliderThumbVariants as sliderThumbVariants,
   SliderThumbCircularVariants,
   sliderThumbCircularStateLayerVariants,
   sliderThumbKnoblessVariants,
   valueIndicatorVariants,
   stopIndicatorVariants,
   insetIconVariants,
-  // Backward compatibility aliases
-  Slider,
-  sliderVariants,
-  sliderTrackVariants,
-  sliderRangeVariants,
-  sliderThumbVariants,
-} from "./components/premium/slider";
-export type { PremiumSliderProps, SliderProps } from "./components/premium/slider";
+} from "./components/slider/advanced";
+export type { PremiumSliderProps as SliderProps } from "./components/slider/advanced";
+export {
+  Slider as BasicSlider,
+  sliderVariants as basicSliderVariants,
+  sliderTrackVariants as basicSliderTrackVariants,
+  sliderRangeVariants as basicSliderRangeVariants,
+  sliderThumbVariants as basicSliderThumbVariants,
+  getGapSize,
+} from "./components/slider/basic";
+export type { SliderProps as BasicSliderProps } from "./components/slider/basic";
 
 // -----------------------------------------------------------------------------
 // ComboBox
@@ -1063,111 +1500,12 @@ export {
   comboboxFloatingLabelVariants,
   comboboxOptionsVariants,
   comboboxOptionVariants,
-} from "./components/premium/combobox";
+} from "./components/combobox";
 export type {
   ComboBoxProps,
   OutlinedComboBoxProps,
   ComboBoxOption,
-} from "./components/premium/combobox";
-
-// -----------------------------------------------------------------------------
-// Premium Sheet
-// -----------------------------------------------------------------------------
-export {
-  PremiumSheet,
-  PremiumSheetTrigger,
-  PremiumSheetPortal,
-  PremiumSheetContent,
-  PremiumSheetHeader,
-  PremiumSheetFooter,
-  PremiumSheetTitle,
-  PremiumSheetDescription,
-  PremiumSheetClose,
-  premiumSheetOverlayVariants,
-  premiumSheetContentVariants,
-  premiumSheetHeaderVariants,
-  premiumSheetFooterVariants,
-  premiumSheetTitleVariants,
-  premiumSheetDescriptionVariants,
-  premiumSheetCloseVariants,
-  premiumSheetHandleVariants,
-  animationPresets,
-} from "./components/premium/sheet";
-export type {
-  PremiumSheetProps,
-  PremiumSheetTriggerProps,
-  PremiumSheetPortalProps,
-  PremiumSheetOverlayProps,
-  PremiumSheetContentProps,
-  PremiumSheetHeaderProps,
-  PremiumSheetFooterProps,
-  PremiumSheetTitleProps,
-  PremiumSheetDescriptionProps,
-  PremiumSheetCloseProps,
-  SheetPosition,
-  SheetSize,
-  AnimationType,
-  SpringConfigOptions,
-  GestureSensitivity,
-} from "./components/premium/sheet";
-
-// -----------------------------------------------------------------------------
-// Premium Stepper
-// -----------------------------------------------------------------------------
-export {
-  PremiumStepper,
-  PremiumStepperList,
-  PremiumStepperItem,
-  PremiumStepperTrigger,
-  PremiumStepperIndicator,
-  PremiumStepperLabel,
-  PremiumStepperConnector,
-  PremiumStepperContent,
-  usePremiumStepperNavigation,
-  usePremiumStepperContext,
-  premiumStepperVariants,
-  premiumStepperListVariants,
-  premiumStepperItemVariants,
-  premiumStepperTriggerVariants,
-  premiumStepperIndicatorVariants,
-  premiumStepperLabelVariants,
-  premiumStepperLabelTitleVariants,
-  premiumStepperLabelDescriptionVariants,
-  premiumStepperConnectorVariants,
-  premiumStepperContentVariants,
-} from "./components/premium/stepper";
-export type {
-  PremiumStepperProps,
-  PremiumStepperListProps,
-  PremiumStepperItemProps,
-  PremiumStepperTriggerProps,
-  PremiumStepperIndicatorProps,
-  PremiumStepperLabelProps,
-  PremiumStepperConnectorProps,
-  PremiumStepperContentProps,
-} from "./components/premium/stepper";
-
-// -----------------------------------------------------------------------------
-// Premium Navigation
-// -----------------------------------------------------------------------------
-export {
-  PremiumNavGroup,
-  PremiumNavItem,
-  PremiumNavItemWithSubmenu,
-  PremiumNavSection,
-  PremiumSubmenuItem,
-  premiumNavGroupVariants,
-  indicatorAnimationVariants,
-  premiumNavItemVariants,
-  premiumSubmenuItemVariants,
-} from "./components/premium/navigation";
-export type {
-  PremiumNavGroupProps,
-  PremiumNavItemProps,
-  PremiumNavItemWithSubmenuProps,
-  PremiumNavSectionProps,
-  PremiumSubmenuItemProps,
-} from "./components/premium/navigation";
+} from "./components/combobox";
 
 // -----------------------------------------------------------------------------
 // Carousel
@@ -1186,7 +1524,7 @@ export {
   carouselContentVariants,
   carouselItemVariants,
   carouselIndicatorVariants,
-} from "./components/premium/carousel";
+} from "./components/carousel";
 export type {
   CarouselApi,
   CarouselProps,
@@ -1197,7 +1535,7 @@ export type {
   CarouselIndicatorsProps,
   CarouselProgressProps,
   CarouselCounterProps,
-} from "./components/premium/carousel";
+} from "./components/carousel";
 
 // -----------------------------------------------------------------------------
 // DatePicker
@@ -1210,11 +1548,11 @@ export {
   useDatePickerContext,
   datePickerTriggerVariants,
   datePickerContentVariants,
-} from "./components/premium/date-picker";
+} from "./components/date-picker";
 export type {
   DatePickerProps,
   DatePickerMode,
-} from "./components/premium/date-picker";
+} from "./components/date-picker";
 
 // -----------------------------------------------------------------------------
 // TimePicker
@@ -1225,11 +1563,11 @@ export {
   timePickerTriggerVariants,
   timeColumnVariants,
   timeItemVariants,
-} from "./components/premium/time-picker";
+} from "./components/time-picker";
 export type {
   TimePickerProps,
   InlineTimePickerProps,
-} from "./components/premium/time-picker";
+} from "./components/time-picker";
 
 // -----------------------------------------------------------------------------
 // DateTimePicker
@@ -1237,10 +1575,10 @@ export type {
 export {
   DateTimePicker,
   dateTimePickerTriggerVariants,
-} from "./components/premium/date-time-picker";
+} from "./components/date-time-picker";
 export type {
   DateTimePickerProps,
-} from "./components/premium/date-time-picker";
+} from "./components/date-time-picker";
 
 // -----------------------------------------------------------------------------
 // MultiSelect
@@ -1258,13 +1596,13 @@ export {
   multiSelectGroupVariants,
   multiSelectLabelVariants,
   multiSelectSearchInputVariants,
-} from "./components/premium/multi-select";
+} from "./components/multi-select";
 export type {
   MultiSelectProps,
   MultiSelectOption,
   MultiSelectGroupProps,
   MultiSelectItemProps,
-} from "./components/premium/multi-select";
+} from "./components/multi-select";
 
 // -----------------------------------------------------------------------------
 // DataTable
@@ -1276,13 +1614,13 @@ export {
   DataTablePagination,
   DataTableRowActions,
   dataTableSurfaceVariants,
-} from "./components/premium/data-table";
+} from "./components/data-table";
 export type {
   DataTableProps,
   DataTableRowAction,
   DataTableSize,
   DataTableVariant,
-} from "./components/premium/data-table";
+} from "./components/data-table";
 
 // -----------------------------------------------------------------------------
 // ScrollArea
@@ -1296,14 +1634,14 @@ export {
   scrollBarThumbVariants,
   loadingContainerVariants,
   useScrollAreaContext,
-} from "./components/premium/scroll-area";
+} from "./components/scroll-area";
 export type {
   ScrollAreaProps,
   ScrollBarProps,
   ScrollBarOrientation,
   ScrollBarVisibility,
   InfiniteScrollMode,
-} from "./components/premium/scroll-area";
+} from "./components/scroll-area";
 
 // =============================================================================
 // PREMIUM TEMPLATES

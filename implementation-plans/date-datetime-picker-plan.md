@@ -10,11 +10,11 @@ Implement a comprehensive date/datetime picker system with a base component arch
 
 2. **Create base utilities** at `src/lib/date-utils.ts` with timezone-aware helper functions using date-fns: `formatDate`, `parseDate`, `isValidDate`, `isDateInMonth`, `getDaysInMonth`, `adjustForTimezone`, `getDefaultTimezone`, and preset date calculators.
 
-3. **Create Premium date-picker directory structure** at `src/components/premium/date-picker/` with files: `index.tsx`, `base.tsx`, `calendar.tsx`, `date-input.tsx`, `time-picker.tsx`, `presets.tsx`, `year-selector.tsx`, `DatePicker.stories.tsx`, `agents.md`, and `README.md`.
+3. **Create date-picker directory structure** at `src/components/date-picker/` with files: `index.tsx`, `base.tsx`, `calendar.tsx`, `date-input.tsx`, `time-picker.tsx`, `presets.tsx`, `year-selector.tsx`, `DatePicker.stories.tsx`, `agents.md`, and `README.md`.
 
-4. **Create TimePicker component** at `src/components/premium/time-picker/` with `index.tsx`, `time-picker.tsx`, `agents.md`, and `TimePicker.stories.tsx`—inheriting base patterns but standalone as a time-only picker.
+4. **Create TimePicker component** at `src/components/time-picker/` with `index.tsx`, `time-picker.tsx`, `agents.md`, and `TimePicker.stories.tsx`—inheriting base patterns but standalone as a time-only picker.
 
-5. **Create DateTimePicker component** at `src/components/premium/date-time-picker/` with `index.tsx`, `date-time-picker.tsx`, `agents.md`, and `DateTimePicker.stories.tsx`—combining DatePicker and TimePicker functionality.
+5. **Create DateTimePicker component** at `src/components/date-time-picker/` with `index.tsx`, `date-time-picker.tsx`, `agents.md`, and `DateTimePicker.stories.tsx`—combining DatePicker and TimePicker functionality.
 
 6. **Build shared DatePicker context structure** in `base.tsx` with `DatePickerProvider` component to manage shared state across all components, including timezone configuration, display formats, validation rules, and error state.
 
@@ -308,9 +308,9 @@ src/
 }
 ```
 
-## Tier Placement
+## Component Classification
 
-**Premium Tier** - Due to:
+**Advanced Component** - Features:
 - Complex state management (calendar navigation, date ranges, time selection)
 - Third-party dependencies (date-fns, react-day-picker)
 - Advanced interactions (keyboard navigation, date validation, localization)
