@@ -650,7 +650,31 @@ const PremiumSheetContent = React.forwardRef<
 
         return () => window.cancelAnimationFrame(frame);
       }
-    }, [animateTo, directionMultiplier, isOpen, openPosition]);
+
+      // Closing branch: drive the exit animation so controlled usage
+      // (parent flips `open` to false directly) still gets a close
+      // transition. `setIsOpen(false)` is a no-op for state when the
+      // component is controlled, so we only manage the local animation
+      // here and clear `isAnimating` once the transition completes,
+      // keeping `shouldRender` mounted throughout.
+      setIsAnimating(true);
+      setUseTransition(true);
+      animateTo(directionMultiplier * 100, 0);
+      if (closeTimeoutRef.current) {
+        window.clearTimeout(closeTimeoutRef.current);
+      }
+      closeTimeoutRef.current = window.setTimeout(() => {
+        setIsAnimating(false);
+        closeTimeoutRef.current = null;
+      }, durationMs);
+
+      return () => {
+        if (closeTimeoutRef.current) {
+          window.clearTimeout(closeTimeoutRef.current);
+          closeTimeoutRef.current = null;
+        }
+      };
+    }, [animateTo, directionMultiplier, isOpen, openPosition, durationMs]);
 
     // Cleanup timeout on unmount
     React.useEffect(() => {

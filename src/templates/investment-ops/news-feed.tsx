@@ -56,6 +56,7 @@ export function NewsFeed({
   tickerOptions = [],
   onFilterChange,
   onItemOpen,
+  onLoadMore,
   loading = false,
   className,
 }: NewsFeedProps) {
@@ -73,6 +74,29 @@ export function NewsFeed({
       (tickers.length === 0 || it.tickers.some((t) => tickers.includes(t))) &&
       (sentiments.length === 0 || sentiments.includes(it.sentiment))
   );
+
+  // Infinite-scroll: fire `onLoadMore` when a sentinel near the bottom
+  // of the feed becomes visible. Skipped while loading or when no
+  // callback is supplied.
+  const sentinelRef = React.useRef<HTMLDivElement | null>(null);
+  React.useEffect(() => {
+    if (!onLoadMore) return;
+    const node = sentinelRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !loading) {
+            onLoadMore();
+          }
+        }
+      },
+      { rootMargin: "120px" }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [onLoadMore, loading]);
 
   return (
     <Card className={cn("w-full overflow-hidden", className)}>
@@ -115,6 +139,19 @@ export function NewsFeed({
             ))}
           </ul>
         )}
+        {onLoadMore ? (
+          <div
+            ref={sentinelRef}
+            aria-hidden="true"
+            className="h-px w-full"
+            data-testid="news-feed-load-more-sentinel"
+          />
+        ) : null}
+        {onLoadMore && loading ? (
+          <div className="p-4">
+            <Skeleton className="h-16 w-full" />
+          </div>
+        ) : null}
       </ScrollArea>
     </Card>
   );
