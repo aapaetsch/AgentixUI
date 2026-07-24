@@ -15,9 +15,11 @@ attached to an immutable release.
 This candidate starts from branch
 `react19-package-readiness-beta-0.2.0` at
 `5a129a8c5275c0a3f96f38d5717f894bb5d57ead`. Its primary React 19 source
-commit is `91a9c11394c12018b291eb41bcc4283cfa941e69`.
-The release commit for beta.1 does not exist yet because review is required
-before commit, tag, push, or publication.
+commit is `91a9c11394c12018b291eb41bcc4283cfa941e69`. The reviewed beta.1 candidate
+implementation commit is
+`ec45f6e29e84d0558668e7b6bce4546f1803da00`. This candidate commit is not yet
+the immutable release/tag commit; that final identity remains unestablished
+until tagging and publication.
 
 The canonical local beta.0 tarball was independently found at
 `C:\Users\aapae\Documents\Projects\Aidans-React-UI\agentix-ui-0.2.0-beta.0.tgz`.
@@ -227,14 +229,14 @@ coverage and keyboard activation remain release follow-ups.
 
 Status remains release-blocked. The AgentixUI maintainer must:
 
-1. review and commit these bytes;
-2. publish `@agentix/ui@0.2.0-beta.1` to the approved npm registry with the
+1. publish `@agentix/ui@0.2.0-beta.1` to the approved npm registry with the
    `beta` dist-tag and provenance, or attach this exact tarball to an immutable
    GitHub prerelease;
-3. create a never-moved tag at the full release commit; and
-4. record the registry URL, registry integrity, provenance, full commit, and
-   tag here.
+2. create a never-moved tag at the full release commit; and
+3. record the registry URL, registry integrity, provenance, full release
+   commit, and tag here.
 
 Until those actions complete, there is no registry URL, immutable release URL,
-release commit, or tag to report. PortfolioTrackAndScreen must separately
+final immutable release/tag commit, or tag to report. The reviewed candidate
+implementation commit above exists, but PortfolioTrackAndScreen must separately
 review and approve the resulting immutable source and lock bytes.
