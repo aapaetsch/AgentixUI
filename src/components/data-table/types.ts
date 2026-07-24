@@ -93,5 +93,10 @@ export interface DataTableProps<TData, TValue = unknown> {
 }
 
 declare module "@tanstack/react-table" {
+  // The generic params must match @tanstack/table-core's ColumnMeta exactly
+  // (TData extends RowData, TValue). TValue is unused by our meta shape but is
+  // required by the augmentation signature; we disable the unused-var rule
+  // for this declaration.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData extends RowData, TValue> extends DataTableColumnMeta<TData> {}
 }

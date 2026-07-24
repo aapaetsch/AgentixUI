@@ -14,6 +14,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+*.tgz
 *.log
 
 # ---------------------------------------------------------
@@ -55,6 +56,5 @@ storybook-static/
 # OS junk
 # ---------------------------------------------------------
 Thumbs.db
-package-lock.json
 agentixUI.code-workspace
 .keys/ollama.txt

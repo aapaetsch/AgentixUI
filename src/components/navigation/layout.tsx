@@ -4,7 +4,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ChevronLeft, ChevronRight, Menu, X, PanelLeftClose, PanelLeft } from "lucide-react";
+import { ChevronRight, Menu, X, PanelLeftClose, PanelLeft } from "lucide-react";
 
 import { cn } from "../../lib/utils";
 
@@ -355,7 +355,6 @@ const Navrail = React.forwardRef<HTMLElement, NavrailProps>(
     position, 
     collapsible,
     defaultCollapsed,
-    onCollapseChange,
     children, 
     ...props 
   }, ref) => {

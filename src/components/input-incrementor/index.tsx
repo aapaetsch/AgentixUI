@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import { Minus, Plus } from "lucide-react";
 
 import { cn } from "../../lib/utils";
@@ -574,12 +574,13 @@ const InputIncrementor = React.forwardRef<HTMLInputElement, InputIncrementorProp
           e.preventDefault();
           handleDecrement();
           break;
-        case "Enter":
+        case "Enter": {
           e.preventDefault();
           const parsedValue = parseInputValue(inputDisplayValue);
           updateValue(parsedValue);
           setIsEditing(false);
           break;
+        }
         case "Escape":
           e.preventDefault();
           setInputDisplayValue(formatDisplayValue(currentValue));

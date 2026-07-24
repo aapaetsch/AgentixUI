@@ -4,7 +4,7 @@ import * as React from "react";
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Check, Circle, AlertCircle, ChevronRight } from "lucide-react";
+import { Check, AlertCircle } from "lucide-react";
 
 import { cn } from "../../lib/utils";
 
@@ -186,7 +186,6 @@ const PremiumStepper = React.forwardRef<HTMLDivElement, PremiumStepperProps>(
       variant = "default",
       size = "md",
       alternativeLabel = false,
-      connector,
       onStepValidate,
       children,
       ...props
@@ -474,7 +473,6 @@ const PremiumStepperItem = React.forwardRef<HTMLDivElement, PremiumStepperItemPr
     if (orientation === "vertical") {
       // Check if this is the last step to hide the connector line
       const isLastStep = index === stepOrder.length - 1;
-      const isFirstStep = index === 0;
       
       return (
         <PremiumStepperItemContext.Provider value={itemContextValue}>
@@ -961,7 +959,7 @@ export interface PremiumStepperContentProps extends React.HTMLAttributes<HTMLDiv
  * PremiumStepperContent - Step content panel with inline support for vertical orientation
  */
 const PremiumStepperContent = React.forwardRef<HTMLDivElement, PremiumStepperContentProps>(
-  ({ className, value, forceMount, transitionDuration, children, ...props }, ref) => {
+  ({ className, value, forceMount, children, ...props }, ref) => {
     const { activeStep, getStepIndex, size, orientation } = usePremiumStepperContext();
     
     // For vertical orientation with inline content
@@ -1030,7 +1028,6 @@ function usePremiumStepperNavigation() {
     stepOrder,
     canNavigateTo,
     isStepCompleted,
-    onStepValidate,
   } = context;
 
   const totalSteps = stepOrder.length;

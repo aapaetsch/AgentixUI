@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Premium Navigation Components
  * 
@@ -21,9 +23,7 @@ import {
   AccordionContent,
 } from "../accordion";
 import {
-  useNavigation,
   useNavigationOptional,
-  NavBadge,
 } from "./layout";
 
 // ============================================================================

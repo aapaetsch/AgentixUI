@@ -539,15 +539,6 @@ function MultiSelectRoot<T = string>(
     [handleValueChange]
   );
 
-  // Remove single tag
-  const handleRemoveTag = React.useCallback(
-    (optionValue: T, e: React.MouseEvent) => {
-      e.stopPropagation();
-      toggleOption(optionValue);
-    },
-    [toggleOption]
-  );
-
   // Keyboard navigation
   const handleKeyDown = React.useCallback(
     (e: React.KeyboardEvent) => {

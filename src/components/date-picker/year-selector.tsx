@@ -7,7 +7,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Button } from "../button";
 import {
-  format,
   getYear,
   getMonth,
   setMonth,
@@ -204,7 +203,6 @@ function YearSelector({
   const view = controlledView ?? internalView;
   const currentDisplayDate = displayMonth ?? internalDisplayDate;
   const currentYear = getYear(currentDisplayDate);
-  const currentMonth = getMonth(currentDisplayDate);
   const today = new Date();
   const todayYear = getYear(today);
   const todayMonth = getMonth(today);

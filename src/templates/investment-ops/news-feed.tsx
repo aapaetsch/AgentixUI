@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { cn } from "../../lib/utils";
-import { Card, CardHeader, CardTitle, CardContent } from "../../components/card";
+import { Card, CardHeader, CardTitle } from "../../components/card";
 import { Avatar, AvatarFallback } from "../../components/avatar";
 import { Badge } from "../../components/badge";
 import { Chip } from "../../components/chip";
@@ -10,7 +10,6 @@ import { MultiSelect } from "../../components/multi-select";
 import { ToggleGroup, ToggleGroupItem } from "../../components/toggle-group";
 import { ScrollArea } from "../../components/scroll-area";
 import { Skeleton } from "../../components/skeleton";
-import { formatTime } from "../../lib/date-utils";
 import { formatRelativeTime } from "../../lib/time-utils";
 
 export interface NewsItem {
@@ -76,6 +75,29 @@ export function NewsFeed({
       (sentiments.length === 0 || sentiments.includes(it.sentiment))
   );
 
+  // Infinite-scroll: fire `onLoadMore` when a sentinel near the bottom
+  // of the feed becomes visible. Skipped while loading or when no
+  // callback is supplied.
+  const sentinelRef = React.useRef<HTMLDivElement | null>(null);
+  React.useEffect(() => {
+    if (!onLoadMore) return;
+    const node = sentinelRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !loading) {
+            onLoadMore();
+          }
+        }
+      },
+      { rootMargin: "120px" }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [onLoadMore, loading]);
+
   return (
     <Card className={cn("w-full overflow-hidden", className)}>
       <CardHeader className="border-b">
@@ -117,6 +139,19 @@ export function NewsFeed({
             ))}
           </ul>
         )}
+        {onLoadMore ? (
+          <div
+            ref={sentinelRef}
+            aria-hidden="true"
+            className="h-px w-full"
+            data-testid="news-feed-load-more-sentinel"
+          />
+        ) : null}
+        {onLoadMore && loading ? (
+          <div className="p-4">
+            <Skeleton className="h-16 w-full" />
+          </div>
+        ) : null}
       </ScrollArea>
     </Card>
   );

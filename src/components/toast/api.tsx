@@ -18,13 +18,10 @@ import {
   useToast as useFreeToast,
   ToastProvider as FreeToastProvider,
   ToastOptions as FreeToastOptions,
-  ToastVariant,
   ToastPosition,
-  ToastType,
   ToastActionConfig,
 } from "./primitives";
-import { cn } from "../../lib/utils";
-import { Loader2, RotateCcw, CheckCircle2, XCircle } from "lucide-react";
+import { Loader2, CheckCircle2, XCircle } from "lucide-react";
 
 // ============================================================================
 // Premium Toast Types
@@ -113,7 +110,6 @@ export function PremiumToastProvider({
   position = "bottom-right",
   maxToasts = 5,
   swipeDirection = "right",
-  enableSounds = false,
 }: PremiumToastProviderProps) {
   return (
     <FreeToastProvider
@@ -354,8 +350,12 @@ const createPremiumToastImperative = (options: PremiumToastOptions): string => {
   if (options.sound) {
     try {
       const audio = new Audio(options.sound);
-      audio.play().catch(() => {});
-    } catch {}
+      audio.play().catch(() => {
+        // Autoplay may be blocked by the browser user-gesture policy; ignore.
+      });
+    } catch {
+      // Audio construction/playback may fail in unsupported environments; ignore.
+    }
   }
 
   return freeToast({

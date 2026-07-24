@@ -5,14 +5,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { CalendarIcon, X } from "lucide-react";
 
 import { cn } from "../../lib/utils";
-import { Button } from "../button";
-import { Input } from "../input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../popover";
-import { Calendar, type CalendarProps } from "./calendar";
+import { Calendar } from "./calendar";
 import { YearSelector, type YearSelectorView } from "./year-selector";
 import { Presets } from "./presets";
 import {
@@ -21,12 +19,10 @@ import {
   type DateValidationError,
   formatDate,
   formatDateRange,
-  parseDate,
   validateDate,
   getDatePresets,
   getDateRangePresets,
   DATE_FORMATS,
-  isSameDay,
 } from "../../lib/date-utils";
 
 // ============================================================================

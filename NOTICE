@@ -1,0 +1,9 @@
+@agentix/ui
+Copyright (c) Aidan Paetsch
+
+This package is licensed under the MIT License. See LICENSE.
+
+React and React DOM remain external peer dependencies. Most runtime
+dependencies remain external. The packed JavaScript includes selected
+lucide-react code for a working native CommonJS contract; see
+THIRD_PARTY_NOTICES.

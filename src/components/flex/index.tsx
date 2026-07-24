@@ -370,7 +370,7 @@ const FlexItem = React.forwardRef<HTMLDivElement, FlexItemProps>(
   (
     {
       className,
-      inline = false,
+      inline: _inline = false,
       grow,
       shrink,
       basis,

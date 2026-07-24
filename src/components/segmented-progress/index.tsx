@@ -112,8 +112,6 @@ function buildChartPalette(): string[] {
   return palette;
 }
 
-const chartPalette = buildChartPalette();
-
 function resolveSegmentColor(palette: string[], index: number, explicit?: string): string {
   if (explicit) return explicit;
   return palette[index % palette.length] || "currentColor";
@@ -178,7 +176,6 @@ export const SegmentedProgress = React.forwardRef<
       max > 0 &&
       max < sum
     ) {
-      // eslint-disable-next-line no-console
       console.warn(
         `[SegmentedProgress] max (${max}) is less than the segment sum (${sum}). ` +
           "`max` is effectively ignored — segments fill the bar with no remainder."

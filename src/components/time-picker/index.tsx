@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Clock, ChevronUp, ChevronDown } from "lucide-react";
+import { Clock } from "lucide-react";
 
 import { cn } from "../../lib/utils";
 import { Button } from "../button";
@@ -12,7 +12,6 @@ import {
   PopoverTrigger,
 } from "../popover";
 import {
-  type TimeValue,
   type TimeFormat,
   formatTime,
   getHoursArray,
@@ -319,7 +318,7 @@ function TimePicker({
   // Scroll to selected values on open
   React.useEffect(() => {
     if (isOpen && value) {
-      const scrollToSelected = (ref: React.RefObject<HTMLDivElement>, index: number, itemHeight: number) => {
+      const scrollToSelected = (ref: React.RefObject<HTMLDivElement | null>, index: number, itemHeight: number) => {
         if (ref.current) {
           const scrollTop = index * itemHeight - ref.current.clientHeight / 2 + itemHeight / 2;
           ref.current.scrollTop = Math.max(0, scrollTop);

@@ -231,7 +231,6 @@ function DateTimePicker({
   value,
   onChange,
   placeholder = "Select date and time",
-  dateFormat = DATE_FORMATS.date,
   timeFormat = "12",
   minuteStep = 1,
   minDate,

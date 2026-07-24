@@ -2,15 +2,11 @@ import * as React from "react";
 
 import { cn } from "../../lib/utils";
 import { Resizable, ResizablePanel, ResizableHandle } from "../../components/resizable";
-import { Navbar, NavbarContent, NavbarActions } from "../../components/navigation/layout";
-import { Navrail, NavrailContent, NavrailHeader, NavrailFooter } from "../../components/navigation/layout";
 import { PremiumNavItem as NavItem } from "../../components/navigation/items";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/tabs";
-import { Button } from "../../components/button";
 import { ExtendedFAB } from "../../components/fab/extended-fab";
 import { Plus, Star, Briefcase, Filter, Newspaper, Bell, Settings } from "lucide-react";
 
-import { StatTile } from "./stat-tile";
 import { AccountSummary } from "./account-summary";
 import { Watchlist } from "./watchlist";
 import { HoldingsTable } from "./holdings-table";

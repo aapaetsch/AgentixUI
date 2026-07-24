@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import {
   Group as RRPGroup,
@@ -12,7 +14,7 @@ import {
   type LayoutChangedMeta,
 } from "react-resizable-panels";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, GripVertical } from "lucide-react";
+import { ChevronRight, ChevronDown, GripVertical } from "lucide-react";
 
 import { cn } from "../../lib/utils";
 

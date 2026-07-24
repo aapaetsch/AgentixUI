@@ -387,7 +387,7 @@ const HoverCardContent = React.forwardRef<
     },
     ref
   ) => {
-    const { size: contextSize, showCloseButton, onClose } = useHoverCardContext();
+    const { size: contextSize, showCloseButton } = useHoverCardContext();
     const size = sizeProp ?? contextSize;
 
     // Calculate max height style

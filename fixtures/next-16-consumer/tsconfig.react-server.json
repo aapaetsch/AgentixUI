@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "customConditions": ["react-server"],
+    "incremental": false
+  },
+  "include": ["type-tests/react-server.ts"],
+  "exclude": ["node_modules"]
+}

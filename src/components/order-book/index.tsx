@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
@@ -318,7 +320,6 @@ export function OrderBook({
   maxRows = 15,
   precision = 2,
   currency = "USD",
-  highlightLast = false,
   onLevelClick,
   className,
 }: OrderBookProps) {

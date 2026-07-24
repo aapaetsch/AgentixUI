@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { cn } from "../../lib/utils";
 import { Badge, type BadgeProps } from "../badge";
-import { formatDate, DATE_FORMATS } from "../../lib/date-utils";
+import { formatDate } from "../../lib/date-utils";
 
 /* -------------------------------------------------------------------------------------------------
  * ExpiryBadge

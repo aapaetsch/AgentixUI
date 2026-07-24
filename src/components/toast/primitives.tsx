@@ -831,7 +831,6 @@ export interface ToastProviderProps {
 export function ToastProvider({
   children,
   position = "bottom-right",
-  duration = 5000,
   maxToasts = 5,
   swipeDirection = "right",
   label = "Notifications",

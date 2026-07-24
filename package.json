@@ -1,19 +1,27 @@
 {
   "name": "@agentix/ui",
-  "version": "0.1.0-beta.0",
+  "version": "0.2.0-beta.1",
   "description": "Modern React UI library with free and premium components, built with TypeScript, Tailwind CSS, and shadcn/ui patterns",
   "author": "Aidan Paetsch",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aapae/Aidans-React-UI.git"
+    "url": "git+https://github.com/aapaetsch/AgentixUI.git"
   },
   "bugs": {
-    "url": "https://github.com/aapae/Aidans-React-UI/issues"
+    "url": "https://github.com/aapaetsch/AgentixUI/issues"
   },
-  "homepage": "https://github.com/aapae/Aidans-React-UI#readme",
+  "homepage": "https://github.com/aapaetsch/AgentixUI#readme",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true,
+    "tag": "beta"
   },
+  "engines": {
+    "node": "22.17.0",
+    "npm": "10.9.2"
+  },
+  "packageManager": "npm@10.9.2",
   "keywords": [
     "react",
     "ui",
@@ -32,98 +40,143 @@
   ],
   "files": [
     "dist",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "LICENSE",
+    "NOTICE",
+    "THIRD_PARTY_NOTICES",
+    "README.md"
   ],
   "exports": {
     ".": {
+      "react-server": {
+        "types": "./dist/react-server.d.ts",
+        "import": "./dist/react-server.mjs",
+        "require": "./dist/react-server.js"
+      },
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
     "./finance": {
+      "react-server": {
+        "types": "./dist/finance-server.d.ts",
+        "import": "./dist/finance-server.mjs",
+        "require": "./dist/finance-server.js"
+      },
       "types": "./dist/finance.d.ts",
       "import": "./dist/finance.mjs",
       "require": "./dist/finance.js"
     },
     "./templates/investment-ops": {
+      "react-server": {
+        "types": "./dist/templates/investment-ops/react-server.d.ts",
+        "import": "./dist/templates/investment-ops/react-server.mjs",
+        "require": "./dist/templates/investment-ops/react-server.js"
+      },
       "types": "./dist/templates/investment-ops/index.d.ts",
       "import": "./dist/templates/investment-ops/index.mjs",
       "require": "./dist/templates/investment-ops/index.js"
     },
     "./globals.css": "./dist/globals.css",
+    "./package.json": "./package.json",
     "./tailwind.config": {
       "require": "./tailwind.config.js"
     }
   },
   "scripts": {
-    "build": "tsup",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "tsup",
+    "build:css": "tailwindcss -c tailwind.config.js -i src/globals.css -o dist/globals.css --minify",
     "dev": "tsup --watch",
-    "lint": "eslint src/",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "pack:check": "npm pack --dry-run --ignore-scripts",
+    "pack:artifact": "npm pack --ignore-scripts",
+    "evidence:dependencies": "node scripts/package-evidence.mjs"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^1.6.1",
-    "@storybook/addon-essentials": "^8.2.6",
-    "@storybook/addon-interactions": "^8.2.6",
-    "@storybook/addon-links": "^8.2.6",
-    "@storybook/addon-onboarding": "^8.2.6",
-    "@storybook/blocks": "^8.2.6",
-    "@storybook/react": "^8.2.6",
-    "@storybook/react-vite": "^8.2.6",
-    "@storybook/test": "^8.2.6",
-    "@types/node": "^20.14.10",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "autoprefixer": "^10.4.19",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.407.0",
-    "postcss": "^8.4.39",
-    "shadcn": "^3.5.1",
-    "storybook": "^8.2.6",
-    "tailwind-merge": "^2.4.0",
-    "tailwindcss": "^3.4.4",
-    "tailwindcss-animate": "^1.0.7",
-    "tsup": "^8.1.0",
-    "typescript": "^5.5.3"
+    "@chromatic-com/storybook": "3.2.7",
+    "@eslint/js": "9.36.0",
+    "@storybook/addon-essentials": "8.6.18",
+    "@storybook/addon-interactions": "8.6.18",
+    "@storybook/addon-links": "8.6.18",
+    "@storybook/blocks": "8.6.18",
+    "@storybook/react": "8.6.18",
+    "@storybook/react-vite": "8.6.18",
+    "@storybook/test": "8.6.18",
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "22.15.0",
+    "@types/react": "19.2.0",
+    "@types/react-dom": "19.2.3",
+    "@typescript-eslint/eslint-plugin": "8.40.0",
+    "@typescript-eslint/parser": "8.40.0",
+    "@vitejs/plugin-react": "5.2.0",
+    "@vitest/coverage-v8": "3.2.7",
+    "autoprefixer": "10.4.22",
+    "eslint": "9.36.0",
+    "eslint-plugin-react": "7.37.0",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "globals": "16.4.0",
+    "jsdom": "26.1.0",
+    "postcss": "8.5.22",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "shadcn": "3.5.1",
+    "storybook": "8.6.18",
+    "tailwindcss": "3.4.18",
+    "tailwindcss-animate": "1.0.7",
+    "tsup": "8.5.0",
+    "typescript": "5.9.3",
+    "vite": "6.4.3",
+    "vitest": "3.2.7"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.9",
-    "@radix-ui/react-accordion": "^1.2.12",
-    "@radix-ui/react-alert-dialog": "^1.1.15",
-    "@radix-ui/react-avatar": "^1.1.11",
-    "@radix-ui/react-checkbox": "^1.3.3",
-    "@radix-ui/react-context-menu": "^2.2.16",
-    "@radix-ui/react-dialog": "^1.1.15",
-    "@radix-ui/react-dropdown-menu": "^2.1.16",
-    "@radix-ui/react-hover-card": "^1.1.15",
-    "@radix-ui/react-popover": "^1.1.15",
-    "@radix-ui/react-radio-group": "^1.3.8",
-    "@radix-ui/react-scroll-area": "^1.2.10",
-    "@radix-ui/react-select": "^2.2.6",
-    "@radix-ui/react-separator": "^1.1.8",
-    "@radix-ui/react-slider": "^1.3.6",
-    "@radix-ui/react-slot": "^1.2.4",
-    "@radix-ui/react-switch": "^1.2.6",
-    "@radix-ui/react-tabs": "^1.1.13",
-    "@radix-ui/react-toast": "^1.2.15",
-    "@radix-ui/react-toggle-group": "^1.1.15",
-    "@radix-ui/react-toolbar": "^1.1.15",
-    "@radix-ui/react-tooltip": "^1.2.8",
-    "@react-spring/web": "^9.7.5",
-    "@tanstack/react-table": "^8.21.3",
-    "@tanstack/react-virtual": "^3.13.12",
-    "@use-gesture/react": "^10.3.1",
-    "cmdk": "^1.1.1",
-    "date-fns": "^4.1.0",
-    "embla-carousel-autoplay": "^8.6.0",
-    "embla-carousel-react": "^8.6.0",
-    "react-day-picker": "^9.13.0",
-    "react-resizable-panels": "^4.12.2"
+    "@headlessui/react": "2.2.9",
+    "@radix-ui/react-accordion": "1.2.12",
+    "@radix-ui/react-alert-dialog": "1.1.15",
+    "@radix-ui/react-avatar": "1.1.11",
+    "@radix-ui/react-checkbox": "1.3.3",
+    "@radix-ui/react-collapsible": "1.1.12",
+    "@radix-ui/react-context-menu": "2.2.16",
+    "@radix-ui/react-dialog": "1.1.15",
+    "@radix-ui/react-dropdown-menu": "2.1.16",
+    "@radix-ui/react-hover-card": "1.1.15",
+    "@radix-ui/react-popover": "1.1.15",
+    "@radix-ui/react-radio-group": "1.3.8",
+    "@radix-ui/react-scroll-area": "1.2.10",
+    "@radix-ui/react-select": "2.2.6",
+    "@radix-ui/react-separator": "1.1.11",
+    "@radix-ui/react-slider": "1.3.6",
+    "@radix-ui/react-slot": "1.2.4",
+    "@radix-ui/react-switch": "1.2.6",
+    "@radix-ui/react-tabs": "1.1.13",
+    "@radix-ui/react-toast": "1.2.15",
+    "@radix-ui/react-toggle-group": "1.1.15",
+    "@radix-ui/react-toolbar": "1.1.15",
+    "@radix-ui/react-tooltip": "1.2.8",
+    "@tanstack/react-table": "8.21.3",
+    "@tanstack/react-virtual": "3.13.12",
+    "@use-gesture/react": "10.3.1",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "cmdk": "1.1.1",
+    "date-fns": "4.1.0",
+    "embla-carousel-autoplay": "8.6.0",
+    "embla-carousel-react": "8.6.0",
+    "lucide-react": "0.474.0",
+    "react-day-picker": "9.13.0",
+    "react-resizable-panels": "4.12.2",
+    "tailwind-merge": "2.6.0"
   }
 }
