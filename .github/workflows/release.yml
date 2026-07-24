@@ -1,0 +1,95 @@
+name: Release to npm
+
+# Publishes @agentix/ui to npm with Sigstore provenance when a tag
+# matching `v*` is pushed. Provenance requires:
+#   - `id-token: write` permission (below)
+#   - an `NPM_TOKEN` repo secret with publish rights on @agentix/ui
+#   - Actions: "Allow GitHub Actions to create and approve pull requests"
+#     is NOT required; workflow permissions must allow `id-token: write`.
+#
+# The workflow builds from a clean checkout (no dist committed) so the
+# published bytes are reproducible from the tag.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Build & publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    # Only run for tags pushed to the main repo (not forks).
+    if: github.repository == 'aapaetsch/AgentixUI'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.17.0"
+          cache: npm
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Verify tag matches package.json version
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          echo "package.json: $PKG_VERSION"
+          echo "tag:          $TAG_VERSION"
+          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+            echo "::error::Tag $TAG_VERSION does not match package.json version $PKG_VERSION"
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify dist artifacts
+        run: |
+          test -f dist/index.js
+          test -f dist/index.mjs
+          test -f dist/index.d.ts
+          test -f dist/globals.css
+          test -f dist/react-server.js
+          test -f dist/react-server.mjs
+          test -f dist/finance.js
+          test -f dist/finance.mjs
+          test -f dist/templates/investment-ops/index.js
+
+      - name: Dry-run pack
+        run: npm pack --dry-run --ignore-scripts
+
+      - name: Publish
+        # `publishConfig.tag` in package.json controls the dist-tag
+        # ("beta" for now). Drop `--tag` here so a future latest release
+        # is honored automatically once publishConfig.tag changes.
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
