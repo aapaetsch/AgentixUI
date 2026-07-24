@@ -1,4 +1,4 @@
-# Agent Protocol: @agentix/ui
+# Agent Protocol: aapaetsch-ui-kit
 
 ## Identity & Purpose
 You are maintaining a shared React UI library using **TypeScript, React, Tailwind CSS, and shadcn/ui**.

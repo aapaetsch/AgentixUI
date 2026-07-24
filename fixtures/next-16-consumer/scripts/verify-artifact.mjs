@@ -4,12 +4,12 @@ import { readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 
 const require = createRequire(import.meta.url);
-const packagePath = require.resolve("@agentix/ui/package.json");
+const packagePath = require.resolve("aapaetsch-ui-kit/package.json");
 const packageRoot = resolve(packagePath, "..");
 const manifest = JSON.parse(readFileSync(packagePath, "utf8"));
 
 if (manifest.version !== "0.2.0-beta.1") {
-  throw new Error(`unexpected @agentix/ui version: ${manifest.version}`);
+  throw new Error(`unexpected aapaetsch-ui-kit version: ${manifest.version}`);
 }
 
 for (const scriptName of [

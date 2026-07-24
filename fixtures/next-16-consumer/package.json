@@ -1,5 +1,5 @@
 {
-  "name": "agentix-ui-next-16-consumer",
+  "name": "aapaetsch-ui-kit-next-16-consumer",
   "version": "0.0.0",
   "private": true,
   "engines": {
@@ -15,7 +15,7 @@
     "typecheck:react-server": "tsc -p tsconfig.react-server.json --pretty false"
   },
   "dependencies": {
-    "@agentix/ui": "file:../../agentix-ui-0.2.0-beta.1.tgz",
+    "aapaetsch-ui-kit": "file:../../aapaetsch-ui-kit-0.2.0-beta.1.tgz",
     "next": "16.2.11",
     "react": "19.2.8",
     "react-dom": "19.2.8"

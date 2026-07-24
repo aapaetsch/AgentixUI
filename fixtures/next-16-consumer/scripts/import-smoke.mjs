@@ -1,6 +1,6 @@
-const root = await import("@agentix/ui");
-const finance = await import("@agentix/ui/finance");
-const templates = await import("@agentix/ui/templates/investment-ops");
+const root = await import("aapaetsch-ui-kit");
+const finance = await import("aapaetsch-ui-kit/finance");
+const templates = await import("aapaetsch-ui-kit/templates/investment-ops");
 
 for (const [label, module, expected] of [
   ["root", root, "Typography"],

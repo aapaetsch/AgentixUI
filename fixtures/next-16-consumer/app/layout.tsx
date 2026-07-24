@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "@agentix/ui/globals.css";
+import "aapaetsch-ui-kit/globals.css";
 
 export const metadata: Metadata = {
   title: "AgentixUI packed artifact fixture",

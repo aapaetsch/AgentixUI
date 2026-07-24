@@ -1,4 +1,4 @@
-# @agentix/ui
+# aapaetsch-ui-kit
 
 A shared React UI library built with **TypeScript**, **React**, **Tailwind CSS**, and **shadcn/ui** patterns. Designed for consumption in Web and Electron applications.
 
@@ -14,7 +14,7 @@ A shared React UI library built with **TypeScript**, **React**, **Tailwind CSS**
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Peer Dependencies
@@ -30,7 +30,7 @@ npm install react react-dom
 1. Import the global styles in your app entry point:
 
 ```tsx
-import '@agentix/ui/globals.css';
+import 'aapaetsch-ui-kit/globals.css';
 ```
 
 2. Import and use components:

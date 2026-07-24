@@ -1,9 +1,9 @@
 name: Release to npm
 
-# Publishes @agentix/ui to npm with Sigstore provenance when a tag
+# Publishes aapaetsch-ui-kit to npm with Sigstore provenance when a tag
 # matching `v*` is pushed. Provenance requires:
 #   - `id-token: write` permission (below)
-#   - an `NPM_TOKEN` repo secret with publish rights on @agentix/ui
+#   - an `NPM_TOKEN` repo secret with publish rights on aapaetsch-ui-kit
 #   - Actions: "Allow GitHub Actions to create and approve pull requests"
 #     is NOT required; workflow permissions must allow `id-token: write`.
 #

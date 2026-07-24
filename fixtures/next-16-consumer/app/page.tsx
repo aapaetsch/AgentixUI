@@ -1,6 +1,6 @@
-import { Typography, formatCurrency } from "@agentix/ui";
-import { computePayoffAtExpiry } from "@agentix/ui/finance";
-import { AccountSummary } from "@agentix/ui/templates/investment-ops";
+import { Typography, formatCurrency } from "aapaetsch-ui-kit";
+import { computePayoffAtExpiry } from "aapaetsch-ui-kit/finance";
+import { AccountSummary } from "aapaetsch-ui-kit/templates/investment-ops";
 
 import { InteractiveSmoke } from "./interactive-smoke";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Card, CardContent } from "@agentix/ui";
+import { Button, Card, CardContent } from "aapaetsch-ui-kit";
 
 export function InteractiveSmoke() {
   const [clickCount, setClickCount] = useState(0);

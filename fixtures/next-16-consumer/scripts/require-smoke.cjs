@@ -1,6 +1,6 @@
-const root = require("@agentix/ui");
-const finance = require("@agentix/ui/finance");
-const templates = require("@agentix/ui/templates/investment-ops");
+const root = require("aapaetsch-ui-kit");
+const finance = require("aapaetsch-ui-kit/finance");
+const templates = require("aapaetsch-ui-kit/templates/investment-ops");
 
 for (const [label, module, expected] of [
   ["root", root, "Typography"],

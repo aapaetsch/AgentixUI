@@ -1,4 +1,4 @@
-# @agentix/ui Component Library Roadmap
+# aapaetsch-ui-kit Component Library Roadmap
 
 This file is an index to the roadmap subfiles. Open any referenced file below to view that section in full — for LLM use, fetch only the subfile(s) you need.
 
