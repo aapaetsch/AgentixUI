@@ -1,7 +1,7 @@
 # Navigation Components Implementation Plan
 
 ## Overview
-This plan outlines the implementation of three core navigation components for the agentixUI library:
+This plan outlines the implementation of three core navigation components for the agentix-ui library:
 1. Navbar - Horizontal top navigation bar
 2. Navrail - Vertical sidebar navigation rail
 3. Navdrawer - Slide-in navigation drawer for mobile/responsive views
