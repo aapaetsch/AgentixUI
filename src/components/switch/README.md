@@ -5,13 +5,13 @@ A switch component that follows Material Design 3 patterns with optional icon su
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
 
 ```tsx
-import { Switch } from '@agentix/ui';
+import { Switch } from 'aapaetsch-ui-kit';
 
 // Basic usage
 <Switch />
@@ -107,7 +107,7 @@ interface SwitchProps extends React.ComponentPropsWithoutRef<typeof SwitchPrimit
 
 - `@radix-ui/react-switch` - Core switch primitive for accessibility
 - `class-variance-authority` - Variant management
-- `@agentix/ui/lib/utils` - `cn()` utility for class merging
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility for class merging
 
 ## License
 

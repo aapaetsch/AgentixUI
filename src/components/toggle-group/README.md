@@ -9,7 +9,7 @@ order side (buy/sell), chart type, indicator toggles.
 ## Installation
 
 ```tsx
-import { ToggleGroup, ToggleGroupItem } from "@agentix/ui";
+import { ToggleGroup, ToggleGroupItem } from "aapaetsch-ui-kit";
 ```
 
 ## Usage

@@ -5,7 +5,7 @@ A flexible toast notification system with an imperative API for use outside Reac
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Quick Start
@@ -13,7 +13,7 @@ npm install @agentix/ui
 ### 1. Add ToastProvider to your app root
 
 ```tsx
-import { ToastProvider } from '@agentix/ui';
+import { ToastProvider } from 'aapaetsch-ui-kit';
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
 ### 2. Use toasts in your components
 
 ```tsx
-import { useToast } from '@agentix/ui';
+import { useToast } from 'aapaetsch-ui-kit';
 
 function MyComponent() {
   const { toast } = useToast();
@@ -43,7 +43,7 @@ function MyComponent() {
 ### 3. Use toasts outside React (API utilities, etc.)
 
 ```tsx
-import { toast } from '@agentix/ui';
+import { toast } from 'aapaetsch-ui-kit';
 
 // In a non-React file
 async function fetchData() {
@@ -159,7 +159,7 @@ type ToastType = "toast" | "snackbar";
 ### With Avatar
 
 ```tsx
-import { Avatar, AvatarImage, AvatarFallback } from '@agentix/ui';
+import { Avatar, AvatarImage, AvatarFallback } from 'aapaetsch-ui-kit';
 
 toast({
   title: 'New message from Sarah',

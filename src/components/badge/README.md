@@ -5,13 +5,13 @@ A comprehensive badge system following Material Design 3 patterns with shadcn/ui
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
 
 ```tsx
-import { Badge, BadgeAnchor, AnimatedBadge } from '@agentix/ui';
+import { Badge, BadgeAnchor, AnimatedBadge } from 'aapaetsch-ui-kit';
 
 // Standard badge
 <Badge>Default</Badge>
@@ -152,7 +152,7 @@ Hide badge when destination selected (MD3 guideline):
 
 - `@radix-ui/react-slot` - Polymorphic component (asChild prop)
 - `class-variance-authority` - Variant management
-- `@agentix/ui/lib/utils` - `cn()` utility
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License
 

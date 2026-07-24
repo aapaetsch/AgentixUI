@@ -6,7 +6,7 @@ around a proportional zero line.
 ## Usage
 
 ```tsx
-import { MiniBars } from "@agentix/ui";
+import { MiniBars } from "aapaetsch-ui-kit";
 
 <MiniBars data={[1, -2, 3, -1, 2]} positiveColor="#22c55e" negativeColor="#ef4444" />
 ```

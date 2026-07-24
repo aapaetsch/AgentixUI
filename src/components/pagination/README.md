@@ -40,7 +40,7 @@ Pre-composed pagination with automatic responsive behavior and smart page range 
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
@@ -56,7 +56,7 @@ import {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 
 <Pagination>
   <PaginationContent>
@@ -96,7 +96,7 @@ import {
   PaginationLink,
   PaginationPrevious,
   PaginationNext,
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 
 function MyPagination() {
   const [page, setPage] = useState(1);
@@ -142,7 +142,7 @@ The `ResponsivePagination` component handles page range calculation, ellipsis pl
 
 ```tsx
 import { useState } from 'react';
-import { ResponsivePagination } from '@agentix/ui';
+import { ResponsivePagination } from 'aapaetsch-ui-kit';
 
 function MyPagination() {
   const [page, setPage] = useState(1);
@@ -172,7 +172,7 @@ function MyPagination() {
 
 ```tsx
 import { useState } from 'react';
-import { ResponsivePagination, PaginationPageSizeSelector } from '@agentix/ui';
+import { ResponsivePagination, PaginationPageSizeSelector } from 'aapaetsch-ui-kit';
 
 function DataTablePagination() {
   const [page, setPage] = useState(1);
@@ -199,7 +199,7 @@ function DataTablePagination() {
 ### Using the usePaginationRange Hook
 
 ```tsx
-import { usePaginationRange } from '@agentix/ui';
+import { usePaginationRange } from 'aapaetsch-ui-kit';
 
 function CustomPagination({ currentPage, totalPages }) {
   const range = usePaginationRange(currentPage, totalPages, 1);
@@ -349,8 +349,8 @@ Labels on Previous/Next buttons are hidden on mobile by default (can be enabled 
 
 - `lucide-react` - Icons (ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal)
 - `class-variance-authority` - Variant management
-- `@agentix/ui/button` - Button styles
-- `@agentix/ui/select` - Page size selector
+- `aapaetsch-ui-kit/button` - Button styles
+- `aapaetsch-ui-kit/select` - Page size selector
 
 ## License
 

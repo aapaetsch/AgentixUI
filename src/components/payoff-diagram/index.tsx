@@ -149,7 +149,7 @@ const defaultHoverValue = (value: number) =>
  * Renders a hockey-stick payoff profile from a sorted list of `(price, value)`
  * points. Profit regions (value > 0) tint toward `positiveColor`; loss regions
  * toward `negativeColor`. Draws an optional spot marker, breakeven dots, and a
- * zero baseline. No axes, ticks, or legend — stays in `@agentix/ui` per the
+ * zero baseline. No axes, ticks, or legend — stays in `aapaetsch-ui-kit` per the
  * `Sparkline` precedent.
  *
  * @example

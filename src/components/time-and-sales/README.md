@@ -9,7 +9,7 @@ newest unless the user has scrolled up.
 ## Installation
 
 ```tsx
-import { TimeAndSales } from "@agentix/ui/finance";
+import { TimeAndSales } from "aapaetsch-ui-kit/finance";
 ```
 
 ## Usage

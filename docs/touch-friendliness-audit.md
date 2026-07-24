@@ -1,4 +1,4 @@
-# Touch-Friendliness Audit — @agentix/ui
+# Touch-Friendliness Audit — aapaetsch-ui-kit
 
 > **Generated:** 2026-07-20
 > **Scope:** All 75 components under `src/components/`

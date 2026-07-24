@@ -8,10 +8,10 @@ rendering with optional semantic P&L coloring.
 
 ## Installation
 
-The components are exported from `@agentix/ui`:
+The components are exported from `aapaetsch-ui-kit`:
 
 ```tsx
-import { Typography, NumericText } from "@agentix/ui";
+import { Typography, NumericText } from "aapaetsch-ui-kit";
 ```
 
 ## Usage

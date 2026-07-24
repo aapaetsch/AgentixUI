@@ -2,7 +2,7 @@
 
 ## Investment-Ops Template Set — ✅ Complete
 
-Folder: `src/templates/investment-ops/` (secondary entrypoint `@agentix/ui/templates/investment-ops`)
+Folder: `src/templates/investment-ops/` (secondary entrypoint `aapaetsch-ui-kit/templates/investment-ops`)
 
 | Block | Status | Description |
 |------|--------|-------------|

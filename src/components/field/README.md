@@ -6,7 +6,7 @@ dependency.
 
 ## Installation
 
-`Field` is part of `@agentix/ui`:
+`Field` is part of `aapaetsch-ui-kit`:
 
 ```sh
 import {
@@ -15,7 +15,7 @@ import {
   FieldDescription,
   FieldError,
   FieldContent,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 ```
 
 ## Usage

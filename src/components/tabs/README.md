@@ -5,13 +5,13 @@ A comprehensive tabs system following Material Design 3 patterns with shadcn/ui 
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
 
 ```tsx
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@agentix/ui';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from 'aapaetsch-ui-kit';
 
 // Basic usage
 <Tabs defaultValue="tab1">
@@ -203,7 +203,7 @@ When `orientation="vertical"`:
 
 - `@radix-ui/react-tabs` - Core tabs primitive for accessibility and state management
 - `class-variance-authority` - Variant management
-- `@agentix/ui/lib/utils` - `cn()` utility for class merging
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility for class merging
 
 ## License
 

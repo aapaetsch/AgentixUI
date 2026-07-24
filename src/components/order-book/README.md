@@ -9,7 +9,7 @@ trading dashboard.
 ## Installation
 
 ```tsx
-import { OrderBook } from "@agentix/ui/finance";
+import { OrderBook } from "aapaetsch-ui-kit/finance";
 ```
 
 ## Usage

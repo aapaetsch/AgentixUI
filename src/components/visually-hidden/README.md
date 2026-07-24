@@ -6,7 +6,7 @@ visually. On focus the element reveals itself, so it also works as a skip-link h
 
 ## Installation
 ```tsx
-import { VisuallyHidden } from "@agentix/ui";
+import { VisuallyHidden } from "aapaetsch-ui-kit";
 ```
 
 ## Usage

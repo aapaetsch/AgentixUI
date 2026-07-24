@@ -37,7 +37,7 @@ import {
  * ## Usage
  *
  * ```tsx
- * import { ComboBox, OutlinedComboBox } from "@agentix/ui";
+ * import { ComboBox, OutlinedComboBox } from "aapaetsch-ui-kit";
  *
  * // Basic usage
  * <ComboBox

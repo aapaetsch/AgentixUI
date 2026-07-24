@@ -8,7 +8,7 @@ tile, table cell, or inline next to a numeric label, and is drop-in compatible w
 ## Installation / Usage
 
 ```tsx
-import { Sparkline } from "@agentix/ui";
+import { Sparkline } from "aapaetsch-ui-kit";
 
 <Sparkline data={[1, 2, 3, 2, 4]} />
 

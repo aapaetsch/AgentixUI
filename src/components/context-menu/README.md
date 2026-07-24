@@ -18,10 +18,10 @@ A context menu component providing right-click action menus for web and Electron
 
 ## Installation
 
-The component is part of the @agentix/ui library. Ensure you have installed the package:
+The component is part of the aapaetsch-ui-kit library. Ensure you have installed the package:
 
 ```bash
-npm install @agentix/ui @radix-ui/react-context-menu
+npm install aapaetsch-ui-kit @radix-ui/react-context-menu
 ```
 
 ## Basic Usage
@@ -34,7 +34,7 @@ import {
   ContextMenuTrigger,
   ContextMenuContent,
   ContextMenuItem,
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 
 function App() {
   return (
@@ -63,7 +63,7 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuShortcut,
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 import { Copy, Clipboard } from 'lucide-react';
 
 function App() {
@@ -99,7 +99,7 @@ import {
   ContextMenuCheckboxItem,
   ContextMenuLabel,
   ContextMenuSeparator,
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 
 function App() {
   const [showBookmarks, setShowBookmarks] = useState(false);
@@ -142,7 +142,7 @@ import {
   ContextMenuRadioItem,
   ContextMenuLabel,
   ContextMenuSeparator,
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 
 function App() {
   const [theme, setTheme] = useState('light');
@@ -178,7 +178,7 @@ import {
   ContextMenuSubTrigger,
   ContextMenuSubContent,
   ContextMenuSeparator,
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 import { Download, Save, Trash2 } from 'lucide-react';
 
 function App() {
@@ -577,7 +577,7 @@ import {
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuShortcut,
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 import { Copy, Clipboard, Edit2, Maximize2, Trash2, Scissors } from 'lucide-react';
 
 function FileManager() {

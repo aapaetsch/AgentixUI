@@ -2,12 +2,12 @@
 
 Floating Action Buttons for primary screen actions following Material Design 3 specifications.
 
-> ⭐ This is a Premium component available in the @agentix/ui Premium package.
+> ⭐ This is a Premium component available in the aapaetsch-ui-kit Premium package.
 
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install @agentix/ui
 ### FAB
 
 ```tsx
-import { FAB } from '@agentix/ui';
+import { FAB } from 'aapaetsch-ui-kit';
 
 // Basic FAB
 <FAB icon={<PlusIcon />} label="Add item" />
@@ -34,7 +34,7 @@ import { FAB } from '@agentix/ui';
 ### ExtendedFAB
 
 ```tsx
-import { ExtendedFAB } from '@agentix/ui';
+import { ExtendedFAB } from 'aapaetsch-ui-kit';
 
 // Extended FAB with label
 <ExtendedFAB icon={<PlusIcon />} label="Create new" />
@@ -50,7 +50,7 @@ import { ExtendedFAB } from '@agentix/ui';
 ### FABMenu
 
 ```tsx
-import { FABMenu } from '@agentix/ui';
+import { FABMenu } from 'aapaetsch-ui-kit';
 
 const menuItems = [
   { id: "1", icon: <FileIcon />, label: "New file", onClick: () => console.log("New file") },
@@ -191,7 +191,7 @@ interface FABMenuProps {
 
 - `class-variance-authority` - Variant management
 - `lucide-react` - Icons (used in stories)
-- `@agentix/ui/lib/utils` - `cn()` utility
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License
 

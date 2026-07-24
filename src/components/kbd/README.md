@@ -6,7 +6,7 @@ border, subtle background, mono font, and muted text.
 
 ## Installation
 ```tsx
-import { Kbd } from "@agentix/ui";
+import { Kbd } from "aapaetsch-ui-kit";
 ```
 
 ## Usage

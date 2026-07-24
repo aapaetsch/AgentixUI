@@ -5,13 +5,13 @@ A flexible, accessible textarea component with optional auto-resize, character c
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
 
 ```tsx
-import { Textarea, TextareaWithCounter } from '@agentix/ui';
+import { Textarea, TextareaWithCounter } from 'aapaetsch-ui-kit';
 
 // Basic usage
 <Textarea placeholder="Enter your message..." />
@@ -153,7 +153,7 @@ Extends all `TextareaProps` plus:
 ## Dependencies
 
 - `class-variance-authority` - Variant management
-- `@agentix/ui/lib/utils` - Class name merging
+- `aapaetsch-ui-kit/lib/utils` - Class name merging
 
 ## License
 

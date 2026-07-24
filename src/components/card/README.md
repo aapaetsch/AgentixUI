@@ -5,7 +5,7 @@ A comprehensive card system following Material Design 3 patterns with elevated, 
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ import {
   CardFooter,
   SwipeableCard,
   ExpandableCard
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 
 // Basic card
 <Card>
@@ -288,7 +288,7 @@ interface ExpandableCardProps extends CardProps {
 
 - `@radix-ui/react-slot` - Polymorphic component support
 - `class-variance-authority` - Variant management
-- `@agentix/ui/lib/utils` - `cn()` utility
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License
 

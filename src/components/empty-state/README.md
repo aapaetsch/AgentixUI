@@ -17,16 +17,16 @@ unobtrusive copy instead of leaving blank space:
 
 ## Installation
 
-`EmptyState` is exported from `@agentix/ui`:
+`EmptyState` is exported from `aapaetsch-ui-kit`:
 
 ```ts
-import { EmptyState } from "@agentix/ui";
+import { EmptyState } from "aapaetsch-ui-kit";
 ```
 
 ## Usage
 
 ```tsx
-import { EmptyState, Button } from "@agentix/ui";
+import { EmptyState, Button } from "aapaetsch-ui-kit";
 import { Search } from "lucide-react";
 
 export function NoResults() {

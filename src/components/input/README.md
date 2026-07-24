@@ -7,13 +7,13 @@ A versatile input component offering two distinct visual styles:
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
 
 ```tsx
-import { Input, OutlinedInput } from '@agentix/ui';
+import { Input, OutlinedInput } from 'aapaetsch-ui-kit';
 
 // Basic shadcn input
 <Input placeholder="Enter email..." />
@@ -109,7 +109,7 @@ MD3 outlined variant has taller heights to accommodate the floating label space.
 ## Dependencies
 
 - `class-variance-authority` - CVA for variant management
-- `@agentix/ui/lib/utils` - cn utility (clsx + tailwind-merge)
+- `aapaetsch-ui-kit/lib/utils` - cn utility (clsx + tailwind-merge)
 
 ## License
 

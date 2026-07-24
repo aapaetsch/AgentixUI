@@ -4,17 +4,17 @@ A styled `<label>` for forms, following the shadcn/ui aesthetic.
 
 ## Installation
 
-`Label` is part of `@agentix/ui`:
+`Label` is part of `aapaetsch-ui-kit`:
 
 ```sh
-import { Label } from "@agentix/ui";
+import { Label } from "aapaetsch-ui-kit";
 ```
 
 ## Usage
 
 ```tsx
-import { Label } from "@agentix/ui";
-import { Input } from "@agentix/ui";
+import { Label } from "aapaetsch-ui-kit";
+import { Input } from "aapaetsch-ui-kit";
 
 <div className="flex flex-col gap-2">
   <Label htmlFor="email">Email</Label>

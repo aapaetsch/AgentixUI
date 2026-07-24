@@ -1,6 +1,6 @@
 # Gauge
 
-A radial dial / gauge primitive for `@agentix/ui`. Sibling of `Progress`.
+A radial dial / gauge primitive for `aapaetsch-ui-kit`. Sibling of `Progress`.
 
 Renders a pure inline SVG dial with:
 - a background (track) arc,
@@ -11,7 +11,7 @@ Renders a pure inline SVG dial with:
 ## Installation / Import
 
 ```ts
-import { Gauge } from "@agentix/ui";
+import { Gauge } from "aapaetsch-ui-kit";
 ```
 
 ## Usage

@@ -43,7 +43,7 @@ New primitives these templates compose (live in `src/components/`, not here):
 - OrderTicket ships simple equity flow only; multi-leg options now live in
   `MultiLegOrderTicket` (Phase J-open).
 - Chart integrations use slot props; templates ship before the chart lib lands.
-- Payoff/Greeks-decay/IV visuals are inline-SVG `@agentix/ui` primitives
+- Payoff/Greeks-decay/IV visuals are inline-SVG `aapaetsch-ui-kit` primitives
   (`Sparkline` precedent) — heavy chart versions remain planned for
   `@agentix/charts`.
 

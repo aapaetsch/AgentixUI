@@ -8,7 +8,7 @@ investment-ops dashboard shell where `Flex`/`Grid` cannot express draggable spli
 ## Installation
 
 ```tsx
-import { Resizable, ResizablePanel, ResizableHandle } from "@agentix/ui";
+import { Resizable, ResizablePanel, ResizableHandle } from "aapaetsch-ui-kit";
 ```
 
 ## Usage

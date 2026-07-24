@@ -5,7 +5,7 @@ A comprehensive avatar system with size and shape variants, group stacking, stat
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import {
   AvatarGroup, 
   AvatarBadge, 
   AnimatedAvatar 
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 
 // Basic avatar
 <Avatar>
@@ -213,7 +213,7 @@ interface AnimatedAvatarProps extends AvatarProps {
 
 - `@radix-ui/react-avatar` - Avatar primitive for image loading states
 - `class-variance-authority` - Variant management
-- `@agentix/ui/lib/utils` - `cn()` utility
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License
 

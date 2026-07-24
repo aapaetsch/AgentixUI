@@ -72,7 +72,7 @@ const DEFAULT_STOPS = {
  *
  * - `variant="term"` — single polyline plotting IV per expiry (`Sparkline`-like).
  * - `variant="surface"` — small divergent-color cell grid (strike × expiry)
- *   sized to fit ≤ ~100 cells, staying within `@agentix/ui` per the roadmap
+ *   sized to fit ≤ ~100 cells, staying within `aapaetsch-ui-kit` per the roadmap
  *   allowance for decorative heatmaps.
  *
  * No axes, ticks, crosshair, or legend — full versions remain planned for

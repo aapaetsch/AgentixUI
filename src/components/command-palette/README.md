@@ -20,7 +20,7 @@ import {
   CommandLoading,
   CommandPaletteTrigger,
   useCommandPalette,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 ```
 
 ## Usage

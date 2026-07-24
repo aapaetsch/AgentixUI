@@ -5,7 +5,7 @@ Loading placeholder components that display animated placeholders while content 
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import {
   SkeletonAvatar, 
   SkeletonButton, 
   SkeletonInput 
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 
 // Basic skeleton
 <Skeleton className="w-32 h-8" />
@@ -253,7 +253,7 @@ All skeleton components include proper accessibility attributes:
 ## Dependencies
 
 - `class-variance-authority` - Variant management
-- `@agentix/ui/lib/utils` - `cn()` utility
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License
 

@@ -9,7 +9,7 @@ roving tabindex and keyboard navigation between actions.
 ## Installation
 
 ```tsx
-import { Toolbar, ToolbarButton, ToolbarSeparator, ToolbarLabel, ToolbarToggleGroup } from "@agentix/ui";
+import { Toolbar, ToolbarButton, ToolbarSeparator, ToolbarLabel, ToolbarToggleGroup } from "aapaetsch-ui-kit";
 ```
 
 ## Usage

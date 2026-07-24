@@ -11,7 +11,7 @@ Unlike traditional comboboxes with a separate search input inside the dropdown, 
 
 ## Installation
 
-This component is part of the `@agentix/ui` library. No additional installation required beyond the main package.
+This component is part of the `aapaetsch-ui-kit` library. No additional installation required beyond the main package.
 
 ### Dependencies
 
@@ -25,7 +25,7 @@ The following dependencies are used by this component:
 ### Basic Usage
 
 ```tsx
-import { ComboBox } from "@agentix/ui";
+import { ComboBox } from "aapaetsch-ui-kit";
 
 const fruits = [
   { value: "apple", label: "Apple" },
@@ -50,7 +50,7 @@ function MyComponent() {
 ### MD3 Outlined Variant
 
 ```tsx
-import { OutlinedComboBox } from "@agentix/ui";
+import { OutlinedComboBox } from "aapaetsch-ui-kit";
 
 function MyComponent() {
   const [country, setCountry] = React.useState<string | null>(null);
@@ -70,7 +70,7 @@ function MyComponent() {
 ### With Icons
 
 ```tsx
-import { ComboBox, type ComboBoxOption } from "@agentix/ui";
+import { ComboBox, type ComboBoxOption } from "aapaetsch-ui-kit";
 import { Apple, Banana, Cherry } from "lucide-react";
 
 const fruits: ComboBoxOption[] = [
@@ -141,7 +141,7 @@ function MyComponent() {
 For lists with 100+ items, enable virtualization:
 
 ```tsx
-import { ComboBox } from "@agentix/ui";
+import { ComboBox } from "aapaetsch-ui-kit";
 
 const items = Array.from({ length: 10000 }, (_, i) => ({
   value: `item-${i}`,
@@ -185,7 +185,7 @@ import {
   ComboBoxLabel,
   ComboBoxDescription,
   ComboBox,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 
 <ComboBoxField>
   <ComboBoxLabel>Country</ComboBoxLabel>

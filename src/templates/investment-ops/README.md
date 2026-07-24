@@ -25,7 +25,7 @@ import {
   OptionsChain,
   PayoffBundleCard,
   MultiLegOrderTicket,
-} from "@agentix/ui/templates/investment-ops";
+} from "aapaetsch-ui-kit/templates/investment-ops";
 ```
 
 ## Blocks
@@ -55,11 +55,11 @@ import {
 - **PayoffBundleCard** — Multi-leg risk snapshot card (`PayoffDiagram` + net debit/credit `Badge` + max P/L + `BreakevenBadges`). Companion to `MultiLegOrderTicket`.
 - **MultiLegOrderTicket** — Multi-leg option order builder: `Sheet` with a `SpreadTypeSelector` that pre-fills a dynamic list of `LegBuilderRow`s, live `PayoffBundleCard` preview, net debit/credit display, and an `AlertDialog`-confirmed submit that fires `toast.promise(onSubmit(legs))`. Mirrors `OrderTicket`'s interaction pattern.
 
-These templates compose the new `@agentix/ui` options primitives
+These templates compose the new `aapaetsch-ui-kit` options primitives
 (`OptionSymbolBadge`, `ExpiryBadge`, `GreeksDisplay`, `BreakevenBadges`,
 `PayoffDiagram`, `GreeksDecayChart`, `IVChart`, `StrikesNavigator`,
 `LegBuilderRow`, `SpreadTypeSelector`) and the pure helpers in
-`@agentix/ui/finance` (`computePayoffAtExpiry`, `breakevensAtExpiry`,
+`aapaetsch-ui-kit/finance` (`computePayoffAtExpiry`, `breakevensAtExpiry`,
 `maxProfit/LossAtExpiry`, `netPremium`, `priceGrid`).
 
 ## Recent API Additions

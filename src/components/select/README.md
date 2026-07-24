@@ -5,7 +5,7 @@ A dropdown select component following Material Design 3 patterns, built on Radix
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ import {
   SelectLabel, 
   SelectItem, 
   SelectSeparator 
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 
 // Basic
 <Select>
@@ -212,7 +212,7 @@ The Select component uses React Context internally to track open state and pass 
 - `@radix-ui/react-select` - Core primitive
 - `class-variance-authority` - Variant management
 - `lucide-react` - Icon library (ChevronDown, ChevronUp, Check)
-- `@agentix/ui/AnimatedChevron` - Optional morphing chevron animation (internal component)
+- `aapaetsch-ui-kit/AnimatedChevron` - Optional morphing chevron animation (internal component)
 
 ## License
 

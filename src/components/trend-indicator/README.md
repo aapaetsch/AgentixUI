@@ -7,7 +7,7 @@ compact up/down signal.
 
 ## Installation
 ```tsx
-import { TrendIndicator } from "@agentix/ui";
+import { TrendIndicator } from "aapaetsch-ui-kit";
 ```
 
 ## Usage

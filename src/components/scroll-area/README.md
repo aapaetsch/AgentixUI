@@ -16,7 +16,7 @@ A custom scrollbar container component with Material Design 3 styling, optional 
 ## Installation
 
 ```tsx
-import { ScrollArea, ScrollBar } from "@agentix/ui";
+import { ScrollArea, ScrollBar } from "aapaetsch-ui-kit";
 ```
 
 ## Usage

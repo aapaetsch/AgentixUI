@@ -4,7 +4,7 @@ A comprehensive navigation system for React applications featuring Navbar, Navra
 
 ## Installation
 
-The navigation components are included in the `@agentix/ui` package. Ensure you have the required dependencies:
+The navigation components are included in the `aapaetsch-ui-kit` package. Ensure you have the required dependencies:
 
 ```bash
 npm install @radix-ui/react-dialog @radix-ui/react-slot lucide-react
@@ -25,7 +25,7 @@ import {
   NavdrawerContent,
   NavItem,
   NavSection,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 import { Home, Settings, Users } from "lucide-react";
 
 function App() {
@@ -371,14 +371,14 @@ Navigation components with submenu support are available in the unified library.
 - Animated chevron transitions
 - Enhanced styling variants
 
-Navigation submenu components are available from `@agentix/ui`:
+Navigation submenu components are available from `aapaetsch-ui-kit`:
 
 ```tsx
 import {
   NavItem,
   NavItemWithSubmenu,
   NavSection,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 
 function NavigationWithSubmenus() {
   return (
@@ -421,6 +421,6 @@ import type {
   NavdrawerProps,
   NavItemProps,
   NavSectionProps,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 ```
 

@@ -18,7 +18,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 
 <Table>
   <TableHeader>

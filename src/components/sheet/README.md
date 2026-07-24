@@ -4,7 +4,7 @@ The Sheet component includes gesture support, spring animations, snap points, an
 
 ## Installation
 
-The Sheet component is available from the unified `@agentix/ui` package.
+The Sheet component is available from the unified `aapaetsch-ui-kit` package.
 
 ```tsx
 import {
@@ -16,7 +16,7 @@ import {
   SheetTitle,
   SheetDescription,
   SheetClose,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 ```
 
 ## Features

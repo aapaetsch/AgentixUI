@@ -70,7 +70,7 @@ import {
  *   ContextMenuContent,
  *   ContextMenuItem,
  *   ContextMenuShortcut,
- * } from '@agentix/ui';
+ * } from 'aapaetsch-ui-kit';
  *
  * <ContextMenu>
  *   <ContextMenuTrigger>

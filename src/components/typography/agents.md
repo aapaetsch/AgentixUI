@@ -35,8 +35,8 @@ display.
 
 - `class-variance-authority` — variant management
 - `clsx` + `tailwind-merge` via `cn()`
-- `@agentix/ui` `lib/number-utils.ts` (formatters)
-- `@agentix/ui` `lib/color-utils.ts` (`pnlColorClass`)
+- `aapaetsch-ui-kit` `lib/number-utils.ts` (formatters)
+- `aapaetsch-ui-kit` `lib/color-utils.ts` (`pnlColorClass`)
 
 ## Styling Decisions
 

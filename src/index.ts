@@ -1,4 +1,4 @@
-// @agentix/ui - Shared Design System
+// aapaetsch-ui-kit - Shared Design System
 // Export all components from this file
 
 // =============================================================================

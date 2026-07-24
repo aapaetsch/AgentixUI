@@ -8,13 +8,13 @@ result each frame. It powers KPI tiles and price tickers across the investment-o
 ## Installation
 
 ```tsx
-import { AnimatedNumber } from "@agentix/ui";
+import { AnimatedNumber } from "aapaetsch-ui-kit";
 ```
 
 ## Usage
 
 ```tsx
-import { formatCurrency } from "@agentix/ui";
+import { formatCurrency } from "aapaetsch-ui-kit";
 
 <AnimatedNumber
   value={portfolioValue}

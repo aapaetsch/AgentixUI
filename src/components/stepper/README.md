@@ -24,7 +24,7 @@ import {
   StepperLabel,
   StepperConnector,
   StepperContent,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 
 function VerticalStepperExample() {
   return (

@@ -1,4 +1,4 @@
-// Vitest configuration for @agentix/ui
+// Vitest configuration for aapaetsch-ui-kit
 // Component and unit tests run in jsdom with the React plugin.
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";

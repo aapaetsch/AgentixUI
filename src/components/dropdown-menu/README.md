@@ -19,7 +19,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 
 <DropdownMenu>
   <DropdownMenuTrigger asChild>

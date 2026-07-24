@@ -4,10 +4,10 @@ A modal dialog that interrupts users with critical content requiring a response.
 
 ## Installation
 
-The AlertDialog component requires the `@radix-ui/react-alert-dialog` package, which is included with `@agentix/ui`.
+The AlertDialog component requires the `@radix-ui/react-alert-dialog` package, which is included with `aapaetsch-ui-kit`.
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ import {
   AlertDialogDescription,
   AlertDialogAction,
   AlertDialogCancel,
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 ```
 
 ### Basic Usage

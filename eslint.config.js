@@ -1,4 +1,4 @@
-// ESLint 9 flat config for @agentix/ui
+// ESLint 9 flat config for aapaetsch-ui-kit
 // Lints both the library source (src/) and the tooling files in the repo root.
 
 import js from "@eslint/js";

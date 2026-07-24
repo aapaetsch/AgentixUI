@@ -7,13 +7,13 @@ Built on top of Radix UI Checkbox primitive with full accessibility support.
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
 
 ```tsx
-import { Checkbox } from '@agentix/ui';
+import { Checkbox } from 'aapaetsch-ui-kit';
 
 // Basic usage
 <Checkbox label="Accept terms and conditions" />

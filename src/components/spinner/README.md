@@ -5,13 +5,13 @@ An animated loading indicator component with support for classic circular spinne
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
 
 ```tsx
-import { Spinner } from '@agentix/ui';
+import { Spinner } from 'aapaetsch-ui-kit';
 
 // Default circular spinner
 <Spinner />
@@ -174,7 +174,7 @@ Sizes follow Material Design 3 specifications (24dp - 240dp):
 ## Dependencies
 
 - `class-variance-authority` - Variant management
-- `@agentix/ui/lib/utils` - `cn()` utility
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License
 

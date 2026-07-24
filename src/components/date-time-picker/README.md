@@ -4,7 +4,7 @@ A combined date and time selection component that integrates a calendar with tim
 
 ## Installation
 
-The DateTimePicker is part of the `@agentix/ui` package. Ensure you have the required dependencies:
+The DateTimePicker is part of the `aapaetsch-ui-kit` package. Ensure you have the required dependencies:
 
 ```bash
 npm install date-fns react-day-picker
@@ -15,7 +15,7 @@ npm install date-fns react-day-picker
 ### Basic Usage
 
 ```tsx
-import { DateTimePicker } from "@agentix/ui";
+import { DateTimePicker } from "aapaetsch-ui-kit";
 import { useState } from "react";
 
 function MyComponent() {

@@ -20,8 +20,8 @@ const files = execFileSync("tar", ["-tf", artifactPath], {
 const evidence = {
   generatedAt: new Date().toISOString(),
   artifact: {
-    name: "agentix-ui-0.2.0-beta.1.tgz",
-    package: "@agentix/ui",
+    name: "aapaetsch-ui-kit-0.2.0-beta.1.tgz",
+    package: "aapaetsch-ui-kit",
     version: "0.2.0-beta.1",
     byteLength: bytes.length,
     fileCount: files.length,

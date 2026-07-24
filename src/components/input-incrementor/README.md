@@ -5,13 +5,13 @@ A numeric input component with increment/decrement buttons for precise value con
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
 
 ```tsx
-import { InputIncrementor } from '@agentix/ui';
+import { InputIncrementor } from 'aapaetsch-ui-kit';
 
 // Basic usage
 <InputIncrementor defaultValue={0} />
@@ -320,7 +320,7 @@ Override styles using the `containerClassName`, `inputClassName`, and `buttonCla
 
 - `lucide-react` - Icon set
 - `class-variance-authority` - Variant management
-- `@agentix/ui/lib/utils` - `cn()` utility
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License
 

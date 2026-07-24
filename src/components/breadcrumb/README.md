@@ -31,7 +31,7 @@ import {
   BreadcrumbLink, 
   BreadcrumbPage,
   BreadcrumbSeparator 
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 
 <Breadcrumb>
   <BreadcrumbList>
@@ -115,7 +115,7 @@ Override individual separators by passing children to `BreadcrumbSeparator`:
 Show collapsed items indicator:
 
 ```tsx
-import { BreadcrumbEllipsis } from "@agentix/ui";
+import { BreadcrumbEllipsis } from "aapaetsch-ui-kit";
 
 <Breadcrumb>
   <BreadcrumbList>
@@ -139,7 +139,7 @@ import { BreadcrumbEllipsis } from "@agentix/ui";
 Automatically collapses middle items on smaller screens. Shows a popover on desktop and drawer on mobile:
 
 ```tsx
-import { ResponsiveBreadcrumb } from "@agentix/ui";
+import { ResponsiveBreadcrumb } from "aapaetsch-ui-kit";
 
 const items = [
   { href: "/", label: "Home" },

@@ -4,16 +4,16 @@ A non-modal notification element for displaying informational messages inline wi
 
 ## Installation
 
-The Alert component is part of the `@agentix/ui` package. No additional dependencies are required.
+The Alert component is part of the `aapaetsch-ui-kit` package. No additional dependencies are required.
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription } from "@agentix/ui";
+import { Alert, AlertTitle, AlertDescription } from "aapaetsch-ui-kit";
 ```
 
 ### Basic Alert
@@ -105,8 +105,8 @@ import { Terminal } from "lucide-react";
 ### With Action Buttons
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription, AlertAction } from "@agentix/ui";
-import { Button } from "@agentix/ui";
+import { Alert, AlertTitle, AlertDescription, AlertAction } from "aapaetsch-ui-kit";
+import { Button } from "aapaetsch-ui-kit";
 
 <Alert variant="warning">
   <AlertTitle>Unsaved Changes</AlertTitle>

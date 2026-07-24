@@ -1,6 +1,6 @@
 # SegmentedProgress
 
-A segmented bar for `@agentix/ui`. Sibling of `LinearProgress`.
+A segmented bar for `aapaetsch-ui-kit`. Sibling of `LinearProgress`.
 
 Renders a horizontal or vertical bar divided into proportional labeled
 segments, each with its own value and color. Useful for portfolio
@@ -9,7 +9,7 @@ composition, capacity meters, allocation breakdowns, etc.
 ## Installation / Import
 
 ```ts
-import { SegmentedProgress, type Segment } from "@agentix/ui";
+import { SegmentedProgress, type Segment } from "aapaetsch-ui-kit";
 ```
 
 ## Usage

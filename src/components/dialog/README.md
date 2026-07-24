@@ -5,7 +5,7 @@ A comprehensive modal dialog system built on Radix UI primitives with Material D
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ import {
   DialogPages,
   useDialogPages,
   useResponsiveDialog
-} from '@agentix/ui';
+} from 'aapaetsch-ui-kit';
 
 // Basic dialog
 <Dialog>
@@ -256,7 +256,7 @@ Each nesting level increases z-index by 10:
 - `@radix-ui/react-dialog` - Core dialog primitive with accessibility
 - `class-variance-authority` - CVA for variant management
 - `lucide-react` - X icon for close button
-- `@agentix/ui/lib/utils` - `cn()` utility function
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility function
 
 ## License
 

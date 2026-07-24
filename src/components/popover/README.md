@@ -29,7 +29,7 @@ import {
   Popover, 
   PopoverTrigger, 
   PopoverContent 
-} from "@agentix/ui";
+} from "aapaetsch-ui-kit";
 
 <Popover>
   <PopoverTrigger asChild>
@@ -87,7 +87,7 @@ Control alignment within the positioned side:
 ### With Close Button
 
 ```tsx
-import { PopoverClose } from "@agentix/ui";
+import { PopoverClose } from "aapaetsch-ui-kit";
 
 <Popover>
   <PopoverTrigger asChild>

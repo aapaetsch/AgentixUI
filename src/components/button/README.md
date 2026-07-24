@@ -38,7 +38,7 @@ Segmented buttons with merged borders and single/multi-select. Supports two styl
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
@@ -46,7 +46,7 @@ npm install @agentix/ui
 ### Button
 
 ```tsx
-import { Button } from '@agentix/ui';
+import { Button } from 'aapaetsch-ui-kit';
 
 // Standard button
 <Button>Click me</Button>
@@ -66,7 +66,7 @@ import { Button } from '@agentix/ui';
 ### IconButton
 
 ```tsx
-import { IconButton } from '@agentix/ui';
+import { IconButton } from 'aapaetsch-ui-kit';
 
 <IconButton aria-label="Favorite">
   <HeartIcon />
@@ -76,7 +76,7 @@ import { IconButton } from '@agentix/ui';
 ### ToggleButton
 
 ```tsx
-import { ToggleButton } from '@agentix/ui';
+import { ToggleButton } from 'aapaetsch-ui-kit';
 
 <ToggleButton pressed={isSelected} onPressedChange={setSelected}>
   Toggle
@@ -86,7 +86,7 @@ import { ToggleButton } from '@agentix/ui';
 ### ToggleIconButton
 
 ```tsx
-import { ToggleIconButton } from '@agentix/ui';
+import { ToggleIconButton } from 'aapaetsch-ui-kit';
 
 <ToggleIconButton 
   icon={<BookmarkIcon />} 
@@ -100,7 +100,7 @@ import { ToggleIconButton } from '@agentix/ui';
 ### SplitButton
 
 ```tsx
-import { SplitButton } from '@agentix/ui';
+import { SplitButton } from 'aapaetsch-ui-kit';
 
 <SplitButton
   onAction={() => console.log("Primary action")}
@@ -113,7 +113,7 @@ import { SplitButton } from '@agentix/ui';
 ### ButtonGroup
 
 ```tsx
-import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, Button } from '@agentix/ui';
+import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, Button } from 'aapaetsch-ui-kit';
 
 // Basic usage (shadcn style - default)
 <ButtonGroup>
@@ -152,7 +152,7 @@ import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, Button } from '@age
 ### ConnectedButtonGroup
 
 ```tsx
-import { ConnectedButtonGroup, ConnectedButtonGroupItem } from '@agentix/ui';
+import { ConnectedButtonGroup, ConnectedButtonGroupItem } from 'aapaetsch-ui-kit';
 
 // Shadcn style (default) - single select
 <ConnectedButtonGroup value={selectedValue} onValueChange={setSelectedValue}>
@@ -378,7 +378,7 @@ When using `styleVariant="md3"`:
 - `@radix-ui/react-slot` - Polymorphic component (Button only)
 - `class-variance-authority` - Variant management
 - `lucide-react` - Icons (SplitButton chevron, stories)
-- `@agentix/ui/lib/utils` - `cn()` utility
+- `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License
 

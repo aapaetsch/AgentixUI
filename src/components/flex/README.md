@@ -22,7 +22,7 @@ Flex components are part of the core library. No additional installation is requ
 ### FlexRow (Horizontal Layout)
 
 ```tsx
-import { FlexRow, FlexItem } from "@agentix/ui";
+import { FlexRow, FlexItem } from "aapaetsch-ui-kit";
 
 // Basic row layout
 <FlexRow gap={4}>
@@ -46,7 +46,7 @@ import { FlexRow, FlexItem } from "@agentix/ui";
 ### FlexCol (Vertical Layout)
 
 ```tsx
-import { FlexCol, FlexItem } from "@agentix/ui";
+import { FlexCol, FlexItem } from "aapaetsch-ui-kit";
 
 // Basic column layout
 <FlexCol gap={4}>
@@ -76,7 +76,7 @@ import { FlexCol, FlexItem } from "@agentix/ui";
 FlexRow and FlexCol support flex item props (`grow`, `shrink`, `basis`, `alignSelf`, `order`) so they can be nested inside each other without needing a wrapper:
 
 ```tsx
-import { FlexRow, FlexCol } from "@agentix/ui";
+import { FlexRow, FlexCol } from "aapaetsch-ui-kit";
 
 // Sidebar + Main content layout
 <FlexRow gap={4}>
@@ -105,7 +105,7 @@ import { FlexRow, FlexCol } from "@agentix/ui";
 ### Base Flex Container
 
 ```tsx
-import { Flex } from "@agentix/ui";
+import { Flex } from "aapaetsch-ui-kit";
 
 // Full control over direction
 <Flex direction="row" gap={4}>
@@ -123,7 +123,7 @@ import { Flex } from "@agentix/ui";
 ### Flex Items
 
 ```tsx
-import { FlexRow, FlexItem } from "@agentix/ui";
+import { FlexRow, FlexItem } from "aapaetsch-ui-kit";
 
 <FlexRow gap={4}>
   <FlexItem grow={1}>This item grows</FlexItem>

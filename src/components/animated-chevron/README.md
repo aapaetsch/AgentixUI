@@ -5,13 +5,13 @@ A standalone animated chevron indicator with morphing SVG animation.
 ## Installation
 
 ```bash
-npm install @agentix/ui
+npm install aapaetsch-ui-kit
 ```
 
 ## Usage
 
 ```tsx
-import { AnimatedChevron } from '@agentix/ui';
+import { AnimatedChevron } from 'aapaetsch-ui-kit';
 
 // Basic toggle
 const [isOpen, setIsOpen] = useState(false);
@@ -100,7 +100,7 @@ The chevron is purely decorative (`pointer-events-none`). Ensure the parent inte
 ## Dependencies
 
 - `class-variance-authority` - For managing size variants
-- `@agentix/ui/lib/utils` - For `cn()` utility function
+- `aapaetsch-ui-kit/lib/utils` - For `cn()` utility function
 
 No external icon libraries required - the chevron is a custom SVG.
 
