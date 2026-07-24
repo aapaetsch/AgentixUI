@@ -87,9 +87,10 @@ jobs:
         run: npm pack --dry-run --ignore-scripts
 
       - name: Publish
-        # `publishConfig.tag` in package.json controls the dist-tag
-        # ("beta" for now). Drop `--tag` here so a future latest release
-        # is honored automatically once publishConfig.tag changes.
-        run: npm publish --provenance --access public
+        # Explicit `--tag beta` so a pre-release version never lands
+        # under `latest`. publishConfig.tag would normally drive this,
+        # but npm's pre-publish notice has been observed defaulting to
+        # `latest` in CI, so the flag is kept explicit for safety.
+        run: npm publish --provenance --access public --tag beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
