@@ -1,0 +1,1 @@
+import type { Meta,StoryObj } from "@storybook/react";import { ReturnsChart } from ".";const meta={title:"Charts/Quant/ReturnsChart",component:ReturnsChart,args:{"aria-label":"Monthly returns",data:[{period:"Jan",value:2.4},{period:"Feb",value:-1.2},{period:"Mar",value:3.1}]}} satisfies Meta<typeof ReturnsChart>;export default meta;export const Default:StoryObj<typeof meta>={};

@@ -127,16 +127,19 @@ Richer APIs and interaction models for complex use cases.
 
 `aapaetsch-ui-kit` is intentionally **UI‑only**. It contains primitives, layout, form, navigation, disclosure, overlays, and small inline‑SVG data‑viz primitives (`Sparkline`‑class components, `NumericText`, `TrendIndicator`, `Gauge`, `SegmentedProgress`). It deliberately **does not** ship general‑purpose chart components (line, bar, candlestick, heatmap with axes/legends, etc.).
 
-**Why:** Real charting brings heavy dependencies (D3 modules, `visx`, `lightweight-charts`, possibly Canvas/WebGL) and a faster release cadence than the UI kit. Bundling them would force every consumer — settings pages, auth flows, marketing forms — to ship megabytes they may never use. See `docs/chart-library-strategy.md` for the full decision record and the boundary contract.
+**Why:** Real charting brings specialized rendering, interaction, accessibility, and release concerns. Bundling it would force every consumer—settings pages, auth flows, and marketing forms—to ship code they never use. See `docs/chart-library-strategy.md` for the full decision record and boundary contract.
 
 **Boundary contract:**
 
 ```
-@agentix/charts  ->  aapaetsch-ui-kit   (charts consumes ui primitives, tokens, cn())
-aapaetsch-ui-kit ✗   @agentix/charts  (ui MUST NOT depend on charts)
+@agentix/charts         -> aapaetsch-ui-kit
+@agentix/charts-market  -> aapaetsch-ui-kit
+aapaetsch-ui-kit         ✗ chart packages
 ```
 
-`@agentix/charts` (planned, separate package in this monorepo) will ship the charting surface: `LineChart`, `AreaChart`, `BarChart`, `Histogram`, `ScatterPlot`, `BoxPlot`, `Treemap`, full `Heatmap`/`DonutChart` with axes/legends, `CandlestickChart`, `DepthChart`, plus the quant domain widgets (`EquityCurve`, `DrawdownCurve`, `CorrelationMatrix`, `SignalHeatmap`, `ICBars`, `QuantileSpreadChart`, etc.). Composed dashboards (`BacktestTearsheet`, `RiskDashboard`, `SymbolDetailPage`) will likely live in a third `@agentix/templates` package and consume both.
+`@agentix/charts` lives in the `charts/` npm workspace and ships shared chart chrome, ten foundational Recharts charts, and financial/quantitative compositions including depth, volume profile, equity, drawdown, returns, correlation, signals, risk, and tearsheets.
+
+`@agentix/charts-market` lives in `charts-market/`. It is an ESM-only technical-analysis package with a first-party Canvas 2D + SVG engine, five market-series modes, resizable panes, streaming updates, indicators, controlled drawings, chart overlays, synchronized multi-chart workspaces, and versioned persistence contracts.
 
 `globals.css` remains the **single source of truth** for theming across both packages — `@agentix/charts` reads UI kit tokens and defines no visual identity of its own.
 

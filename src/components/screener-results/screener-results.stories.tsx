@@ -1,0 +1,2 @@
+import type { Meta, StoryObj } from "@storybook/react"; import { fn } from "@storybook/test"; import { ScreenerResults } from ".";
+const meta={title:"Finance/Screeners/ScreenerResults",component:ScreenerResults,args:{results:[{symbol:"AAPL",name:"Apple Inc.",price:224.9,changePercent:1.42,marketCap:3400000000000},{symbol:"MSFT",name:"Microsoft",price:514.2,changePercent:-0.31,marketCap:3820000000000}],onRowClick:fn()}} satisfies Meta<typeof ScreenerResults>;export default meta;export const Default:StoryObj<typeof meta>={};

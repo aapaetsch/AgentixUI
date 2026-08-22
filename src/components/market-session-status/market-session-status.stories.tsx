@@ -1,0 +1,2 @@
+import type { Meta, StoryObj } from "@storybook/react"; import { MarketSessionStatus } from ".";
+const meta={title:"Finance/Symbol/MarketSessionStatus",component:MarketSessionStatus,args:{state:"open",nextTransition:"Closes in 2h 14m"}} satisfies Meta<typeof MarketSessionStatus>;export default meta;export const Open:StoryObj<typeof meta>={};export const Closed:StoryObj<typeof meta>={args:{state:"closed",nextTransition:"Opens tomorrow"}};

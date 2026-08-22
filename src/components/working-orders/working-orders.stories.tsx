@@ -1,0 +1,2 @@
+import type { Meta, StoryObj } from "@storybook/react"; import { fn } from "@storybook/test"; import { WorkingOrders } from ".";
+const meta={title:"Finance/Trading/WorkingOrders",component:WorkingOrders,args:{orders:[{id:"o1",symbol:"NVDA",side:"buy",type:"limit",quantity:100,filledQuantity:25,limitPrice:178.5,status:"partiallyFilled"}],onModify:fn(),onCancel:fn()}} satisfies Meta<typeof WorkingOrders>;export default meta;export const Default:StoryObj<typeof meta>={};

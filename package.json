@@ -22,6 +22,10 @@
     "npm": "10.9.2"
   },
   "packageManager": "npm@10.9.2",
+  "workspaces": [
+    "charts",
+    "charts-market"
+  ],
   "keywords": [
     "react",
     "ui",
@@ -84,13 +88,17 @@
     }
   },
   "scripts": {
-    "build": "npm run build:js && npm run build:css",
+    "build": "npm run build:ui && npm run build:charts && npm run build:charts-market",
+    "build:ui": "npm run build:js && npm run build:css",
+    "build:charts": "npm run build --workspace @agentix/charts",
+    "build:charts-market": "npm run build --workspace @agentix/charts-market",
     "build:js": "tsup",
     "build:css": "tailwindcss -c tailwind.config.js -i src/globals.css -o dist/globals.css --minify",
     "dev": "tsup --watch",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "typecheck": "npm run typecheck:ui && npm run typecheck --workspace @agentix/charts && npm run typecheck --workspace @agentix/charts-market",
+    "typecheck:ui": "tsc --noEmit",
+    "test": "vitest run && npm run test --workspace @agentix/charts && npm run test --workspace @agentix/charts-market",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",

@@ -23,5 +23,5 @@
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "dist", "**/*.stories.tsx", "vitest.config.ts", "vitest.setup.ts", "eslint.config.js"]
+  "exclude": ["node_modules", "dist", "**/*.stories.tsx", "vitest.config.mts", "vitest.setup.ts", "eslint.config.mjs"]
 }

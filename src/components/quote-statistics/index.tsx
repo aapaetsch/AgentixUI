@@ -1,0 +1,4 @@
+import * as React from "react"; import { cn } from "../../lib/utils"; import type { QuoteStatistic } from "../../lib/trading-workflow-types";
+export interface QuoteStatisticsProps extends React.HTMLAttributes<HTMLDListElement>{statistics:QuoteStatistic[];columns?:2|3|4}
+const columns={2:"sm:grid-cols-2",3:"sm:grid-cols-3",4:"sm:grid-cols-2 lg:grid-cols-4"};
+export function QuoteStatistics({statistics,columns:columnCount=2,className,...props}:QuoteStatisticsProps){return <dl className={cn("grid gap-x-6 gap-y-3",columns[columnCount],className)} {...props}>{statistics.map(s=><div key={s.id} className="flex items-baseline justify-between gap-3 border-b border-border py-2"><dt className="text-sm text-muted-foreground">{s.label}</dt><dd className={cn("font-mono text-sm font-medium tabular-nums",s.emphasis==="positive"&&"text-[hsl(var(--positive))]",s.emphasis==="negative"&&"text-[hsl(var(--negative))]")}>{s.value}</dd></div>)}</dl>}

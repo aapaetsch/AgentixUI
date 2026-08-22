@@ -1,0 +1,2 @@
+import type { Meta, StoryObj } from "@storybook/react"; import { fn } from "@storybook/test"; import { AlertRuleEditor } from ".";
+const meta={title:"Finance/Alerts/AlertRuleEditor",component:AlertRuleEditor,args:{value:{id:"a1",symbol:"AAPL",field:"price",operator:"greaterThan",threshold:225,enabled:true},onValueChange:fn()}} satisfies Meta<typeof AlertRuleEditor>;export default meta;export const Default:StoryObj<typeof meta>={};

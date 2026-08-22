@@ -1,0 +1,2 @@
+import type { Meta, StoryObj } from "@storybook/react"; import { QuoteStatistics } from ".";
+const meta={title:"Finance/Symbol/QuoteStatistics",component:QuoteStatistics,args:{statistics:[{id:"open",label:"Open",value:"$221.30"},{id:"high",label:"Day high",value:"$225.20"},{id:"volume",label:"Volume",value:"48.2M"},{id:"change",label:"Change",value:"+1.42%",emphasis:"positive"}],columns:2}} satisfies Meta<typeof QuoteStatistics>;export default meta;export const Default:StoryObj<typeof meta>={};

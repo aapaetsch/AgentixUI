@@ -64,7 +64,7 @@ primitives + tokens). `@agentix/ui` MUST NOT depend on `@agentix/charts`.
 | 5 | 🟠 P1 | **`BarChart`** | 🟧 Charts | chart primitive | Volume bars, broker comparison, holdings by sector | IC bars, monthly returns bars, factor exposure bars, performance attribution | — | S | Vertical + horizontal; supports stacked & divergent bars. |
 | 6 | 🟠 P1 | **`Histogram`** | 🟧 Charts | chart primitive | Trade size / volume distribution | Returns distribution, signal value distribution, slippage distribution | — | S | Optional normal overlay, KDE, bins config. |
 | 7 | 🟠 P1 | **`DonutChart` / PieChart`** | 🟧 Charts | chart primitive | Allocation donut in `AllocationBreakdown` | Risk decomposition donut (systematic/idiosyncratic/factor) | — | S | Default to charts. Stays in UI only if a small decorative variant is needed. |
-| 8 | 🟠 P1 | **`CandlestickChart`** | 🟧 Charts | chart primitive | The core price chart for every symbol view | Price chart underneath backtest trade markers | (or adapter over `lightweight-charts`) | L | If bundled, prefer dependency‑free SVG impl for v1. |
+| 8 | 🟠 P1 | **`CandlestickChart`** | 🟧 Charts | chart primitive | The core price chart for every symbol view | Price chart underneath backtest trade markers | first-party Canvas engine | L | Implemented in the isolated market package. |
 | 9 | 🟡 P2 | **`BoxPlot`** | 🟧 Charts | chart primitive | Returns by sector / regime | Distribution diagnostics, signal decile returns | — | S | Useful for "is this alpha still alive?" diagnostics. |
 | 10 | 🟡 P2 | **`SurfaceChart`** (heatmap) | 🟧 Charts | chart primitive | Volatility surface (strike × expiry) | Implied vol surface, factor exposure surface | — | M | Can reuse `Heatmap` + axis mapping. |
 | 11 | 🟡 P2 | **`RadarChart`** | 🟧 Charts | chart primitive | Multi‑asset score comparison | Multi‑factor score comparison across strategies | — | S | Spider chart; used by risk & perf summaries. |
@@ -299,7 +299,7 @@ primitives + tokens). `@agentix/ui` MUST NOT depend on `@agentix/charts`.
 
 ## Suggested Build Order
 
-A concrete sequencing that respects composition dependencies and unlocks the most user‑visible value fastest. **Phases that target 🟦 `@agentix/ui` can proceed now**; phases targeting 🟧 `@agentix/charts` block on creating the new package (see `docs/chart-library-strategy.md`).
+A concrete sequencing that respects composition dependencies and unlocks the most user‑visible value fastest. **Phase C is complete and `@agentix/charts` now exists; Phase D is in progress.**
 
 ### Phase A — UI chart primitives + form/text (🟦 `@agentix/ui`, ship now)
 1. `Sparkline` (XS) — #1
@@ -339,36 +339,36 @@ A concrete sequencing that respects composition dependencies and unlocks the mos
 33. `WorkspaceTabs` (M) — #35
 34. `TagInput` (S) — #24
 
-### Phase C — Initialize 🟧 `@agentix/charts` package (BLOCKER for chart work)
-35. Scaffold `charts/` workspace folder (pnpm workspaces, tsup, shared Storybook section).
-36. Pick charting engine: `visx` for SVG primitives + optional `lightweight-charts` peer for canvas‑backed `CandlestickChart`.
-37. Implement chart chrome: `ChartCard`, `ChartTooltip`, `ChartLegend`, `ChartGrid`.
-38. Implement scale + axis utilities (linear, log, time, divergent color).
+### Phase C — Initialize 🟧 `@agentix/charts` package — ✅ Complete
+35. ✅ Scaffold `charts/` npm workspace folder (tsup, Vitest, shared Storybook section).
+36. ✅ Select Recharts v3 for SVG primitives and isolate the first-party Canvas 2D + SVG engine in the ESM-only `@agentix/charts-market` package.
+37. ✅ Implement chart chrome: `ChartContainer`, `ChartCard`, `ChartTooltip`, `ChartLegend`, `ChartGrid`.
+38. ✅ Implement config-driven palette mapping and shared axis/grid defaults on Recharts' scale system.
 
-### Phase D — Chart foundation (🟧 `@agentix/charts`, after Phase C)
-39. `Heatmap` (S) — #2
-40. `LineChart`/`AreaChart` (M) — #3
-41. `Histogram` (S) — #6
-42. `BarChart` (S) — #5
-43. `ScatterPlot` (M) — #4
-44. `DonutChart` (S) — #7
-45. `BoxPlot` (S) — #9
-46. `Treemap` (M) — #12
-47. `RadarChart` (S) — #11
+### Phase D — Chart foundation (🟧 `@agentix/charts`) — ✅ Complete
+39. ✅ `Heatmap` (S) — #2
+40. ✅ `LineChart`/`AreaChart` (M) — #3
+41. ✅ `Histogram` (S) — #6
+42. ✅ `BarChart` (S) — #5
+43. ✅ `ScatterPlot` (M) — #4
+44. ✅ `DonutChart` (S) — #7
+45. ✅ `BoxPlot` (S) — #9
+46. ✅ `Treemap` (M) — #12
+47. ✅ `RadarChart` (S) — #11
 
 ### Phase E — Financial chart widgets (🟧 `@agentix/charts`)
-48. `CandlestickChart` (L) — #8
-49. `DepthChart` (M) — #42
-50. `VolumeProfile` (M) — #45
+48. ✅ `MarketChart` in `@agentix/charts-market` (L) — replaces #8
+49. ✅ `DepthChart` (M) — #42
+50. ✅ `VolumeProfile` (M) — #45
 51. `PriceTiersChart` (M) — #60
 
 ### Phase F — Quant chart widgets (🟧 `@agentix/charts`)
-52. `EquityCurve` (S) — #67
-53. `DrawdownCurve` (S) — #68
-54. `RollingMetricChart` (S) — #69
+52. ✅ `EquityCurve` (S) — #67
+53. ✅ `DrawdownChart` (S) — #68
+54. ✅ `RollingMetricChart` (S) — #69
 55. `ReturnsHistogram` (S) — #70
 56. `MonthlyReturnsHeatmap` (S) — #71
-57. `CorrelationMatrix` (S) — #72
+57. ✅ `CorrelationMatrix` (S) — #72
 58. `FactorScatterPlot` (S) — #73
 59. `QQPlot` (S) — #74
 60. `VolatilityConeChart` (M) — #75
@@ -398,7 +398,7 @@ A concrete sequencing that respects composition dependencies and unlocks the mos
 84. `RegimeShadeOverlay` (S) — #124
 
 ### Phase G — Quant reports (⬜ templates package, after Phase F)
-85. **`BacktestTearsheet`** (L) — #139 ← milestone
+85. ✅ **`Tearsheet` foundation** (L) — replaceable report composition for #139/#140
 86. `AlphaTearsheet` (L) — #140
 87. `RiskDashboard` (L) — #141
 88. `PortfolioDashboard` (L) — #143
@@ -473,11 +473,11 @@ Counts by destination (from the 145 table rows above):
 | Package | Count | Representative items |
 |---------|-------|---------------------|
 | 🟦 `@agentix/ui` (in‑scope now) | ~75 | Sparkline, NumericText, TrendIndicator, Label, Field, Form, Typography, EmptyState, Gauge, SymbolHeader, QuoteStatsStrip, DateRangePicker, QuantMetricStrip, TradeBlotter, TreeView, Sidebar … |
-| 🟧 `@agentix/charts` (future) | ~55 | LineChart, Heatmap, BarChart, Histogram, ScatterPlot, DonutChart, CandlestickChart, DepthChart, EquityCurve, DrawdownCurve, CorrelationMatrix, SignalHeatmap, ICBars, BacktestTearsheet dependencies … |
+| 🟧 Chart packages (implemented foundation) | ~55 | `@agentix/charts`: LineChart, Heatmap, BarChart, Histogram, ScatterPlot, DonutChart, DepthChart, EquityCurve, DrawdownChart, CorrelationMatrix, SignalChart and Tearsheet. `@agentix/charts-market`: candlestick/OHLC market charts, indicators, drawings, overlays and synchronized workspaces. Specialized domain wrappers remain demand-driven. |
 | ⬜ templates (third package or `src/templates/`) | ~15 | MarketViewLayout, EmailClientLayout, BacktestTearsheet, AlphaTearsheet, RiskDashboard, SymbolDetailPage, PortfolioDashboard, QuantWorkspace, MonteCarloReport … |
 
 ## Next Actions (recommended)
 
-1. **Approve / amend `docs/chart-library-strategy.md`** as the boundary contract.
-2. Begin **Phase A** in `@agentix/ui`: `Sparkline`, `NumericText`, `TrendIndicator`, `Typography`, `Label`, `Field`, `Kbd`, `VisuallyHidden`, `EmptyState`, `Gauge`, `SegmentedProgress`. All are in‑scope, low effort, no chart‑dependency.
-3. Pick a date to start **Phase C** (scaffold `@agentix/charts` package) — that's the blocker for everything in Phases D–G.
+1. Integrate the completed `@agentix/charts` and `@agentix/charts-market` packages into a consumer application and collect API feedback.
+2. Build specialized quant wrappers only when a consumer needs behavior beyond the completed generic/composition layer.
+3. Keep Fibonacci, channels, anchored VWAP, freehand tools and pattern recognition in the experimental market-plugin backlog.

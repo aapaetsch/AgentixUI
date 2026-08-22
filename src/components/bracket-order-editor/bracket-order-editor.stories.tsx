@@ -1,0 +1,2 @@
+import type { Meta, StoryObj } from "@storybook/react"; import { fn } from "@storybook/test"; import { BracketOrderEditor } from ".";
+const meta={title:"Finance/Trading/BracketOrderEditor",component:BracketOrderEditor,args:{value:{symbol:"AAPL",side:"buy",quantity:100,entryPrice:220,takeProfitPrice:235,stopLossPrice:214},onValueChange:fn()}} satisfies Meta<typeof BracketOrderEditor>;export default meta;export const Long:StoryObj<typeof meta>={};

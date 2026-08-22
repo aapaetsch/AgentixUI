@@ -1,0 +1,2 @@
+import type { Meta, StoryObj } from "@storybook/react"; import { fn } from "@storybook/test"; import { ReplayControls } from ".";
+const meta={title:"Finance/Replay/ReplayControls",component:ReplayControls,args:{current:42,min:0,max:100,playing:false,speed:1,onCurrentChange:fn(),onPlayingChange:fn(),onStep:fn(),onSpeedChange:fn()}} satisfies Meta<typeof ReplayControls>;export default meta;export const Paused:StoryObj<typeof meta>={};

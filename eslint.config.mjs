@@ -12,16 +12,21 @@ export default [
   {
     ignores: [
       "dist/**",
+      "charts/dist/**",
+      "charts-market/dist/**",
       "storybook-static/**",
       "node_modules/**",
       "src/**/*.stories.tsx",
+      "charts/src/**/*.stories.tsx",
+      "charts-market/src/**/*.stories.tsx",
+      ".npm-cache/**",
       "coverage/**",
       "fixtures/**/.next/**",
     ],
   },
   js.configs.recommended,
   {
-    files: ["src/**/*.{ts,tsx}"],
+    files: ["src/**/*.{ts,tsx}", "charts/src/**/*.{ts,tsx}", "charts-market/src/**/*.{ts,tsx}"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {

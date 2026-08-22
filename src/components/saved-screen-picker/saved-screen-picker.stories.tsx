@@ -1,0 +1,2 @@
+import type { Meta, StoryObj } from "@storybook/react"; import { fn } from "@storybook/test"; import { SavedScreenPicker } from ".";
+const meta={title:"Finance/Screeners/SavedScreenPicker",component:SavedScreenPicker,args:{screens:[{id:"growth",name:"Growth leaders"},{id:"value",name:"Deep value"}],value:"growth",onValueChange:fn(),onCreate:fn(),onRename:fn(),onDuplicate:fn(),onDelete:fn()}} satisfies Meta<typeof SavedScreenPicker>;export default meta;export const Default:StoryObj<typeof meta>={};

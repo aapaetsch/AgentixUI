@@ -1,0 +1,3 @@
+"use client"; import * as React from "react"; import { LineChart } from "../line-chart"; import type { ChartDatum } from "../../lib/chart-types";
+export interface RollingMetricChartProps{data:ChartDatum[];xKey:string;metricKey:string;label:string;"aria-label":string;height?:number;color?:string;className?:string;valueFormatter?:(value:number)=>string}
+export function RollingMetricChart({data,xKey,metricKey,label,color,"aria-label":ariaLabel,...props}:RollingMetricChartProps){return <LineChart aria-label={ariaLabel} data={data} xKey={xKey} series={[{dataKey:metricKey,label,color}]} {...props}/>}

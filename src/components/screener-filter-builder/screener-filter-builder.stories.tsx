@@ -1,0 +1,2 @@
+import type { Meta, StoryObj } from "@storybook/react"; import { fn } from "@storybook/test"; import { ScreenerFilterBuilder } from ".";
+const meta={title:"Finance/Screeners/ScreenerFilterBuilder",component:ScreenerFilterBuilder,args:{definitions:[{id:"marketCap",label:"Market cap",type:"number"},{id:"sector",label:"Sector",type:"text"}],filters:[{id:"f1",field:"marketCap",operator:"greaterThan",value:10000000000}],onFiltersChange:fn()}} satisfies Meta<typeof ScreenerFilterBuilder>;export default meta;export const Default:StoryObj<typeof meta>={};

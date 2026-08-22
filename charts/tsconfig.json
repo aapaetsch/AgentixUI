@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@charts/*": ["./src/*"],
+      "aapaetsch-ui-kit": ["../src/index.ts"]
+    },
+    "types": ["vitest/globals", "@testing-library/jest-dom/vitest", "node"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "dist", "**/*.stories.tsx"]
+}

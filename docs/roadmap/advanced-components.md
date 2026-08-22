@@ -32,6 +32,17 @@
 | **OrderBook** | ✅ Complete | `OrderBook`, `OrderBookSide`, `OrderBookRow`, `OrderBookSpread`, `OrderBookHeader`, `OrderBookSkeleton`, `orderBookRowVariants`, `orderBookSideVariants` | Level-2 depth ladder with bid/ask depth bars + spread; memoized rows; throttled SR summary; exports from `./finance` secondary entrypoint | - |
 | **TimeAndSales** | ✅ Complete | `TimeAndSales`, `TimeAndSalesRow`, `TimeAndSalesHeader`, `timeAndSalesRowVariants` | Streaming recent-trades tape, rolling window, autoscroll unless scrolled up, throttled SR summary; exports from `./finance` secondary entrypoint | - |
 
+### Controlled finance workflows — ✅ Complete
+
+| Group | Components | Contract |
+|---|---|---|
+| Alerts | `AlertRuleEditor`, `AlertManager`, `AlertLog` | Controlled rule and event surfaces; evaluation remains external |
+| Screeners | `ScreenerFilterBuilder`, `SavedScreenPicker`, `ScreenerResults` | Controlled filters, saved-screen intents and accessible results |
+| Trading | `OrderStatusBadge`, `WorkingOrders`, `TradeBlotter`, `BracketOrderEditor` | Modify/cancel/submit intent surfaces; execution remains external |
+| Replay | `ReplayControls` | Controlled progress, play/pause, step and speed intents |
+| Strategy | `StrategyReport` | Metrics, replaceable chart slots and trade report |
+| Symbol context | `SymbolSearch`, `QuoteStatistics`, `MarketSessionStatus` | Search, quote metadata and consumer-calculated session status |
+
 ### Options (Phase J-open) — ✅ Complete
 
 | Component | Status | Variants/Sub-components | Notes |

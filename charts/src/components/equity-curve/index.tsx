@@ -1,0 +1,3 @@
+"use client"; import * as React from "react"; import { LineChart } from "../line-chart"; import type { ChartDatum } from "../../lib/chart-types";
+export interface EquityCurveProps{data:ChartDatum[];xKey:string;equityKey?:string;benchmarkKey?:string;"aria-label":string;height?:number;className?:string;valueFormatter?:(value:number)=>string}
+export function EquityCurve({data,xKey,equityKey="equity",benchmarkKey,"aria-label":ariaLabel,...props}:EquityCurveProps){return <LineChart aria-label={ariaLabel} data={data} xKey={xKey} series={[{dataKey:equityKey,label:"Strategy",color:"hsl(var(--chart-1))"},...(benchmarkKey?[{dataKey:benchmarkKey,label:"Benchmark",color:"hsl(var(--muted-foreground))"}]:[])]} {...props}/>}

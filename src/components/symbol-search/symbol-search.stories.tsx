@@ -1,0 +1,2 @@
+import type { Meta, StoryObj } from "@storybook/react"; import { fn } from "@storybook/test"; import { SymbolSearch } from ".";
+const meta={title:"Finance/Symbol/SymbolSearch",component:SymbolSearch,args:{query:"APP",results:[{symbol:"AAPL",name:"Apple Inc.",exchange:"NASDAQ",assetType:"Equity"},{symbol:"APP",name:"AppLovin Corp.",exchange:"NASDAQ",assetType:"Equity"}],onQueryChange:fn(),onSelect:fn()}} satisfies Meta<typeof SymbolSearch>;export default meta;export const Results:StoryObj<typeof meta>={};
