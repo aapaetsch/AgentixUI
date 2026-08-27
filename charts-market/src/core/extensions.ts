@@ -52,14 +52,92 @@ export interface DrawingState<TParameters extends SerializableParameters = Seria
   parameters: TParameters;
   visible: boolean;
   locked: boolean;
+  /** @deprecated Use MarketChart.selectedDrawingIds for transient selection state. */
   selected?: boolean;
 }
+
+export interface DrawingCoordinate {
+  x: number;
+  y: number;
+}
+
+export interface DrawingBounds {
+  width: number;
+  height: number;
+}
+
+export type DrawingPrimitive =
+  | { id: string; kind: "line"; from: DrawingCoordinate; to: DrawingCoordinate }
+  | { id: string; kind: "rect"; x: number; y: number; width: number; height: number; closed?: boolean }
+  | { id: string; kind: "ellipse"; cx: number; cy: number; rx: number; ry: number; closed?: boolean }
+  | { id: string; kind: "polyline"; points: DrawingCoordinate[]; closed?: boolean }
+  | { id: string; kind: "text"; at: DrawingCoordinate; text: string; anchor?: "start" | "middle" | "end" };
+
+export interface DrawingHandle {
+  id: string;
+  pointIndex: number;
+  position: DrawingCoordinate;
+  cursor?: string;
+  label?: string;
+}
+
+export interface DrawingHitResult {
+  drawingId: string;
+  rendererId: string;
+  kind: "body" | "handle";
+  distance: number;
+  zIndex: number;
+  handleId?: string;
+  pointIndex?: number;
+}
+
+export interface DrawingRendererContext {
+  drawing: DrawingState;
+  points: Array<DrawingCoordinate | null>;
+  bounds: DrawingBounds;
+}
+
+export interface DrawingRendererDefinition {
+  id: string;
+  getPrimitives(context: DrawingRendererContext): DrawingPrimitive[];
+  getHandles?(context: DrawingRendererContext): DrawingHandle[];
+  hitTest?(
+    point: DrawingCoordinate,
+    context: DrawingRendererContext,
+    tolerance: number,
+  ): Omit<DrawingHitResult, "drawingId" | "rendererId" | "zIndex"> | null;
+}
+
+export type DrawingToolCategory = "lines" | "shapes" | "fibonacci" | (string & {});
+
+export interface DrawingInputLifecycle {
+  mode: "point" | "drag";
+  points: number;
+  allowDegenerate?: boolean;
+}
+
+export interface DrawingParameterSchemaField {
+  type: "color" | "number" | "select";
+  label: string;
+  minimum?: number;
+  maximum?: number;
+  step?: number;
+  options?: Array<{ label: string; value: string | number }>;
+}
+
+export type DrawingParameterSchema = Record<string, DrawingParameterSchemaField>;
 
 export interface DrawingToolDefinition<TParameters extends SerializableParameters = SerializableParameters> {
   id: string;
   version: number;
   label: string;
-  requiredPoints: number;
+  /** Defaults to the tool id. */
+  rendererId?: string;
+  category?: DrawingToolCategory;
+  input?: DrawingInputLifecycle;
+  parameterSchema?: DrawingParameterSchema;
+  /** @deprecated Prefer input.points. Legacy definitions are adapted automatically. */
+  requiredPoints?: number;
   defaultParameters: TParameters;
 }
 

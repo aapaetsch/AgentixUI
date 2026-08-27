@@ -15,3 +15,5 @@ const chartRef = useRef<MarketChartHandle>(null)
 ```
 
 Use `chartRef.current?.appendOrUpdate(bar)` for streaming updates and `chartRef.current?.getSnapshot()` for read-only viewport state. Consumers own data fetching and persistence. The package has no runtime chart-engine dependency or third-party branding.
+
+Drawing interaction is configured through `drawingRenderers` and `drawingInteraction`. Prefer `selectedDrawingIds` and `onSelectedDrawingIdsChange` for transient controlled selection; the deprecated `DrawingState.selected` wire shape remains compatible when those props are omitted. `onDrawingsChange` receives additive change metadata as its second argument.

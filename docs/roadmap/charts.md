@@ -44,6 +44,8 @@ theme contract in `src/globals.css`; the UI kit does not depend on charts.
 `RiskChart`, and the replaceable-slot `Tearsheet` composition. Market
 candlesticks remain exclusively in `@agentix/charts-market`.
 
+The market-chart drawing layer is complete with registry-driven renderer-neutral geometry for all eight tools, deterministic hit testing, pointer/touch/keyboard drafting and editing, transient multi-selection, multi-drawing movement, weak/strong/off OHLC snapping, contextual style previews, locking/visibility and bounded controlled undo/redo with change metadata.
+
 Every public chart has an accessible name, Storybook coverage, colocated
 README and `agents.md` guidance. Package gates cover ESM/CommonJS/declarations,
 typecheck, component tests, and quantitative calculation tests.

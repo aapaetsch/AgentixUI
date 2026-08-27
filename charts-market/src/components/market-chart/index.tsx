@@ -7,6 +7,7 @@ import type {
   CurrentBarSnapshot,
   ChartOverlayState,
   DrawingState,
+  DrawingRendererDefinition,
   DrawingToolDefinition,
   IndicatorInstance,
   IndicatorDefinition,
@@ -27,7 +28,19 @@ import type {
 } from "../../core";
 import { marketTimeKey, reportMarketDataIssues } from "../../core";
 import { MarketChartControls } from "../../controls";
-import { builtInDrawingTools, DrawingLayer, DrawingToolbar } from "../../drawings";
+import {
+  builtInDrawingRenderers,
+  builtInDrawingTools,
+  createDrawingHistory,
+  defaultDrawingInteraction,
+  drawingDocumentsEqual,
+  DrawingLayer,
+  DrawingToolbar,
+  reduceDrawingHistory,
+  stripTransientDrawingState,
+  type DrawingChangeMetadata,
+  type DrawingInteractionConfig,
+} from "../../drawings";
 import { builtInIndicators } from "../../indicators";
 import { createMarketChartEngine } from "../../engine";
 
@@ -64,7 +77,10 @@ export interface MarketChartProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   renderLayers?: MarketRenderLayer[];
   drawings?: DrawingState[];
   drawingTools?: DrawingToolDefinition[];
+  drawingRenderers?: DrawingRendererDefinition[];
+  drawingInteraction?: Partial<DrawingInteractionConfig>;
   activeDrawingTool?: string;
+  selectedDrawingIds?: string[];
   overlays?: ChartOverlayState[];
   extendedSessions?: MarketSessionRange[];
   locale?: string;
@@ -76,7 +92,8 @@ export interface MarketChartProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   onVisibleRangeChange?: (range: VisibleRange | null) => void;
   onCurrentBarChange?: (snapshot: CurrentBarSnapshot | null) => void;
   onCrosshairChange?: (snapshot: MarketCrosshairSnapshot | null) => void;
-  onDrawingsChange?: (drawings: DrawingState[]) => void;
+  onDrawingsChange?: (drawings: DrawingState[], metadata?: DrawingChangeMetadata) => void;
+  onSelectedDrawingIdsChange?: (drawingIds: string[]) => void;
   onActiveDrawingToolChange?: (toolId: string | undefined) => void;
   /** Primarily for adapter contract tests and alternative engines. */
   engineFactory?: MarketChartEngineFactory;
@@ -121,7 +138,10 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   renderLayers = [],
   drawings = [],
   drawingTools = builtInDrawingTools,
+  drawingRenderers = builtInDrawingRenderers,
+  drawingInteraction,
   activeDrawingTool,
+  selectedDrawingIds: controlledSelectedDrawingIds,
   overlays = [],
   extendedSessions = [],
   locale,
@@ -134,12 +154,14 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   onCurrentBarChange,
   onCrosshairChange,
   onDrawingsChange,
+  onSelectedDrawingIdsChange,
   onActiveDrawingToolChange,
   engineFactory = createMarketChartEngine,
   className,
   ...props
 }, forwardedRef) {
   const chartHostRef = React.useRef<HTMLDivElement>(null);
+  const chartSurfaceRef = React.useRef<HTMLDivElement>(null);
   const indicatorSelectId = React.useId();
   const engineRef = React.useRef<MarketChartEngine | null>(null);
   const dataRef = React.useRef(data);
@@ -154,10 +176,14 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   const [, setViewportRevision] = React.useState(0);
   const [currentBar, setCurrentBar] = React.useState<OhlcBar | null>(data.at(-1) ?? null);
   const [crosshairSnapshot, setCrosshairSnapshot] = React.useState<MarketCrosshairSnapshot | null>(null);
+  const [internalSelectedDrawingIds, setInternalSelectedDrawingIds] = React.useState<string[]>(() => drawings.filter((drawing) => drawing.selected).map((drawing) => drawing.id));
+  const [drawingStylePreview, setDrawingStylePreview] = React.useState<Record<string, string | number> | null>(null);
+  const [, setDrawingHistoryRevision] = React.useState(0);
   const issues = React.useMemo(() => reportMarketDataIssues(data), [data]);
   const renderData = React.useMemo(() => issues.length ? [] : data, [data, issues.length]);
   const engineOptionsRef = React.useRef({ chartType, renderData, height, showVolume, scaleMode, markers, extendedSessions, locale, timeZone, paneSizes, renderLayers });
-  const drawingHistoryRef = React.useRef<{ past: DrawingState[][]; present: DrawingState[]; future: DrawingState[][] }>({ past: [], present: drawings, future: [] });
+  const historyLimit = drawingInteraction?.historyLimit ?? defaultDrawingInteraction.historyLimit;
+  const drawingHistoryRef = React.useRef(createDrawingHistory(drawings, historyLimit));
   const indicatorRuntimeRef = React.useRef(new Map<string, IndicatorRuntime>());
   const indicatorsRef = React.useRef(indicators);
   const indicatorSeriesRef = React.useRef<IndicatorRenderSeries[]>([]);
@@ -188,7 +214,18 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   indicatorSeriesRef.current = indicatorSeries;
   engineOptionsRef.current = { chartType, renderData, height, showVolume, scaleMode, markers, extendedSessions, locale, timeZone, paneSizes, renderLayers };
 
-  React.useEffect(() => { drawingHistoryRef.current.present = drawings; }, [drawings]);
+  React.useEffect(() => {
+    const history = drawingHistoryRef.current;
+    if (history.limit !== historyLimit) {
+      const nextLimit = Math.max(0, Math.floor(historyLimit));
+      drawingHistoryRef.current = { ...history, limit: nextLimit, past: nextLimit === 0 ? [] : history.past.slice(-nextLimit) };
+      setDrawingHistoryRevision((value) => value + 1);
+    }
+    if (!drawingDocumentsEqual(drawingHistoryRef.current.present, drawings)) {
+      drawingHistoryRef.current = reduceDrawingHistory(drawingHistoryRef.current, { type: "rebase", drawings });
+      setDrawingHistoryRevision((value) => value + 1);
+    }
+  }, [drawings, historyLimit]);
 
   React.useEffect(() => {
     setCurrentBar(data.at(-1) ?? null);
@@ -285,29 +322,45 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   const snapshot = currentBar ? snapshotForBar(currentBar) : null;
   const numberFormatter = React.useMemo(() => new Intl.NumberFormat(locale, { maximumFractionDigits: 4 }), [locale]);
   const showTable = dataTable === "always" || (dataTable === "toggle" && tableOpen);
-  const selectedDrawing = drawings.find((drawing) => drawing.selected);
+  const usesLegacySelection = controlledSelectedDrawingIds === undefined && onSelectedDrawingIdsChange === undefined;
+  const effectiveSelectedDrawingIds = usesLegacySelection ? drawings.filter((drawing) => drawing.selected).map((drawing) => drawing.id) : controlledSelectedDrawingIds ?? internalSelectedDrawingIds;
+  const selectedDrawingSet = new Set(effectiveSelectedDrawingIds);
+  const displayedDrawings = drawingStylePreview ? drawings.map((drawing) => selectedDrawingSet.has(drawing.id) ? { ...drawing, parameters: { ...drawing.parameters, ...drawingStylePreview } } : drawing) : drawings;
+  const selectedDrawings = drawings.filter((drawing) => selectedDrawingSet.has(drawing.id));
+  const selectedDrawing = selectedDrawings[0];
   const selectedTool = drawingTools.find((tool) => tool.id === activeDrawingTool);
+  const crosshairLegendSeries = crosshairSnapshot ? indicatorSeries.filter((series) => series.paneId === crosshairSnapshot.paneId || (crosshairSnapshot.paneId === "price" && series.placement === "overlay")) : [];
   const addIndicator = (definitionId: string) => {
     const definition = availableIndicators.find((item) => item.id === definitionId); if (!definition) return;
     const id = `${definition.id}-${Date.now()}`;
     onIndicatorsChange?.([...indicators, { id, definition, parameters: { ...definition.defaultParameters }, visible: true }]);
   };
-  const commitDrawings = (next: DrawingState[]) => {
-    const history = drawingHistoryRef.current;
-    drawingHistoryRef.current = { past: [...history.past, history.present], present: next, future: [] };
-    onDrawingsChange?.(next);
+  const withLegacySelection = (document: DrawingState[], ids = effectiveSelectedDrawingIds) => usesLegacySelection
+    ? document.map((drawing) => ({ ...drawing, selected: ids.includes(drawing.id) || undefined }))
+    : document;
+  const changeSelection = (ids: string[]) => {
+    if (usesLegacySelection) onDrawingsChange?.(withLegacySelection(drawingHistoryRef.current.present, ids), { type: "selection", drawingIds: ids });
+    else {
+      if (controlledSelectedDrawingIds === undefined) setInternalSelectedDrawingIds(ids);
+      onSelectedDrawingIdsChange?.(ids);
+    }
+  };
+  const commitDrawings = (next: DrawingState[], metadata: DrawingChangeMetadata = { type: "style", drawingIds: effectiveSelectedDrawingIds }) => {
+    const history = reduceDrawingHistory(drawingHistoryRef.current, { type: "commit", drawings: stripTransientDrawingState(next), metadata });
+    if (history === drawingHistoryRef.current) return;
+    drawingHistoryRef.current = history;
+    setDrawingHistoryRevision((value) => value + 1);
+    onDrawingsChange?.(withLegacySelection(history.present), metadata);
   };
   const undoDrawings = () => {
-    const history = drawingHistoryRef.current; if (!history.past.length) return;
-    const present = history.past[history.past.length - 1];
-    drawingHistoryRef.current = { past: history.past.slice(0, -1), present, future: [history.present, ...history.future] };
-    onDrawingsChange?.(present);
+    const history = reduceDrawingHistory(drawingHistoryRef.current, { type: "undo" }); if (history === drawingHistoryRef.current) return;
+    drawingHistoryRef.current = history; setDrawingHistoryRevision((value) => value + 1);
+    onDrawingsChange?.(withLegacySelection(history.present), { type: "undo", drawingIds: history.present.map((drawing) => drawing.id) });
   };
   const redoDrawings = () => {
-    const history = drawingHistoryRef.current; if (!history.future.length) return;
-    const present = history.future[0];
-    drawingHistoryRef.current = { past: [...history.past, history.present], present, future: history.future.slice(1) };
-    onDrawingsChange?.(present);
+    const history = reduceDrawingHistory(drawingHistoryRef.current, { type: "redo" }); if (history === drawingHistoryRef.current) return;
+    drawingHistoryRef.current = history; setDrawingHistoryRevision((value) => value + 1);
+    onDrawingsChange?.(withLegacySelection(history.present), { type: "redo", drawingIds: history.present.map((drawing) => drawing.id) });
   };
 
   return (
@@ -321,12 +374,14 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
         />
       ) : null}
       {onDrawingsChange ? <DrawingToolbar
-        tools={drawingTools} activeToolId={activeDrawingTool} selectedDrawing={selectedDrawing}
+        tools={drawingTools} activeToolId={activeDrawingTool} selectedDrawing={selectedDrawing} selectedDrawings={selectedDrawings}
         canUndo={drawingHistoryRef.current.past.length > 0} canRedo={drawingHistoryRef.current.future.length > 0}
         onActiveToolChange={onActiveDrawingToolChange} onUndo={undoDrawings} onRedo={redoDrawings}
-        onDelete={() => selectedDrawing && commitDrawings(drawings.filter((drawing) => drawing.id !== selectedDrawing.id))}
-        onToggleVisibility={() => selectedDrawing && commitDrawings(drawings.map((drawing) => drawing.id === selectedDrawing.id ? { ...drawing, visible: !drawing.visible } : drawing))}
-        onToggleLock={() => selectedDrawing && commitDrawings(drawings.map((drawing) => drawing.id === selectedDrawing.id ? { ...drawing, locked: !drawing.locked } : drawing))}
+        onStylePreview={setDrawingStylePreview}
+        onStyleCommit={(changes) => { setDrawingStylePreview(null); commitDrawings(drawings.map((drawing) => selectedDrawingSet.has(drawing.id) ? { ...drawing, parameters: { ...drawing.parameters, ...changes } } : drawing), { type: "style", drawingIds: effectiveSelectedDrawingIds, transactionId: `style-${Date.now()}` }); }}
+        onDelete={() => { commitDrawings(drawings.filter((drawing) => !selectedDrawingSet.has(drawing.id)), { type: "delete", drawingIds: effectiveSelectedDrawingIds }); changeSelection([]); }}
+        onToggleVisibility={() => commitDrawings(drawings.map((drawing) => selectedDrawingSet.has(drawing.id) ? { ...drawing, visible: !drawing.visible } : drawing), { type: "visibility", drawingIds: effectiveSelectedDrawingIds })}
+        onToggleLock={() => commitDrawings(drawings.map((drawing) => selectedDrawingSet.has(drawing.id) ? { ...drawing, locked: !drawing.locked } : drawing), { type: "lock", drawingIds: effectiveSelectedDrawingIds })}
       /> : null}
       {onIndicatorsChange ? <div className="flex flex-wrap items-center gap-2 border-b border-border bg-background px-3 py-2 text-xs">
         <label className="font-medium" htmlFor={indicatorSelectId}>Indicators</label>
@@ -352,12 +407,37 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
           </span>
         </div>
       ) : null}
-      {crosshairSnapshot ? <div aria-label="Pane indicator legend" className="flex flex-wrap gap-x-4 border-b border-border px-3 py-1 font-mono text-[0.6875rem] text-muted-foreground">
-        {indicatorSeries.filter((series) => series.paneId === crosshairSnapshot.paneId || (crosshairSnapshot.paneId === "price" && series.placement === "overlay")).map((series) => <span key={series.id} style={{ color: series.color }}>{series.id} {crosshairSnapshot.values[series.id] == null ? "—" : (series.formatValue?.(crosshairSnapshot.values[series.id]!) ?? numberFormatter.format(crosshairSnapshot.values[series.id]!))}</span>)}
-      </div> : null}
-      <div className="relative" style={{ minHeight: height }}>
+      <div
+        ref={chartSurfaceRef}
+        className={cn("relative outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring/60", activeDrawingTool && "cursor-crosshair")}
+        style={{ minHeight: height }}
+        tabIndex={onDrawingsChange ? 0 : undefined}
+        aria-label={onDrawingsChange ? "Interactive market chart" : undefined}
+        onKeyDownCapture={(event) => {
+          if (!(event.ctrlKey || event.metaKey)) return;
+          if (event.key.toLowerCase() === "z") { event.preventDefault(); event.shiftKey ? redoDrawings() : undoDrawings(); }
+          else if (event.key.toLowerCase() === "y") { event.preventDefault(); redoDrawings(); }
+        }}
+      >
         <div ref={chartHostRef} aria-hidden="true" style={{ height }} />
-        {engineRef.current && onDrawingsChange ? <DrawingLayer engine={engineRef.current} data={renderData} drawings={drawings} activeTool={selectedTool} onDrawingsChange={commitDrawings} onActiveToolComplete={() => onActiveDrawingToolChange?.(undefined)} aria-label="Chart drawings" /> : null}
+        {crosshairSnapshot && crosshairLegendSeries.length ? <div aria-label="Pane indicator legend" className="pointer-events-none absolute left-2 top-2 z-10 flex max-w-[calc(100%-5rem)] flex-wrap gap-x-4 rounded-[var(--radius)] border border-border/70 bg-background/85 px-2 py-1 font-mono text-[0.6875rem] text-muted-foreground shadow-sm backdrop-blur-sm">
+          {crosshairLegendSeries.map((series) => <span key={series.id} style={{ color: series.color }}>{series.id} {crosshairSnapshot.values[series.id] == null ? "—" : (series.formatValue?.(crosshairSnapshot.values[series.id]!) ?? numberFormatter.format(crosshairSnapshot.values[series.id]!))}</span>)}
+        </div> : null}
+        {engineRef.current && onDrawingsChange ? <DrawingLayer
+          engine={engineRef.current}
+          data={renderData}
+          drawings={displayedDrawings}
+          tools={drawingTools}
+          renderers={drawingRenderers}
+          activeTool={selectedTool}
+          selectedDrawingIds={effectiveSelectedDrawingIds}
+          interaction={drawingInteraction}
+          interactionTargetRef={chartSurfaceRef}
+          onDrawingsChange={commitDrawings}
+          onSelectedDrawingIdsChange={changeSelection}
+          onActiveToolComplete={() => onActiveDrawingToolChange?.(undefined)}
+          aria-label="Chart drawings"
+        /> : null}
         {loading ? <div role="status" className="absolute inset-0 grid place-items-center bg-background"><div className="h-24 w-[70%] animate-pulse rounded bg-muted" aria-label="Loading market chart" /></div> : null}
         {!loading && visibleError ? <div role="alert" className="absolute inset-0 grid place-items-center bg-background p-6 text-center text-sm text-destructive">{visibleError}</div> : null}
         {!loading && !visibleError && data.length === 0 ? <div className="absolute inset-0 grid place-items-center bg-background p-6 text-center text-sm text-muted-foreground">{emptyMessage}</div> : null}
