@@ -51,7 +51,7 @@ export function hitTestPrimitives(
 ): number | null {
   let closest = Number.POSITIVE_INFINITY;
   for (const primitive of primitives) {
-    if (primitive.kind === "text") continue;
+    if (primitive.kind === "text" || primitive.kind === "multiline-text") continue;
     if (primitive.kind === "line") {
       closest = Math.min(closest, distanceToSegment(point, primitive.from, primitive.to));
       continue;
@@ -77,11 +77,17 @@ export function hitTestPrimitives(
       closest = Math.min(closest, distanceToEllipse(point, primitive));
       continue;
     }
-    if (primitive.closed && primitive.points.length >= 3 && pointInPolygon(point, primitive.points)) return 0;
-    for (let index = 1; index < primitive.points.length; index += 1) {
-      closest = Math.min(closest, distanceToSegment(point, primitive.points[index - 1], primitive.points[index]));
+    if (primitive.kind === "arrowhead") {
+      closest = Math.min(closest, distanceBetween(point, primitive.at));
+      continue;
     }
-    if (primitive.closed && primitive.points.length > 2) {
+    const paths = primitive.kind === "band" ? [primitive.upper, primitive.lower] : [primitive.points];
+    if ((primitive.kind === "polygon" || primitive.kind === "polyline") && primitive.closed && primitive.points.length >= 3 && pointInPolygon(point, primitive.points)) return 0;
+    if (primitive.kind === "band" && primitive.upper.length > 1 && primitive.lower.length > 1 && pointInPolygon(point, [...primitive.upper, ...primitive.lower.slice().reverse()])) return 0;
+    for (const path of paths) for (let index = 1; index < path.length; index += 1) {
+      closest = Math.min(closest, distanceToSegment(point, path[index - 1], path[index]));
+    }
+    if ((primitive.kind === "polygon" || primitive.kind === "polyline") && primitive.closed && primitive.points.length > 2) {
       closest = Math.min(closest, distanceToSegment(point, primitive.points.at(-1)!, primitive.points[0]));
     }
   }
@@ -168,8 +174,9 @@ export function hitTestDrawings({
   contexts: ReadonlyMap<string, DrawingRendererContext>;
   minimumTolerance?: number;
 }): DrawingHitResult | null {
-  for (let index = drawings.length - 1; index >= 0; index -= 1) {
-    const drawing = drawings[index];
+  const ordered = drawings.map((drawing, index) => ({ drawing, index })).sort((left, right) => (left.drawing.zIndex ?? left.index) - (right.drawing.zIndex ?? right.index));
+  for (let orderedIndex = ordered.length - 1; orderedIndex >= 0; orderedIndex -= 1) {
+    const { drawing, index } = ordered[orderedIndex];
     if (!drawing.visible) continue;
     const renderer = resolveDrawingRenderer(drawing, tools, renderers);
     const context = contexts.get(drawing.id);

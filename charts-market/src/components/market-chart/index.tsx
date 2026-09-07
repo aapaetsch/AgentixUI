@@ -35,11 +35,22 @@ import {
   defaultDrawingInteraction,
   drawingDocumentsEqual,
   DrawingLayer,
+  DrawingObjectTree,
   DrawingToolbar,
+  applyDrawingDefaults,
+  duplicateDrawings,
+  groupDrawings,
+  parseDrawingClipboard,
+  reorderDrawing,
+  serializeDrawingClipboard,
+  setAllDrawingLock,
+  setAllDrawingVisibility,
+  ungroupDrawings,
   reduceDrawingHistory,
   stripTransientDrawingState,
   type DrawingChangeMetadata,
   type DrawingInteractionConfig,
+  type DrawingPreferences,
 } from "../../drawings";
 import { builtInIndicators } from "../../indicators";
 import { createMarketChartEngine } from "../../engine";
@@ -81,6 +92,8 @@ export interface MarketChartProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   drawingInteraction?: Partial<DrawingInteractionConfig>;
   activeDrawingTool?: string;
   selectedDrawingIds?: string[];
+  drawingPreferences?: Partial<DrawingPreferences>;
+  showDrawingObjectTree?: boolean;
   overlays?: ChartOverlayState[];
   extendedSessions?: MarketSessionRange[];
   locale?: string;
@@ -95,6 +108,8 @@ export interface MarketChartProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   onDrawingsChange?: (drawings: DrawingState[], metadata?: DrawingChangeMetadata) => void;
   onSelectedDrawingIdsChange?: (drawingIds: string[]) => void;
   onActiveDrawingToolChange?: (toolId: string | undefined) => void;
+  onDrawingPreferencesChange?: (preferences: Partial<DrawingPreferences>) => void;
+  onCreateDrawingAlert?: (drawingId: string) => void;
   /** Primarily for adapter contract tests and alternative engines. */
   engineFactory?: MarketChartEngineFactory;
 }
@@ -142,6 +157,8 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   drawingInteraction,
   activeDrawingTool,
   selectedDrawingIds: controlledSelectedDrawingIds,
+  drawingPreferences,
+  showDrawingObjectTree = false,
   overlays = [],
   extendedSessions = [],
   locale,
@@ -156,6 +173,8 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   onDrawingsChange,
   onSelectedDrawingIdsChange,
   onActiveDrawingToolChange,
+  onDrawingPreferencesChange,
+  onCreateDrawingAlert,
   engineFactory = createMarketChartEngine,
   className,
   ...props
@@ -328,7 +347,8 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   const displayedDrawings = drawingStylePreview ? drawings.map((drawing) => selectedDrawingSet.has(drawing.id) ? { ...drawing, parameters: { ...drawing.parameters, ...drawingStylePreview } } : drawing) : drawings;
   const selectedDrawings = drawings.filter((drawing) => selectedDrawingSet.has(drawing.id));
   const selectedDrawing = selectedDrawings[0];
-  const selectedTool = drawingTools.find((tool) => tool.id === activeDrawingTool);
+  const selectedToolDefinition = drawingTools.find((tool) => tool.id === activeDrawingTool);
+  const selectedTool = selectedToolDefinition ? applyDrawingDefaults(selectedToolDefinition, drawingPreferences?.defaults?.[selectedToolDefinition.id]) : undefined;
   const crosshairLegendSeries = crosshairSnapshot ? indicatorSeries.filter((series) => series.paneId === crosshairSnapshot.paneId || (crosshairSnapshot.paneId === "price" && series.placement === "overlay")) : [];
   const addIndicator = (definitionId: string) => {
     const definition = availableIndicators.find((item) => item.id === definitionId); if (!definition) return;
@@ -376,7 +396,14 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
       {onDrawingsChange ? <DrawingToolbar
         tools={drawingTools} activeToolId={activeDrawingTool} selectedDrawing={selectedDrawing} selectedDrawings={selectedDrawings}
         canUndo={drawingHistoryRef.current.past.length > 0} canRedo={drawingHistoryRef.current.future.length > 0}
-        onActiveToolChange={onActiveDrawingToolChange} onUndo={undoDrawings} onRedo={redoDrawings}
+        onActiveToolChange={(toolId) => { onActiveDrawingToolChange?.(toolId); if (toolId) onDrawingPreferencesChange?.({ ...drawingPreferences, recentToolIds: [toolId, ...(drawingPreferences?.recentToolIds ?? []).filter((id) => id !== toolId)].slice(0, 8) }); }} onUndo={undoDrawings} onRedo={redoDrawings}
+        favoriteToolIds={drawingPreferences?.favoriteToolIds} recentToolIds={drawingPreferences?.recentToolIds} keepDrawingMode={drawingPreferences?.keepDrawingMode ?? drawingInteraction?.keepDrawingMode}
+        onToggleFavorite={(toolId) => { const favorites = drawingPreferences?.favoriteToolIds ?? []; onDrawingPreferencesChange?.({ ...drawingPreferences, favoriteToolIds: favorites.includes(toolId) ? favorites.filter((id) => id !== toolId) : [...favorites, toolId] }); }}
+        onKeepDrawingModeChange={(enabled) => onDrawingPreferencesChange?.({ ...drawingPreferences, keepDrawingMode: enabled })}
+        onLockAll={() => commitDrawings(setAllDrawingLock(drawings, true), { type: "lock", drawingIds: drawings.map((drawing) => drawing.id) })}
+        onHideAll={() => { commitDrawings(setAllDrawingVisibility(drawings, false), { type: "visibility", drawingIds: drawings.map((drawing) => drawing.id) }); changeSelection([]); }}
+        onRemoveAll={() => { commitDrawings([], { type: "clear", drawingIds: drawings.map((drawing) => drawing.id) }); changeSelection([]); }}
+        onCreateAlert={selectedDrawing && (["lines", "channels", "volume"].includes(drawingTools.find((tool) => tool.id === selectedDrawing.type)?.category ?? "") || selectedDrawing.type === "rectangle") ? () => onCreateDrawingAlert?.(selectedDrawing.id) : undefined}
         onStylePreview={setDrawingStylePreview}
         onStyleCommit={(changes) => { setDrawingStylePreview(null); commitDrawings(drawings.map((drawing) => selectedDrawingSet.has(drawing.id) ? { ...drawing, parameters: { ...drawing.parameters, ...changes } } : drawing), { type: "style", drawingIds: effectiveSelectedDrawingIds, transactionId: `style-${Date.now()}` }); }}
         onDelete={() => { commitDrawings(drawings.filter((drawing) => !selectedDrawingSet.has(drawing.id)), { type: "delete", drawingIds: effectiveSelectedDrawingIds }); changeSelection([]); }}
@@ -407,9 +434,9 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
           </span>
         </div>
       ) : null}
-      <div
+      <div className={cn(showDrawingObjectTree && "flex min-w-0")}><div
         ref={chartSurfaceRef}
-        className={cn("relative outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring/60", activeDrawingTool && "cursor-crosshair")}
+        className={cn("relative min-w-0 flex-1 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring/60", activeDrawingTool && "cursor-crosshair")}
         style={{ minHeight: height }}
         tabIndex={onDrawingsChange ? 0 : undefined}
         aria-label={onDrawingsChange ? "Interactive market chart" : undefined}
@@ -417,6 +444,8 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
           if (!(event.ctrlKey || event.metaKey)) return;
           if (event.key.toLowerCase() === "z") { event.preventDefault(); event.shiftKey ? redoDrawings() : undoDrawings(); }
           else if (event.key.toLowerCase() === "y") { event.preventDefault(); redoDrawings(); }
+          else if (event.key.toLowerCase() === "c" && effectiveSelectedDrawingIds.length && navigator.clipboard) { event.preventDefault(); void navigator.clipboard.writeText(serializeDrawingClipboard(drawings.filter((drawing) => selectedDrawingSet.has(drawing.id)))); }
+          else if (event.key.toLowerCase() === "v" && navigator.clipboard) { event.preventDefault(); void navigator.clipboard.readText().then((text) => { const pasted = parseDrawingClipboard(text).map((drawing, index) => ({ ...drawing, id: `pasted-${Date.now()}-${index}`, name: drawing.name ? `${drawing.name} copy` : undefined })); commitDrawings([...drawings, ...pasted], { type: "clipboard", drawingIds: pasted.map((drawing) => drawing.id) }); changeSelection(pasted.map((drawing) => drawing.id)); }).catch(() => undefined); }
         }}
       >
         <div ref={chartHostRef} aria-hidden="true" style={{ height }} />
@@ -431,7 +460,7 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
           renderers={drawingRenderers}
           activeTool={selectedTool}
           selectedDrawingIds={effectiveSelectedDrawingIds}
-          interaction={drawingInteraction}
+          interaction={{ ...drawingInteraction, keepDrawingMode: drawingPreferences?.keepDrawingMode ?? drawingInteraction?.keepDrawingMode }}
           interactionTargetRef={chartSurfaceRef}
           onDrawingsChange={commitDrawings}
           onSelectedDrawingIdsChange={changeSelection}
@@ -441,7 +470,7 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
         {loading ? <div role="status" className="absolute inset-0 grid place-items-center bg-background"><div className="h-24 w-[70%] animate-pulse rounded bg-muted" aria-label="Loading market chart" /></div> : null}
         {!loading && visibleError ? <div role="alert" className="absolute inset-0 grid place-items-center bg-background p-6 text-center text-sm text-destructive">{visibleError}</div> : null}
         {!loading && !visibleError && data.length === 0 ? <div className="absolute inset-0 grid place-items-center bg-background p-6 text-center text-sm text-muted-foreground">{emptyMessage}</div> : null}
-      </div>
+      </div>{showDrawingObjectTree && onDrawingsChange ? <DrawingObjectTree drawings={drawings} selectedDrawingIds={effectiveSelectedDrawingIds} onSelectedDrawingIdsChange={changeSelection} onRename={(id, name) => commitDrawings(drawings.map((drawing) => drawing.id === id ? { ...drawing, name } : drawing), { type: "rename", drawingIds: [id] })} onReorder={(id, direction) => commitDrawings(reorderDrawing(drawings, id, direction), { type: "reorder", drawingIds: [id] })} onToggleVisibility={(id) => commitDrawings(drawings.map((drawing) => drawing.id === id ? { ...drawing, visible: !drawing.visible } : drawing), { type: "visibility", drawingIds: [id] })} onToggleLock={(id) => commitDrawings(drawings.map((drawing) => drawing.id === id ? { ...drawing, locked: !drawing.locked } : drawing), { type: "lock", drawingIds: [id] })} onDuplicate={(id) => commitDrawings(duplicateDrawings(drawings, [id], () => `duplicate-${Date.now()}`), { type: "duplicate", drawingIds: [id] })} onDelete={(id) => commitDrawings(drawings.filter((drawing) => drawing.id !== id), { type: "delete", drawingIds: [id] })} onGroup={(ids) => commitDrawings(groupDrawings(drawings, ids, `group-${Date.now()}`), { type: "group", drawingIds: ids })} onUngroup={(ids) => commitDrawings(ungroupDrawings(drawings, ids), { type: "ungroup", drawingIds: ids })} /> : null}</div>
       <div className="flex items-center justify-between gap-3 border-t border-border px-3 py-2 text-xs text-muted-foreground">
         {dataTable === "toggle" ? <Button type="button" colorStyle="text" size="xs" onClick={() => setTableOpen((value) => !value)}>{tableOpen ? "Hide data" : "View data"}</Button> : <span />}
       </div>

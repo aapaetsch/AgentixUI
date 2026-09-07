@@ -1,6 +1,6 @@
 {
   "name": "aapaetsch-ui-kit",
-  "version": "0.2.0-beta.1",
+  "version": "0.2.0-beta.2",
   "description": "Modern React UI library with free and premium components, built with TypeScript, Tailwind CSS, and shadcn/ui patterns",
   "author": "Aidan Paetsch",
   "repository": {
@@ -90,15 +90,15 @@
   "scripts": {
     "build": "npm run build:ui && npm run build:charts && npm run build:charts-market",
     "build:ui": "npm run build:js && npm run build:css",
-    "build:charts": "npm run build --workspace @agentix/charts",
-    "build:charts-market": "npm run build --workspace @agentix/charts-market",
+    "build:charts": "npm run build --workspace aapaetsch-charts",
+    "build:charts-market": "npm run build --workspace aapaetsch-charts-market",
     "build:js": "tsup",
     "build:css": "tailwindcss -c tailwind.config.js -i src/globals.css -o dist/globals.css --minify",
     "dev": "tsup --watch",
     "lint": "eslint .",
-    "typecheck": "npm run typecheck:ui && npm run typecheck --workspace @agentix/charts && npm run typecheck --workspace @agentix/charts-market",
+    "typecheck": "npm run typecheck:ui && npm run typecheck --workspace aapaetsch-charts && npm run typecheck --workspace aapaetsch-charts-market",
     "typecheck:ui": "tsc --noEmit",
-    "test": "vitest run && npm run test --workspace @agentix/charts && npm run test --workspace @agentix/charts-market",
+    "test": "vitest run && npm run test --workspace aapaetsch-charts && npm run test --workspace aapaetsch-charts-market",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",

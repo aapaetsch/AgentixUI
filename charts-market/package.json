@@ -1,8 +1,24 @@
 {
-  "name": "@agentix/charts-market",
+  "name": "aapaetsch-charts-market",
   "version": "0.1.0-beta.0",
   "description": "Modular, accessible technical-market charts for Agentix applications",
+  "author": "Aidan Paetsch",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aapaetsch/AgentixUI.git",
+    "directory": "charts-market"
+  },
+  "bugs": {
+    "url": "https://github.com/aapaetsch/AgentixUI/issues"
+  },
+  "homepage": "https://github.com/aapaetsch/AgentixUI/tree/main/charts-market#readme",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true,
+    "tag": "beta"
+  },
   "type": "module",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

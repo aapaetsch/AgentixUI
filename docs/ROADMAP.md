@@ -10,9 +10,9 @@ This file is an index to the roadmap subfiles. Open any referenced file below to
   - FILE: `docs/roadmap/components.md`
 - Advanced Components: implemented & planned 
   - FILE: `docs/roadmap/advanced-components.md`
-- Charts Package: `@agentix/charts` status and public surface
+- Charts Package: `aapaetsch-charts` status and public surface
   - FILE: `docs/roadmap/charts.md`
-- Market Charts Package: `@agentix/charts-market` architecture, features and release gates
+- Market Charts Package: `aapaetsch-charts-market` architecture, features and release gates
   - FILE: `docs/roadmap/charts-market.md`
 - Templates: page layouts and application shells 
   - FILE: `docs/roadmap/templates.md`

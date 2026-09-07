@@ -1,4 +1,4 @@
-# @agentix/charts
+# aapaetsch-charts
 
 Accessible, theme-aware React charts for dashboards, finance applications, and
 quantitative workspaces. The package lives beside `aapaetsch-ui-kit`, consumes
@@ -8,14 +8,14 @@ UI bundle.
 ## Install
 
 ```bash
-npm install @agentix/charts aapaetsch-ui-kit recharts
+npm install aapaetsch-charts aapaetsch-ui-kit recharts
 ```
 
 Import `aapaetsch-ui-kit/globals.css` once in the host application, then use a
 typed chart component:
 
 ```tsx
-import { LineChart } from "@agentix/charts";
+import { LineChart } from "aapaetsch-charts";
 
 <LineChart
   aria-label="Monthly revenue"
@@ -34,8 +34,8 @@ The package surface includes shared chart chrome; `LineChart`, `AreaChart`,
 Quantitative compositions are also available from the focused entrypoint:
 
 ```tsx
-import { EquityCurve, Tearsheet } from "@agentix/charts/quant";
+import { EquityCurve, Tearsheet } from "aapaetsch-charts/quant";
 ```
 
 Market candlesticks and technical-analysis plugins live in the separate
-`@agentix/charts-market` package.
+`aapaetsch-charts-market` package.

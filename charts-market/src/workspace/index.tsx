@@ -156,4 +156,5 @@ export type {
   TechnicalChartState,
   TechnicalWorkspaceState,
   TechnicalWorkspaceStateV1,
+  TechnicalWorkspaceStateV2,
 } from "./state";

@@ -59,7 +59,7 @@
 | **Progress** | ✅ Complete | `LinearProgress`, `CircularProgress`, `SkillBar`, `ProgressGroup`, `valueFormatters` | Horizontal/vertical bars, circular, gradients, indeterminate mode |
 | **Gauge** | ✅ Complete | `Gauge`, `gaugeVariants`; sizes sm/md/lg; variants semicircle/full; threshold zones | Radial dial sibling of `Progress`. Pure SVG, optional animated needle |
 | **SegmentedProgress** | ✅ Complete | `SegmentedProgress`, `segmentedProgressVariants`, `Segment` type | Multi-segment range bar (siblings of `LinearProgress`); horizontal/vertical, optional value labels, `--chart-1`…`--chart-5` palette fallback |
-| **Sparkline** | ✅ Complete | `Sparkline`, `sparklineContainerVariants`; variants line/area/bar | Dependency-free inline SVG micro-chart; drop-in for `StatTile.sparklineRenderSlot`. Closes the `@agentix/charts` boundary case (`docs/chart-library-strategy.md`) |
+| **Sparkline** | ✅ Complete | `Sparkline`, `sparklineContainerVariants`; variants line/area/bar | Dependency-free inline SVG micro-chart; drop-in for `StatTile.sparklineRenderSlot`. Closes the `aapaetsch-charts` boundary case (`docs/chart-library-strategy.md`) |
 | **MiniBars** | ✅ Complete | `MiniBars`, `miniBarsContainerVariants` | One-row SVG divergent histogram; sibling of `Sparkline` |
 | **EmptyState** | ✅ Complete | `EmptyState`, `emptyStateIconVariants`, `emptyStateTitleVariants` | Zero/empty-state composer (muted icon + title + description + CTA `action` slot). Default `lucide-react` `Inbox` icon |
 

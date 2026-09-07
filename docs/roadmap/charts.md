@@ -1,6 +1,6 @@
 # Charts Package
 
-`@agentix/charts` is a separately consumable npm workspace inside this
+`aapaetsch-charts` is a separately consumable npm workspace inside this
 repository. It depends on the UI kit for shared Card primitives, `cn()`, and the
 theme contract in `src/globals.css`; the UI kit does not depend on charts.
 
@@ -8,7 +8,7 @@ theme contract in `src/globals.css`; the UI kit does not depend on charts.
 
 | Capability | Status | Notes |
 |---|---|---|
-| npm workspace and package manifest | ✅ Complete | Independent `@agentix/charts` package with ESM, CJS, and declaration exports for root and `./quant` entrypoints |
+| npm workspace and package manifest | ✅ Complete | Independent `aapaetsch-charts` package with ESM, CJS, and declaration exports for root and `./quant` entrypoints |
 | Build and typecheck | ✅ Complete | Dedicated tsup and TypeScript configs integrated into root scripts |
 | Unit testing | ✅ Complete | Dedicated Vitest/jsdom project integrated into the root test command |
 | Storybook | ✅ Complete | `Charts/` stories discovered by the shared Storybook workspace |
@@ -42,9 +42,9 @@ theme contract in `src/globals.css`; the UI kit does not depend on charts.
 `DepthChart`, `VolumeProfile`, `EquityCurve`, `DrawdownChart`,
 `RollingMetricChart`, `ReturnsChart`, `CorrelationMatrix`, `SignalChart`,
 `RiskChart`, and the replaceable-slot `Tearsheet` composition. Market
-candlesticks remain exclusively in `@agentix/charts-market`.
+candlesticks remain exclusively in `aapaetsch-charts-market`.
 
-The market-chart drawing layer is complete with registry-driven renderer-neutral geometry for all eight tools, deterministic hit testing, pointer/touch/keyboard drafting and editing, transient multi-selection, multi-drawing movement, weak/strong/off OHLC snapping, contextual style previews, locking/visibility and bounded controlled undo/redo with change metadata.
+The market-chart drawing layer is complete with registry-driven renderer-neutral geometry for the 37-tool practical pack, deterministic hit testing, fixed/multi-click/variable/freehand pointer/touch/keyboard drafting and editing, transient multi-selection, grouped movement, weak/strong/off OHLC snapping, contextual style previews, object management, locking/visibility and bounded controlled undo/redo with change metadata.
 
 Every public chart has an accessible name, Storybook coverage, colocated
 README and `agents.md` guidance. Package gates cover ESM/CommonJS/declarations,

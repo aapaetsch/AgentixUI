@@ -40,7 +40,7 @@ export interface TechnicalWorkspaceStateV1 {
   extensions?: Record<string, JsonValue>;
 }
 
-export interface TechnicalWorkspaceState {
+export interface TechnicalWorkspaceStateV2 {
   version: 2;
   layout: MultiChartPreset;
   name: string;
@@ -55,7 +55,12 @@ export interface TechnicalWorkspaceState {
   extensions?: Record<string, JsonValue>;
 }
 
-export type AnyTechnicalWorkspaceState = TechnicalWorkspaceStateV1 | TechnicalWorkspaceState;
+export interface TechnicalWorkspaceState extends Omit<TechnicalWorkspaceStateV2, "version"> {
+  version: 3;
+  drawingSynchronization: "off" | "same-symbol" | "layout";
+}
+
+export type AnyTechnicalWorkspaceState = TechnicalWorkspaceStateV1 | TechnicalWorkspaceStateV2 | TechnicalWorkspaceState;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -73,13 +78,14 @@ export function migrateWorkspaceState(input: AnyTechnicalWorkspaceState): Techni
       synchronized: { symbol: false, interval: false, visibleRange: false, crosshair: false },
     };
   }
-  if (state.version !== 2) throw new Error("Unsupported technical workspace version.");
+  if (state.version === 2) state = { ...state, version: 3, drawingSynchronization: "off" };
+  if (state.version !== 3) throw new Error("Unsupported technical workspace version.");
   return state;
 }
 
 export function parseWorkspaceState(value: string): TechnicalWorkspaceState {
   const parsed: unknown = JSON.parse(value);
-  if (!isRecord(parsed) || (parsed.version !== 1 && parsed.version !== 2) || !Array.isArray(parsed.charts)) {
+  if (!isRecord(parsed) || (parsed.version !== 1 && parsed.version !== 2 && parsed.version !== 3) || !Array.isArray(parsed.charts)) {
     throw new Error("Invalid technical workspace state.");
   }
   return migrateWorkspaceState(parsed as unknown as AnyTechnicalWorkspaceState);

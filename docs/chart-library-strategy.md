@@ -5,12 +5,12 @@
 
 ## TL;DR
 
-Chart components ship in a **separate `@agentix/charts` package**. `aapaetsch-ui-kit` keeps
+Chart components ship in a **separate `aapaetsch-charts` package**. `aapaetsch-ui-kit` keeps
 only tiny, dependency‑free, inline‑SVG "data‑viz primitives" that are visually and
 functionally indistinguishable from UI primitives (Sparkline, Gauge, NumericText,
 TrendIndicator, MiniBars, SegmentedProgress). Everything else — anything with axes,
 ticks, legends, tooltips, crosshairs, color scales, or domain logic — lives in
-`@agentix/charts`.
+`aapaetsch-charts`.
 
 ## Why split
 
@@ -33,7 +33,7 @@ ticks, legends, tooltips, crosshairs, color scales, or domain logic — lives in
    RTL axes, and number formatting — not the same concerns as Button/Badge/Card.
    Splitting keeps contributors focused.
 5. **Consumer choice.** A pure‑form app should install only `aapaetsch-ui-kit`. A quant
-   dashboard installs `aapaetsch-ui-kit` + `@agentix/charts` explicitly. Tree‑shaking
+   dashboard installs `aapaetsch-ui-kit` + `aapaetsch-charts` explicitly. Tree‑shaking
    isn't enough—large visualization and rendering runtimes do not always tree-shake fully.
 
 ## Industry precedent
@@ -51,15 +51,15 @@ All of them separate chart code from UI primitives for the same reasons in §1.
 ## Boundary contract
 
 ```
-@agentix/charts  →  aapaetsch-ui-kit  (charts consumes UI primitives, tokens, cn)
-aapaetsch-ui-kit ✗  @agentix/charts    (UI MUST NOT depend on charts)
+aapaetsch-charts  →  aapaetsch-ui-kit  (charts consumes UI primitives, tokens, cn)
+aapaetsch-ui-kit ✗  aapaetsch-charts    (UI MUST NOT depend on charts)
 ```
 
-- `@agentix/charts` consumes from `aapaetsch-ui-kit`: `cn()`, `Tooltip`, `Popover`,
+- `aapaetsch-charts` consumes from `aapaetsch-ui-kit`: `cn()`, `Tooltip`, `Popover`,
   `Card`, `Grid`, `Flex`, theme tokens from `globals.css`, and the in‑scope
   primitives (`Sparkline`, `NumericText`, `TrendIndicator`, `MiniBars`, `Gauge`,
   `SegmentedProgress`).
-- `aapaetsch-ui-kit` never imports from `@agentix/charts`.
+- `aapaetsch-ui-kit` never imports from `aapaetsch-charts`.
 - `globals.css` remains the **single source of truth** for theming. Charts define
   zero CSS variables of their own; they read tokens defined by the UI kit.
 - Charts MAY define new CSS variables for chart‑specific concerns (e.g.
@@ -84,13 +84,13 @@ number or a path, it stays in the UI kit.**
 | `Heatmap` (inline, ≤ ~100 cells) | Borderline. **Defer to charts** if it needs axes, color legends, or row/col labels. A small decorative tile‑grid stays here. |
 | `DonutChart` (decorative, no legend/tooltip) | Borderline. **Default to charts** unless trivially small and purely decorative. |
 
-Default: when in doubt, **put it in `@agentix/charts`**. We can always pull a tiny
+Default: when in doubt, **put it in `aapaetsch-charts`**. We can always pull a tiny
 version back into `aapaetsch-ui-kit` if it proves to be a UI primitive.
 
-## What goes to `@agentix/charts`
+## What goes to `aapaetsch-charts`
 
 From the `docs/finance-quant-component-roadmap.md`, the following are deferred to
-`@agentix/charts`:
+`aapaetsch-charts`:
 
 - **Foundational chart primitives:** `LineChart`, `AreaChart`, `BarChart`,
   `Histogram`, `ScatterPlot`, `BoxPlot`, `Treemap`, `SurfaceChart`,
@@ -108,7 +108,7 @@ From the `docs/finance-quant-component-roadmap.md`, the following are deferred t
 - **Quant reports (composed):** `BacktestTearsheet`, `AlphaTearsheet`,
   `RiskDashboard` — arguable a third tier (`@agentix/templates` or
   `@agentix/quant-reports`), but charting code is at least half of their weight;
-  start them inside `@agentix/charts` and split later if it becomes necessary.
+  start them inside `aapaetsch-charts` and split later if it becomes necessary.
 - **Generic chart chrome:** `ChartCard`, `ChartTooltip`, `ChartLegend`,
   `ChartGrid`, color‑scale helpers, axis/tick utilities.
 
@@ -116,7 +116,7 @@ From the `docs/finance-quant-component-roadmap.md`, the following are deferred t
 
 Monorepo with npm workspaces. Charts live in a sibling folder, mirroring
 `src/`'s conventions. Single Git repo, single PR can refactor tokens in
-`aapaetsch-ui-kit` and update all consumers in `@agentix/charts` in one commit.
+`aapaetsch-ui-kit` and update all consumers in `aapaetsch-charts` in one commit.
 
 ```
 Aidans-React-UI/
@@ -127,7 +127,7 @@ Aidans-React-UI/
 │   ├── styles/
 │   ├── globals.css           # owns CSS variables; both packages consume
 │   └── index.ts
-└── charts/                   # @agentix/charts
+└── charts/                   # aapaetsch-charts
     ├── src/
     │   ├── primitives/        # Line, Area, Bar, Histogram, Scatter, BoxPlot
     │   ├── scales/           # linear, log, time, divergent color
@@ -146,17 +146,17 @@ Aidans-React-UI/
     └── stories/              # own Storybook section or subapp
 ```
 
-The chart surface is split into `@agentix/charts` for Recharts-backed SVG
-primitives/compositions and `@agentix/charts-market` for the opt-in first-party
+The chart surface is split into `aapaetsch-charts` for Recharts-backed SVG
+primitives/compositions and `aapaetsch-charts-market` for the opt-in first-party
 Canvas 2D + SVG market engine. General chart consumers do not pay for or evaluate
 the market engine.
 
 ## Tooling decisions
 
 - **Charts engine:** Recharts v3 is selected for SVG primitives, following the
-  current shadcn chart composition model. `@agentix/charts` provides shared
+  current shadcn chart composition model. `aapaetsch-charts` provides shared
   chrome and typed convenience charts without hiding Recharts exports from
-  advanced consumers. `@agentix/charts-market` supplies the implemented,
+  advanced consumers. `aapaetsch-charts-market` supplies the implemented,
   dependency-free Canvas engine for candlestick, OHLC bar, line, area and baseline
   market views.
 - **Color scales:** use the shared `--chart-1`…`--chart-5` palette plus small,
@@ -165,18 +165,18 @@ the market engine.
   that read the UI kit's surface, border, text, and chart tokens.
 - **Storybook:** shared Storybook workspace; add a `Charts/` section alongside
   the existing `Components/`/`Templates/` tree.
-- **Package entrypoints:** dual entrypoints — `@agentix/charts` (general) and
-  `@agentix/charts/quant` (quant‑domain widgets), mirroring the existing
+- **Package entrypoints:** dual entrypoints — `aapaetsch-charts` (general) and
+  `aapaetsch-charts/quant` (quant‑domain widgets), mirroring the existing
   `finance.ts` secondary entrypoint pattern in `src/`.
 
 ## Current implementation
 
 The initial chart system is implemented across two npm workspaces:
 
-- `@agentix/charts` provides shared Recharts chrome, ten foundational charts,
+- `aapaetsch-charts` provides shared Recharts chrome, ten foundational charts,
   financial and quantitative compositions, report composition, root and
   `./quant` entrypoints, tests, declarations, and shared Storybook coverage.
-- `@agentix/charts-market` provides the ESM-only first-party Canvas 2D + SVG engine,
+- `aapaetsch-charts-market` provides the ESM-only first-party Canvas 2D + SVG engine,
   five market-series modes, indicators, drawings, overlays, controls,
   synchronized workspaces, persistence migrations, accessibility fallbacks,
   performance tests, and Storybook coverage.
@@ -187,9 +187,9 @@ shared design tokens and does not import either chart package.
 ## Resolved decisions
 
 - Candlestick and technical-analysis rendering uses the isolated first-party
-  `@agentix/charts-market` engine. General SVG
-  charts remain in the Recharts-backed `@agentix/charts` package.
-- The initial `Tearsheet` report composition remains in `@agentix/charts` with
+  `aapaetsch-charts-market` engine. General SVG
+  charts remain in the Recharts-backed `aapaetsch-charts` package.
+- The initial `Tearsheet` report composition remains in `aapaetsch-charts` with
   replaceable content slots. A third report package is unnecessary at the
   current size.
 - Both chart packages live and build independently inside this npm-workspace
@@ -201,13 +201,13 @@ shared design tokens and does not import either chart package.
 Reopen this decision if any of these happen:
 
 - A chart needs depth that depends on chart code; would force `aapaetsch-ui-kit` to
-  depend on `@agentix/charts`.
-- `@agentix/charts` releases start forcing unrelated breaking changes in
+  depend on `aapaetsch-charts`.
+- `aapaetsch-charts` releases start forcing unrelated breaking changes in
   `aapaetsch-ui-kit`.
 - Bundle size of `aapaetsch-ui-kit` (compressed) grows beyond ~30KB due to chart
   imports sneaking in.
 - A second domain (e.g. maps / geo) emerges, suggesting we split again into
-  `@agentix/charts-geo` or similar.
+  `aapaetsch-charts-geo` or similar.
 
 ## Changelog
 

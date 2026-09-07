@@ -1,91 +1,83 @@
-import type { DrawingPrimitive, DrawingRendererDefinition } from "../core";
+import type { DrawingCoordinate, DrawingPrimitive, DrawingRendererContext, DrawingRendererDefinition } from "../core";
+import { calculateDrawingVwap, calculateLinearRegression, calculatePosition, calculateRangeMeasurement, formatDuration, type DrawingPriceSource } from "./calculations";
 import { clipLineToBounds, defaultDrawingHandles } from "./geometry";
 
-function linePrimitive(id: string, points: Array<{ x: number; y: number } | null>, bounds: { width: number; height: number }, mode: "segment" | "ray" | "infinite" = "segment"): DrawingPrimitive[] {
-  const first = points[0];
-  const second = points[1];
-  if (!first || !second) return [];
+const asNumber = (value: unknown, fallback: number) => typeof value === "number" && Number.isFinite(value) ? value : fallback;
+const asBoolean = (value: unknown, fallback = false) => typeof value === "boolean" ? value : fallback;
+const asString = (value: unknown, fallback: string) => typeof value === "string" ? value : fallback;
+const number = (value: number | null, digits = 2) => value == null || !Number.isFinite(value) ? "—" : value.toFixed(digits);
+
+function linePrimitive(id: string, points: Array<DrawingCoordinate | null>, bounds: { width: number; height: number }, mode: "segment" | "ray" | "infinite" = "segment"): DrawingPrimitive[] {
+  const first = points[0]; const second = points[1]; if (!first || !second) return [];
   const clipped = clipLineToBounds(first, second, bounds, mode);
   return clipped ? [{ id, kind: "line", from: clipped[0], to: clipped[1] }] : [];
 }
 
-const horizontalLineRenderer: DrawingRendererDefinition = {
-  id: "horizontal-line",
-  getPrimitives: ({ points, bounds }) => points[0] ? [{ id: "line", kind: "line", from: { x: 0, y: points[0].y }, to: { x: bounds.width, y: points[0].y } }] : [],
-  getHandles: defaultDrawingHandles,
-};
+function extensionMode(context: DrawingRendererContext): "segment" | "ray" | "infinite" {
+  const left = asBoolean(context.drawing.parameters.extendLeft); const right = asBoolean(context.drawing.parameters.extendRight);
+  return left && right ? "infinite" : right ? "ray" : "segment";
+}
 
-const verticalLineRenderer: DrawingRendererDefinition = {
-  id: "vertical-line",
-  getPrimitives: ({ points, bounds }) => points[0] ? [{ id: "line", kind: "line", from: { x: points[0].x, y: 0 }, to: { x: points[0].x, y: bounds.height } }] : [],
-  getHandles: defaultDrawingHandles,
-};
+const horizontalLineRenderer: DrawingRendererDefinition = { id: "horizontal-line", getPrimitives: ({ points, bounds }) => points[0] ? [{ id: "line", kind: "line", from: { x: 0, y: points[0].y }, to: { x: bounds.width, y: points[0].y } }] : [], getHandles: defaultDrawingHandles };
+const verticalLineRenderer: DrawingRendererDefinition = { id: "vertical-line", getPrimitives: ({ points, bounds }) => points[0] ? [{ id: "line", kind: "line", from: { x: points[0].x, y: 0 }, to: { x: points[0].x, y: bounds.height } }] : [], getHandles: defaultDrawingHandles };
+const trendLineRenderer: DrawingRendererDefinition = { id: "trend-line", getPrimitives: (context) => linePrimitive("line", context.points, context.bounds), getHandles: defaultDrawingHandles };
+const arrowRenderer: DrawingRendererDefinition = { id: "arrow", getPrimitives: (context) => { const line = linePrimitive("line", context.points, context.bounds); const [first, second] = context.points; return first && second ? [...line, { id: "arrowhead", kind: "arrowhead", at: second, from: first }] : line; }, getHandles: defaultDrawingHandles };
+const rayRenderer: DrawingRendererDefinition = { id: "ray", getPrimitives: (context) => linePrimitive("ray", context.points, context.bounds, "ray"), getHandles: defaultDrawingHandles };
+const extendedLineRenderer: DrawingRendererDefinition = { id: "extended-line", getPrimitives: (context) => linePrimitive("extended-line", context.points, context.bounds, "infinite"), getHandles: defaultDrawingHandles };
+const horizontalRayRenderer: DrawingRendererDefinition = { id: "horizontal-ray", getPrimitives: ({ points, bounds }) => points[0] ? [{ id: "ray", kind: "line", from: points[0], to: { x: bounds.width, y: points[0].y } }] : [], getHandles: defaultDrawingHandles };
+const crossLineRenderer: DrawingRendererDefinition = { id: "cross-line", getPrimitives: ({ points, bounds }) => points[0] ? [{ id: "horizontal", kind: "line", from: { x: 0, y: points[0].y }, to: { x: bounds.width, y: points[0].y } }, { id: "vertical", kind: "line", from: { x: points[0].x, y: 0 }, to: { x: points[0].x, y: bounds.height } }] : [], getHandles: defaultDrawingHandles };
 
-const trendLineRenderer: DrawingRendererDefinition = {
-  id: "trend-line",
-  getPrimitives: ({ points, bounds }) => linePrimitive("line", points, bounds),
-  getHandles: defaultDrawingHandles,
-};
+function trendMeasurementPrimitives(context: DrawingRendererContext, angleOnly: boolean): DrawingPrimitive[] {
+  const [first, second] = context.points; if (!first || !second || context.drawing.points.length < 2) return [];
+  const angle = Math.atan2(first.y - second.y, second.x - first.x) * 180 / Math.PI;
+  const measurement = calculateRangeMeasurement(context.data, context.drawing.points[0], context.drawing.points[1]);
+  const label = angleOnly ? `${number(angle, 1)}°` : `${number(measurement.absoluteChange)} · ${number(measurement.percentageChange)}% · ${measurement.bars} bars · ${formatDuration(measurement.durationMs)}${asBoolean(context.drawing.parameters.showAngle) ? ` · ${number(angle, 1)}°` : ""}`;
+  return [...linePrimitive("line", context.points, context.bounds), { id: "label", kind: "multiline-text", at: { x: (first.x + second.x) / 2, y: (first.y + second.y) / 2 - 8 }, lines: [label], anchor: "middle", background: true }];
+}
+const infoLineRenderer: DrawingRendererDefinition = { id: "info-line", getPrimitives: (context) => trendMeasurementPrimitives(context, false), getHandles: defaultDrawingHandles, derivedValues: (context) => { const value = calculateRangeMeasurement(context.data, context.drawing.points[0], context.drawing.points[1]); return { absoluteChange: value.absoluteChange, percentageChange: value.percentageChange, bars: value.bars, durationMs: value.durationMs }; } };
+const trendAngleRenderer: DrawingRendererDefinition = { id: "trend-angle", getPrimitives: (context) => trendMeasurementPrimitives(context, true), getHandles: defaultDrawingHandles };
 
-const rayRenderer: DrawingRendererDefinition = {
-  id: "ray",
-  getPrimitives: ({ points, bounds }) => linePrimitive("ray", points, bounds, "ray"),
-  getHandles: defaultDrawingHandles,
-};
+function channelLines(context: DrawingRendererContext, first: DrawingCoordinate, second: DrawingCoordinate, offset: DrawingCoordinate): DrawingPrimitive[] {
+  const dx = offset.x - first.x; const dy = offset.y - first.y;
+  const upper: [DrawingCoordinate, DrawingCoordinate] = [first, second]; const lower: [DrawingCoordinate, DrawingCoordinate] = [{ x: first.x + dx, y: first.y + dy }, { x: second.x + dx, y: second.y + dy }];
+  const mode = extensionMode(context); const top = clipLineToBounds(...upper, context.bounds, mode) ?? upper; const bottom = clipLineToBounds(...lower, context.bounds, mode) ?? lower;
+  const result: DrawingPrimitive[] = [];
+  if (asBoolean(context.drawing.parameters.showBoundaries, true)) result.push({ id: "boundary-a", kind: "line", from: top[0], to: top[1], role: "boundary" }, { id: "boundary-b", kind: "line", from: bottom[0], to: bottom[1], role: "boundary" });
+  if (asBoolean(context.drawing.parameters.showMidline, true)) result.push({ id: "midline", kind: "line", from: { x: (top[0].x + bottom[0].x) / 2, y: (top[0].y + bottom[0].y) / 2 }, to: { x: (top[1].x + bottom[1].x) / 2, y: (top[1].y + bottom[1].y) / 2 }, role: "midline", dashStyle: "dashed" });
+  if (asBoolean(context.drawing.parameters.fill, true)) result.unshift({ id: "fill", kind: "polygon", points: [top[0], top[1], bottom[1], bottom[0]], closed: true, opacity: asNumber(context.drawing.parameters.fillOpacity, 0.1) });
+  return result;
+}
+const parallelChannelRenderer: DrawingRendererDefinition = { id: "parallel-channel", getPrimitives: (context) => context.points[0] && context.points[1] && context.points[2] ? channelLines(context, context.points[0], context.points[1], context.points[2]) : [], getHandles: defaultDrawingHandles };
+const flatChannelRenderer: DrawingRendererDefinition = { id: "flat-top-bottom", getPrimitives: (context) => { const [first, second, third] = context.points; if (!first || !second || !third) return []; const opposite = [{ x: first.x, y: third.y }, { x: second.x, y: third.y }]; const primitives: DrawingPrimitive[] = [{ id: "slope", kind: "line", from: first, to: second }, { id: "flat", kind: "line", from: opposite[0], to: opposite[1] }]; if (asBoolean(context.drawing.parameters.showMidline, true)) primitives.push({ id: "midline", kind: "line", from: { x: first.x, y: (first.y + third.y) / 2 }, to: { x: second.x, y: (second.y + third.y) / 2 }, dashStyle: "dashed" }); if (asBoolean(context.drawing.parameters.fill, true)) primitives.unshift({ id: "fill", kind: "polygon", points: [first, second, opposite[1], opposite[0]], closed: true, opacity: asNumber(context.drawing.parameters.fillOpacity, 0.1) }); return primitives; }, getHandles: defaultDrawingHandles, derivedValues: ({ drawing }) => ({ orientation: drawing.points[2]?.price >= Math.max(drawing.points[0]?.price ?? -Infinity, drawing.points[1]?.price ?? -Infinity) ? "top" : "bottom" }) };
+const disjointChannelRenderer: DrawingRendererDefinition = { id: "disjoint-channel", getPrimitives: (context) => { const [a, b, c, d] = context.points; if (!a || !b || !c || !d) return []; const result: DrawingPrimitive[] = []; if (asBoolean(context.drawing.parameters.fill, true)) result.push({ id: "fill", kind: "polygon", points: [a, b, d, c], closed: true, opacity: asNumber(context.drawing.parameters.fillOpacity, 0.1) }); if (asBoolean(context.drawing.parameters.showBoundaries, true)) result.push({ id: "a", kind: "line", from: a, to: b }, { id: "b", kind: "line", from: c, to: d }); if (asBoolean(context.drawing.parameters.showMidline, true)) result.push({ id: "midline", kind: "line", from: { x: (a.x + c.x) / 2, y: (a.y + c.y) / 2 }, to: { x: (b.x + d.x) / 2, y: (b.y + d.y) / 2 }, dashStyle: "dashed" }); return result; }, getHandles: defaultDrawingHandles };
+const regressionRenderer: DrawingRendererDefinition = { id: "regression-trend", getPrimitives: (context) => { if (context.drawing.points.length < 2) return []; const bars = context.resolveRange(context.drawing.points[0], context.drawing.points[1]); const regression = calculateLinearRegression(bars, asString(context.drawing.parameters.source, "close") as DrawingPriceSource); if (!regression) return []; const multiple = asNumber(context.drawing.parameters.deviation, 2); const coordinates = (offset: number) => bars.map((bar, index) => context.coordinateFor({ time: bar.time, price: regression.values[index] + offset * regression.deviation * multiple })).filter((point): point is DrawingCoordinate => point != null); const center = coordinates(0), upper = coordinates(1), lower = coordinates(-1); if (center.length < 2) return []; const result: DrawingPrimitive[] = []; if (asBoolean(context.drawing.parameters.fill, true)) result.push({ id: "fill", kind: "band", upper, lower, opacity: asNumber(context.drawing.parameters.fillOpacity, 0.1) }); if (asBoolean(context.drawing.parameters.showBoundaries, true)) result.push({ id: "upper", kind: "path", points: upper }, { id: "lower", kind: "path", points: lower }); if (asBoolean(context.drawing.parameters.showMidline, true)) result.push({ id: "center", kind: "path", points: center, dashStyle: "dashed" }); return result; }, getHandles: defaultDrawingHandles, derivedValues: (context) => { const bars = context.drawing.points.length >= 2 ? context.resolveRange(context.drawing.points[0], context.drawing.points[1]) : []; const value = calculateLinearRegression(bars, asString(context.drawing.parameters.source, "close") as DrawingPriceSource); return value ? { available: true, slope: value.slope, intercept: value.intercept, standardDeviation: value.deviation, bars: bars.length } : { available: false, slope: null, intercept: null, standardDeviation: null, bars: bars.length }; } };
 
-const extendedLineRenderer: DrawingRendererDefinition = {
-  id: "extended-line",
-  getPrimitives: ({ points, bounds }) => linePrimitive("extended-line", points, bounds, "infinite"),
-  getHandles: defaultDrawingHandles,
-};
+function rangePrimitives(context: DrawingRendererContext, mode: "price" | "date" | "both"): DrawingPrimitive[] { const [first, second] = context.points; if (!first || !second || context.drawing.points.length < 2) return []; const measurement = calculateRangeMeasurement(context.data, context.drawing.points[0], context.drawing.points[1]); const labels: string[] = []; if (mode !== "date") labels.push(`${number(measurement.absoluteChange)} (${number(measurement.percentageChange)}%)`); if (mode !== "price") labels.push(`${measurement.bars} bars · ${formatDuration(measurement.durationMs)}`); return [{ id: "range", kind: "rect", x: Math.min(first.x, second.x), y: Math.min(first.y, second.y), width: Math.abs(second.x - first.x), height: Math.abs(second.y - first.y), closed: true, opacity: asNumber(context.drawing.parameters.fillOpacity, 0.12) }, { id: "label", kind: "multiline-text", at: { x: (first.x + second.x) / 2, y: Math.min(first.y, second.y) - 8 }, lines: labels, anchor: "middle", background: true }]; }
+const measurementRenderer = (id: string, mode: "price" | "date" | "both"): DrawingRendererDefinition => ({ id, getPrimitives: (context) => rangePrimitives(context, mode), getHandles: defaultDrawingHandles, derivedValues: (context) => { if (context.drawing.points.length < 2) return { available: false, absoluteChange: null, percentageChange: null, bars: 0, durationMs: 0 }; const value = calculateRangeMeasurement(context.data, context.drawing.points[0], context.drawing.points[1]); return { available: true, absoluteChange: value.absoluteChange, percentageChange: value.percentageChange, bars: value.bars, durationMs: value.durationMs }; } });
 
-const rectangleRenderer: DrawingRendererDefinition = {
-  id: "rectangle",
-  getPrimitives: ({ points }) => {
-    const first = points[0]; const second = points[1];
-    return first && second ? [{
-      id: "rectangle", kind: "rect", x: Math.min(first.x, second.x), y: Math.min(first.y, second.y),
-      width: Math.abs(second.x - first.x), height: Math.abs(second.y - first.y), closed: true,
-    }] : [];
-  },
-  getHandles: defaultDrawingHandles,
-};
+function positionPrimitives(context: DrawingRendererContext, direction: "long" | "short"): DrawingPrimitive[] { const [entry, target, stop] = context.points; if (!entry || !target || !stop) return []; const values = calculatePosition(context.drawing.points, direction, asNumber(context.drawing.parameters.accountSize, NaN), asNumber(context.drawing.parameters.riskPercent, NaN), typeof context.drawing.parameters.quantity === "number" && context.drawing.parameters.quantity > 0 ? context.drawing.parameters.quantity : undefined); if (!values) return []; const range = calculateRangeMeasurement(context.data, context.drawing.points[0], context.drawing.points[1]); return [{ id: "reward", kind: "rect", x: Math.min(entry.x, target.x), y: Math.min(entry.y, target.y), width: Math.abs(target.x - entry.x), height: Math.abs(target.y - entry.y), closed: true, fill: "hsl(var(--positive))", opacity: 0.14 }, { id: "risk", kind: "rect", x: Math.min(entry.x, stop.x), y: Math.min(entry.y, stop.y), width: Math.abs(stop.x - entry.x), height: Math.abs(stop.y - entry.y), closed: true, fill: "hsl(var(--negative))", opacity: 0.14 }, { id: "entry", kind: "line", from: { x: Math.min(target.x, stop.x, entry.x), y: entry.y }, to: { x: Math.max(target.x, stop.x, entry.x), y: entry.y } }, { id: "label", kind: "multiline-text", at: { x: entry.x + 6, y: entry.y - 8 }, lines: [`Entry ${number(values.entry)} · Target ${number(values.target)} · Stop ${number(values.stop)}`, `Risk ${number(values.risk)} (${number(values.riskPercent)}%) · Reward ${number(values.reward)} (${number(values.rewardPercent)}%) · R/R ${number(values.riskReward)}`, `${range.bars} bars · ${formatDuration(range.durationMs)} · Qty ${number(values.quantity)}`], background: true }]; }
+const positionRenderer = (id: string, direction: "long" | "short"): DrawingRendererDefinition => ({ id, getPrimitives: (context) => positionPrimitives(context, direction), getHandles: defaultDrawingHandles, derivedValues: (context) => { const values = calculatePosition(context.drawing.points, direction); if (!values || context.drawing.points.length < 2) return { available: false, entry: null, target: null, stop: null, risk: null, reward: null, riskReward: null, bars: 0, durationMs: 0 }; const range = calculateRangeMeasurement(context.data, context.drawing.points[0], context.drawing.points[1]); return { available: true, entry: values.entry, target: values.target, stop: values.stop, risk: values.risk, reward: values.reward, riskReward: values.riskReward, bars: range.bars, durationMs: range.durationMs }; } });
 
-const ellipseRenderer: DrawingRendererDefinition = {
-  id: "ellipse",
-  getPrimitives: ({ points }) => {
-    const first = points[0]; const second = points[1];
-    return first && second ? [{
-      id: "ellipse", kind: "ellipse", cx: (first.x + second.x) / 2, cy: (first.y + second.y) / 2,
-      rx: Math.abs(second.x - first.x) / 2, ry: Math.abs(second.y - first.y) / 2, closed: true,
-    }] : [];
-  },
-  getHandles: defaultDrawingHandles,
-};
+const rectangleRenderer: DrawingRendererDefinition = { id: "rectangle", getPrimitives: ({ points }) => { const [a, b] = points; return a && b ? [{ id: "rectangle", kind: "rect", x: Math.min(a.x, b.x), y: Math.min(a.y, b.y), width: Math.abs(b.x - a.x), height: Math.abs(b.y - a.y), closed: true }] : []; }, getHandles: defaultDrawingHandles };
+const ellipseRenderer: DrawingRendererDefinition = { id: "ellipse", getPrimitives: ({ points }) => { const [a, b] = points; return a && b ? [{ id: "ellipse", kind: "ellipse", cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2, rx: Math.abs(b.x - a.x) / 2, ry: Math.abs(b.y - a.y) / 2, closed: true }] : []; }, getHandles: defaultDrawingHandles };
+const circleRenderer: DrawingRendererDefinition = { id: "circle", getPrimitives: ({ points }) => { const [a, b] = points; if (!a || !b) return []; const radius = Math.min(Math.abs(b.x - a.x), Math.abs(b.y - a.y)) / 2; return [{ id: "circle", kind: "ellipse", cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2, rx: radius, ry: radius, closed: true }]; }, getHandles: defaultDrawingHandles };
+const pointPathRenderer = (id: string, closed = false): DrawingRendererDefinition => ({ id, getPrimitives: ({ points }) => { const available = points.filter((point): point is DrawingCoordinate => point != null); if (available.length < 2) return []; return closed ? [{ id, kind: "polygon", points: available, closed: true }] : [{ id, kind: "path", points: available }]; }, getHandles: defaultDrawingHandles });
 
-const fibonacciRetracementRenderer: DrawingRendererDefinition = {
-  id: "fibonacci-retracement",
-  getPrimitives: ({ points }) => {
-    const first = points[0]; const second = points[1];
-    if (!first || !second) return [];
-    return [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1].flatMap<DrawingPrimitive>((level) => {
-      const y = first.y + (second.y - first.y) * level;
-      return [
-        { id: `level-${level}`, kind: "line", from: { x: first.x, y }, to: { x: second.x, y } },
-        { id: `label-${level}`, kind: "text", at: { x: second.x + 5, y: y - 3 }, text: String(level) },
-      ];
-    });
-  },
-  getHandles: defaultDrawingHandles,
-};
+function fibonacciLevels(context: DrawingRendererContext): DrawingPrimitive[] { const [first, second] = context.points; if (!first || !second) return []; const configured = Array.isArray(context.drawing.parameters.levels) ? context.drawing.parameters.levels.filter((value): value is number => typeof value === "number") : [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1]; const levels = asBoolean(context.drawing.parameters.reverse) ? configured.map((value) => 1 - value) : configured; const startX = asBoolean(context.drawing.parameters.extendLeft) ? 0 : Math.min(first.x, second.x); const endX = asBoolean(context.drawing.parameters.extendRight) ? context.bounds.width : Math.max(first.x, second.x); const yFor = (level: number) => first.y + (second.y - first.y) * level; const bands: DrawingPrimitive[] = asBoolean(context.drawing.parameters.fillBands, true) ? levels.slice(0, -1).map((level, index) => ({ id: `band-${index}`, kind: "rect", x: startX, y: Math.min(yFor(level), yFor(levels[index + 1])), width: endX - startX, height: Math.abs(yFor(levels[index + 1]) - yFor(level)), closed: true, fill: Array.isArray(context.drawing.parameters.levelColors) && typeof context.drawing.parameters.levelColors[index] === "string" ? context.drawing.parameters.levelColors[index] : undefined, opacity: 0.06 })) : []; return [...bands, ...levels.flatMap<DrawingPrimitive>((level, index) => { const y = yFor(level); const color = Array.isArray(context.drawing.parameters.levelColors) && typeof context.drawing.parameters.levelColors[index] === "string" ? context.drawing.parameters.levelColors[index] : undefined; const firstPrice = context.drawing.points[0]?.price; const secondPrice = context.drawing.points[1]?.price; const priceLabel = asBoolean(context.drawing.parameters.showPrices, true) && firstPrice != null && secondPrice != null ? ` · ${number(firstPrice + (secondPrice - firstPrice) * level)}` : ""; const label = `${level}${priceLabel}`; return [{ id: `level-${index}`, kind: "line", from: { x: startX, y }, to: { x: endX, y }, role: "level", stroke: color }, { id: `label-${index}`, kind: "text", at: { x: endX - 4, y: y - 3 }, text: label, anchor: "end", stroke: color }]; })]; }
+const fibonacciRetracementRenderer: DrawingRendererDefinition = { id: "fibonacci-retracement", getPrimitives: fibonacciLevels, getHandles: defaultDrawingHandles };
+const fibonacciExtensionRenderer: DrawingRendererDefinition = { id: "fibonacci-extension", getPrimitives: (context) => { const [a, b, c] = context.points; if (!a || !b || !c) return []; const delta = b.y - a.y; return [0, 0.618, 1, 1.618, 2.618].flatMap<DrawingPrimitive>((level) => { const y = c.y + delta * level; return [{ id: `level-${level}`, kind: "line", from: { x: c.x, y }, to: { x: asBoolean(context.drawing.parameters.extendRight, true) ? context.bounds.width : Math.max(c.x, b.x), y } }, { id: `label-${level}`, kind: "text", at: { x: c.x + 4, y: y - 3 }, text: String(level) }]; }); }, getHandles: defaultDrawingHandles };
+const fibonacciTimeZoneRenderer: DrawingRendererDefinition = { id: "fibonacci-time-zone", getPrimitives: (context) => { const [a, b] = context.points; if (!a || !b) return []; const width = b.x - a.x; return [0, 1, 2, 3, 5, 8, 13, 21, 34].map<DrawingPrimitive>((level) => ({ id: `zone-${level}`, kind: "line", from: { x: a.x + width * level, y: 0 }, to: { x: a.x + width * level, y: context.bounds.height }, role: "level" })); }, getHandles: defaultDrawingHandles };
+
+function vwapPrimitives(context: DrawingRendererContext, fixed: boolean): DrawingPrimitive[] { const first = context.drawing.points[0]; if (!first) return []; const second = fixed ? context.drawing.points[1] : { time: context.data.at(-1)?.time ?? first.time, price: first.price }; if (!second) return []; const result = calculateDrawingVwap(context.resolveRange(first, second), asString(context.drawing.parameters.source, "hlc3") as DrawingPriceSource); if (!result.available) return [{ id: "unavailable", kind: "multiline-text", at: context.points[0] ?? { x: 8, y: 16 }, lines: [result.reason ?? "VWAP unavailable"], background: true }]; const center = result.points.map((point) => context.coordinateFor({ time: point.time, price: point.value })).filter((point): point is DrawingCoordinate => point != null); const primitives: DrawingPrimitive[] = center.length > 1 ? [{ id: "vwap", kind: "path", points: center }] : []; for (const multiple of [1, 2, 3]) if (asBoolean(context.drawing.parameters[`band${multiple}`])) { const coordinates = (direction: number) => result.points.map((point) => context.coordinateFor({ time: point.time, price: point.value + point.standardDeviation * multiple * direction })).filter((point): point is DrawingCoordinate => point != null); primitives.push({ id: `upper-${multiple}`, kind: "path", points: coordinates(1), dashStyle: "dashed" }, { id: `lower-${multiple}`, kind: "path", points: coordinates(-1), dashStyle: "dashed" }); } return primitives; }
+const vwapRenderer = (id: string, fixed: boolean): DrawingRendererDefinition => ({ id, getPrimitives: (context) => vwapPrimitives(context, fixed), getHandles: defaultDrawingHandles, derivedValues: (context) => { const first = context.drawing.points[0]; const second = fixed ? context.drawing.points[1] : context.data.at(-1) && { time: context.data.at(-1)!.time, price: first?.price ?? 0 }; if (!first || !second) return { available: false, reason: "VWAP requires its anchor range.", latest: null }; const result = calculateDrawingVwap(context.resolveRange(first, second), asString(context.drawing.parameters.source, "hlc3") as DrawingPriceSource); return { available: result.available, reason: result.reason ?? null, latest: result.points.at(-1)?.value ?? null }; } });
+
+const annotationRenderer = (id: string, price = false, arrow = false): DrawingRendererDefinition => ({ id, getPrimitives: (context) => { const point = context.points[0]; if (!point) return []; const label = asString(context.drawing.parameters.text, context.drawing.name ?? id.replaceAll("-", " ")) + (price ? ` ${number(context.drawing.points[0].price)}` : ""); const result: DrawingPrimitive[] = [{ id: "text", kind: "multiline-text", at: point, lines: label.split("\n"), anchor: "start", background: true }]; if (arrow && context.points[1]) result.unshift({ id: "leader", kind: "line", from: context.points[1], to: point }, { id: "arrowhead", kind: "arrowhead", from: context.points[1], at: point }); return result; }, getHandles: defaultDrawingHandles });
 
 export const builtInDrawingRenderers: DrawingRendererDefinition[] = [
-  horizontalLineRenderer,
-  verticalLineRenderer,
-  trendLineRenderer,
-  rayRenderer,
-  extendedLineRenderer,
-  rectangleRenderer,
-  ellipseRenderer,
-  fibonacciRetracementRenderer,
+  horizontalLineRenderer, verticalLineRenderer, trendLineRenderer, arrowRenderer, rayRenderer, extendedLineRenderer, horizontalRayRenderer, crossLineRenderer, infoLineRenderer, trendAngleRenderer,
+  parallelChannelRenderer, regressionRenderer, flatChannelRenderer, disjointChannelRenderer,
+  measurementRenderer("price-range", "price"), measurementRenderer("date-range", "date"), measurementRenderer("date-price-range", "both"), positionRenderer("long-position", "long"), positionRenderer("short-position", "short"),
+  rectangleRenderer, ellipseRenderer, circleRenderer, pointPathRenderer("triangle", true), pointPathRenderer("polyline"), pointPathRenderer("brush"), pointPathRenderer("highlighter"),
+  fibonacciRetracementRenderer, fibonacciExtensionRenderer, fibonacciTimeZoneRenderer, vwapRenderer("anchored-vwap", false), vwapRenderer("fixed-range-vwap", true),
+  annotationRenderer("text"), annotationRenderer("note"), annotationRenderer("callout", false, true), annotationRenderer("price-label", true), annotationRenderer("price-note", true, true), annotationRenderer("arrow-marker", false, true),
 ];

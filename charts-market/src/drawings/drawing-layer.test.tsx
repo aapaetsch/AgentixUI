@@ -2,7 +2,7 @@ import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { MarketChartEngine } from "../core";
-import { DrawingLayer, horizontalLineDrawing, trendLineDrawing } from ".";
+import { brushDrawing, DrawingLayer, horizontalLineDrawing, parallelChannelDrawing, polylineDrawing, trendLineDrawing } from ".";
 
 const engine = {
   pointForCoordinate: vi.fn(),
@@ -86,7 +86,7 @@ describe("DrawingLayer", () => {
     expect(onDrawingsChange).not.toHaveBeenCalled();
     fireEvent(layer, pointer("pointerup", 10, 20));
     expect(onDrawingsChange).toHaveBeenCalledWith(
-      [expect.objectContaining({ type: "horizontal-line", points: [{ time: 10, price: 20 }] })],
+      [expect.objectContaining({ type: "horizontal-line", points: [expect.objectContaining({ time: 10, price: 20, anchor: { field: "close" } })] })],
       expect.objectContaining({ type: "create" }),
     );
   });
@@ -156,5 +156,28 @@ describe("DrawingLayer", () => {
     fireEvent.keyDown(layer, { key: "ArrowUp" }); expect(onDrawingsChange).not.toHaveBeenCalled();
     rerender(<DrawingLayer aria-label="Drawings" engine={engine} drawings={[]} activeTool={horizontalLineDrawing} onDrawingsChange={onDrawingsChange} />);
     fireEvent.keyDown(layer, { key: "Enter" }); expect(onDrawingsChange).toHaveBeenLastCalledWith(expect.any(Array), expect.objectContaining({ type: "create" }));
+  });
+
+  it("creates fixed multi-click tools only after their final point", () => {
+    const onDrawingsChange = vi.fn(); render(<DrawingLayer aria-label="Channel drawings" engine={engine} drawings={[]} activeTool={parallelChannelDrawing} onDrawingsChange={onDrawingsChange} />); const layer = screen.getByLabelText("Channel drawings");
+    fireEvent(layer, pointer("pointerdown", 10, 10)); fireEvent(layer, pointer("pointerdown", 50, 20)); expect(onDrawingsChange).not.toHaveBeenCalled(); fireEvent(layer, pointer("pointerdown", 20, 40));
+    expect(onDrawingsChange).toHaveBeenCalledWith([expect.objectContaining({ type: "parallel-channel", points: [{ time: 10, price: 10 }, { time: 50, price: 20 }, { time: 20, price: 40 }] })], expect.objectContaining({ type: "create" }));
+  });
+
+  it("completes variable tools with Enter and removes the last draft point with Backspace", () => {
+    const onDrawingsChange = vi.fn(); render(<DrawingLayer aria-label="Polyline drawings" engine={engine} drawings={[]} activeTool={polylineDrawing} onDrawingsChange={onDrawingsChange} />); const layer = screen.getByLabelText("Polyline drawings");
+    fireEvent(layer, pointer("pointerdown", 10, 10)); fireEvent(layer, pointer("pointerdown", 20, 20)); fireEvent.keyDown(layer, { key: "Backspace" }); fireEvent(layer, pointer("pointerdown", 30, 30)); fireEvent.keyDown(layer, { key: "Enter" });
+    expect(onDrawingsChange).toHaveBeenCalledWith([expect.objectContaining({ type: "polyline", points: [{ time: 10, price: 10 }, { time: 30, price: 30 }] })], expect.objectContaining({ type: "create" }));
+  });
+
+  it("samples freehand input and commits a simplified path once on release", () => {
+    const onDrawingsChange = vi.fn(); render(<DrawingLayer aria-label="Brush drawings" engine={engine} drawings={[]} activeTool={brushDrawing} onSelectedDrawingIdsChange={() => undefined} onDrawingsChange={onDrawingsChange} />); const layer = screen.getByLabelText("Brush drawings");
+    fireEvent(layer, pointer("pointerdown", 10, 10)); fireEvent(layer, pointer("pointermove", 20, 20)); fireEvent(layer, pointer("pointermove", 30, 30)); expect(onDrawingsChange).not.toHaveBeenCalled(); fireEvent(layer, pointer("pointerup", 40, 40));
+    expect(onDrawingsChange).toHaveBeenCalledTimes(1); expect(onDrawingsChange.mock.calls[0][0][0]).toMatchObject({ type: "brush" }); expect(onDrawingsChange.mock.calls[0][0][0].points.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("shows Shift-drag quick measure without persisting a drawing", () => {
+    const onDrawingsChange = vi.fn(); render(<DrawingLayer aria-label="Quick measure drawings" engine={engine} drawings={[]} onDrawingsChange={onDrawingsChange} />); const layer = screen.getByLabelText("Quick measure drawings");
+    fireEvent(layer, pointer("pointerdown", 10, 10, { shiftKey: true })); fireEvent(layer, pointer("pointermove", 30, 40, { shiftKey: true })); fireEvent(layer, pointer("pointerup", 30, 40, { shiftKey: true })); expect(onDrawingsChange).not.toHaveBeenCalled();
   });
 });

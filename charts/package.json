@@ -1,8 +1,24 @@
 {
-  "name": "@agentix/charts",
+  "name": "aapaetsch-charts",
   "version": "0.1.0-beta.0",
   "description": "Accessible, theme-aware React charts for Agentix applications",
+  "author": "Aidan Paetsch",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aapaetsch/AgentixUI.git",
+    "directory": "charts"
+  },
+  "bugs": {
+    "url": "https://github.com/aapaetsch/AgentixUI/issues"
+  },
+  "homepage": "https://github.com/aapaetsch/AgentixUI/tree/main/charts#readme",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true,
+    "tag": "beta"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

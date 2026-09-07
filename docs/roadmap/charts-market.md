@@ -1,6 +1,6 @@
 # Market Charts Package
 
-`@agentix/charts-market` is the ESM-only technical-analysis package. It uses a
+`aapaetsch-charts-market` is the ESM-only technical-analysis package. It uses a
 first-party Canvas 2D + SVG engine with no runtime chart-engine dependency and exposes
 stable root, `core`, `indicators`, `drawings`, `overlays`, `controls`, and
 `workspace` entrypoints.
@@ -12,7 +12,7 @@ stable root, `core`, `indicators`, `drawings`, `overlays`, `controls`, and
 | `core` | ✅ Complete | React/browser-independent market types, validation, streaming buffer, engine port and extension contracts |
 | `engine` | ✅ Complete | Indexed OHLC storage, logical time and price scales, synchronized panes, DPR-aware Canvas rendering, input control, events, resize and cleanup |
 | `indicators` | ✅ Complete | Pure SMA, EMA, VWAP, Bollinger Bands, RSI, MACD and ATR calculations plus rendered overlay/pane series |
-| `drawings` | ✅ Complete | Renderer-registry-driven horizontal/vertical/trend lines, rays, extended lines, rectangles, ellipses and Fibonacci retracements; deterministic hit testing, pointer/touch/keyboard editing, transient multi-selection, snapping, styling and bounded history |
+| `drawings` | ✅ Complete | 37-tool practical pack covering documented lines, four channels, measurements/positions, Fibonacci, VWAP, shapes/freehand and annotations; data-aware renderers, full lifecycle support, object management, controlled preferences and v3 persistence |
 | `overlays` | ✅ Complete | Price/indicator alerts, order/bracket/position lines, execution/replay/session markers |
 | `controls` | ✅ Complete | Controlled symbol, interval, series, scale, fit-content and realtime actions |
 | `workspace` | ✅ Complete | 1/2/3/4/6/8 layouts, independent synchronization, composable panels, layout management and versioned persistence |
@@ -62,24 +62,25 @@ clients. Consumers own storage.
 
 ## Explicit advanced backlog
 
-Channels, anchored VWAP, freehand tools and pattern
-recognition remain experimental-plugin backlog. They are not part of the stable
-initial drawing contract.
+Specialist Gann, pitchfork, Elliott-wave, harmonic-pattern, volume-profile, sticker,
+emoji and large icon packs remain outside the practical drawing contract. Automatic
+pattern recognition remains experimental-plugin backlog.
 
-## TradingView-style analysis expansion — 📋 Planned
+## TradingView-style analysis expansion — 🔄 In Progress
 
 The coordinated implementation plan for additional chart types, indicators, drawing
 tools, and chart-analysis workflows is documented in
 [`implementation-plans/market-chart-analysis-expansion-plan.md`](../../implementation-plans/market-chart-analysis-expansion-plan.md).
 
-The first milestone adds extensible renderer/transform/drawing contracts, Heikin Ashi,
-high-value trend and momentum indicators, Fibonacci/channel/measurement drawings,
-multi-symbol comparison, and a richer data window. Advanced price-based and
-microstructure charts remain later phases because they require derived or enriched
-market-data contracts.
+The practical drawing-tools milestone is complete: lifecycle/primitives, all documented
+line variants, four channels, measurements/positions, Fibonacci analysis, anchored and
+fixed-range VWAP, annotations/freehand, object management, clipboard/preferences,
+alerts, synchronization modes, and workspace v3 migration. Chart-type, indicator,
+comparison-series, and richer data-window expansion remains in progress.
 
 ## Changelog
 
+- 2026-08-26 — Completed the practical 37-tool drawing pack with fixed/multi-click/variable/freehand lifecycles, persistent OHLC anchors, data-aware regression/measurement/VWAP calculations, four channels, complete line variants, positions, Fibonacci, annotations, deterministic freehand simplification, floating actions, context-managed object tree, controlled preferences/templates, versioned clipboard, alert intents, drawing synchronization modes and workspace v3 migration.
 - 2026-08-26 — Completed Drawing Interaction v2 with renderer-neutral registry contracts, transient multi-selection, deterministic geometry/hits, multi-drawing movement, three snapping modes, keyboard/touch editing, style-session previews, typed commit metadata, canonical bounded history, accessibility feedback and 500-drawing stress coverage.
 - 2026-08-26 — Rebuilt drawing around local press-drag-release drafts and pointer capture, eliminating hover-driven controlled updates; added angled trend-line gestures, rays, extended lines, ellipses, Fibonacci retracements, styling controls, Escape cancellation and an Alt snapping bypass.
 - 2026-08-21 — Closed the first-party acceptance audit by adding renderer-neutral OHLC snapping for new and edited SVG drawing points, with configurable opt-out and distance controls.

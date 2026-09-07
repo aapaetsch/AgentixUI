@@ -28,6 +28,7 @@ export type {
   DrawingParameterSchema,
   DrawingParameterSchemaField,
   DrawingPrimitive,
+  DrawingPrimitiveStyle,
   DrawingRendererContext,
   DrawingRendererDefinition,
   DrawingState,

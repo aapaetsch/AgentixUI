@@ -2,7 +2,7 @@
 
 ## Goal
 
-Expand `@agentix/charts-market` toward the high-value chart-analysis capabilities
+Expand `aapaetsch-charts-market` toward the high-value chart-analysis capabilities
 users expect from TradingView while preserving the package's current strengths:
 
 1. A first-party Canvas 2D + SVG renderer with no runtime chart-engine dependency.
@@ -28,7 +28,9 @@ The package currently provides:
 
 - Five price-series modes: candlestick, OHLC bar, line, area, and baseline.
 - Seven built-in indicators: SMA, EMA, VWAP, Bollinger Bands, RSI, MACD, and ATR.
-- Four drawing tools: horizontal line, vertical line, trend line, and rectangle.
+- A 37-tool practical drawing pack spanning complete documented lines, four channels,
+  measurements and positions, Fibonacci, anchored/fixed-range VWAP, shapes/freehand,
+  annotations, and object management.
 - Volume and indicator panes, crosshair, pan/zoom, four price-scale modes,
   extended-session shading, markers, overlays, and streaming updates.
 - Serializable one-to-eight chart workspaces with symbol, interval, visible-range,
@@ -467,14 +469,14 @@ Requirements:
 
 ---
 
-## Workstream C — Drawing Tools
+## Workstream C — Drawing Tools — ✅ Practical Pack Complete
 
 ### Objective
 
 Replace the current fixed-point/path switch with an extensible drawing runtime, then
 ship the technical-analysis, measurement, and annotation tools with the highest value.
 
-### C1. Drawing contract v2 — Priority P0
+### C1. Drawing contract v2 — ✅ Complete
 
 The existing `requiredPoints` number is insufficient for freehand, polyline, rays,
 derived geometry, and text tools. Extend definitions additively:
@@ -518,7 +520,7 @@ Implementation requirements:
 4. Separate selection bounds from visible geometry so thin lines remain usable.
 5. Add keyboard move/delete, Escape-to-cancel, and focus-visible handles.
 
-### C2. High-value trend and measurement tools — Priority P0
+### C2. High-value trend and measurement tools — ✅ Complete
 
 Implement in this order:
 
@@ -535,7 +537,7 @@ Measurements must expose calculated values as visible labels and accessible text
 absolute change, percentage change, bars elapsed, elapsed time, risk/reward, entry,
 stop, target, and quantity where applicable.
 
-### C3. Shapes and annotations — Priority P1
+### C3. Shapes and annotations — ✅ Complete
 
 1. Arrow and arrow marker.
 2. Circle and ellipse.
@@ -547,7 +549,7 @@ Use a controlled inline editor for text. Do not embed a general rich-text editor
 Freehand data should be simplified with a deterministic point-reduction algorithm and
 stored in logical chart coordinates.
 
-### C4. Advanced technical tools — Priority P2
+### C4. Advanced technical tools — 🔄 Partial
 
 1. Fibonacci extension and time zone.
 2. Regression trend channel.
@@ -559,7 +561,7 @@ stored in logical chart coordinates.
 Anchored VWAP and volume-profile tools require consumer-supplied volume and session/tick
 metadata. Pattern tools in this phase are manual markup tools, not automatic detection.
 
-### C5. Drawing workflow and settings — Priority P1
+### C5. Drawing workflow and settings — ✅ Complete
 
 Add a categorized toolbar with:
 

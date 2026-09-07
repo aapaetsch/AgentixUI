@@ -1,9 +1,9 @@
-name: Release to npm
+name: Release packages to npm
 
-# Publishes aapaetsch-ui-kit to npm with Sigstore provenance when a tag
+# Publishes the UI kit and both chart workspaces to npm with Sigstore provenance when a tag
 # matching `v*` is pushed. Provenance requires:
 #   - `id-token: write` permission (below)
-#   - an `NPM_TOKEN` repo secret with publish rights on aapaetsch-ui-kit
+#   - an `NPM_TOKEN` repo secret with publish rights on all three packages
 #   - Actions: "Allow GitHub Actions to create and approve pull requests"
 #     is NOT required; workflow permissions must allow `id-token: write`.
 #
@@ -82,15 +82,36 @@ jobs:
           test -f dist/finance.js
           test -f dist/finance.mjs
           test -f dist/templates/investment-ops/index.js
+          test -f charts/dist/index.js
+          test -f charts/dist/index.cjs
+          test -f charts/dist/index.d.ts
+          test -f charts/dist/quant.js
+          test -f charts-market/dist/index.js
+          test -f charts-market/dist/index.d.ts
+          test -f charts-market/dist/drawings.js
+          test -f charts-market/dist/workspace.js
 
-      - name: Dry-run pack
-        run: npm pack --dry-run --ignore-scripts
+      - name: Dry-run package contents
+        run: |
+          npm pack --dry-run --ignore-scripts
+          npm pack --dry-run --ignore-scripts --workspace aapaetsch-charts
+          npm pack --dry-run --ignore-scripts --workspace aapaetsch-charts-market
 
-      - name: Publish
+      - name: Publish UI kit
         # Explicit `--tag beta` so a pre-release version never lands
         # under `latest`. publishConfig.tag would normally drive this,
         # but npm's pre-publish notice has been observed defaulting to
         # `latest` in CI, so the flag is kept explicit for safety.
         run: npm publish --provenance --access public --tag beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish general charts
+        run: npm publish --workspace aapaetsch-charts --provenance --access public --tag beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish market charts
+        run: npm publish --workspace aapaetsch-charts-market --provenance --access public --tag beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -132,16 +132,16 @@ Richer APIs and interaction models for complex use cases.
 **Boundary contract:**
 
 ```
-@agentix/charts         -> aapaetsch-ui-kit
-@agentix/charts-market  -> aapaetsch-ui-kit
+aapaetsch-charts         -> aapaetsch-ui-kit
+aapaetsch-charts-market  -> aapaetsch-ui-kit
 aapaetsch-ui-kit         ✗ chart packages
 ```
 
-`@agentix/charts` lives in the `charts/` npm workspace and ships shared chart chrome, ten foundational Recharts charts, and financial/quantitative compositions including depth, volume profile, equity, drawdown, returns, correlation, signals, risk, and tearsheets.
+`aapaetsch-charts` lives in the `charts/` npm workspace and ships shared chart chrome, ten foundational Recharts charts, and financial/quantitative compositions including depth, volume profile, equity, drawdown, returns, correlation, signals, risk, and tearsheets.
 
-`@agentix/charts-market` lives in `charts-market/`. It is an ESM-only technical-analysis package with a first-party Canvas 2D + SVG engine, five market-series modes, resizable panes, streaming updates, indicators, controlled drawings, chart overlays, synchronized multi-chart workspaces, and versioned persistence contracts.
+`aapaetsch-charts-market` lives in `charts-market/`. It is an ESM-only technical-analysis package with a first-party Canvas 2D + SVG engine, five market-series modes, resizable panes, streaming updates, indicators, controlled drawings, chart overlays, synchronized multi-chart workspaces, and versioned persistence contracts.
 
-`globals.css` remains the **single source of truth** for theming across both packages — `@agentix/charts` reads UI kit tokens and defines no visual identity of its own.
+`globals.css` remains the **single source of truth** for theming across both packages — `aapaetsch-charts` reads UI kit tokens and defines no visual identity of its own.
 
 ## Roadmap — Financial & Quant Components
 
@@ -154,7 +154,7 @@ A consolidated, ranked gap analysis of financial dashboard and quant‑workspace
 5. **Quant dashboard components** (charts, signal research, risk, backtest management, infra UI)
 6. **Composed templates** (BacktestTearsheet, AlphaTearsheet, RiskDashboard, SymbolDetailPage …)
 
-Each row is ranked P0–P4, tagged with effort (XS–XL), and assigned a destination 🟦 `aapaetsch-ui-kit` / 🟧 `@agentix/charts` / ⬜ templates. A 10‑phase build order (A–J) explicitly schedules UI‑in‑scope work first and chart work after the `@agentix/charts` package is scaffolded.
+Each row is ranked P0–P4, tagged with effort (XS–XL), and assigned a destination 🟦 `aapaetsch-ui-kit` / 🟧 `aapaetsch-charts` / ⬜ templates. A 10‑phase build order (A–J) explicitly schedules UI‑in‑scope work first and chart work after the `aapaetsch-charts` package is scaffolded.
 
 ## Theming
 

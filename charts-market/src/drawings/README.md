@@ -1,30 +1,45 @@
 # Drawings
 
-The drawing package provides eight built-in tools: horizontal and vertical lines, trend lines, rays, extended lines, rectangles, ellipses, and Fibonacci retracements. Every tool resolves through a `DrawingRendererDefinition`; custom renderers return renderer-neutral `DrawingPrimitive` and `DrawingHandle` values and can participate in the same deterministic hit-testing pipeline.
+The drawings entrypoint provides a practical technical-analysis pack with 37 built-in tools, renderer-neutral primitives, controlled documents, transient selection, data-aware calculations, and versioned clipboard/workspace persistence.
 
-`MarketChart` keeps drawings controlled and serializable while selection remains transient:
+## Tool families
+
+- Lines: trend line, arrow, ray, info line, extended line, trend angle, horizontal line/ray, vertical line, and cross line.
+- Channels: parallel, OLS regression, flat top/bottom, and disjoint channels.
+- Measurements and positions: price/date/date-and-price ranges, quick measure, and three-point long/short positions.
+- Fibonacci: configurable retracement, trend-based extension, and time zones.
+- Volume: anchored and inclusive fixed-range VWAP with seven price sources, missing-volume disclosure, zero-volume support, and optional 1/2/3σ bands.
+- Shapes and annotations: rectangle, ellipse, circle, triangle, variable polyline, simplified brush/highlighter, text, note, callout, price label/note, and arrow marker.
+
+## Controlled usage
 
 ```tsx
 <MarketChart
+  data={bars}
   drawings={drawings}
   selectedDrawingIds={selectedIds}
+  drawingPreferences={preferences}
+  showDrawingObjectTree
   onDrawingsChange={(next, metadata) => {
     setDrawings(next)
-    audit(metadata.type)
+    audit(metadata?.type)
   }}
   onSelectedDrawingIdsChange={setSelectedIds}
-  drawingInteraction={{
-    snapMode: "weak",
-    snapDistance: 10,
-    keyboardPriceStep: 0.05,
-    keepDrawingMode: false,
-    historyLimit: 100,
-  }}
+  onDrawingPreferencesChange={setPreferences}
+  onCreateDrawingAlert={(drawingId) => openAlertEditor(drawingId)}
 />
 ```
 
-Legacy `DrawingState.selected` remains supported when the new selection props are absent. Selection and hover never enter history. Create, move, resize, and style gestures preview locally and produce one pointer-up commit with change metadata. External controlled documents rebase history and invalidate redo.
+Selection, hover, draft points, inline text editing, and quick measure remain transient. A completed pointer, touch, freehand, multi-click, variable-point, style, group-move, or keyboard gesture emits one history commit. Backspace removes the last multi-click draft point; Enter or double-click completes variable tools; Escape cancels.
 
-Pointer and touch users can click or modifier-click to select, drag bodies, and edit endpoints. Blank clicks deselect without consuming chart navigation. Keyboard users can Tab through visible drawings, use arrows to nudge (Shift for 10×), Delete/Backspace, Escape, Ctrl/Cmd+D, and Enter/Space to create with an active tool. Locked drawings remain selectable but cannot move or resize.
+Snapped points may retain an `anchor.field` binding so they continue to follow the selected bar's open, high, low, or close value. Hold Alt to bypass weak or strong OHLC snapping. Shift constrains ellipse drawing and Shift-drag on blank chart space provides a non-persistent date-and-price measurement.
 
-Snapping modes are `off`, `weak` (default, threshold-based), and `strong` (nearest OHLC value on the selected bar). Hold Alt to bypass either magnet mode temporarily.
+## Data conventions
+
+Regression and VWAP use the read-only ordered OHLCV slice supplied to `MarketChart`. Regression uses ordinary least squares across an inclusive anchor range. VWAP uses cumulative `price × volume / volume`; zero-volume bars preserve the current cumulative value and missing volume makes the result unavailable with an accessible reason. Fixed-range VWAP stops at its inclusive end anchor and anchored VWAP extends through the latest bar.
+
+Position account size, risk percentage, and quantity are calculation metadata only. `onCreateDrawingAlert` is an intent callback; the package never evaluates alerts or places trades.
+
+## Management and persistence
+
+`DrawingObjectTree`, `DrawingInlineTextEditor`, management helpers, versioned clipboard helpers, controlled favorites/recent tools, keep-drawing mode, defaults/templates, z-order, grouping, lock/hide/remove-all commands, and synchronization modes (`off`, `same-symbol`, `layout`) are exported from `aapaetsch-charts-market/drawings`. Existing drawing documents remain readable because every new drawing-state field is optional.

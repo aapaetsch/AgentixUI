@@ -2,10 +2,11 @@
 
 import * as React from "react";
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, Tooltip, TooltipContent, TooltipTrigger, cn } from "aapaetsch-ui-kit";
-import { CircleDashed, Eye, EyeOff, Hash, Lock, MousePointer2, Palette, Redo2, Slash, Square, Trash2, Undo2, Unlock } from "lucide-react";
+import { Bell, CircleDashed, Eye, EyeOff, Hash, Lock, MousePointer2, Palette, Redo2, Repeat2, Search, Slash, Square, Star, Trash2, Undo2, Unlock } from "lucide-react";
 
-import type { DrawingCoordinate, DrawingPoint, DrawingPrimitive, DrawingRendererContext, DrawingRendererDefinition, DrawingState, DrawingToolDefinition, MarketChartEngine, OhlcBar, SerializableParameters } from "../core";
+import type { DrawingCoordinate, DrawingPoint, DrawingPrimitive, DrawingRendererContext, DrawingRendererDefinition, DrawingState, DrawingToolDefinition, MarketChartEngine, OhlcBar } from "../core";
 import { marketTimeKey } from "../core";
+import { resolveInclusiveRange, simplifyCoordinates } from "./calculations";
 import type { DrawingChangeMetadata } from ".";
 import { hitTestDrawings, resolveDrawingRenderer } from "./geometry";
 import { builtInDrawingRenderers } from "./renderers";
@@ -48,8 +49,10 @@ export interface DrawingLayerProps extends Omit<React.SVGAttributes<SVGSVGElemen
 type SnapResult = { point: DrawingPoint; marker: DrawingCoordinate | null };
 type DrawingGesture =
   | { kind: "create"; pointerId: number; drawing: DrawingState; changed: boolean }
+  | { kind: "quick-measure"; pointerId: number; drawing: DrawingState; changed: boolean }
   | { kind: "resize"; pointerId: number; drawing: DrawingState; pointIndex: number; changed: boolean }
   | { kind: "move"; pointerId: number; drawingIds: string[]; start: DrawingCoordinate; originals: Map<string, DrawingState>; drawings: DrawingState[]; changed: boolean };
+type MultiClickDraft = { drawing: DrawingState; minimumPoints: number; maximumPoints?: number };
 
 function makeId(prefix = "drawing") {
   return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -67,25 +70,36 @@ function documentsAreEqual(first: readonly DrawingState[], second: readonly Draw
   return JSON.stringify(first) === JSON.stringify(second);
 }
 
-function dashArray(parameters: SerializableParameters): string | undefined {
+function dashArray(parameters: { dashStyle?: unknown }): string | undefined {
   if (parameters.dashStyle === "dashed") return "7 5";
   if (parameters.dashStyle === "dotted") return "2 4";
   return undefined;
 }
 
 function renderPrimitive(primitive: DrawingPrimitive, hitArea = false) {
-  const common = hitArea ? { fill: "none", stroke: "transparent", strokeWidth: 12 } : {};
+  const common = hitArea ? { fill: "none", stroke: "transparent", strokeWidth: 12 } : { stroke: primitive.stroke, fill: primitive.fill, opacity: primitive.opacity, strokeWidth: primitive.lineWidth, strokeDasharray: dashArray(primitive) };
   if (primitive.kind === "line") return <line key={primitive.id} x1={primitive.from.x} y1={primitive.from.y} x2={primitive.to.x} y2={primitive.to.y} {...common} />;
   if (primitive.kind === "rect") return <rect key={primitive.id} x={primitive.x} y={primitive.y} width={primitive.width} height={primitive.height} {...common} />;
   if (primitive.kind === "ellipse") return <ellipse key={primitive.id} cx={primitive.cx} cy={primitive.cy} rx={primitive.rx} ry={primitive.ry} {...common} />;
   if (primitive.kind === "polyline") return <polyline key={primitive.id} points={primitive.points.map((point) => `${point.x},${point.y}`).join(" ")} {...common} />;
+  if (primitive.kind === "polygon") return <polygon key={primitive.id} points={primitive.points.map((point) => `${point.x},${point.y}`).join(" ")} {...common} />;
+  if (primitive.kind === "path") return <polyline key={primitive.id} points={primitive.points.map((point) => `${point.x},${point.y}`).join(" ")} {...common} fill="none" />;
+  if (primitive.kind === "band") return <polygon key={primitive.id} points={[...primitive.upper, ...primitive.lower.slice().reverse()].map((point) => `${point.x},${point.y}`).join(" ")} {...common} />;
+  if (primitive.kind === "arrowhead") {
+    const angle = Math.atan2(primitive.at.y - primitive.from.y, primitive.at.x - primitive.from.x); const size = primitive.size ?? 9;
+    const points = [primitive.at, { x: primitive.at.x - Math.cos(angle - 0.55) * size, y: primitive.at.y - Math.sin(angle - 0.55) * size }, { x: primitive.at.x - Math.cos(angle + 0.55) * size, y: primitive.at.y - Math.sin(angle + 0.55) * size }];
+    return <polygon key={primitive.id} points={points.map((point) => `${point.x},${point.y}`).join(" ")} {...common} />;
+  }
   if (hitArea) return null;
-  return <text key={primitive.id} x={primitive.at.x} y={primitive.at.y} textAnchor={primitive.anchor} fill="currentColor" stroke="none" fontSize="10">{primitive.text}</text>;
+  if (primitive.kind === "text") return <text key={primitive.id} x={primitive.at.x} y={primitive.at.y} textAnchor={primitive.anchor} fill={primitive.stroke ?? "currentColor"} stroke="none" fontSize="10">{primitive.text}</text>;
+  const width = Math.max(...primitive.lines.map((line) => line.length), 1) * 6 + 10; const height = primitive.lines.length * 14 + 6; const offset = primitive.anchor === "middle" ? -width / 2 : primitive.anchor === "end" ? -width : 0;
+  return <g key={primitive.id}>{primitive.background ? <rect x={primitive.at.x + offset} y={primitive.at.y - 12} width={width} height={height} rx={4} fill="hsl(var(--background))" fillOpacity={0.9} stroke="hsl(var(--border))" /> : null}<text x={primitive.at.x} y={primitive.at.y} textAnchor={primitive.anchor} fill="currentColor" stroke="none" fontSize="10">{primitive.lines.map((line, index) => <tspan key={index} x={primitive.at.x} dy={index === 0 ? 0 : 14}>{line}</tspan>)}</text></g>;
 }
 
 export function DrawingLayer({ engine, data = [], drawings, tools = [], renderers = builtInDrawingRenderers, activeTool, selectedDrawingIds, interaction, interactionTargetRef, snapToOhlc, snapDistance, onDrawingsChange, onSelectedDrawingIdsChange, onActiveToolComplete, className, ...props }: DrawingLayerProps) {
   const svgRef = React.useRef<SVGSVGElement>(null);
   const gestureRef = React.useRef<DrawingGesture | null>(null);
+  const multiClickDraftRef = React.useRef<MultiClickDraft | null>(null);
   const [draftDrawings, setDraftDrawings] = React.useState<DrawingState[] | null>(null);
   const [bounds, setBounds] = React.useState({ width: 1, height: 1 });
   const [hoveredDrawingId, setHoveredDrawingId] = React.useState<string | null>(null);
@@ -114,9 +128,10 @@ export function DrawingLayer({ engine, data = [], drawings, tools = [], renderer
     const observer = new ResizeObserver(update); observer.observe(element); return () => observer.disconnect();
   }, []);
 
-  const contexts = React.useMemo(() => new Map(displayedDrawings.map((drawing) => [drawing.id, {
-    drawing, points: drawing.points.map((point) => engine.coordinateFor(point)), bounds,
-  } satisfies DrawingRendererContext])), [bounds, displayedDrawings, engine]);
+  const contexts = React.useMemo(() => new Map(displayedDrawings.map((drawing) => {
+    const anchoredPoints = drawing.points.map((point) => { const bar = point.anchor ? barsByTime.get(marketTimeKey(point.time)) : undefined; return bar && point.anchor ? { ...point, price: bar[point.anchor.field] } : point; });
+    return [drawing.id, { drawing: { ...drawing, points: anchoredPoints }, points: anchoredPoints.map((point) => engine.coordinateFor(point)), bounds, data, resolveRange: (first: DrawingPoint, second: DrawingPoint) => resolveInclusiveRange(data, first, second), coordinateFor: (point: DrawingPoint) => engine.coordinateFor(point) } satisfies DrawingRendererContext];
+  })), [barsByTime, bounds, data, displayedDrawings, engine]);
 
   const emitSelection = React.useCallback((ids: string[]) => {
     const unique = Array.from(new Set(ids)).filter((id) => displayedDrawings.some((drawing) => drawing.id === id && drawing.visible));
@@ -134,17 +149,17 @@ export function DrawingLayer({ engine, data = [], drawings, tools = [], renderer
     const point = engine.pointForCoordinate(local);
     if (!point || settings.snapMode === "off" || event.altKey) return point ? { point, marker: null } : null;
     const bar = barsByTime.get(marketTimeKey(point.time)); if (!bar) return { point, marker: null };
-    const nearest = [bar.open, bar.high, bar.low, bar.close]
-      .map((price) => ({ price, coordinate: engine.coordinateFor({ time: bar.time, price }) }))
-      .filter((candidate): candidate is { price: number; coordinate: DrawingCoordinate } => candidate.coordinate != null)
+    const nearest = (["open", "high", "low", "close"] as const)
+      .map((field) => ({ field, price: bar[field], coordinate: engine.coordinateFor({ time: bar.time, price: bar[field] }) }))
+      .filter((candidate): candidate is { field: "open" | "high" | "low" | "close"; price: number; coordinate: DrawingCoordinate } => candidate.coordinate != null)
       .map((candidate) => ({ ...candidate, distance: Math.hypot(candidate.coordinate.x - local.x, candidate.coordinate.y - local.y) }))
       .sort((left, right) => left.distance - right.distance)[0];
     if (!nearest || (settings.snapMode === "weak" && nearest.distance > settings.snapDistance)) return { point, marker: null };
-    return { point: { time: bar.time, price: nearest.price }, marker: nearest.coordinate };
+    return { point: { time: bar.time, price: nearest.price, anchor: { field: nearest.field } }, marker: nearest.coordinate };
   }, [barsByTime, bounds.height, bounds.width, engine, settings.snapDistance, settings.snapMode]);
 
   const cancelGesture = React.useCallback((announce = true) => {
-    gestureRef.current = null; setDraftDrawings(null); setSnapMarker(null); if (announce) setAnnouncement("Drawing edit cancelled");
+    gestureRef.current = null; multiClickDraftRef.current = null; setDraftDrawings(null); setSnapMarker(null); if (announce) setAnnouncement("Drawing edit cancelled");
   }, []);
   React.useEffect(() => { if (gestureRef.current?.kind === "create" && gestureRef.current.drawing.type !== normalizedActiveTool?.id) cancelGesture(false); }, [cancelGesture, normalizedActiveTool?.id]);
   React.useEffect(() => () => { gestureRef.current = null; }, []);
@@ -152,12 +167,15 @@ export function DrawingLayer({ engine, data = [], drawings, tools = [], renderer
   const updateGesture = React.useCallback((event: PointerEvent): DrawingState[] | null => {
     const gesture = gestureRef.current; if (!gesture || gesture.pointerId !== event.pointerId) return null;
     const element = svgRef.current; if (!element) return null;
-    const rect = element.getBoundingClientRect(); const coordinate = { x: event.clientX - rect.left, y: event.clientY - rect.top };
-    if (gesture.kind === "create" || gesture.kind === "resize") {
+    const rect = element.getBoundingClientRect(); let coordinate = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    if (gesture.kind === "create" || gesture.kind === "quick-measure" || gesture.kind === "resize") {
+      if (gesture.kind === "create" && gesture.drawing.type === "ellipse" && event.shiftKey) { const origin = engine.coordinateFor(gesture.drawing.points[0]); if (origin) { const size = Math.max(Math.abs(coordinate.x - origin.x), Math.abs(coordinate.y - origin.y)); coordinate = { x: origin.x + Math.sign(coordinate.x - origin.x || 1) * size, y: origin.y + Math.sign(coordinate.y - origin.y || 1) * size }; } }
       const result = pointForEvent(event, coordinate); if (!result) return null; setSnapMarker(result.marker);
-      if (gesture.kind === "create") {
+      if (gesture.kind === "create" || gesture.kind === "quick-measure") {
+        const freehand = gesture.kind === "create" && normalizedActiveTool?.input.mode === "freehand";
         const pointIndex = gesture.drawing.points.length > 1 ? gesture.drawing.points.length - 1 : 0;
-        const drawing = { ...gesture.drawing, points: gesture.drawing.points.map((point, index) => index === pointIndex ? result.point : point) };
+        const points = freehand ? [...gesture.drawing.points, result.point] : gesture.drawing.points.map((point, index) => index === pointIndex ? result.point : point);
+        const drawing = { ...gesture.drawing, points };
         const next = drawings.concat(drawing);
         gestureRef.current = { ...gesture, drawing, changed: !pointsAreEqual(drawing.points[0], drawing.points.at(-1)!) || drawing.points.length === 1 };
         setDraftDrawings(next); return next;
@@ -172,7 +190,7 @@ export function DrawingLayer({ engine, data = [], drawings, tools = [], renderer
       return { ...drawing, points: original.points.map((point) => { const origin = engine.coordinateFor(point); return origin ? engine.pointForCoordinate({ x: origin.x + dx, y: origin.y + dy }) ?? point : point; }) };
     });
     gestureRef.current = { ...gesture, drawings: next, changed: !documentsAreEqual(drawings, next) }; setDraftDrawings(next); return next;
-  }, [drawings, engine, pointForEvent]);
+  }, [drawings, engine, normalizedActiveTool?.input.mode, pointForEvent]);
 
   React.useEffect(() => {
     const svg = svgRef.current; const target = interactionTargetRef?.current ?? svg; if (!svg || !target) return;
@@ -188,12 +206,30 @@ export function DrawingLayer({ engine, data = [], drawings, tools = [], renderer
       if (normalizedActiveTool) {
         const result = pointForEvent(event, coordinate); if (!result) return;
         event.preventDefault(); event.stopPropagation(); target.focus({ preventScroll: true });
-        const pointCount = normalizedActiveTool.input.points; const points = pointCount === 1 ? [result.point] : Array.from({ length: pointCount }, () => result.point);
+        if (normalizedActiveTool.input.mode === "multi-click" || normalizedActiveTool.input.mode === "variable") {
+          const maximumPoints = normalizedActiveTool.input.points ?? normalizedActiveTool.input.maximumPoints;
+          const minimumPoints = normalizedActiveTool.input.minimumPoints ?? maximumPoints ?? 1;
+          const existing = multiClickDraftRef.current;
+          const drawing = existing?.drawing.type === normalizedActiveTool.id ? { ...existing.drawing, points: [...existing.drawing.points, result.point] } : makeDrawing(normalizedActiveTool, [result.point]);
+          if (maximumPoints && drawing.points.length >= maximumPoints) {
+            multiClickDraftRef.current = null; setDraftDrawings(null); setSnapMarker(null); onDrawingsChange([...drawings, drawing], { type: "create", drawingIds: [drawing.id], transactionId: `create-${drawing.id}` }); emitSelection([drawing.id]); setAnnouncement(`${drawing.type} created`); finishTool();
+          } else {
+            multiClickDraftRef.current = { drawing, minimumPoints, maximumPoints }; setDraftDrawings([...drawings, drawing]); setSnapMarker(result.marker); setAnnouncement(`${drawing.points.length} point${drawing.points.length === 1 ? "" : "s"} placed`);
+          }
+          return;
+        }
+        const pointCount = normalizedActiveTool.input.points ?? normalizedActiveTool.input.minimumPoints ?? 1; const points = pointCount === 1 ? [result.point] : Array.from({ length: pointCount }, () => result.point);
         const drawing = makeDrawing(normalizedActiveTool, points);
         gestureRef.current = { kind: "create", pointerId: event.pointerId, drawing, changed: pointCount === 1 };
         setDraftDrawings([...drawings, drawing]); setSnapMarker(result.marker); target.style.cursor = "crosshair"; target.setPointerCapture?.(event.pointerId); return;
       }
       const hit = hitAt(coordinate);
+      if (!hit && event.shiftKey) {
+        const result = pointForEvent(event, coordinate); if (!result) return;
+        event.preventDefault(); event.stopPropagation(); target.focus({ preventScroll: true });
+        const drawing: DrawingState = { id: "quick-measure", type: "date-price-range", version: 1, points: [result.point, result.point], parameters: { color: "#64748b", lineWidth: 1, fillOpacity: 0.12 }, visible: true, locked: true };
+        gestureRef.current = { kind: "quick-measure", pointerId: event.pointerId, drawing, changed: false }; setDraftDrawings([...drawings, drawing]); target.setPointerCapture?.(event.pointerId); return;
+      }
       if (!hit) { emitSelection([]); setHoveredDrawingId(null); return; }
       const drawing = drawings.find((item) => item.id === hit.drawingId); if (!drawing) return;
       event.preventDefault(); event.stopPropagation(); target.focus({ preventScroll: true });
@@ -205,7 +241,7 @@ export function DrawingLayer({ engine, data = [], drawings, tools = [], renderer
       if (drawing.locked) { target.style.cursor = "pointer"; setAnnouncement(`${drawing.type} selected and locked`); return; }
       if (hit.kind === "handle" && hit.pointIndex != null) gestureRef.current = { kind: "resize", pointerId: event.pointerId, drawing: { ...drawing, points: drawing.points.slice() }, pointIndex: hit.pointIndex, changed: false };
       else {
-        const ids = (nextSelection.includes(drawing.id) ? nextSelection : [drawing.id]).filter((id) => !drawings.find((item) => item.id === id)?.locked);
+        const groupIds = drawing.groupId ? drawings.filter((item) => item.groupId === drawing.groupId).map((item) => item.id) : []; const ids = Array.from(new Set([...(nextSelection.includes(drawing.id) ? nextSelection : [drawing.id]), ...groupIds])).filter((id) => !drawings.find((item) => item.id === id)?.locked);
         gestureRef.current = { kind: "move", pointerId: event.pointerId, drawingIds: ids, start: coordinate, originals: new Map(drawings.filter((item) => ids.includes(item.id)).map((item) => [item.id, { ...item, points: item.points.slice() }])), drawings, changed: false };
       }
       target.style.cursor = "grabbing"; target.setPointerCapture?.(event.pointerId);
@@ -224,9 +260,11 @@ export function DrawingLayer({ engine, data = [], drawings, tools = [], renderer
       event.preventDefault(); event.stopPropagation(); const next = updateGesture(event) ?? draftDrawings; const current = gestureRef.current;
       gestureRef.current = null; setDraftDrawings(null); setSnapMarker(null); target.style.cursor = normalizedActiveTool ? "crosshair" : previousCursor; target.releasePointerCapture?.(event.pointerId);
       if (!current || !next || !current.changed) return;
+      if (current.kind === "quick-measure") { setAnnouncement("Quick measurement complete"); return; }
       if (current.kind === "create") {
         if (current.drawing.points.length > 1 && pointsAreEqual(current.drawing.points[0], current.drawing.points.at(-1)!) && !normalizedActiveTool?.input.allowDegenerate) return;
-        onDrawingsChange(next, { type: "create", drawingIds: [current.drawing.id], transactionId: `create-${current.drawing.id}` }); emitSelection([current.drawing.id]); setAnnouncement(`${current.drawing.type} created`); finishTool();
+        const tolerance = typeof current.drawing.parameters.simplificationTolerance === "number" ? current.drawing.parameters.simplificationTolerance : 1.5; const committedDrawing = normalizedActiveTool?.input.mode === "freehand" ? { ...current.drawing, points: simplifyCoordinates(current.drawing.points.map((point) => engine.coordinateFor(point)).filter((point): point is DrawingCoordinate => point != null), tolerance).map((coordinate) => engine.pointForCoordinate(coordinate)).filter((point): point is DrawingPoint => point != null) } : current.drawing;
+        const committed = next.map((drawing) => drawing.id === current.drawing.id ? committedDrawing : drawing); onDrawingsChange(committed, { type: "create", drawingIds: [current.drawing.id], transactionId: `create-${current.drawing.id}` }); emitSelection([current.drawing.id]); setAnnouncement(`${current.drawing.type} created`); finishTool();
       } else {
         const ids = current.kind === "resize" ? [current.drawing.id] : current.drawingIds;
         onDrawingsChange(next, { type: current.kind, drawingIds: ids, transactionId: `${current.kind}-${event.pointerId}` }); setAnnouncement(`${ids.length} drawing${ids.length === 1 ? "" : "s"} ${current.kind === "move" ? "moved" : "resized"}`);
@@ -241,14 +279,20 @@ export function DrawingLayer({ engine, data = [], drawings, tools = [], renderer
     };
     const handleKeyDown = (event: KeyboardEvent) => {
       const visible = drawings.filter((drawing) => drawing.visible);
-      if (event.key === "Escape") { if (gestureRef.current) cancelGesture(); else emitSelection([]); onActiveToolComplete?.(); return; }
+      if (event.key === "Escape") { if (gestureRef.current || multiClickDraftRef.current) cancelGesture(); else emitSelection([]); onActiveToolComplete?.(); return; }
+      if (multiClickDraftRef.current && event.key === "Backspace") {
+        event.preventDefault(); const draft = multiClickDraftRef.current; const points = draft.drawing.points.slice(0, -1); if (!points.length) cancelGesture(); else { const drawing = { ...draft.drawing, points }; multiClickDraftRef.current = { ...draft, drawing }; setDraftDrawings([...drawings, drawing]); setAnnouncement("Last draft point removed"); } return;
+      }
+      if (multiClickDraftRef.current && event.key === "Enter") {
+        event.preventDefault(); const draft = multiClickDraftRef.current; if (draft.drawing.points.length < draft.minimumPoints) return; multiClickDraftRef.current = null; setDraftDrawings(null); onDrawingsChange([...drawings, draft.drawing], { type: "create", drawingIds: [draft.drawing.id], transactionId: `create-${draft.drawing.id}` }); emitSelection([draft.drawing.id]); setAnnouncement(`${draft.drawing.type} created`); finishTool(); return;
+      }
       if (event.key === "Tab" && visible.length) {
         event.preventDefault(); const currentIndex = visible.findIndex((drawing) => drawing.id === focusedDrawingId || selectedSet.has(drawing.id)); const nextIndex = (currentIndex + (event.shiftKey ? -1 : 1) + visible.length) % visible.length;
         emitSelection([visible[nextIndex].id]); setFocusedDrawingId(visible[nextIndex].id); return;
       }
       if ((event.key === "Enter" || event.key === " ") && normalizedActiveTool) {
         event.preventDefault(); const center = pointForEvent(event, { x: bounds.width / 2, y: bounds.height / 2 }); if (!center) return;
-        const pointCount = normalizedActiveTool.input.points; const points = pointCount === 1 ? [center.point] : Array.from({ length: pointCount }, (_, index) => index === 0 ? center.point : engine.pointForCoordinate({ x: bounds.width / 2 + 40 * index, y: bounds.height / 2 - 40 * index }) ?? center.point);
+        const pointCount = normalizedActiveTool.input.points ?? normalizedActiveTool.input.minimumPoints ?? 1; const points = pointCount === 1 ? [center.point] : Array.from({ length: pointCount }, (_, index) => index === 0 ? center.point : engine.pointForCoordinate({ x: bounds.width / 2 + 40 * index, y: bounds.height / 2 - 40 * index }) ?? center.point);
         const drawing = makeDrawing(normalizedActiveTool, points); onDrawingsChange([...drawings, drawing], { type: "create", drawingIds: [drawing.id], transactionId: `keyboard-create-${drawing.id}` }); emitSelection([drawing.id]); setAnnouncement(`${drawing.type} created with keyboard`); finishTool(); return;
       }
       if ((event.key === "Delete" || event.key === "Backspace") && effectiveSelectedIds.length) {
@@ -264,18 +308,22 @@ export function DrawingLayer({ engine, data = [], drawings, tools = [], renderer
       const next = drawings.map((drawing) => movableIds.includes(drawing.id) ? { ...drawing, points: drawing.points.map((point) => ({ ...shiftTime(point, timeDelta), price: point.price + priceDelta })) } : drawing);
       onDrawingsChange(next, { type: "move", drawingIds: movableIds, transactionId: `keyboard-${event.key}-${Date.now()}` }); setAnnouncement(`${movableIds.length} drawing${movableIds.length === 1 ? "" : "s"} nudged`);
     };
-    const pointerDownListener = handlePointerDown as EventListener; const pointerMoveListener = handlePointerMove as EventListener; const pointerUpListener = handlePointerUp as EventListener; const pointerCancelListener = handlePointerCancel as EventListener; const lostCaptureListener = handleLostPointerCapture as EventListener; const keyDownListener = handleKeyDown as EventListener;
-    target.addEventListener("pointerdown", pointerDownListener, true); target.addEventListener("pointermove", pointerMoveListener, true); target.addEventListener("pointerup", pointerUpListener, true); target.addEventListener("pointercancel", pointerCancelListener, true); target.addEventListener("lostpointercapture", lostCaptureListener, true); target.addEventListener("keydown", keyDownListener);
-    return () => { target.style.cursor = previousCursor; target.removeEventListener("pointerdown", pointerDownListener, true); target.removeEventListener("pointermove", pointerMoveListener, true); target.removeEventListener("pointerup", pointerUpListener, true); target.removeEventListener("pointercancel", pointerCancelListener, true); target.removeEventListener("lostpointercapture", lostCaptureListener, true); target.removeEventListener("keydown", keyDownListener); };
+    const handleDoubleClick = (event: MouseEvent) => { const draft = multiClickDraftRef.current; if (!draft || draft.drawing.points.length < draft.minimumPoints) return; event.preventDefault(); event.stopPropagation(); multiClickDraftRef.current = null; setDraftDrawings(null); onDrawingsChange([...drawings, draft.drawing], { type: "create", drawingIds: [draft.drawing.id], transactionId: `create-${draft.drawing.id}` }); emitSelection([draft.drawing.id]); setAnnouncement(`${draft.drawing.type} created`); finishTool(); };
+    type TargetListener = Parameters<typeof target.addEventListener>[1];
+    const pointerDownListener = handlePointerDown as TargetListener; const pointerMoveListener = handlePointerMove as TargetListener; const pointerUpListener = handlePointerUp as TargetListener; const pointerCancelListener = handlePointerCancel as TargetListener; const lostCaptureListener = handleLostPointerCapture as TargetListener; const keyDownListener = handleKeyDown as TargetListener; const doubleClickListener = handleDoubleClick as TargetListener;
+    target.addEventListener("pointerdown", pointerDownListener, true); target.addEventListener("pointermove", pointerMoveListener, true); target.addEventListener("pointerup", pointerUpListener, true); target.addEventListener("pointercancel", pointerCancelListener, true); target.addEventListener("lostpointercapture", lostCaptureListener, true); target.addEventListener("keydown", keyDownListener); target.addEventListener("dblclick", doubleClickListener, true);
+    return () => { target.style.cursor = previousCursor; target.removeEventListener("pointerdown", pointerDownListener, true); target.removeEventListener("pointermove", pointerMoveListener, true); target.removeEventListener("pointerup", pointerUpListener, true); target.removeEventListener("pointercancel", pointerCancelListener, true); target.removeEventListener("lostpointercapture", lostCaptureListener, true); target.removeEventListener("keydown", keyDownListener); target.removeEventListener("dblclick", doubleClickListener, true); };
   }, [bounds.height, bounds.width, cancelGesture, contexts, data, displayedDrawings, draftDrawings, drawings, effectiveSelectedIds, emitSelection, engine, focusedDrawingId, interactionTargetRef, normalizedActiveTool, normalizedTools, onActiveToolComplete, onDrawingsChange, pointForEvent, renderers, selectedSet, settings.hitTolerance, settings.keepDrawingMode, settings.keyboardPriceStep, updateGesture]);
 
+  const floatingDrawing = effectiveSelectedIds.length === 1 ? displayedDrawings.find((drawing) => drawing.id === effectiveSelectedIds[0]) : undefined;
+  const floatingPoint = floatingDrawing ? contexts.get(floatingDrawing.id)?.points.find((point) => point != null) : undefined;
   return <>
     <svg ref={svgRef} role="application" aria-roledescription="interactive drawing layer" aria-label={props["aria-label"] ?? "Chart drawings"} aria-activedescendant={focusedDrawingId ? `drawing-${focusedDrawingId}` : undefined} className={cn("pointer-events-none absolute inset-0 size-full overflow-visible outline-none", className)} tabIndex={interactionTargetRef ? undefined : 0} {...props}>
       {displayedDrawings.filter((drawing) => drawing.visible).map((drawing) => {
         const renderer = resolveDrawingRenderer(drawing, normalizedTools, renderers); const context = contexts.get(drawing.id); if (!renderer || !context) return null;
         const primitives = renderer.getPrimitives(context); const color = typeof drawing.parameters.color === "string" ? drawing.parameters.color : "hsl(var(--primary))"; const lineWidth = typeof drawing.parameters.lineWidth === "number" ? drawing.parameters.lineWidth : 1;
-        const selected = selectedSet.has(drawing.id); const emphasized = selected || hoveredDrawingId === drawing.id; const focused = focusedDrawingId === drawing.id; const isShape = primitives.some((primitive) => primitive.kind === "rect" || primitive.kind === "ellipse" || primitive.kind === "polyline" && primitive.closed); const handles = selected && !drawing.locked ? renderer.getHandles?.(context) ?? [] : [];
-        return <g id={`drawing-${drawing.id}`} key={drawing.id} data-drawing-id={drawing.id} aria-label={`${drawing.type}${drawing.locked ? ", locked" : ""}${selected ? ", selected" : ""}`} fill={isShape ? color : "none"} fillOpacity={isShape ? Number(drawing.parameters.fillOpacity ?? 0.12) : 0} stroke={color} strokeWidth={lineWidth + (emphasized ? 1 : 0)} strokeDasharray={draftDrawings && !drawings.includes(drawing) ? "6 4" : dashArray(drawing.parameters)} color={color}>
+        const selected = selectedSet.has(drawing.id); const emphasized = selected || hoveredDrawingId === drawing.id; const focused = focusedDrawingId === drawing.id; const isShape = primitives.some((primitive) => primitive.kind === "rect" || primitive.kind === "ellipse" || primitive.kind === "polygon" || primitive.kind === "band" || primitive.kind === "polyline" && primitive.closed); const handles = selected && !drawing.locked ? renderer.getHandles?.(context) ?? [] : []; const derived = renderer.describe?.(context) ?? Object.entries(renderer.derivedValues?.(context) ?? {}).map(([key, value]) => `${key} ${value}`).join(", ");
+        return <g id={`drawing-${drawing.id}`} key={drawing.id} data-drawing-id={drawing.id} aria-label={`${drawing.name ?? drawing.type}${derived ? `, ${derived}` : ""}${drawing.locked ? ", locked" : ""}${selected ? ", selected" : ""}`} fill={isShape ? color : "none"} fillOpacity={isShape ? Number(drawing.parameters.fillOpacity ?? 0.12) : 0} stroke={color} strokeWidth={lineWidth + (emphasized ? 1 : 0)} strokeDasharray={draftDrawings && !drawings.includes(drawing) ? "6 4" : dashArray(drawing.parameters)} color={color} opacity={typeof drawing.parameters.opacity === "number" ? drawing.parameters.opacity : 1}>
           {focused ? <g stroke="hsl(var(--ring))" strokeWidth={lineWidth + 5} opacity={0.35}>{primitives.map((primitive) => renderPrimitive(primitive))}</g> : null}
           <g data-hit-area="true" aria-hidden="true">{primitives.map((primitive) => renderPrimitive(primitive, true))}</g>{primitives.map((primitive) => renderPrimitive(primitive))}
           {handles.map((handle) => <g key={handle.id} data-drawing-handle={handle.id}><circle cx={handle.position.x} cy={handle.position.y} r={14} fill="transparent" stroke="none" /><circle cx={handle.position.x} cy={handle.position.y} r={6} fill="hsl(var(--background))" stroke={color} strokeWidth={2} /></g>)}
@@ -283,6 +331,7 @@ export function DrawingLayer({ engine, data = [], drawings, tools = [], renderer
       })}
       {snapMarker ? <g data-snap-marker="true" pointerEvents="none" fill="none" stroke="hsl(var(--primary))" strokeWidth={1.5}><circle cx={snapMarker.x} cy={snapMarker.y} r={7} /><line x1={snapMarker.x - 11} x2={snapMarker.x + 11} y1={snapMarker.y} y2={snapMarker.y} /><line x1={snapMarker.x} x2={snapMarker.x} y1={snapMarker.y - 11} y2={snapMarker.y + 11} /></g> : null}
     </svg>
+    {floatingDrawing && floatingPoint ? <div role="toolbar" aria-label={`Actions for ${floatingDrawing.name ?? floatingDrawing.type}`} className="absolute z-20 flex -translate-y-full items-center gap-0.5 rounded-[var(--radius)] border border-border bg-background/95 p-1 shadow-md backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95" style={{ left: Math.max(4, Math.min(bounds.width - 124, floatingPoint.x)), top: Math.max(4, floatingPoint.y - 10) }}><IconAction label={floatingDrawing.locked ? "Unlock drawing" : "Lock drawing"} onClick={() => onDrawingsChange(drawings.map((drawing) => drawing.id === floatingDrawing.id ? { ...drawing, locked: !drawing.locked } : drawing), { type: "lock", drawingIds: [floatingDrawing.id] })}>{floatingDrawing.locked ? <Unlock /> : <Lock />}</IconAction><IconAction label="Hide drawing" onClick={() => { onDrawingsChange(drawings.map((drawing) => drawing.id === floatingDrawing.id ? { ...drawing, visible: false } : drawing), { type: "visibility", drawingIds: [floatingDrawing.id] }); emitSelection([]); }}><EyeOff /></IconAction><IconAction label="Delete drawing" onClick={() => { onDrawingsChange(drawings.filter((drawing) => drawing.id !== floatingDrawing.id), { type: "delete", drawingIds: [floatingDrawing.id] }); emitSelection([]); }}><Trash2 /></IconAction></div> : null}
     <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">{announcement}</div>
   </>;
 }
@@ -294,7 +343,16 @@ export interface DrawingToolbarProps extends React.HTMLAttributes<HTMLDivElement
   selectedDrawings?: DrawingState[];
   canUndo?: boolean;
   canRedo?: boolean;
+  favoriteToolIds?: string[];
+  recentToolIds?: string[];
+  keepDrawingMode?: boolean;
   onActiveToolChange?: (toolId: string | undefined) => void;
+  onToggleFavorite?: (toolId: string) => void;
+  onKeepDrawingModeChange?: (enabled: boolean) => void;
+  onLockAll?: () => void;
+  onHideAll?: () => void;
+  onRemoveAll?: () => void;
+  onCreateAlert?: () => void;
   /** @deprecated Use onStyleCommit. */
   onUpdateSelected?: (changes: Record<string, string | number>) => void;
   onStylePreview?: (changes: Record<string, string | number>) => void;
@@ -315,29 +373,32 @@ function IconAction({ label, shortcut, children, ...props }: React.ComponentProp
   return <Tooltip><TooltipTrigger asChild><Button type="button" size="sm" iconOnly colorStyle="ghost" aria-label={label} {...props}>{children}</Button></TooltipTrigger><TooltipContent size="xs">{label}{shortcut ? ` · ${shortcut}` : ""}</TooltipContent></Tooltip>;
 }
 
-export function DrawingToolbar({ tools, activeToolId, selectedDrawing, selectedDrawings, canUndo, canRedo, onActiveToolChange, onUpdateSelected, onStylePreview, onStyleCommit, onDelete, onToggleVisibility, onToggleLock, onUndo, onRedo, className, ...props }: DrawingToolbarProps) {
+export function DrawingToolbar({ tools, activeToolId, selectedDrawing, selectedDrawings, canUndo, canRedo, favoriteToolIds = [], recentToolIds = [], keepDrawingMode = false, onActiveToolChange, onToggleFavorite, onKeepDrawingModeChange, onLockAll, onHideAll, onRemoveAll, onCreateAlert, onUpdateSelected, onStylePreview, onStyleCommit, onDelete, onToggleVisibility, onToggleLock, onUndo, onRedo, className, ...props }: DrawingToolbarProps) {
   const selections = selectedDrawings ?? (selectedDrawing ? [selectedDrawing] : []); const primary = selections[0]; const [styleDraft, setStyleDraft] = React.useState<Record<string, string | number>>({}); const committedStyle = React.useRef<Record<string, string | number>>({});
+  const [search, setSearch] = React.useState("");
   React.useEffect(() => {
     const next: Record<string, string | number> = primary ? { color: typeof primary.parameters.color === "string" && primary.parameters.color.startsWith("#") ? primary.parameters.color : "#64748b", lineWidth: typeof primary.parameters.lineWidth === "number" ? primary.parameters.lineWidth : 1, dashStyle: typeof primary.parameters.dashStyle === "string" ? primary.parameters.dashStyle : "solid", fillOpacity: typeof primary.parameters.fillOpacity === "number" ? primary.parameters.fillOpacity : 0.12 } : {};
     committedStyle.current = next; setStyleDraft(next);
-  }, [primary?.id, primary?.parameters]);
+  }, [primary]);
   const preview = (changes: Record<string, string | number>) => { const next = { ...styleDraft, ...changes }; setStyleDraft(next); onStylePreview?.(next); };
   const commitStyle = (changes: Record<string, string | number>) => { const next = { ...styleDraft, ...changes }; if (JSON.stringify(next) === JSON.stringify(committedStyle.current)) return; committedStyle.current = next; setStyleDraft(next); (onStyleCommit ?? onUpdateSelected)?.(next); };
-  const groupedTools = tools.reduce<Record<string, DrawingToolDefinition[]>>((groups, tool) => { const category = normalizeDrawingToolDefinition(tool).category; groups[category] = [...(groups[category] ?? []), tool]; return groups; }, {});
+  const matchingTools = tools.filter((tool) => `${tool.label} ${tool.category ?? ""}`.toLowerCase().includes(search.toLowerCase()));
+  const groupedTools = matchingTools.reduce<Record<string, DrawingToolDefinition[]>>((groups, tool) => { const category = normalizeDrawingToolDefinition(tool).category; groups[category] = [...(groups[category] ?? []), tool]; return groups; }, {});
   const activeTool = tools.find((tool) => tool.id === activeToolId); const allHidden = selections.length > 0 && selections.every((drawing) => !drawing.visible); const allLocked = selections.length > 0 && selections.every((drawing) => drawing.locked);
   return <div className={cn("flex min-h-11 flex-wrap items-center gap-1 border-b border-border bg-background px-2 py-1.5", className)} {...props}>
     <IconAction label="Pointer" shortcut="Esc" aria-pressed={!activeToolId} colorStyle={!activeToolId ? "tonal" : "ghost"} onClick={() => onActiveToolChange?.(undefined)}><MousePointer2 /></IconAction>
     <DropdownMenu><Tooltip><TooltipTrigger asChild><DropdownMenuTrigger asChild><Button type="button" size="sm" colorStyle={activeToolId ? "tonal" : "ghost"} aria-label={activeTool ? `Active drawing tool: ${activeTool.label}` : "Choose drawing tool"}>{activeTool ? <ToolIcon id={activeTool.id} /> : <Slash />}<span className="hidden sm:inline">{activeTool?.label ?? "Draw"}</span></Button></DropdownMenuTrigger></TooltipTrigger><TooltipContent size="xs">Drawing tools · press and drag</TooltipContent></Tooltip>
-      <DropdownMenuContent align="start">{Object.entries(groupedTools).map(([category, categoryTools], categoryIndex) => <React.Fragment key={category}>{categoryIndex ? <DropdownMenuSeparator /> : null}<DropdownMenuLabel>{category}</DropdownMenuLabel>{categoryTools.map((tool) => <DropdownMenuItem key={tool.id} icon={<ToolIcon id={tool.id} />} onSelect={() => onActiveToolChange?.(tool.id)}>{tool.label}</DropdownMenuItem>)}</React.Fragment>)}</DropdownMenuContent>
+      <DropdownMenuContent align="start" className="max-h-[28rem] w-72 overflow-auto"><div className="sticky top-0 z-10 flex items-center gap-2 border-b border-border bg-popover p-2"><Search className="size-3.5 text-muted-foreground" aria-hidden="true" /><input aria-label="Search drawing tools" value={search} onChange={(event) => setSearch(event.target.value)} onKeyDown={(event) => event.stopPropagation()} className="h-7 min-w-0 flex-1 bg-transparent text-xs outline-none" placeholder="Search tools" /></div>{!search && favoriteToolIds.length ? <><DropdownMenuLabel>Favorites</DropdownMenuLabel>{favoriteToolIds.map((id) => tools.find((tool) => tool.id === id)).filter((tool): tool is DrawingToolDefinition => Boolean(tool)).map((tool) => <DropdownMenuItem key={`favorite-${tool.id}`} icon={<Star className="fill-current" />} onSelect={() => onActiveToolChange?.(tool.id)}>{tool.label}</DropdownMenuItem>)}<DropdownMenuSeparator /></> : null}{!search && recentToolIds.length ? <><DropdownMenuLabel>Recent</DropdownMenuLabel>{recentToolIds.slice(0, 5).map((id) => tools.find((tool) => tool.id === id)).filter((tool): tool is DrawingToolDefinition => Boolean(tool)).map((tool) => <DropdownMenuItem key={`recent-${tool.id}`} icon={<ToolIcon id={tool.id} />} onSelect={() => onActiveToolChange?.(tool.id)}>{tool.label}</DropdownMenuItem>)}<DropdownMenuSeparator /></> : null}{Object.entries(groupedTools).map(([category, categoryTools], categoryIndex) => <React.Fragment key={category}>{categoryIndex ? <DropdownMenuSeparator /> : null}<DropdownMenuLabel>{category}</DropdownMenuLabel>{categoryTools.map((tool) => <DropdownMenuItem key={tool.id} icon={<ToolIcon id={tool.id} />} onSelect={() => onActiveToolChange?.(tool.id)}><span className="flex-1">{tool.label}</span>{onToggleFavorite ? <button type="button" aria-label={`${favoriteToolIds.includes(tool.id) ? "Remove" : "Add"} ${tool.label} ${favoriteToolIds.includes(tool.id) ? "from" : "to"} favorites`} className="ml-4 rounded p-1 hover:bg-muted" onPointerDown={(event) => { event.preventDefault(); event.stopPropagation(); onToggleFavorite(tool.id); }}><Star className={cn("size-3.5", favoriteToolIds.includes(tool.id) && "fill-current")} /></button> : null}</DropdownMenuItem>)}</React.Fragment>)}</DropdownMenuContent>
     </DropdownMenu>
-    <div className="mx-1 h-5 w-px bg-border" aria-hidden="true" /><IconAction label="Undo" shortcut="Ctrl/Cmd+Z" disabled={!canUndo} onClick={onUndo}><Undo2 /></IconAction><IconAction label="Redo" shortcut="Ctrl/Cmd+Shift+Z" disabled={!canRedo} onClick={onRedo}><Redo2 /></IconAction>
+    <IconAction label={keepDrawingMode ? "Disable keep drawing mode" : "Enable keep drawing mode"} aria-pressed={keepDrawingMode} colorStyle={keepDrawingMode ? "tonal" : "ghost"} onClick={() => onKeepDrawingModeChange?.(!keepDrawingMode)}><Repeat2 /></IconAction><div className="mx-1 h-5 w-px bg-border" aria-hidden="true" /><IconAction label="Undo" shortcut="Ctrl/Cmd+Z" disabled={!canUndo} onClick={onUndo}><Undo2 /></IconAction><IconAction label="Redo" shortcut="Ctrl/Cmd+Shift+Z" disabled={!canRedo} onClick={onRedo}><Redo2 /></IconAction>
+    {(onLockAll || onHideAll || onRemoveAll) ? <DropdownMenu><DropdownMenuTrigger asChild><Button size="sm" colorStyle="ghost">All</Button></DropdownMenuTrigger><DropdownMenuContent align="start">{onLockAll ? <DropdownMenuItem icon={<Lock />} onSelect={onLockAll}>Lock all</DropdownMenuItem> : null}{onHideAll ? <DropdownMenuItem icon={<EyeOff />} onSelect={onHideAll}>Hide all</DropdownMenuItem> : null}{onRemoveAll ? <><DropdownMenuSeparator /><DropdownMenuItem icon={<Trash2 />} onSelect={onRemoveAll}>Remove all</DropdownMenuItem></> : null}</DropdownMenuContent></DropdownMenu> : null}
     {activeToolId ? <span className="ml-1 hidden text-[0.6875rem] text-muted-foreground lg:inline">Drag to draw · Alt bypasses magnet · Esc cancels</span> : null}
     {primary ? <div className="ml-auto flex flex-wrap items-center gap-1" aria-label={`Style ${selections.length} selected drawing${selections.length === 1 ? "" : "s"}`}><Palette className="mx-1 size-3.5 text-muted-foreground" aria-hidden="true" />
       <input aria-label="Drawing color" type="color" className="size-8 cursor-pointer rounded-[var(--radius-sm)] border border-border bg-background p-1" value={String(styleDraft.color ?? "#64748b")} onInput={(event) => preview({ color: event.currentTarget.value })} onChange={(event) => commitStyle({ color: event.currentTarget.value })} />
       <select aria-label="Drawing line width" className="h-8 rounded-[var(--radius-sm)] border border-border bg-background px-2 text-xs" value={Number(styleDraft.lineWidth ?? 1)} onChange={(event) => { const changes = { lineWidth: Number(event.target.value) }; preview(changes); commitStyle(changes); }}><option value={1}>1 px</option><option value={2}>2 px</option><option value={3}>3 px</option><option value={5}>5 px</option></select>
       <select aria-label="Drawing dash style" className="h-8 rounded-[var(--radius-sm)] border border-border bg-background px-2 text-xs" value={String(styleDraft.dashStyle ?? "solid")} onChange={(event) => { const changes = { dashStyle: event.target.value }; preview(changes); commitStyle(changes); }}><option value="solid">Solid</option><option value="dashed">Dashed</option><option value="dotted">Dotted</option></select>
       {(primary.type === "rectangle" || primary.type === "ellipse") ? <label className="flex h-8 items-center gap-1 px-1 text-[0.6875rem] text-muted-foreground">Fill<input aria-label="Drawing fill opacity" type="range" min={0} max={0.5} step={0.05} value={Number(styleDraft.fillOpacity ?? 0.12)} onInput={(event) => preview({ fillOpacity: Number(event.currentTarget.value) })} onPointerUp={(event) => commitStyle({ fillOpacity: Number(event.currentTarget.value) })} onKeyUp={(event) => commitStyle({ fillOpacity: Number(event.currentTarget.value) })} /></label> : null}
-      <IconAction label={allHidden ? "Show selected" : "Hide selected"} onClick={onToggleVisibility}>{allHidden ? <Eye /> : <EyeOff />}</IconAction><IconAction label={allLocked ? "Unlock selected" : "Lock selected"} onClick={onToggleLock}>{allLocked ? <Unlock /> : <Lock />}</IconAction><IconAction label="Delete selected" shortcut="Delete" onClick={onDelete}><Trash2 /></IconAction>
+      {onCreateAlert ? <IconAction label="Create drawing alert" onClick={onCreateAlert}><Bell /></IconAction> : null}<IconAction label={allHidden ? "Show selected" : "Hide selected"} onClick={onToggleVisibility}>{allHidden ? <Eye /> : <EyeOff />}</IconAction><IconAction label={allLocked ? "Unlock selected" : "Lock selected"} onClick={onToggleLock}>{allLocked ? <Unlock /> : <Lock />}</IconAction><IconAction label="Delete selected" shortcut="Delete" onClick={onDelete}><Trash2 /></IconAction>
     </div> : null}
   </div>;
 }

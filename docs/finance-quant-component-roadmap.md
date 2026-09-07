@@ -11,7 +11,7 @@ Components are split across **two packages**:
   `SegmentedProgress` / `RangeBar`, small decorative `Heatmap`/`DonutChart`).
   Rule of thumb: if it has axes, ticks, legend, tooltip, crosshair, color scale,
   or domain logic → it does NOT belong here.
-- **`@agentix/charts`** — separate package (planned). All real charting surface:
+- **`aapaetsch-charts`** — separate package (planned). All real charting surface:
   `LineChart`, `AreaChart`, `BarChart`, `Histogram`, `ScatterPlot`, `BoxPlot`,
   `Treemap`, `SurfaceChart`, `SankeyChart`, `RadarChart`, full `Heatmap` /
   `DonutChart`, financial microstructure charts, all quant charts, the composed
@@ -21,12 +21,12 @@ Components are split across **two packages**:
 The `Location` column in each table below uses:
 
 - 🟦 **UI** — ship in `@agentix/ui` (current target).
-- 🟧 **Charts** — defer to `@agentix/charts` (build later, separate package).
+- 🟧 **Charts** — defer to `aapaetsch-charts` (build later, separate package).
 - ⬜ **Template** — composed app/layout template, consider a third
   `@agentix/templates` package.
 
-`@agentix/charts` will depend on `@agentix/ui` (chart widgets consume UI
-primitives + tokens). `@agentix/ui` MUST NOT depend on `@agentix/charts`.
+`aapaetsch-charts` will depend on `@agentix/ui` (chart widgets consume UI
+primitives + tokens). `@agentix/ui` MUST NOT depend on `aapaetsch-charts`.
 
 ## Rank Definitions
 
@@ -53,7 +53,7 @@ primitives + tokens). `@agentix/ui` MUST NOT depend on `@agentix/charts`.
 ## Section 1 — Foundational Charting & Data‑Viz Primitives
 *(These compose everything below — ship first.)*
 
-**Packaging:** Most items in this section go to 🟧 **`@agentix/charts`**. Exceptions kept in 🟦 **`@agentix/ui`**: `Sparkline` (#1, tiny inline `<path>`), a purely decorative `Heatmap` variant (#2, only if ≤ ~100 cells and no axis/legend), `Gauge` (#13, sibling of `Progress`), and possibly `DonutChart` (#7) **only if trivially small and decorative** — default to charts.
+**Packaging:** Most items in this section go to 🟧 **`aapaetsch-charts`**. Exceptions kept in 🟦 **`@agentix/ui`**: `Sparkline` (#1, tiny inline `<path>`), a purely decorative `Heatmap` variant (#2, only if ≤ ~100 cells and no axis/legend), `Gauge` (#13, sibling of `Progress`), and possibly `DonutChart` (#7) **only if trivially small and decorative** — default to charts.
 
 | # | Rank | Component | Location | Category | Use Case (Finance) | Use Case (Quant) | Deps | Effort | Notes |
 |---|------|-----------|----------|----------|---------------------|------------------|------|--------|-------|
@@ -124,7 +124,7 @@ primitives + tokens). `@agentix/ui` MUST NOT depend on `@agentix/charts`.
 ## Section 4 — Financial Dashboard Components
 *(Dashboards / portfolio / execution / monitoring)*
 
-**Packaging:** Mostly 🟦 **`@agentix/ui`** (composites and small widgets). Heavy chart‑backed items go to 🟧 **`@agentix/charts`** (DepthChart #42, VolumeProfile #45, OptionsChain #46, PriceTiersChart #60). Layout templates like `MarketViewLayout` are ⬜ templates and already handled in §3.
+**Packaging:** Mostly 🟦 **`@agentix/ui`** (composites and small widgets). Heavy chart‑backed items go to 🟧 **`aapaetsch-charts`** (DepthChart #42, VolumeProfile #45, OptionsChain #46, PriceTiersChart #60). Layout templates like `MarketViewLayout` are ⬜ templates and already handled in §3.
 
 ### Market Microstructure
 
@@ -170,7 +170,7 @@ primitives + tokens). `@agentix/ui` MUST NOT depend on `@agentix/charts`.
 
 ## Section 5 — Quant Dashboard Components
 
-**Packaging:** All chart‑backed quant widgets go to 🟧 **`@agentix/charts`**. Pure‑UI composites that don't render chart geometry stay in 🟦 **`@agentix/ui`** (KPI strips, parameter search forms, status cards, pure‑table widgets). When a quant chart is composed of `DataTable` + chart cells, the chart cells are charts; the surrounding table is UI.
+**Packaging:** All chart‑backed quant widgets go to 🟧 **`aapaetsch-charts`**. Pure‑UI composites that don't render chart geometry stay in 🟦 **`@agentix/ui`** (KPI strips, parameter search forms, status cards, pure‑table widgets). When a quant chart is composed of `DataTable` + chart cells, the chart cells are charts; the surrounding table is UI.
 
 ### Quant‑specific charts (composed on top of Section 1 primitives)
 
@@ -299,7 +299,7 @@ primitives + tokens). `@agentix/ui` MUST NOT depend on `@agentix/charts`.
 
 ## Suggested Build Order
 
-A concrete sequencing that respects composition dependencies and unlocks the most user‑visible value fastest. **Phase C is complete and `@agentix/charts` now exists; Phase D is in progress.**
+A concrete sequencing that respects composition dependencies and unlocks the most user‑visible value fastest. **Phase C is complete and `aapaetsch-charts` now exists; Phase D is in progress.**
 
 ### Phase A — UI chart primitives + form/text (🟦 `@agentix/ui`, ship now)
 1. `Sparkline` (XS) — #1
@@ -339,13 +339,13 @@ A concrete sequencing that respects composition dependencies and unlocks the mos
 33. `WorkspaceTabs` (M) — #35
 34. `TagInput` (S) — #24
 
-### Phase C — Initialize 🟧 `@agentix/charts` package — ✅ Complete
+### Phase C — Initialize 🟧 `aapaetsch-charts` package — ✅ Complete
 35. ✅ Scaffold `charts/` npm workspace folder (tsup, Vitest, shared Storybook section).
-36. ✅ Select Recharts v3 for SVG primitives and isolate the first-party Canvas 2D + SVG engine in the ESM-only `@agentix/charts-market` package.
+36. ✅ Select Recharts v3 for SVG primitives and isolate the first-party Canvas 2D + SVG engine in the ESM-only `aapaetsch-charts-market` package.
 37. ✅ Implement chart chrome: `ChartContainer`, `ChartCard`, `ChartTooltip`, `ChartLegend`, `ChartGrid`.
 38. ✅ Implement config-driven palette mapping and shared axis/grid defaults on Recharts' scale system.
 
-### Phase D — Chart foundation (🟧 `@agentix/charts`) — ✅ Complete
+### Phase D — Chart foundation (🟧 `aapaetsch-charts`) — ✅ Complete
 39. ✅ `Heatmap` (S) — #2
 40. ✅ `LineChart`/`AreaChart` (M) — #3
 41. ✅ `Histogram` (S) — #6
@@ -356,13 +356,13 @@ A concrete sequencing that respects composition dependencies and unlocks the mos
 46. ✅ `Treemap` (M) — #12
 47. ✅ `RadarChart` (S) — #11
 
-### Phase E — Financial chart widgets (🟧 `@agentix/charts`)
-48. ✅ `MarketChart` in `@agentix/charts-market` (L) — replaces #8
+### Phase E — Financial chart widgets (🟧 `aapaetsch-charts`)
+48. ✅ `MarketChart` in `aapaetsch-charts-market` (L) — replaces #8
 49. ✅ `DepthChart` (M) — #42
 50. ✅ `VolumeProfile` (M) — #45
 51. `PriceTiersChart` (M) — #60
 
-### Phase F — Quant chart widgets (🟧 `@agentix/charts`)
+### Phase F — Quant chart widgets (🟧 `aapaetsch-charts`)
 52. ✅ `EquityCurve` (S) — #67
 53. ✅ `DrawdownChart` (S) — #68
 54. ✅ `RollingMetricChart` (S) — #69
@@ -464,7 +464,7 @@ A concrete sequencing that respects composition dependencies and unlocks the mos
 - Items already on `docs/roadmap/*`: `Typography` (📋), `Collapsible` (🟢), `Menubar` (🟢), `ColorPicker` (🟢), `RichTextEditor` (🟢), `AspectRatio` (🟢), `FileUpload` (🟢), `Progress (advanced)` (🟡). Those rows here update/restate those with finance/quant use cases.
 - Items already implemented and referenced here as dependencies: `OrderBook`, `TimeAndSales`, `StatTile`, `DataTable`, `Card`, `Badge`, `Avatar`, `Switch`, `Slider`, `Tabs`, `Breadcrumb`, `Pagination`, `Carousel`, `Separator`, `Progress`, `Skeleton`, `Container`, `Grid`, `Flex`, `Resizable`, `ScrollArea`, `AlertDialog`, `DropdownMenu`, `ContextMenu`, `HoverCard`, `Tooltip`, `DatePicker`, `TimePicker`, `DateTimePicker`, `MultiSelect`, `Combobox`, `CommandPalette`, `ToggleGroup`, `Toolbar`, `Toast`.
 - `Sparkline` is the single highest-ROI gap: it immediately fills a render slot already exposed in `StatTile` (`sparklineRenderSlot`) and closes visual needs across every dashboard and tearsheet. **In‑scope for `@agentix/ui` right now.**
-- `BacktestTearsheet` is the single highest-ROI composition: with `EquityCurve` + `Heatmap` + `LineChart` in place, it ties three primitive charts into one killer quant widget. **Blocked** on `@agentix/charts` package (Phase C).
+- `BacktestTearsheet` is the single highest-ROI composition: with `EquityCurve` + `Heatmap` + `LineChart` in place, it ties three primitive charts into one killer quant widget. **Blocked** on `aapaetsch-charts` package (Phase C).
 
 ## Packaging Summary
 
@@ -473,11 +473,11 @@ Counts by destination (from the 145 table rows above):
 | Package | Count | Representative items |
 |---------|-------|---------------------|
 | 🟦 `@agentix/ui` (in‑scope now) | ~75 | Sparkline, NumericText, TrendIndicator, Label, Field, Form, Typography, EmptyState, Gauge, SymbolHeader, QuoteStatsStrip, DateRangePicker, QuantMetricStrip, TradeBlotter, TreeView, Sidebar … |
-| 🟧 Chart packages (implemented foundation) | ~55 | `@agentix/charts`: LineChart, Heatmap, BarChart, Histogram, ScatterPlot, DonutChart, DepthChart, EquityCurve, DrawdownChart, CorrelationMatrix, SignalChart and Tearsheet. `@agentix/charts-market`: candlestick/OHLC market charts, indicators, drawings, overlays and synchronized workspaces. Specialized domain wrappers remain demand-driven. |
+| 🟧 Chart packages (implemented foundation) | ~55 | `aapaetsch-charts`: LineChart, Heatmap, BarChart, Histogram, ScatterPlot, DonutChart, DepthChart, EquityCurve, DrawdownChart, CorrelationMatrix, SignalChart and Tearsheet. `aapaetsch-charts-market`: candlestick/OHLC market charts, indicators, drawings, overlays and synchronized workspaces. Specialized domain wrappers remain demand-driven. |
 | ⬜ templates (third package or `src/templates/`) | ~15 | MarketViewLayout, EmailClientLayout, BacktestTearsheet, AlphaTearsheet, RiskDashboard, SymbolDetailPage, PortfolioDashboard, QuantWorkspace, MonteCarloReport … |
 
 ## Next Actions (recommended)
 
-1. Integrate the completed `@agentix/charts` and `@agentix/charts-market` packages into a consumer application and collect API feedback.
+1. Integrate the completed `aapaetsch-charts` and `aapaetsch-charts-market` packages into a consumer application and collect API feedback.
 2. Build specialized quant wrappers only when a consumer needs behavior beyond the completed generic/composition layer.
 3. Keep Fibonacci, channels, anchored VWAP, freehand tools and pattern recognition in the experimental market-plugin backlog.

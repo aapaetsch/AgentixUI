@@ -44,7 +44,7 @@ export function assertValidOhlcData(data: readonly OhlcBar[]): void {
 export function reportMarketDataIssues(data: readonly OhlcBar[]): MarketDataIssue[] {
   const issues = validateOhlcData(data);
   if (issues.length && typeof process !== "undefined" && process.env.NODE_ENV !== "production") {
-    console.warn("[@agentix/charts-market] Invalid market data", issues);
+    console.warn("[aapaetsch-charts-market] Invalid market data", issues);
   }
   return issues;
 }
