@@ -30,10 +30,28 @@ jobs:
         with:
           node-version: '22.22.2'
           registry-url: 'https://registry.npmjs.org/'
-      - name: Install pinned staging-capable npm CLI
+      - name: Prepare verified isolated staging-capable npm CLI
         run: |
-          npm install --global npm@12.2.0 --ignore-scripts --no-audit --no-fund --userconfig=/dev/null --registry=https://registry.npmjs.org/
-          test "$(npm --version)" = '12.2.0'
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import {createHash} from 'node:crypto';
+          import {execFileSync} from 'node:child_process';
+          const directory = path.join(process.env.RUNNER_TEMP,'npm-stage-12.2.0');
+          fs.mkdirSync(directory,{recursive:true});
+          const response = await fetch('https://registry.npmjs.org/npm/-/npm-12.2.0.tgz');
+          if (!response.ok) throw Error('npm CLI download failed: '+response.status);
+          const bytes = Buffer.from(await response.arrayBuffer());
+          const integrity = 'sha512-'+createHash('sha512').update(bytes).digest('base64');
+          if (integrity !== 'sha512-ZsJjKpTnlmSXOLLXiU1xDCzC4Wlok4IwZmh/aw2KUuXytU7q6qMv/cUT7MoeSf95Slwuw/lRXYefGzGCspHPNQ==') throw Error('npm CLI integrity mismatch');
+          const archive = path.join(directory,'npm.tgz');
+          fs.writeFileSync(archive,bytes);
+          execFileSync('tar',['-xzf',archive,'-C',directory]);
+          const cli = path.join(directory,'package/bin/npm-cli.js');
+          if (execFileSync(process.execPath,[cli,'--version'],{encoding:'utf8'}).trim() !== '12.2.0') throw Error('Unexpected npm version');
+          fs.appendFileSync(process.env.GITHUB_ENV,`NPM_STAGING_CLI=${cli}\n`);
+          console.log('Verified npm 12.2.0 CLI prepared without replacing the runner npm installation.');
+          NODE
       - name: Verify approved artifact and source
         run: |
           echo 'bf213e605fe719e5afc11d141f7d05909157bd6c163c7c3437b2317099f31b48  package.tgz' | sha256sum --check --strict
@@ -49,7 +67,7 @@ jobs:
           if (integrity !== 'sha512-LhygQBJl4wqctNuafl/fr3tsMHOrY363taLBWYmEnY36JAW+urphsG3p5fBqMkMNVvbtsS54S3RBRORI0sCMww==') throw Error('Integrity mismatch');
           NODE
       - name: Stage the exact reviewed tarball with provenance
-        run: npm stage publish ./package.tgz --provenance --access public --tag beta --ignore-scripts --registry=https://registry.npmjs.org/ --json > stage-publish.json
+        run: node "$NPM_STAGING_CLI" stage publish ./package.tgz --provenance --access public --tag beta --ignore-scripts --registry=https://registry.npmjs.org/ --json > stage-publish.json
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Inspect and download staged package
@@ -63,8 +81,9 @@ jobs:
           if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(stageId ?? '')) throw Error('Missing valid stage ID');
           if (entry.name !== 'aapaetsch-charts-market' || entry.version !== '0.1.0-beta.1-supplied.20261015.1') throw Error('Staged package identity mismatch');
           fs.writeFileSync('stage-id.txt', stageId + '\n');
-          fs.writeFileSync('stage-view.json', execFileSync('npm',['stage','view',stageId,'--json','--registry=https://registry.npmjs.org/'],{encoding:'utf8'}));
-          fs.writeFileSync('stage-download.json', execFileSync('npm',['stage','download',stageId,'--json','--registry=https://registry.npmjs.org/'],{encoding:'utf8'}));
+          if (!process.env.NPM_STAGING_CLI) throw Error('Missing verified staging CLI');
+          fs.writeFileSync('stage-view.json', execFileSync(process.execPath,[process.env.NPM_STAGING_CLI,'stage','view',stageId,'--json','--registry=https://registry.npmjs.org/'],{encoding:'utf8'}));
+          fs.writeFileSync('stage-download.json', execFileSync(process.execPath,[process.env.NPM_STAGING_CLI,'stage','download',stageId,'--json','--registry=https://registry.npmjs.org/'],{encoding:'utf8'}));
           NODE
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
