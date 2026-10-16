@@ -1,0 +1,98 @@
+name: Stage reviewed market chart candidate
+
+# Stage the immutable reviewed bytes; publication requires maintainer 2FA approval.
+on:
+  push:
+    branches: ['release/market-supplied-20261015-1']
+    paths: ['.github/workflows/stage-reviewed-market.yml']
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: staged-market-supplied-20261015-1
+  cancel-in-progress: false
+
+jobs:
+  stage:
+    if: github.repository == 'aapaetsch/AgentixUI'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: charts-market/releases/0.1.0-beta.1-supplied.20261015.1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.2'
+          registry-url: 'https://registry.npmjs.org/'
+      - name: Install pinned staging-capable npm CLI
+        run: |
+          npm install --global npm@12.2.0 --ignore-scripts --no-audit --no-fund --userconfig=/dev/null --registry=https://registry.npmjs.org/
+          test "$(npm --version)" = '12.2.0'
+      - name: Verify approved artifact and source
+        run: |
+          echo 'bf213e605fe719e5afc11d141f7d05909157bd6c163c7c3437b2317099f31b48  package.tgz' | sha256sum --check --strict
+          echo 'a08c82bb3241ae0aa6da8684ff8263a67da43a252f4cfc226d35fb6bcc71dcb2  source.tgz' | sha256sum --check --strict
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import {createHash} from 'node:crypto';
+          import {execFileSync} from 'node:child_process';
+          const manifest = JSON.parse(execFileSync('tar', ['-xOf', 'package.tgz', 'package/package.json'], {encoding:'utf8'}));
+          if (manifest.name !== 'aapaetsch-charts-market' || manifest.version !== '0.1.0-beta.1-supplied.20261015.1') throw Error('Unexpected package identity');
+          if (manifest.publishConfig?.provenance !== true || manifest.publishConfig?.access !== 'public' || manifest.publishConfig?.tag !== 'beta') throw Error('Unexpected publication policy');
+          const integrity = 'sha512-' + createHash('sha512').update(fs.readFileSync('package.tgz')).digest('base64');
+          if (integrity !== 'sha512-LhygQBJl4wqctNuafl/fr3tsMHOrY363taLBWYmEnY36JAW+urphsG3p5fBqMkMNVvbtsS54S3RBRORI0sCMww==') throw Error('Integrity mismatch');
+          NODE
+      - name: Stage the exact reviewed tarball with provenance
+        run: npm stage publish ./package.tgz --provenance --access public --tag beta --ignore-scripts --registry=https://registry.npmjs.org/ --json > stage-publish.json
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Inspect and download staged package
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import {execFileSync} from 'node:child_process';
+          const raw = JSON.parse(fs.readFileSync('stage-publish.json','utf8'));
+          const entry = raw.stageId ? raw : raw['aapaetsch-charts-market'] ?? (Array.isArray(raw) ? raw[0] : null);
+          const stageId = entry?.stageId;
+          if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(stageId ?? '')) throw Error('Missing valid stage ID');
+          if (entry.name !== 'aapaetsch-charts-market' || entry.version !== '0.1.0-beta.1-supplied.20261015.1') throw Error('Staged package identity mismatch');
+          fs.writeFileSync('stage-id.txt', stageId + '\n');
+          fs.writeFileSync('stage-view.json', execFileSync('npm',['stage','view',stageId,'--json','--registry=https://registry.npmjs.org/'],{encoding:'utf8'}));
+          fs.writeFileSync('stage-download.json', execFileSync('npm',['stage','download',stageId,'--json','--registry=https://registry.npmjs.org/'],{encoding:'utf8'}));
+          NODE
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Verify registry-staged bytes before approval
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import {createHash} from 'node:crypto';
+          import {execFileSync} from 'node:child_process';
+          const stageId = fs.readFileSync('stage-id.txt','utf8').trim();
+          const name = 'aapaetsch-charts-market';
+          const version = '0.1.0-beta.1-supplied.20261015.1';
+          const filename = `${name}-${version}-${stageId}.tgz`;
+          const bytes = fs.readFileSync(filename);
+          const sha256 = createHash('sha256').update(bytes).digest('hex');
+          const integrity = 'sha512-' + createHash('sha512').update(bytes).digest('base64');
+          if (sha256 !== 'bf213e605fe719e5afc11d141f7d05909157bd6c163c7c3437b2317099f31b48' || integrity !== 'sha512-LhygQBJl4wqctNuafl/fr3tsMHOrY363taLBWYmEnY36JAW+urphsG3p5fBqMkMNVvbtsS54S3RBRORI0sCMww==') throw Error('Staged bytes differ from approved package');
+          const manifest = JSON.parse(execFileSync('tar',['-xOf',filename,'package/package.json'],{encoding:'utf8'}));
+          if (manifest.name !== name || manifest.version !== version) throw Error('Downloaded stage identity mismatch');
+          const receipt = {name,version,stageId,sha256,integrity,size:bytes.length,published:false,approvalRequired:true};
+          fs.writeFileSync('staging-receipt.json',JSON.stringify(receipt,null,2)+'\n');
+          console.log(JSON.stringify(receipt,null,2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: market-staging-receipt
+          if-no-files-found: error
+          path: |
+            charts-market/releases/0.1.0-beta.1-supplied.20261015.1/staging-receipt.json
+            charts-market/releases/0.1.0-beta.1-supplied.20261015.1/stage-view.json
+            charts-market/releases/0.1.0-beta.1-supplied.20261015.1/stage-publish.json
