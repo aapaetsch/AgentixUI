@@ -1,0 +1,82 @@
+name: Publish reviewed market chart candidate
+
+# Promote the reviewed immutable artifact. This job does not rebuild or repack it.
+on:
+  push:
+    tags:
+      - 'market-candidate-v0.1.0-beta.1-supplied.20261015.1'
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: reviewed-market-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'aapaetsch/AgentixUI'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.2'
+          registry-url: 'https://registry.npmjs.org/'
+      - name: Verify approved artifact and source hashes
+        working-directory: charts-market/releases/0.1.0-beta.1-supplied.20261015.1
+        run: |
+          echo 'bf213e605fe719e5afc11d141f7d05909157bd6c163c7c3437b2317099f31b48  package.tgz' | sha256sum --check --strict
+          echo 'a08c82bb3241ae0aa6da8684ff8263a67da43a252f4cfc226d35fb6bcc71dcb2  source.tgz' | sha256sum --check --strict
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import {createHash} from 'node:crypto';
+          import {execFileSync} from 'node:child_process';
+          const manifest = JSON.parse(execFileSync('tar', ['-xOf', 'package.tgz', 'package/package.json'], {encoding:'utf8'}));
+          if (manifest.name !== 'aapaetsch-charts-market' || manifest.version !== '0.1.0-beta.1-supplied.20261015.1') throw Error('Unexpected package identity');
+          if (manifest.publishConfig?.provenance !== true || manifest.publishConfig?.access !== 'public' || manifest.publishConfig?.tag !== 'beta') throw Error('Unexpected publication policy');
+          const integrity = 'sha512-' + createHash('sha512').update(fs.readFileSync('package.tgz')).digest('base64');
+          if (integrity !== 'sha512-LhygQBJl4wqctNuafl/fr3tsMHOrY363taLBWYmEnY36JAW+urphsG3p5fBqMkMNVvbtsS54S3RBRORI0sCMww==') throw Error('Integrity mismatch');
+          NODE
+      - name: Authenticate publisher
+        run: npm whoami --registry https://registry.npmjs.org/
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish exact reviewed tarball
+        working-directory: charts-market/releases/0.1.0-beta.1-supplied.20261015.1
+        run: npm publish ./package.tgz --provenance --access public --tag beta --ignore-scripts --registry https://registry.npmjs.org/
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Verify registry integrity and beta tag
+        working-directory: charts-market/releases/0.1.0-beta.1-supplied.20261015.1
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const version = '0.1.0-beta.1-supplied.20261015.1';
+          const expected = 'sha512-LhygQBJl4wqctNuafl/fr3tsMHOrY363taLBWYmEnY36JAW+urphsG3p5fBqMkMNVvbtsS54S3RBRORI0sCMww==';
+          let receipt;
+          for (let attempt = 0; attempt < 12; attempt++) {
+            const response = await fetch('https://registry.npmjs.org/aapaetsch-charts-market', {headers:{'Cache-Control':'no-cache'}});
+            if (response.ok) {
+              const metadata = await response.json();
+              const entry = metadata.versions?.[version];
+              if (entry?.dist?.integrity === expected && metadata['dist-tags']?.beta === version) {
+                receipt = {name:entry.name,version,integrity:entry.dist.integrity,tarball:entry.dist.tarball,distTags:metadata['dist-tags'],attestations:entry.dist.attestations ?? null};
+                break;
+              }
+            }
+            await new Promise(resolve => setTimeout(resolve, 5000));
+          }
+          if (!receipt) throw Error('Registry integrity or beta tag verification failed');
+          fs.writeFileSync('publication-receipt.json', JSON.stringify(receipt, null, 2) + '\n');
+          console.log(JSON.stringify(receipt, null, 2));
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: market-publication-receipt
+          path: charts-market/releases/0.1.0-beta.1-supplied.20261015.1/publication-receipt.json
+          if-no-files-found: error
