@@ -1,0 +1,34 @@
+{
+  "candidate": {
+    "name": "aapaetsch-charts-market",
+    "version": "0.1.0-beta.1-calendar.20261016.1",
+    "sha256": "30a08c14dfa74d61e9ac38c9168576a1e2f479b8dde75ab34412c4d90814e274",
+    "integrity": "sha512-KffwukirPNT4lVf7l4o4hwwVh9FtYVYy5m7Fk8XxF1Jtu8vSo+3fzt0p1T1JF3R9SwQsWv57dGSjuFbp90QwzA==",
+    "size": 432600
+  },
+  "source": {
+    "file": "source-sha256-66a8f43f8b9a044f99333b4eba1d9955b766d7c2951b9755986a8bda7742f0f0.tgz",
+    "sha256": "66a8f43f8b9a044f99333b4eba1d9955b766d7c2951b9755986a8bda7742f0f0"
+  },
+  "files": {
+    "baseline.json": "8c2ed161c701b60cbc419006ad9ef46a1243e181c06a5dc8f94020a4e7e212a5",
+    "scope-audit.json": "a192e4d96c4b3115c988ce89222a4f6eec74dcc787ac73efc83aa722e67a3e26",
+    "candidate/manifest.json": "d30a3d723b181d7b1d6a19c64c6647d6c4c5ae1c0223bb8b8dc7ff7db81b4995",
+    "candidate/npm-pack.json": "512cfbb52bff3ac8d9a80158253d4628dc76f6cb644132d0b79d22115ba266ac",
+    "consumer-results.json": "1804d89c24c730a5f94b13db0e8fb11c72c0e47fe99473a605f8f1539f9bbb6f",
+    "dev-runner-results.json": "cf90d5f5d919ab1dc8805d2b05b40a0afdeb28347b5c8d5011d6d19c97f02b2b",
+    "dev-runner-typecheck.log": "3ca40e82a8b6e874e6532f7fec45ddf7c9dc2b69292dac75e6ec69910273e640",
+    "dev-runner-tests.log": "ffbe340e595d4f5426ecda47433c2d51f6bc0ece30ee2f18a08ef291cb37fb8e",
+    "dev-runner-peer-tests.log": "b460f6fbba41b86c4f292a6d5e7b8b02f3370767c91212057cfa6a7e906934dd",
+    "dev-runner-peer-verify.log": "02b653f62046e71edaf9b19fd4109afd8f1eb8127b21ad0ee67480ab7c8cb114",
+    "dev-runner-build.log": "eb2ec48bc6687fbb02f41cf31374c546ebee4ba1fff5fc4ef7db0b0ce1447ea8",
+    "dev-runner-storybook-build.log": "c5d05a81b8a79412c4dfed7088cda5c43229a35e6d723acaaa87d61a7895a4a2",
+    "dev-runner-forced-color-css.json": "6000bfc39254bc2cfa8aa51557255ec2b6a461ce0d35a73d23c0655cd4d6ca53",
+    "browser/results.json": "b399d11fc6caa5637e47b537541b71f910dd061f3731b136f43de8207cf64fca",
+    "browser/trace.zip": "1a4cf360b22a6dbdd4dea38bb9ac54aa8597746098865629f6e821f54fd7fe7b",
+    "legacy-browser/results.json": "a0e6a3b3c3965fccaeb8e9f0b42e5807447cbca274e5470045f59d731c3cfc53",
+    "legacy-browser/trace.zip": "08a4bed5103c4b16efeff425f8cb0931a49066842e093e462f9e0d1050b71408",
+    "legacy-browser/supplemental.json": "7dd8baebc0b66d5497fed559c5e7f65a38c6a7313d5c829f1bf8eec2effe9306",
+    "legacy-browser/touch-drawing.json": "1a55dd7c45ff4e6fc8e3daa9da50b2bac3d8f52157c93902fa13bd12f2abf001"
+  }
+}

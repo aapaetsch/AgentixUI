@@ -1,0 +1,23 @@
+{
+  "version": "0.1.0-beta.1-calendar.20261016.1",
+  "sha256": "30a08c14dfa74d61e9ac38c9168576a1e2f479b8dde75ab34412c4d90814e274",
+  "sourceSha256": "66a8f43f8b9a044f99333b4eba1d9955b766d7c2951b9755986a8bda7742f0f0",
+  "head": "9b8cbb69847ac701dc0d99cd545727ccb833a5a6",
+  "sourceFrozen": true,
+  "priorArtifactPreserved": true,
+  "scopeViolations": [],
+  "rootManifestUnchanged": true,
+  "rootLockfileUnchanged": true,
+  "productEvidenceUnchanged": true,
+  "tests": 123,
+  "peerTests": 5,
+  "stories": 20,
+  "types": true,
+  "esm": true,
+  "cjs": true,
+  "ssr": true,
+  "published": false,
+  "downloads": false,
+  "productInstalled": false,
+  "reviewSha256": "8415436ee2c81a933a6fccf3cc3e264394550c3eaa23f3dc22f53fe0e599b959"
+}
