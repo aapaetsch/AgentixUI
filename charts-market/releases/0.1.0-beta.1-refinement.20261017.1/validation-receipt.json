@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "verifiedAt": "2026-10-17T18:17:33.194Z",
+  "packageSha256": "d6a1bb7f5beea87e33672a0af87d8f0f3b146b1d0f312359c563af44a2f752a1",
+  "sourceSha256": "e05d5ed196cd27251ea1acd32cd8f4e341142af87a192141cbb95d1583637a11",
+  "sourceFilesVerified": 117,
+  "priorImmutableArtifactsVerified": 13,
+  "rootManifestUnchanged": true,
+  "rootLockUnchanged": true,
+  "scopeViolations": [],
+  "runtimeExports": 158,
+  "declarationFilesUnchanged": 22,
+  "serializerUnchanged": true,
+  "published": false,
+  "productInstalled": false
+}

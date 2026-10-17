@@ -1,0 +1,707 @@
+{
+  "name": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.1-refinement.20261017.1",
+  "proposedTag": "beta",
+  "published": false,
+  "dependencyDownloads": false,
+  "installedInProduct": false,
+  "baselineHead": "9b8cbb69847ac701dc0d99cd545727ccb833a5a6",
+  "dirtySource": true,
+  "filename": "aapaetsch-charts-market-0.1.0-beta.1-refinement.20261017.1.tgz",
+  "immutableFilename": "sha256-d6a1bb7f5beea87e33672a0af87d8f0f3b146b1d0f312359c563af44a2f752a1.tgz",
+  "sha256": "d6a1bb7f5beea87e33672a0af87d8f0f3b146b1d0f312359c563af44a2f752a1",
+  "integrity": "sha512-5r2xW2sH80VtUnTaaQzjweeAWOfqtbSIdzCAI/8XZAZ4tQz5E8nLyuUupzfPJy60eGwKWtR0GHFMM3owEOsEvA==",
+  "size": 468694,
+  "files": [
+    {
+      "path": "CALENDAR-COORDINATES.md",
+      "size": 8375,
+      "mode": 420,
+      "sha256": "555ffa7e24beacb0a9ccfe56e574f82aadcfec85bee6df31986eacae3c6ce5e8"
+    },
+    {
+      "path": "LICENSE",
+      "size": 1070,
+      "mode": 420,
+      "sha256": "e80e9406bfe34b32e65f41b41b494d6050138bf6b1968b33e5038a6bfd102bb3"
+    },
+    {
+      "path": "NOTICE",
+      "size": 298,
+      "mode": 420,
+      "sha256": "32a5b1e5bb5a4aac20ef3d8150c8701ba897c097555265422e3a9a1b41e8905b"
+    },
+    {
+      "path": "README.md",
+      "size": 3008,
+      "mode": 420,
+      "sha256": "cdc9ca7d5fbebf41ceaa16f1de3338953835004df60ed20eb13f4bbd953f9b94"
+    },
+    {
+      "path": "REFINEMENT.md",
+      "size": 10528,
+      "mode": 420,
+      "sha256": "0ee6e827043cd6a5e7a93e99d8b89cbdbe3254ecac0fc05929b0919d0a324165"
+    },
+    {
+      "path": "SUPPLIED-RESULTS.md",
+      "size": 15419,
+      "mode": 420,
+      "sha256": "a3bdb680846167c809fe415c4990cce61dbcc1ea84e66e41fb0a8a8cdae45ccb"
+    },
+    {
+      "path": "dist/chunk-42TMBWPM.js",
+      "size": 3079,
+      "mode": 420,
+      "sha256": "42d6d9faacbcbd46fac9ddfcb2d64b8d822a10ff0d7c6df82a8ab358b0cccf69"
+    },
+    {
+      "path": "dist/chunk-42TMBWPM.js.map",
+      "size": 4860,
+      "mode": 420,
+      "sha256": "aff3d5f16bde7235c6bfde7691f328234d82f74fa3dc75fd5afa72d977dc472b"
+    },
+    {
+      "path": "dist/chunk-CCUFKIUD.cjs",
+      "size": 149049,
+      "mode": 420,
+      "sha256": "d02bdfbb4abd41bf880cff6ab8d4b688df1665534445f3a816a1e539812ebe20"
+    },
+    {
+      "path": "dist/chunk-CCUFKIUD.cjs.map",
+      "size": 18456,
+      "mode": 420,
+      "sha256": "5c6424e047fd9a3a3db0a994f6115689952148b54c57f88cdcd6a1f124f88a3b"
+    },
+    {
+      "path": "dist/chunk-JRFCU6X2.cjs",
+      "size": 4424,
+      "mode": 420,
+      "sha256": "5ae08fd5374e75c5e61f518094e9c959c5b301f4a7214fbd547cc190aeaf5d02"
+    },
+    {
+      "path": "dist/chunk-JRFCU6X2.cjs.map",
+      "size": 3082,
+      "mode": 420,
+      "sha256": "36b4eb2ed57b5ac23f80bae11f6ac0f03e5f9fec1df955f9f94f09ad1583cf19"
+    },
+    {
+      "path": "dist/chunk-SBSIAJYK.js",
+      "size": 132549,
+      "mode": 420,
+      "sha256": "15724d3436cb3348f27c01380521e20a20f174c5f1af4cbfc1460dd15677e10a"
+    },
+    {
+      "path": "dist/chunk-SBSIAJYK.js.map",
+      "size": 247215,
+      "mode": 420,
+      "sha256": "33632602a4bce04e82ed79130fb747d5e5228b29fbeb0cddb9081c38c07126a2"
+    },
+    {
+      "path": "dist/chunk-SM3ALV3E.cjs",
+      "size": 170234,
+      "mode": 420,
+      "sha256": "29901d88f9d060d1e7ea7ed6067fd8042f80aa72eab41995b55b7380afa1156b"
+    },
+    {
+      "path": "dist/chunk-SM3ALV3E.cjs.map",
+      "size": 79796,
+      "mode": 420,
+      "sha256": "618593e04c1ca8f868d4358ed934d94d9968cd351b7146468433afa0393da3d2"
+    },
+    {
+      "path": "dist/chunk-UF6ONRGW.js",
+      "size": 143732,
+      "mode": 420,
+      "sha256": "73f7710341b09a1e3d86ac7b01c88c4e4a7a36cd48f7bd62d96504659bc542a8"
+    },
+    {
+      "path": "dist/chunk-UF6ONRGW.js.map",
+      "size": 262598,
+      "mode": 420,
+      "sha256": "a7d41206e8c65d7effd3244f5a9eafa27c1f79429a2f3046c8a3dd4da9cc7be0"
+    },
+    {
+      "path": "dist/controls.cjs",
+      "size": 268,
+      "mode": 420,
+      "sha256": "06ae212887a1c500563c47b20ddf9d7b59e452c6af33b1187e766cce08653dfb"
+    },
+    {
+      "path": "dist/controls.cjs.map",
+      "size": 305,
+      "mode": 420,
+      "sha256": "6b23e7e10ee5e55e64d57c26b4cdc3fcdf6668eae4d3c1c2722ffe719dcba5eb"
+    },
+    {
+      "path": "dist/controls.d.cts",
+      "size": 1116,
+      "mode": 420,
+      "sha256": "0ea096d6373bd9919049ca3576a2c6bb83d9b56ca1c66a425f03c390fbdd262f"
+    },
+    {
+      "path": "dist/controls.d.ts",
+      "size": 1115,
+      "mode": 420,
+      "sha256": "6731430e5491edc84df89ef425ab15b9d0463385cbedd3ee9c55b78d959937bc"
+    },
+    {
+      "path": "dist/controls.js",
+      "size": 159,
+      "mode": 420,
+      "sha256": "513c68dbb1973e9fcb03f2ba3fa9443c3465d06a66cc51e765b969fbc6bb5afc"
+    },
+    {
+      "path": "dist/controls.js.map",
+      "size": 71,
+      "mode": 420,
+      "sha256": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3"
+    },
+    {
+      "path": "dist/core.cjs",
+      "size": 14366,
+      "mode": 420,
+      "sha256": "13f058a6f9bb269d60ce401c227d5fc0ca1d96dc09640596c97e292048335aa8"
+    },
+    {
+      "path": "dist/core.cjs.map",
+      "size": 40184,
+      "mode": 420,
+      "sha256": "5afd8f297a022fb013060c3c3a06b546c482617e5711c55080c40b82c7df035e"
+    },
+    {
+      "path": "dist/core.d.cts",
+      "size": 14204,
+      "mode": 420,
+      "sha256": "6d02d07933febab3e61b08da1ed7e5d1f2ccf109cc5f9629309a5b7a1263a5d8"
+    },
+    {
+      "path": "dist/core.d.ts",
+      "size": 14202,
+      "mode": 420,
+      "sha256": "1bd98d6ce639a6e8098113512b939574a245b38628e26fcd5cd551953ecbd3d8"
+    },
+    {
+      "path": "dist/core.js",
+      "size": 13657,
+      "mode": 420,
+      "sha256": "fbc714775c7ccbe55da293ed0ae094cedc57da1493f3937f73a5bbf9ada6e9d6"
+    },
+    {
+      "path": "dist/core.js.map",
+      "size": 40181,
+      "mode": 420,
+      "sha256": "884e673be3cde585cde86972a286e4e58bad758ace3da800beab1d92b7d4ead0"
+    },
+    {
+      "path": "dist/drawings.cjs",
+      "size": 5864,
+      "mode": 420,
+      "sha256": "9f05e2bc50d9d64abdc19cc3295628ceff6630e7f06a58509103c6abc1eb0bb1"
+    },
+    {
+      "path": "dist/drawings.cjs.map",
+      "size": 1096,
+      "mode": 420,
+      "sha256": "0333170e72bea25e53f0d27f2b2ae54c7603e56a87cce073f5f24a0402f8fce3"
+    },
+    {
+      "path": "dist/drawings.d.cts",
+      "size": 3217,
+      "mode": 420,
+      "sha256": "4ae4dee05bd1510771f7ba9c0adeff6adcd134c7f21397ae3c442ad14f8edc1a"
+    },
+    {
+      "path": "dist/drawings.d.ts",
+      "size": 3215,
+      "mode": 420,
+      "sha256": "3b8d4609d47abcb3486078abcae167956f857c9a43868e04e238d21c49f7072d"
+    },
+    {
+      "path": "dist/drawings.js",
+      "size": 3755,
+      "mode": 420,
+      "sha256": "1a44eb148476b8aa7e721e08d51a4aafcc826f86e7b531782c2a3864673d9207"
+    },
+    {
+      "path": "dist/drawings.js.map",
+      "size": 71,
+      "mode": 420,
+      "sha256": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3"
+    },
+    {
+      "path": "dist/index-BXnHbyev.d.ts",
+      "size": 12016,
+      "mode": 420,
+      "sha256": "753057d504471cb135b5763a5d734bd7fb840326c1bcc53f3221bd1c40a916a2"
+    },
+    {
+      "path": "dist/index-CFi9JTQT.d.cts",
+      "size": 12018,
+      "mode": 420,
+      "sha256": "85d5d225402311bcfbc9c66d195549913c4f1af1db9397dcc4e05988669f9530"
+    },
+    {
+      "path": "dist/index-D49zKcN-.d.cts",
+      "size": 30034,
+      "mode": 420,
+      "sha256": "f823e12c8d5b07e936af775dd8c14afa5dbb26280845e5413a6963091361b87a"
+    },
+    {
+      "path": "dist/index-DEjqm2gw.d.ts",
+      "size": 30033,
+      "mode": 420,
+      "sha256": "6852452d67d61f09e5e5cfd228027206858df5d1cbd6e8987ab876b1665a1ced"
+    },
+    {
+      "path": "dist/index.cjs",
+      "size": 134431,
+      "mode": 420,
+      "sha256": "4ded79101ada130a152fd4b3ce33d1be070ba340f26f59e7807171b92c2c3ee6"
+    },
+    {
+      "path": "dist/index.cjs.map",
+      "size": 27914,
+      "mode": 420,
+      "sha256": "598477645b6cf9ea1a956c521bdc3797cd079fd30da469ae5f19a224520a4b3d"
+    },
+    {
+      "path": "dist/index.d.cts",
+      "size": 27422,
+      "mode": 420,
+      "sha256": "04efbd22cfcdfdbb8d03994825e86594980acad3c2a64db9d102f54699c557f1"
+    },
+    {
+      "path": "dist/index.d.ts",
+      "size": 27415,
+      "mode": 420,
+      "sha256": "903910fa033c07b30bdc50dec7b5abe400ee66a5fe022874877ac4ebf865edde"
+    },
+    {
+      "path": "dist/index.js",
+      "size": 113291,
+      "mode": 420,
+      "sha256": "f53dfcda79518b93d336f6d76218aac3a1c8d2fab91be400f9cf2020f4a63844"
+    },
+    {
+      "path": "dist/index.js.map",
+      "size": 171496,
+      "mode": 420,
+      "sha256": "8572ebe6dc90305f747c71eaceed00c1be1bc46ee921af1dc318f3cc60428100"
+    },
+    {
+      "path": "dist/indicators.cjs",
+      "size": 18021,
+      "mode": 420,
+      "sha256": "8499e8b3d58d3f7a930be109769d1f68fd1e266f7e424f3380ef069a6218957b"
+    },
+    {
+      "path": "dist/indicators.cjs.map",
+      "size": 43064,
+      "mode": 420,
+      "sha256": "d4dd78b66b2df4c12bd6add6ee5a94278b07e82c6691774c781611695d6cb788"
+    },
+    {
+      "path": "dist/indicators.d.cts",
+      "size": 2896,
+      "mode": 420,
+      "sha256": "8cf3001c04a5be8931d985e7f299e71656f161ad608865dcfaee3cec31bfa116"
+    },
+    {
+      "path": "dist/indicators.d.ts",
+      "size": 2894,
+      "mode": 420,
+      "sha256": "707cb33d8146f54a7fcc40cd9618245b5ca76b2df322882a77419f6b6e304526"
+    },
+    {
+      "path": "dist/indicators.js",
+      "size": 17377,
+      "mode": 420,
+      "sha256": "d92d25c94c71d4d8b8f60932f1009943290aab5d6ac470f3f293258f7ac959a0"
+    },
+    {
+      "path": "dist/indicators.js.map",
+      "size": 43061,
+      "mode": 420,
+      "sha256": "5eda1bfbc3efc5d0da88357e81ed053392b870b3429355bf662353bd34a98e65"
+    },
+    {
+      "path": "dist/overlays.cjs",
+      "size": 2090,
+      "mode": 420,
+      "sha256": "017effb1387d3e4f57914b468766d50d52ce099f8a17108099f0eddacae39e84"
+    },
+    {
+      "path": "dist/overlays.cjs.map",
+      "size": 4641,
+      "mode": 420,
+      "sha256": "91fb0f920867c752e4b4004168431210ff556ab2e97d29315441d671fc1afc62"
+    },
+    {
+      "path": "dist/overlays.d.cts",
+      "size": 1877,
+      "mode": 420,
+      "sha256": "33343ef129dfe652cc71183dbe2c113e36477231faba73ef2958ef16e271c3b5"
+    },
+    {
+      "path": "dist/overlays.d.ts",
+      "size": 1875,
+      "mode": 420,
+      "sha256": "7316c8db1863d8795fb2b52b072946577b5dac6237da068ce0b23841ed831740"
+    },
+    {
+      "path": "dist/overlays.js",
+      "size": 1813,
+      "mode": 420,
+      "sha256": "4280bcf8ba913e2293121c13fc9da41f736b022054770d674431857435f7923f"
+    },
+    {
+      "path": "dist/overlays.js.map",
+      "size": 4638,
+      "mode": 420,
+      "sha256": "5bbd32d8a92f7ef4b6e7eeb7eaf8a0297765aa1b4bf2ae3b610abdc8e308d080"
+    },
+    {
+      "path": "dist/styles.css",
+      "size": 13691,
+      "mode": 420,
+      "sha256": "78fb2be5ab652d3dfa33741104dc0379beb7506ad8a8ceddc4b2a8e12e0878b6"
+    },
+    {
+      "path": "dist/types-BQBJH1aA.d.cts",
+      "size": 16650,
+      "mode": 420,
+      "sha256": "3cfd1219b5f22dd271495088d7a92fb23848b8e9d1d2f68ddb9218339c0395f7"
+    },
+    {
+      "path": "dist/types-BQBJH1aA.d.ts",
+      "size": 16650,
+      "mode": 420,
+      "sha256": "3cfd1219b5f22dd271495088d7a92fb23848b8e9d1d2f68ddb9218339c0395f7"
+    },
+    {
+      "path": "dist/types-CYpL_sRA.d.cts",
+      "size": 16650,
+      "mode": 420,
+      "sha256": "0b093e043185bc60d90096ad98af62d4ff3a471a32864286e9330795de729153"
+    },
+    {
+      "path": "dist/types-CYpL_sRA.d.ts",
+      "size": 16650,
+      "mode": 420,
+      "sha256": "0b093e043185bc60d90096ad98af62d4ff3a471a32864286e9330795de729153"
+    },
+    {
+      "path": "dist/workspace.cjs",
+      "size": 781,
+      "mode": 420,
+      "sha256": "93787fee360d8582b8d4fc8fac6b73754ada46f43e5083e8ddda543bfe8f8f71"
+    },
+    {
+      "path": "dist/workspace.cjs.map",
+      "size": 393,
+      "mode": 420,
+      "sha256": "4aeb54f5d0bfb882f44c0a7e33f3f17c879a31e85ba2a7b42c36ec50218860ff"
+    },
+    {
+      "path": "dist/workspace.d.cts",
+      "size": 732,
+      "mode": 420,
+      "sha256": "0aff660a152348fb82a0b00b5a5007d94450f96f7cd844ff759d852a12498325"
+    },
+    {
+      "path": "dist/workspace.d.ts",
+      "size": 729,
+      "mode": 420,
+      "sha256": "d871f6617bf03fd26d511b19a92e4b11c270ac533a00815f778f38189ea9ebf9"
+    },
+    {
+      "path": "dist/workspace.js",
+      "size": 516,
+      "mode": 420,
+      "sha256": "62c65304991af8f2159201903d8d7b7844ae57fac0ba57c1de3c8324c0c21f94"
+    },
+    {
+      "path": "dist/workspace.js.map",
+      "size": 71,
+      "mode": 420,
+      "sha256": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3"
+    },
+    {
+      "path": "package.json",
+      "size": 2952,
+      "mode": 420,
+      "sha256": "65fb44d74b6050421f643dd43299ed87e98ba539690e42674f0e5e7d28f636fd"
+    },
+    {
+      "path": "scripts/verify-peer-boundaries.mjs",
+      "size": 3337,
+      "mode": 420,
+      "sha256": "6293d92b699f87254a0c5d3e86437c9d6da4152b1e8350be207843afca2c2db3"
+    }
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.js",
+      "require": "./dist/core.cjs"
+    },
+    "./indicators": {
+      "types": "./dist/indicators.d.ts",
+      "import": "./dist/indicators.js",
+      "require": "./dist/indicators.cjs"
+    },
+    "./drawings": {
+      "types": "./dist/drawings.d.ts",
+      "import": "./dist/drawings.js",
+      "require": "./dist/drawings.cjs"
+    },
+    "./overlays": {
+      "types": "./dist/overlays.d.ts",
+      "import": "./dist/overlays.js",
+      "require": "./dist/overlays.cjs"
+    },
+    "./controls": {
+      "types": "./dist/controls.d.ts",
+      "import": "./dist/controls.js",
+      "require": "./dist/controls.cjs"
+    },
+    "./workspace": {
+      "types": "./dist/workspace.d.ts",
+      "import": "./dist/workspace.js",
+      "require": "./dist/workspace.cjs"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "runtime": {
+    "node": "v22.22.2",
+    "exports": 158,
+    "exportParity": true,
+    "subpaths": {
+      ".": {
+        "esm": true,
+        "cjs": true,
+        "exports": 158
+      },
+      "./core": {
+        "esm": true,
+        "cjs": true,
+        "exports": 21
+      },
+      "./indicators": {
+        "esm": true,
+        "cjs": true,
+        "exports": 24
+      },
+      "./drawings": {
+        "esm": true,
+        "cjs": true,
+        "exports": 81
+      },
+      "./overlays": {
+        "esm": true,
+        "cjs": true,
+        "exports": 9
+      },
+      "./controls": {
+        "esm": true,
+        "cjs": true,
+        "exports": 1
+      },
+      "./workspace": {
+        "esm": true,
+        "cjs": true,
+        "exports": 7
+      }
+    },
+    "ssr": {
+      "esm": 28172,
+      "cjs": 28172
+    },
+    "types": {
+      "esm": true,
+      "cjs": true,
+      "output": ""
+    },
+    "peerBoundaryRepairUnchanged": true
+  },
+  "peers": {
+    "aapaetsch-ui-kit": {
+      "range": ">=0.2.0-beta.1",
+      "installedVersion": "0.2.0-beta.1",
+      "license": "MIT",
+      "manifestSha256": "342633c7f7d8ece8074565facb953ce7b5a805fb98c35ee2cb49f60f19bfb46f"
+    },
+    "lucide-react": {
+      "range": ">=0.474.0",
+      "installedVersion": "0.474.0",
+      "license": "ISC",
+      "manifestSha256": "007c8a60d977ab5cda5d4ef95459f26f9d0eda8ac5d0be7975c5c27563c49aa4"
+    },
+    "react": {
+      "range": ">=18.0.0 <20.0.0",
+      "installedVersion": "19.2.8",
+      "license": "MIT",
+      "manifestSha256": "e40c3ed9b633c9ecf188e09a4be309780a1ea0a9c068278a30ff6a27e7b2dbb6"
+    },
+    "react-dom": {
+      "range": ">=18.0.0 <20.0.0",
+      "installedVersion": "19.2.8",
+      "license": "MIT",
+      "manifestSha256": "7c82f0967114d4b5d38b1f07e543af87c9919e8d3243f9604004819319cb2200"
+    }
+  },
+  "externalSpecifiers": [
+    "aapaetsch-ui-kit",
+    "lucide-react",
+    "react",
+    "react/jsx-runtime"
+  ],
+  "source": {
+    "file": "source-sha256-e05d5ed196cd27251ea1acd32cd8f4e341142af87a192141cbb95d1583637a11.tgz",
+    "sha256": "e05d5ed196cd27251ea1acd32cd8f4e341142af87a192141cbb95d1583637a11",
+    "files": {
+      "charts-market/CALENDAR-COORDINATES.md": "555ffa7e24beacb0a9ccfe56e574f82aadcfec85bee6df31986eacae3c6ce5e8",
+      "charts-market/LICENSE": "e80e9406bfe34b32e65f41b41b494d6050138bf6b1968b33e5038a6bfd102bb3",
+      "charts-market/NOTICE": "32a5b1e5bb5a4aac20ef3d8150c8701ba897c097555265422e3a9a1b41e8905b",
+      "charts-market/README.md": "cdc9ca7d5fbebf41ceaa16f1de3338953835004df60ed20eb13f4bbd953f9b94",
+      "charts-market/REFINEMENT.md": "0ee6e827043cd6a5e7a93e99d8b89cbdbe3254ecac0fc05929b0919d0a324165",
+      "charts-market/SUPPLIED-RESULTS.md": "a3bdb680846167c809fe415c4990cce61dbcc1ea84e66e41fb0a8a8cdae45ccb",
+      "charts-market/package.json": "65fb44d74b6050421f643dd43299ed87e98ba539690e42674f0e5e7d28f636fd",
+      "charts-market/scripts/verify-peer-boundaries.mjs": "6293d92b699f87254a0c5d3e86437c9d6da4152b1e8350be207843afca2c2db3",
+      "charts-market/scripts/verify-peer-boundaries.test.mjs": "20c22d5261d7557c87b38555d30f405ad600afe6fcfae0cc21fe58b3880c057d",
+      "charts-market/src/components/market-chart/MarketChart.stories.tsx": "bb771ed65d7e9fe5f45bc58b8c866902abbe583980104984a4fbda503a27e3d7",
+      "charts-market/src/components/market-chart/README.md": "89ba530da1bc126974e11c73f8cfe7883c60ff84bf141e200367c5c7382a781d",
+      "charts-market/src/components/market-chart/agents.md": "e4b3137e4f2a2537d44e1e3302b967d92372911dde748ef21d67fa901ac8067e",
+      "charts-market/src/components/market-chart/index.tsx": "f848c9f3b9adbc8896e11d25130e0d4cd34af9e719e3f4126effef7dd51c4e24",
+      "charts-market/src/components/market-chart/market-chart.test.tsx": "32fb268db9de684f7d3cb24a4b712627badd5ec84935d031b99467c5215cc2f1",
+      "charts-market/src/components/market-chart/use-data-revision.test.tsx": "b107869f811211b758be06cc950046d3909ffd3b5b5173ff35a46c569807ddbd",
+      "charts-market/src/components/market-chart/use-data-revision.ts": "9ac158730fc5d7d8b4f1727749c05b5e436c4d892a3f4a8a589e75e2511ab84c",
+      "charts-market/src/components/technical-chart-view/README.md": "f2955f1105adc1fb34844929fdb10dbe4ef3e5f20c2e7eb197b83317e1e74249",
+      "charts-market/src/components/technical-chart-view/agents.md": "8355c0b2a6b5077c32adcc47f4eb243de7e81bff04cbd7a31c87e60ffe8e5464",
+      "charts-market/src/components/technical-chart-view/calendar-gaps.stories.tsx": "d7e54b50b7334454c74debcbca53bbf78ae39b8df99009ea093214b040ff0aba",
+      "charts-market/src/components/technical-chart-view/card-fit.stories.tsx": "02b918737c978f9b08d974c3138f26cc95ac84bd4c0655a4f330a059654a3b10",
+      "charts-market/src/components/technical-chart-view/card-fit.test.tsx": "403a7feca9dfbb9bacacb4536921dc7122746c0acb229e9229906d469e4c7fa0",
+      "charts-market/src/components/technical-chart-view/earnings.test.ts": "454232b0d478e0074f6ac5305c4375404456a3de6e698521ff8cf2aebc335022",
+      "charts-market/src/components/technical-chart-view/earnings.ts": "dbdeab9674f8e4b8d74d9b5b97852f46a3b97436a7866c167bb0cb615fc632bd",
+      "charts-market/src/components/technical-chart-view/fixtures.ts": "0dd8ab30f3e8fdca1eb6d5d15b5606bc0da37746f45989725540f78af38d189e",
+      "charts-market/src/components/technical-chart-view/index.tsx": "405c7190db5f45486d1788baefe59d746af2a972207f4d288fd32d9dce8fbcf2",
+      "charts-market/src/components/technical-chart-view/refinement.stories.tsx": "2d05616d71e04d0f6e506054d76b71d223c66acb00c4a0c6515077dc62f169ce",
+      "charts-market/src/components/technical-chart-view/refinement.test.tsx": "7e1d74d9dd3842e2fe01eca7bb815a4c518ff43006dac72a1192cbc62f4e0835",
+      "charts-market/src/components/technical-chart-view/scoped-theme.tsx": "85d464ee31448162b398108dd0215481d5e6530628053c5726cc33ee4f7a38ba",
+      "charts-market/src/components/technical-chart-view/supplied-fixtures.ts": "3292b8c99b3c1a76480175c06ece05bf982e0ac7b0d651d1c95efa648726f7bd",
+      "charts-market/src/components/technical-chart-view/supplied-results.stories.tsx": "3362220c5840ac4f4274013153747a33ea3d152d5f20b0c604a309003bd57532",
+      "charts-market/src/components/technical-chart-view/supplied-results.test.tsx": "5ed36f6c994bf781329186931d21e6c6c5f041c3858707b8f061480533efe404",
+      "charts-market/src/components/technical-chart-view/supplied-status.tsx": "da3e1fd6f4a305d100b4141c8cffbae39f0cf33155e64244abb59e32afd48a26",
+      "charts-market/src/components/technical-chart-view/technical-chart-view.stories.tsx": "cb55afb5d9d542ed219d91c4d4d269dd0be53864b921392b126be7a00d4828e2",
+      "charts-market/src/components/technical-chart-view/technical-chart-view.test.tsx": "a88a2e6b167e92f8f3a2b8eb55de56ced079b7efff2ba83435af2d3143680aaa",
+      "charts-market/src/components/technical-chart-view/use-chart-geometry.ts": "552b8057d952ab4e25ca9411536885a78dabae30ec53fd89aef2fea2cdb79f7b",
+      "charts-market/src/controls/README.md": "f5c80336e861e608ceab8bfbe50f7ab379b62a09c722652d84c3a0a83c99230f",
+      "charts-market/src/controls/agents.md": "c30961d3b515268937f84534808a698e21df55d84c14a6b050e68cdec844b0e0",
+      "charts-market/src/controls/index.tsx": "6bca145eb411883d4305d26859e26ea1b578630129916fa1bdbf1117f2d05af7",
+      "charts-market/src/controls/market-chart-controls.stories.tsx": "835d7f1ad2e7d2a2fe8d5391ed9477b58156e25fcc35799c217edb5dc3a67d32",
+      "charts-market/src/core/data-buffer.ts": "37d915c633c9809a24514d23570c4e0873e48fad77b39c18aedcc291e86b56e2",
+      "charts-market/src/core/data-revision.ts": "f4b6664266a8ff3a1b5c5329ff92f9f9288e8a5a62c6f588837ddd707e6a9e1c",
+      "charts-market/src/core/engine.ts": "da3c5872bcb1aebad81115b0118100c891ff041faf0cfadcff6f10af5f5ae2de",
+      "charts-market/src/core/extensions.ts": "fec2df37ce0c347e59fb9d3475f324eac207f9ebf17ba04eb0624f307fed2071",
+      "charts-market/src/core/index.ts": "fa883e792f5516a656079d5d59ac155dec535aa0ef59465a5105e3c5785e136d",
+      "charts-market/src/core/performance.test.ts": "3897aaa91be2baa6ddc241376a7341348c2a428e0bd05a3ba0005ed625052461",
+      "charts-market/src/core/presentation.ts": "23c648203e9f5b58647540926df246031b5872d8f6dc3eddab8ae500de9e6915",
+      "charts-market/src/core/refinement.test.ts": "d56c07f53acba17ad62b075b7dae4df9c59d1a22b26b51990880d3f91cd12317",
+      "charts-market/src/core/supplied-results.ts": "615988b5afba154bd6fd6d197fa088b5b90035f1fda4979b91642d535f6c5c81",
+      "charts-market/src/core/technical-chart-state.ts": "087b1243fe7c8910ac6347d0a90b8c0f8271d4d7affa01e25b1668ff5c312ccc",
+      "charts-market/src/core/time-axis.ts": "800b06f23d2edca60b5dac083e8fec21754b91c869762ba9604ceacd47a9170c",
+      "charts-market/src/core/types.ts": "e8e269ea3777a45d785e9eb0d766babe06758f0ee3505372db07a8190cc0b7f4",
+      "charts-market/src/core/validation.test.ts": "873b191cf1097a33442cd6fa7ebb0eef8ff88c4e31630e8179382037d04f7da8",
+      "charts-market/src/core/validation.ts": "4c1de961ef3b1eaa760f4a3c7d3acf1e7147572472b33c72ce3b1bd502510089",
+      "charts-market/src/drawings/README.md": "a34c60af2a5e269a4c3d3070079d4b492a9d0e0c2ac4db17047f3b60f3a7f88d",
+      "charts-market/src/drawings/agents.md": "ea77dd338235bfa29427054b1f31da2230ddf98c53cdd71e94990460d9c84fa1",
+      "charts-market/src/drawings/calculations.test.ts": "34f52b417a85c52498b8eafca4be33caef94f1b2e19c61a8cc5aa3fbc27e9fb8",
+      "charts-market/src/drawings/calculations.ts": "0b1f03ab8d611820e12c39d69e5d9e8939d487bef1a12ef1a59c21ea311701cd",
+      "charts-market/src/drawings/drawing-layer.test.tsx": "fac3fdc3b25aeccb04a4a6769a3e4dc0e2ade30b81a1397bd0ac554ef8690f77",
+      "charts-market/src/drawings/drawing-layer.tsx": "0e7db656b00429b04852710629a6e91b356940dd086a4f583a6fdb2b64bcb462",
+      "charts-market/src/drawings/drawings.stories.tsx": "0c647aff8ad4774a8e74e190f8cd962466067efa721cc5892b146bf47ade298f",
+      "charts-market/src/drawings/drawings.test.ts": "47c4bf32a46aabc016cf2dce18b2626aecfcc7483aea2d5c66d54bb352d60fc1",
+      "charts-market/src/drawings/geometry.test.ts": "8d4af029f05c9974396efc6ddd204bac9ac70f120df6f7ac3850b3d737006b71",
+      "charts-market/src/drawings/geometry.ts": "4ef979665d33ec92e8a8004fe73164bfcc839e4dd15a0c6852e26bdc54156001",
+      "charts-market/src/drawings/index.ts": "9c31afa98b2af616ff707e7217e80bcf4d22aaa7d48f9f6d9c2e01cef9e0077a",
+      "charts-market/src/drawings/inline-text-editor.test.tsx": "d26ad99ace551b6920c5e220ed91437615fb09506f4c90673bf8bb26b5650c7e",
+      "charts-market/src/drawings/inline-text-editor.tsx": "c958af3a33d2208c4da4448d74d8f2dc18015b67e9fe7f6db8a44748f1713b1d",
+      "charts-market/src/drawings/management.test.ts": "6c153e7399e85dda650fdaeac66c0d9bed74be356e408260d862c31623b1059c",
+      "charts-market/src/drawings/management.ts": "75d26ae561de46f8aa1835116d68d52b54b73568e922e28cf60924df8a303a42",
+      "charts-market/src/drawings/object-tree.tsx": "bcfb7e4a70116cd78b31ba0d1525e2ec35b090106bd57d77e31b97985cd87779",
+      "charts-market/src/drawings/renderers.ts": "d05aa891ddf5070ff741d931e714f9e841ff0d2ab9f355a311f75ee7b84c2d86",
+      "charts-market/src/drawings/supplied-renderers.ts": "2f4a915d7266153fdca0b03edf22efc50c03f7571c28f162abd1811cf99a9bf0",
+      "charts-market/src/drawings/tool-definition.ts": "327da217011073cdb264569a6c0daa39e17c30ca362a9faa2693278263ff8fbd",
+      "charts-market/src/engine/axis-badges.ts": "e76390d12e3a1e13e55c9c887e4ad4067d436feba773b6f378c60cb4c8f40575",
+      "charts-market/src/engine/calendar-gaps.test.ts": "ac69c7a4e13c4124a1a4c1a9f246d0bc3ec2b7ccefd6ea4de110d2ef62c77e24",
+      "charts-market/src/engine/canvas-engine.test.ts": "0c21b9d4c9f70c9c93ded09a927dc9a578cfea1e67905522b6dd04e1490bb592",
+      "charts-market/src/engine/canvas-engine.ts": "914bda164048a34c680f8c91f06f328d809b581e48fea16b6c2b08f9cd74157a",
+      "charts-market/src/engine/data-store.ts": "d0437328f5d1e900c2222db13a9e08b99cbcb9511b88061369c9c71693b26275",
+      "charts-market/src/engine/engine-primitives.test.ts": "aba71692508b8b2e8d33dd325c4e7771b23672bd55104af8a05a988d49a9ac9f",
+      "charts-market/src/engine/index.ts": "53f25250c09b65968d4deaffda68eb920537070ee65cf40141bf808a22bbd875",
+      "charts-market/src/engine/pane-layout.ts": "2713b04efa2a1e9ae0e927fdb7b65588a0a8d1bbaa37030015a66bb5c4627ca6",
+      "charts-market/src/engine/price-scale.ts": "9d2c514e54997d25d5ec6e1ec0a8b8a0dd1f5e152dbf58f9e4ec0cfe369c68d0",
+      "charts-market/src/engine/refinement.test.ts": "e6fb911b26f6536f5f0fa4057743f79bd773e3b5e326b6c9df5b6d904ab8e07f",
+      "charts-market/src/engine/render-scheduler.ts": "0746ce54d8233c2cdf66f4b22c238d3c1c766fbd5cc0a0033e9deaf6525af6e7",
+      "charts-market/src/engine/series-renderers.ts": "90bfb598fd1792149358282e2d4a64aa896be38c1df932375669f0d569d99b93",
+      "charts-market/src/engine/technical-chart-contracts.test.ts": "b62418444c5e4dd9c5635e4e0abaddde5ee1caf281211fb3e0f70b9f3a302fb7",
+      "charts-market/src/engine/time-scale.ts": "d228ec4b1220fd7ccb86102b3a87144ec9bcfaea683d74e9b5b51e542968e9f5",
+      "charts-market/src/engine/volume-profile-layer.ts": "8c454bd5be3c1521ea6ca7c48eae71b2aa5bb18f54e4abedfcdf58b4986a6515",
+      "charts-market/src/engine/volume-profile.ts": "4ea696c0e0f8d8c587793b1672a2b294043c04ba47cd03dd4e834dc878040bd0",
+      "charts-market/src/index.ts": "4f0de2f4700b325768ace7867b164a3062c2032034281e25f9293b5f9a6fff38",
+      "charts-market/src/indicators/calculations.ts": "a10fd22ad4beba7b830d5ac6ea36e506b9c76a5d49b6956d3fd63b2e1aa9c14d",
+      "charts-market/src/indicators/definitions.ts": "4922d55e8f0ae0a24b06d250fb57f7689ff74da0cb64df78a25cb4c2171bf0c6",
+      "charts-market/src/indicators/incremental.ts": "5e2a161d91e67f07abdfa84bce4f89ce8477b865541153210257d2c9b82348d8",
+      "charts-market/src/indicators/index.ts": "c6aa66bb0ccecf26430bd68b79f8245448a545813427e6d0d51ab09376434909",
+      "charts-market/src/indicators/indicators.test.ts": "b8d2f1063f549844d6cf3d008aee5a26e99df90c6c1f652b004f5e4403f0952b",
+      "charts-market/src/indicators/supplied-points.test.ts": "e240b3b7a3a917c813fa12e48069acfa326b6a81c1e9080b6183009323a40132",
+      "charts-market/src/indicators/supplied-points.ts": "0d2d9b4824498d1f9ef5fe5aa0eb0cea5b37d671098cbb6e1899fdf0a3360f6a",
+      "charts-market/src/indicators/supplied.ts": "9bf26d74aef96fa5f40906cb0c97fa56966965d98ea6331090e930a15d497ee7",
+      "charts-market/src/overlays/index.ts": "ce646b7753c9dcf61c00f5c5a8a390ba1a2ceeb93510b8d50881f64cb3db2407",
+      "charts-market/src/styles.css": "0e5844ec75de2fb4a76097b26bb624bf8f9d9cf59f6d947855b743dd25f920fb",
+      "charts-market/src/workspace/README.md": "d3daa45b0a1a4c49a3991b7888fdaee6db2433e26754ba3d7132e53ba4942647",
+      "charts-market/src/workspace/agents.md": "9a1953f24450fba23a06965fe99b5c7ae208f4033f31257a1d81038aed6c098d",
+      "charts-market/src/workspace/index.tsx": "d9e833c6ae8048c434e323873ad48dbce1ea71e67d6de7a45b6d17b228c5077b",
+      "charts-market/src/workspace/state.ts": "ced84b935c41c5ae59675944544b60012fffe625016abd0c75e6ccae1850dbfa",
+      "charts-market/src/workspace/workspace.stories.tsx": "ffaaae648d46841cef135a5ad8bb8562e552658232fc19fb6e17bd7a8df74e9e",
+      "charts-market/src/workspace/workspace.test.ts": "6a9dd3e1a12ab1a3c1eac593e0725d178fcf19c87af1394eb9725fa031bc56e3",
+      "charts-market/tailwind.config.cjs": "703445ad55b5a259a252001dfc85f3650b26c36e67a9aaa61d2f3fe125a39523",
+      "charts-market/tsconfig.json": "732b015ff61e15e3dee802698b57063d47229d1ca6b0c3690c93caea59249f59",
+      "charts-market/tsup.config.ts": "8816fe4f7eb9bb7391ad6a428c77be1c6e6ba372ab4e402129d4d26997dd008a",
+      "charts-market/visual-baselines/README.md": "819291c0067f80aab6937565490f4d856dbf3dc9b225ce7c30d57c7db22e69e5",
+      "charts-market/visual-baselines/manifest.json": "e230fecab09ee0f86f86c05ebb63a5024033ff8ee4f49c1560f80c500a189af6",
+      "charts-market/visual-baselines/technical-chart-complete-technical-analysis.png": "24754161f5cd1a1615bea5f874b7dcefec8d9e3fff191b0813bda9ddb37d0c42",
+      "charts-market/visual-baselines/technical-chart-fullscreen-contained.png": "cd3d33b28ebb51e7a0eef1f21a9d95c18ddf5a0a920f45f23945bf211aeccfba",
+      "charts-market/visual-baselines/technical-chart-light.png": "50ff333b2183eb849047eaeee7d5a5b816758c01f11e27a11f5c1fcd2f9054b8",
+      "charts-market/visual-baselines/technical-chart-narrow-responsive.png": "e5cf954204f97e344c95f6b5bf7754b677d2a27b0a9fab6a7e04177e1e041870",
+      "charts-market/vitest.config.ts": "a681fe890fb08514b8c605b294764b80e8e2fd433253fcb25eabd519562d6329",
+      "charts-market/vitest.setup.ts": "9b328c4843431fa76d8de00008fc159e95f99a840211085ff3b8f25e53d14409",
+      "docs/ROADMAP.md": "df3569e26c2321e2f3fbf00dc3100e4c2d780e70fb881a214bb6ace812d52822"
+    }
+  },
+  "license": "MIT",
+  "licenseSha256": "e80e9406bfe34b32e65f41b41b494d6050138bf6b1968b33e5038a6bfd102bb3",
+  "noticeSha256": "32a5b1e5bb5a4aac20ef3d8150c8701ba897c097555265422e3a9a1b41e8905b",
+  "priorArtifacts": {
+    ".chart-supplied-validation/candidate/sha256-bf213e605fe719e5afc11d141f7d05909157bd6c163c7c3437b2317099f31b48.tgz": "bf213e605fe719e5afc11d141f7d05909157bd6c163c7c3437b2317099f31b48",
+    ".chart-supplied-validation/calendar-gaps/candidate/manifest.json": "d30a3d723b181d7b1d6a19c64c6647d6c4c5ae1c0223bb8b8dc7ff7db81b4995",
+    ".chart-supplied-validation/calendar-gaps/PUBLICATION-REVIEW.md": "8415436ee2c81a933a6fccf3cc3e264394550c3eaa23f3dc22f53fe0e599b959",
+    ".chart-supplied-validation/calendar-gaps/candidate/sha256-30a08c14dfa74d61e9ac38c9168576a1e2f479b8dde75ab34412c4d90814e274.tgz": "30a08c14dfa74d61e9ac38c9168576a1e2f479b8dde75ab34412c4d90814e274",
+    ".dashboard-grid-validation/candidate/manifest.json": "4497aee6e977303e01ef0916fb8ba26a4e6c930786d6805e54bec3e4285c5531",
+    ".dashboard-grid-validation/PUBLICATION-REVIEW.md": "7f651f2b3f0bf556946da13a9301b473df8b2b731f71aadc9a1f14bf7bc35787",
+    ".dashboard-grid-validation/candidate/sha256-20c54619e271fa83ba78b9ecb362abe3aafda15b073650872a506e790eb7c56e.tgz": "20c54619e271fa83ba78b9ecb362abe3aafda15b073650872a506e790eb7c56e",
+    ".chart-refinement-validation/candidate/sha256-32f73f768ea0897dbd2e283cbc82684aaeae1dd20767b931edde61cc012a925d.tgz": "32f73f768ea0897dbd2e283cbc82684aaeae1dd20767b931edde61cc012a925d",
+    ".chart-refinement-validation/candidate/source-sha256-eaa1f6cce92c6271235616a92998f9fd2689172557239b456d3ef37702a42afa.tgz": "eaa1f6cce92c6271235616a92998f9fd2689172557239b456d3ef37702a42afa",
+    ".chart-refinement-validation/candidate/manifest.json": "dd27d16b99e41d0dda36a8e29027bc4a2f0356ef05aae2d04e9d412b8568070b",
+    ".chart-refinement-validation/PUBLICATION-REVIEW.md": "0a81462f91fd99686ee8a693564ec9d576974edb1fd9c20090273d5a6f9c2568",
+    ".chart-supplied-validation/calendar-gaps/candidate/source-sha256-66a8f43f8b9a044f99333b4eba1d9955b766d7c2951b9755986a8bda7742f0f0.tgz": "66a8f43f8b9a044f99333b4eba1d9955b766d7c2951b9755986a8bda7742f0f0",
+    ".dashboard-grid-validation/candidate/source-sha256-6bb89c468f8e25f103d3ff8bc0006d656a81db8f9341c38214abc29d9bbe3761.tgz": "6bb89c468f8e25f103d3ff8bc0006d656a81db8f9341c38214abc29d9bbe3761"
+  }
+}

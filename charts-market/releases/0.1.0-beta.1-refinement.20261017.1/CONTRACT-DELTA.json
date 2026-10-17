@@ -1,0 +1,91 @@
+{
+  "previous": {
+    "version": "0.1.0-beta.1-refinement.20261016.1",
+    "packageSha256": "32f73f768ea0897dbd2e283cbc82684aaeae1dd20767b931edde61cc012a925d",
+    "sourceSha256": "eaa1f6cce92c6271235616a92998f9fd2689172557239b456d3ef37702a42afa"
+  },
+  "candidate": {
+    "version": "0.1.0-beta.1-refinement.20261017.1",
+    "packageSha256": "d6a1bb7f5beea87e33672a0af87d8f0f3b146b1d0f312359c563af44a2f752a1",
+    "sourceSha256": "e05d5ed196cd27251ea1acd32cd8f4e341142af87a192141cbb95d1583637a11"
+  },
+  "runtimeExports": {
+    "total": 158,
+    "added": [],
+    "removed": [],
+    "subpaths": {
+      ".": {
+        "esm": true,
+        "cjs": true,
+        "exports": 158
+      },
+      "./core": {
+        "esm": true,
+        "cjs": true,
+        "exports": 21
+      },
+      "./indicators": {
+        "esm": true,
+        "cjs": true,
+        "exports": 24
+      },
+      "./drawings": {
+        "esm": true,
+        "cjs": true,
+        "exports": 81
+      },
+      "./overlays": {
+        "esm": true,
+        "cjs": true,
+        "exports": 9
+      },
+      "./controls": {
+        "esm": true,
+        "cjs": true,
+        "exports": 1
+      },
+      "./workspace": {
+        "esm": true,
+        "cjs": true,
+        "exports": 7
+      }
+    }
+  },
+  "declarations": {
+    "filesVerified": 22,
+    "changed": [],
+    "removed": []
+  },
+  "serializer": {
+    "version": 1,
+    "addedFields": [],
+    "removedFields": [],
+    "byteIdenticalRoundTrip": true
+  },
+  "css": {
+    "subpath": "aapaetsch-charts-market/styles.css",
+    "previous": "afd519231f659706e53944838ce83d7e9a93547f5246091d7ebcfb895ffad8e3",
+    "candidate": "78fb2be5ab652d3dfa33741104dc0379beb7506ad8a8ceddc4b2a8e12e0878b6",
+    "publicTokensAdded": [],
+    "sourceEntryUnchanged": true
+  },
+  "implementationChanged": [
+    "charts-market/src/components/technical-chart-view/index.tsx"
+  ],
+  "changedSources": [
+    "charts-market/REFINEMENT.md",
+    "charts-market/package.json",
+    "charts-market/src/components/technical-chart-view/README.md",
+    "charts-market/src/components/technical-chart-view/agents.md",
+    "charts-market/src/components/technical-chart-view/card-fit.stories.tsx",
+    "charts-market/src/components/technical-chart-view/card-fit.test.tsx",
+    "charts-market/src/components/technical-chart-view/index.tsx",
+    "docs/ROADMAP.md"
+  ],
+  "publicMapping": {
+    "inlinePairs": "TechnicalChartView default OHLC overlay at every width; no opt-in",
+    "displayFormatting": "appearance.legends compact/expanded unchanged; exact title/aria retained",
+    "height": "appearance.height/heightMode/minimumPlotHeight + onGeometryChange unchanged; readout wraps within2lines/28CSSpx and pane boundary without resizing Canvas",
+    "dataAndState": "All prior supplied identity/revision/history/calendar contracts unchanged; no formulas/providers added"
+  }
+}

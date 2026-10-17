@@ -1,0 +1,69 @@
+{
+  "status": "pass",
+  "candidate": "aapaetsch-charts-market@0.1.0-beta.1-refinement.20261017.1",
+  "verifiedAt": "2026-10-17T18:12:41.8687915Z",
+  "checks": {
+    "packageBuild": {
+      "outputs": "ESM/CJS/DTS/DCTS/CSS",
+      "status": "pass",
+      "log": "build.log"
+    },
+    "preservedArtifacts": {
+      "status": "pass",
+      "log": "preserved-artifacts.json",
+      "count": 13
+    },
+    "rootReadonly": [
+      {
+        "path": "package.json",
+        "unchanged": true
+      },
+      {
+        "path": "package-lock.json",
+        "unchanged": true
+      },
+      {
+        "path": ".storybook/main.ts",
+        "unchanged": true
+      },
+      {
+        "path": ".storybook/preview.ts",
+        "unchanged": true
+      }
+    ],
+    "focusedTests": {
+      "status": "pass",
+      "log": "focused-tests.log",
+      "coverage": "2card-fit,6composite-refinement,14supplied-results,1abandoned-render revision gate",
+      "durationSeconds": 36.99,
+      "files": 4,
+      "tests": 23
+    },
+    "typecheck": {
+      "status": "pass",
+      "log": "typecheck.log"
+    },
+    "storybook": {
+      "stable": true,
+      "stories": 56,
+      "status": "pass",
+      "log": "storybook-build.log",
+      "url": "http://127.0.0.1:6019",
+      "cardFitStories": 9,
+      "output": ".chart-refinement-validation/card-fit/storybook-static"
+    }
+  },
+  "review": {
+    "implementation": "Atomic inline-flex baseline-aligned nonbreaking label/value pairs; whole-pair natural wrapping; half-container pair maximum and value ellipsis; exact title/aria values; readout max28CSSpx clipped to pane height below bounded28px legend.",
+    "testMeaning": "Tests verify exact supplied inspection values and pair children plus stale snapshot rejection. Unit tests cannot prove browser layout/wrapping; parent browser checks required.",
+    "testHarness": "No hang reproduced. Independent focused run passed;22.80s collection accounts for most36.99s duration.",
+    "status": "pass",
+    "blockingFindings": [],
+    "api": "No new public API. Existing appearance.height/heightMode/minPlotHeight, appearance.legends and geometry callback remain the public fit controls. Serializer/engine/request/revision contracts unchanged."
+  },
+  "limitations": [
+    "Parent owns visual/axe/320px/390px/200percent zoom/dense-board evidence and immutable packing.",
+    "Existing nonfatal Tailwind ambiguous utility/sourcemap reporting/chunk size warnings remain."
+  ],
+  "sourceEditsByDevRunner": []
+}

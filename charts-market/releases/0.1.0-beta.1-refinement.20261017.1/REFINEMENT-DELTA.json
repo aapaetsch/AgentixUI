@@ -1,0 +1,68 @@
+{
+  "runtimeExports": {
+    "added": [
+      "acceptMarketDataSnapshot",
+      "marketDataCalculationIdentity",
+      "validateMarketPresentation"
+    ],
+    "removed": [],
+    "total": 158
+  },
+  "serializer": {
+    "version": 1,
+    "byteIdenticalRoundTrip": true,
+    "serializedFieldsAdded": [],
+    "serializedFieldsRemoved": [],
+    "runtimeOnly": [
+      "presentation/appearance",
+      "dataIdentity/dataRevision",
+      "geometry",
+      "drawingCommand/history availability",
+      "interaction origin"
+    ]
+  },
+  "declarations": {
+    ".": {
+      "path": "./dist/index.d.ts",
+      "sha256": "903910fa033c07b30bdc50dec7b5abe400ee66a5fe022874877ac4ebf865edde"
+    },
+    "./core": {
+      "path": "./dist/core.d.ts",
+      "sha256": "1bd98d6ce639a6e8098113512b939574a245b38628e26fcd5cd551953ecbd3d8"
+    },
+    "./indicators": {
+      "path": "./dist/indicators.d.ts",
+      "sha256": "707cb33d8146f54a7fcc40cd9618245b5ca76b2df322882a77419f6b6e304526"
+    },
+    "./drawings": {
+      "path": "./dist/drawings.d.ts",
+      "sha256": "3b8d4609d47abcb3486078abcae167956f857c9a43868e04e238d21c49f7072d"
+    },
+    "./overlays": {
+      "path": "./dist/overlays.d.ts",
+      "sha256": "7316c8db1863d8795fb2b52b072946577b5dac6237da068ce0b23841ed831740"
+    },
+    "./controls": {
+      "path": "./dist/controls.d.ts",
+      "sha256": "6731430e5491edc84df89ef425ab15b9d0463385cbedd3ee9c55b78d959937bc"
+    },
+    "./workspace": {
+      "path": "./dist/workspace.d.ts",
+      "sha256": "d871f6617bf03fd26d511b19a92e4b11c270ac533a00815f778f38189ea9ebf9"
+    }
+  },
+  "css": {
+    "subpath": "aapaetsch-charts-market/styles.css",
+    "before": "bf015d9afbd3fe80862f8b4eba5491d29f9fd74717c3be16819ac342b91008f2",
+    "after": "afd519231f659706e53944838ce83d7e9a93547f5246091d7ebcfb895ffad8e3",
+    "publicTokensAdded": [],
+    "sourceEntryUnchanged": true,
+    "reason": "Tailwind utility output includes new compact status/dialog/geometry markup; no root stylesheet edit."
+  },
+  "typesConsumer": "candidate/extracted-32f73f768ea0/package/consumer.mts and consumer.cts; both NodeNext passed",
+  "notes": [
+    "Additive prop and optional second callback argument changes are documented in charts-market/REFINEMENT.md.",
+    "Fixed 72 CSS pixel axis gutter compacts long numeric labels; exact values remain in accessible readouts/tables.",
+    "Full snapshot ingestion remains O(N); cached projections and bounded visible paths avoid history scans on ordinary pointer events."
+  ]
+}
