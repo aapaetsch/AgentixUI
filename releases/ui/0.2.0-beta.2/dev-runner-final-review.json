@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "blockingFindings": [],
+  "reviewedFiles": [
+    "src/components/dashboard-grid/README.md",
+    "docs/dashboard-grid.md",
+    ".dashboard-grid-validation/PUBLICATION-REVIEW.md",
+    ".dashboard-grid-validation/candidate/manifest.json",
+    ".dashboard-grid-validation/final-audit.json"
+  ],
+  "package": {
+    "name": "aapaetsch-ui-kit",
+    "version": "0.2.0-beta.2",
+    "sha256": "20c54619e271fa83ba78b9ecb362abe3aafda15b073650872a506e790eb7c56e",
+    "integrity": "sha512-oS5ig4AWHoWWGryPmbLBCqgLCp5yVQoiBbyKV/mO8JCDvsuwsCGQ5tVAR7OjFo8Lv+H/TAbZgf9/qsUZEo4Kzg==",
+    "size": 2350725,
+    "individuallyVerifiedEntries": 55
+  },
+  "source": {
+    "sha256": "6bb89c468f8e25f103d3ff8bc0006d656a81db8f9341c38214abc29d9bbe3761",
+    "frozenInputsRehashed": 657
+  },
+  "apiAndBoundaries": "README/docs/review match actual controlled props, command constraints, geometry-only callback semantics, CSS import and nine runtime exports/nine types. Client-only root export; server-safe conditional intentionally excludes DashboardGrid. ESM/CJS parity and83server-safe symbols match retained consumer evidence.",
+  "scope": "Final audit passed; additive index/roadmap, no deletions/violations, prior chart artifact identities retained. Concurrent product documentation change explicitly attributed and no product writes claimed.",
+  "limitations": "Forced-colors axe diagnostic and native pinch/headless/physicaliPad limitations stated precisely. Performance301/294frames p958.4ms cited as machine-specific retained browser evidence; no new browser measurements asserted by this review.",
+  "publication": "Not published; separate exact artifact approval, provenance staging and consumer dependency/lock approval correctly retained.",
+  "changes": [],
+  "rebuildRetestRepack": false
+}

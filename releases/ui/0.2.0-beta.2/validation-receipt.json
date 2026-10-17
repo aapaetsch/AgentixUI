@@ -1,0 +1,40 @@
+{
+  "timestampUtc": "2026-10-16T21:56:41.749Z",
+  "head": "9b8cbb69847ac701dc0d99cd545727ccb833a5a6",
+  "changed": [
+    "docs/ROADMAP.md",
+    "src/index.ts"
+  ],
+  "added": [
+    "src/components/dashboard-grid/agents.md",
+    "src/components/dashboard-grid/dashboard-grid.stories.tsx",
+    "src/components/dashboard-grid/dashboard-grid.test.tsx",
+    "src/components/dashboard-grid/index.tsx",
+    "src/components/dashboard-grid/layout.test.ts",
+    "src/components/dashboard-grid/layout.ts",
+    "src/components/dashboard-grid/README.md",
+    "src/components/dashboard-grid/use-dashboard-grid.ts",
+    "docs/dashboard-grid.md"
+  ],
+  "missing": [],
+  "violations": [],
+  "additiveIndex": true,
+  "additiveRoadmap": true,
+  "sourceFilesVerified": 657,
+  "packedFilesVerified": 55,
+  "buildOutputsMatchPackedCandidate": true,
+  "priorArtifactsPreserved": true,
+  "serverCondition": {
+    "reactServerCondition": true,
+    "exports": 83,
+    "clientComponentAbsent": true
+  },
+  "productReadOnlyConcurrentChange": {
+    "before": "0d097ace181df2a1943e626c00896d8162a338cbf8732bdb50a85b4738a0ef5a",
+    "after": "aefabaa43c02edb4bc93879282c73fbb311fc4db93854602684479343121b08c"
+  },
+  "productWriteOperationsByThisTask": 0,
+  "sourceSnapshotSha256": "6bb89c468f8e25f103d3ff8bc0006d656a81db8f9341c38214abc29d9bbe3761",
+  "packageSha256": "20c54619e271fa83ba78b9ecb362abe3aafda15b073650872a506e790eb7c56e",
+  "passed": true
+}

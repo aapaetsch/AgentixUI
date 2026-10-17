@@ -1,0 +1,36 @@
+{
+  "timestampUtc": "2026-10-16T21:57:47.640Z",
+  "name": "aapaetsch-ui-kit",
+  "version": "0.2.0-beta.2",
+  "package": {
+    "file": "candidate/sha256-20c54619e271fa83ba78b9ecb362abe3aafda15b073650872a506e790eb7c56e.tgz",
+    "sha256": "20c54619e271fa83ba78b9ecb362abe3aafda15b073650872a506e790eb7c56e",
+    "integrity": "sha512-oS5ig4AWHoWWGryPmbLBCqgLCp5yVQoiBbyKV/mO8JCDvsuwsCGQ5tVAR7OjFo8Lv+H/TAbZgf9/qsUZEo4Kzg==",
+    "size": 2350725,
+    "files": 55
+  },
+  "source": {
+    "file": "candidate/source-sha256-6bb89c468f8e25f103d3ff8bc0006d656a81db8f9341c38214abc29d9bbe3761.tgz",
+    "sha256": "6bb89c468f8e25f103d3ff8bc0006d656a81db8f9341c38214abc29d9bbe3761",
+    "files": 657
+  },
+  "published": false,
+  "publicationApprovalRequired": true,
+  "productInstallationApprovalRequired": true,
+  "baselineHead": "9b8cbb69847ac701dc0d99cd545727ccb833a5a6",
+  "receipts": {
+    "candidate/manifest.json": "4497aee6e977303e01ef0916fb8ba26a4e6c930786d6805e54bec3e4285c5531",
+    "scope-audit.json": "42541ca7a54d960dc70b0770025747b3ffcaa90c828637da78d755759a86ace1",
+    "consumer-results.json": "1f6cfa788277bafc048c853fb5efe96e3bcfbfd7f77cdcfb3d84364f73d37f7e",
+    "final-audit.json": "a969e5b97a4f6951210b947cf7e518c608bc0d5ad0d34b6a4b851b0b04368f39",
+    "dev-runner/results.json": "58d56d654b93fa35207053e8850f7eae9db9a9ffe90279e71b3ff0c7a598657b",
+    "browser/results.json": "289824c58e0829e64035b3f2482daf49f6dc5d7309229359abc8fc9b5360ec5b",
+    "browser/supplement.json": "5f16788895dc37ec37989409a4aa7f48d7711df11f0714d3c088ff8e9eb11803",
+    "browser/forced-colors-diagnostic.json": "07292f029a37696aa2264d307cd1011a0147fd0f382df2f98fa20b22b01a239d",
+    "browser/packed-consumer.json": "4660df322ac4478224aad0ffa3d792bf88ff16c1091aa899741cac7f582eddfd"
+  },
+  "scopePassed": true,
+  "physicalIPadSafariTested": false,
+  "nativePinchEmulationChangedScale": false,
+  "forcedColorsAxeContrastFalsePositiveDocumented": true
+}
