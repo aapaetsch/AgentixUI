@@ -8,7 +8,7 @@ import {
   AnimatedAvatar,
 } from "./index";
 import { useState } from "react";
-import { User, Building2, Bot } from "lucide-react";
+import { UserIcon as User, BuildingIcon as Building2, BotIcon as Bot } from "aapaetsch-icons";
 
 const meta: Meta<typeof Avatar> = {
   title: "Components/Avatar",

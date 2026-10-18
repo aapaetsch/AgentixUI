@@ -8,6 +8,7 @@ export {
   calculateVwap,
 } from "./calculations";
 export {
+  stochasticIndicator,
   atrIndicator,
   bollingerBandsIndicator,
   builtInIndicators,
@@ -27,3 +28,4 @@ export {
   createVwapRuntime,
 } from "./incremental";
 export type { IndicatorDefinition, IndicatorLineDefinition, IndicatorPoint } from "../core";
+export { suppliedStudyDefinitions } from "./supplied";

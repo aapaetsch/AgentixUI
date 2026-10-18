@@ -18,7 +18,7 @@ Moneyness must respect `optionType`; formatting, row metadata, copy, jump visibi
 - `className?: string`.
 
 ## Dependencies
-- `ScrollArea` (existing), `Input` (existing), `lucide-react` icons.
+- `ScrollArea` (existing), `Input` (existing), `aapaetsch-icons` icons.
 - No virtualization lib — all rows are rendered directly. Strips targeted by
   the options chain rarely exceed ~80 rows; even 200 rows at 28px is fine for
   modern browsers.

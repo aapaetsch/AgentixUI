@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { ChevronRight, Slash, ArrowRight, Circle } from "lucide-react";
+import { ChevronRightIcon as ChevronRight, SlashIcon as Slash, ArrowRightIcon as ArrowRight, CircleIcon as Circle } from "aapaetsch-icons";
 
 import {
   Breadcrumb,

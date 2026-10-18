@@ -8,16 +8,16 @@ import {
   ComboBoxDescription,
   type ComboBoxOption,
 } from "./index";
-import { 
-  Apple, 
-  Banana, 
-  Cherry, 
-  Grape, 
-  Citrus,
-  User,
-  Building2,
-  Globe,
-} from "lucide-react";
+import {
+  AppleIcon as Apple,
+  BananaIcon as Banana,
+  CherryIcon as Cherry,
+  GrapeIcon as Grape,
+  CitrusIcon as Citrus,
+  UserIcon as User,
+  BuildingIcon as Building2,
+  GlobeIcon as Globe,
+} from "aapaetsch-icons";
 
 /**
  * ComboBox is a searchable select component using the Catalyst/Headless UI pattern.

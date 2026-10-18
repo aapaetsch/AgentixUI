@@ -141,7 +141,7 @@ aapaetsch-ui-kit         ✗ chart packages
 
 `aapaetsch-charts-market` lives in `charts-market/`. It is an ESM-only technical-analysis package with a first-party Canvas 2D + SVG engine, five market-series modes, resizable panes, streaming updates, indicators, controlled drawings, chart overlays, synchronized multi-chart workspaces, and versioned persistence contracts.
 
-`globals.css` remains the **single source of truth** for theming across both packages — `aapaetsch-charts` reads UI kit tokens and defines no visual identity of its own.
+`globals.css` remains the **single source of truth** for theme variables across both packages. Each chart package ships a small compiled `styles.css` utility layer so its releases can evolve independently without requiring consumers to scan package source with Tailwind.
 
 ## Roadmap — Financial & Quant Components
 
@@ -235,4 +235,8 @@ MIT � Aidan
 - [Changelog](./docs/roadmap/changelog.md)
 - [Chart Library Strategy](./docs/chart-library-strategy.md)
 - [Financial & Quant Component Roadmap](./docs/finance-quant-component-roadmap.md)
+
+## Original icon library
+
+The kit includes the independent `aapaetsch-icons` workspace: 158 original rounded-outline icons with typed React components and raw SVGs. See [icon usage and authoring](icons/README.md) and [the icon design system](icons/DESIGN.md). Icons inherit the kit's colors and control sizes and are also exported by the UI kit.
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Plus } from "lucide-react";
+import { PlusIcon as Plus } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 import {

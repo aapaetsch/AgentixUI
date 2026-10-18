@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Check, Dot } from "lucide-react";
+import { CheckIcon as Check, DotIcon as Dot } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 

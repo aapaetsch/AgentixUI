@@ -1,6 +1,15 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Apple, Banana, Cherry, Grape, Users, Building, MapPin, Star } from "lucide-react";
+import {
+  AppleIcon as Apple,
+  BananaIcon as Banana,
+  CherryIcon as Cherry,
+  GrapeIcon as Grape,
+  UsersIcon as Users,
+  BuildingIcon as Building,
+  MapPinIcon as MapPin,
+  StarIcon as Star,
+} from "aapaetsch-icons";
 
 import { MultiSelect, type MultiSelectOption } from ".";
 

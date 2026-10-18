@@ -64,7 +64,7 @@ import {
   ContextMenuItem,
   ContextMenuShortcut,
 } from 'aapaetsch-ui-kit';
-import { Copy, Clipboard } from 'lucide-react';
+import { DuplicateIcon as Copy, ClipboardIcon as Clipboard } from "aapaetsch-icons";
 
 function App() {
   return (
@@ -179,7 +179,7 @@ import {
   ContextMenuSubContent,
   ContextMenuSeparator,
 } from 'aapaetsch-ui-kit';
-import { Download, Save, Trash2 } from 'lucide-react';
+import { DownloadIcon as Download, SaveIcon as Save, TrashIcon as Trash2 } from "aapaetsch-icons";
 
 function App() {
   return (
@@ -219,7 +219,7 @@ function App() {
 A typical file manager context menu with copy, paste, rename, and delete:
 
 ```tsx
-import { Copy, Clipboard, Edit2, Maximize2, Trash2 } from 'lucide-react';
+import { DuplicateIcon as Copy, ClipboardIcon as Clipboard, EditIcon as Edit2, MaximizeIcon as Maximize2, TrashIcon as Trash2 } from "aapaetsch-icons";
 
 <ContextMenuContent>
   <ContextMenuItem icon={<Copy className="h-4 w-4" />}>
@@ -256,7 +256,7 @@ import { Copy, Clipboard, Edit2, Maximize2, Trash2 } from 'lucide-react';
 A standard text editor context menu with undo, redo, cut, copy, paste, and find:
 
 ```tsx
-import { Undo, Redo, Scissors, Copy, Clipboard, Search } from 'lucide-react';
+import { UndoIcon as Undo, RedoIcon as Redo, ScissorsIcon as Scissors, DuplicateIcon as Copy, ClipboardIcon as Clipboard, SearchIcon as Search } from "aapaetsch-icons";
 
 <ContextMenuContent>
   <ContextMenuItem icon={<Undo className="h-4 w-4" />}>
@@ -299,7 +299,7 @@ import { Undo, Redo, Scissors, Copy, Clipboard, Search } from 'lucide-react';
 Browser-like navigation context menu with back, forward, reload, and tools:
 
 ```tsx
-import { ChevronLeft, ChevronRight, RotateCcw, Globe } from 'lucide-react';
+import { ChevronLeftIcon as ChevronLeft, ChevronRightIcon as ChevronRight, ResetIcon as RotateCcw, GlobeIcon as Globe } from "aapaetsch-icons";
 
 <ContextMenuContent>
   <ContextMenuItem icon={<ChevronLeft className="h-4 w-4" />}>
@@ -578,7 +578,7 @@ import {
   ContextMenuSeparator,
   ContextMenuShortcut,
 } from 'aapaetsch-ui-kit';
-import { Copy, Clipboard, Edit2, Maximize2, Trash2, Scissors } from 'lucide-react';
+import { DuplicateIcon as Copy, ClipboardIcon as Clipboard, EditIcon as Edit2, MaximizeIcon as Maximize2, TrashIcon as Trash2, ScissorsIcon as Scissors } from "aapaetsch-icons";
 
 function FileManager() {
   const handleCopy = () => console.log('Copy');

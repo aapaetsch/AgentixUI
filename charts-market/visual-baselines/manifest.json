@@ -1,0 +1,34 @@
+{
+  "captured": "2026-09-10",
+  "revision": "Usability refinement: earnings, OHLC, VPVR, scale badges and oscillators",
+  "hardware": {
+    "platform": "win32",
+    "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor           ",
+    "logicalCpus": 16,
+    "memoryGiB": 64,
+    "browser": "136.0.7103.25",
+    "headless": true
+  },
+  "files": [
+    {
+      "story": "complete-technical-analysis",
+      "file": "technical-chart-complete-technical-analysis.png",
+      "sha256": "24754161f5cd1a1615bea5f874b7dcefec8d9e3fff191b0813bda9ddb37d0c42"
+    },
+    {
+      "story": "light",
+      "file": "technical-chart-light.png",
+      "sha256": "50ff333b2183eb849047eaeee7d5a5b816758c01f11e27a11f5c1fcd2f9054b8"
+    },
+    {
+      "story": "narrow-responsive",
+      "file": "technical-chart-narrow-responsive.png",
+      "sha256": "e5cf954204f97e344c95f6b5bf7754b677d2a27b0a9fab6a7e04177e1e041870"
+    },
+    {
+      "story": "fullscreen-contained",
+      "file": "technical-chart-fullscreen-contained.png",
+      "sha256": "cd3d33b28ebb51e7a0eef1f21a9d95c18ddf5a0a920f45f23945bf211aeccfba"
+    }
+  ]
+}

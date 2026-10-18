@@ -1,3 +1,4 @@
+import type { MarketScaleOptions, MarketViewportOptions, TechnicalPaneState } from "./technical-chart-state";
 import type {
   MarketChartType,
   MarketMarker,
@@ -11,6 +12,7 @@ import type {
   VisibleRange,
 } from "./types";
 import type { ChartOverlayState, DrawingPoint } from "./extensions";
+import type { MarketTimeAxis, MarketTimeGap } from "./time-axis";
 
 export interface IndicatorRenderSeries {
   id: string;
@@ -24,7 +26,12 @@ export interface IndicatorRenderSeries {
   points: Array<{ time: MarketTime; value: number | null }>;
 }
 
+export interface MarketRenderBounds { x: number; y: number; width: number; height: number }
 export interface MarketRenderLayerContext {
+  readonly plotBounds?: MarketRenderBounds;
+  readonly paneBounds?: Record<string, MarketRenderBounds>;
+  readonly axisBounds?: Record<string, MarketRenderBounds>;
+  readonly reservedBounds?: MarketRenderBounds;
   readonly visibleData: readonly OhlcBar[];
   readonly panes: readonly MarketPaneGeometry[];
   readonly theme: MarketChartTheme;
@@ -49,6 +56,8 @@ export interface MarketRenderLayer {
   onPointerEvent?: (event: MarketRenderLayerPointerEvent, context: MarketRenderLayerContext) => void;
 }
 
+import type { MarketChartPresentation, MarketChartChangeMetadata } from "./presentation";
+
 export interface MarketChartTheme {
   background: string;
   text: string;
@@ -59,7 +68,27 @@ export interface MarketChartTheme {
   primary: string;
 }
 
+export interface MarketSeriesRendererContext {
+  context: CanvasRenderingContext2D;
+  scale: { toCoordinate(value: number): number | null };
+  pane: MarketPaneGeometry;
+  visible: readonly OhlcBar[];
+  startIndex: number;
+  barSpacing: number;
+  logicalToCoordinate(index: number): number;
+  /** Observation-time coordinates for custom renderers on common calendars. */
+  timeToCoordinate?: (time: MarketTime) => number | null;
+  /** Whether adjacent observations belong to the same host-declared segment. */
+  isTimeSegmentContinuous?: (from: MarketTime, to: MarketTime) => boolean;
+  theme: MarketChartTheme;
+  presentation?: MarketChartPresentation;
+}
+export interface MarketSeriesRendererDefinition { id: MarketChartType; draw(context: MarketSeriesRendererContext): void }
 export interface MarketChartEngineOptions {
+  presentation?: MarketChartPresentation;
+  timeAxis?: MarketTimeAxis;
+  discontinuities?: readonly MarketTimeGap[];
+  seriesRenderers?: MarketSeriesRendererDefinition[];
   chartType: MarketChartType;
   data: OhlcBar[];
   height: number;
@@ -70,16 +99,30 @@ export interface MarketChartEngineOptions {
   locale?: string;
   timeZone?: string;
   theme: MarketChartTheme;
+  panes?: TechnicalPaneState[];
+  viewport?: MarketViewportOptions;
+  scale?: MarketScaleOptions;
+  onViewportChange?: (viewport: MarketViewportOptions, metadata?: MarketChartChangeMetadata) => void;
+  onScaleChange?: (scale: MarketScaleOptions, metadata?: MarketChartChangeMetadata) => void;
+  onSnapshotChange?: (snapshot: MarketChartSnapshot) => void;
+  onKeyboardInspect?: (snapshot: MarketCrosshairSnapshot) => void;
   paneSizes?: Record<string, number>;
   renderLayers?: MarketRenderLayer[];
-  onVisibleRangeChange?: (range: VisibleRange | null) => void;
+  onVisibleRangeChange?: (range: VisibleRange | null, metadata?: MarketChartChangeMetadata) => void;
   onCrosshairMove?: (time: MarketTime | null) => void;
   onCrosshairChange?: (snapshot: MarketCrosshairSnapshot | null) => void;
-  onPaneSizesChange?: (sizes: Record<string, number>) => void;
+  onPaneSizesChange?: (sizes: Record<string, number>, metadata?: MarketChartChangeMetadata) => void;
   onError?: (message: string | null) => void;
 }
 
 export interface MarketChartEngine {
+  resetScale?():void;
+  setTheme?(theme: MarketChartTheme): void;
+  setPresentation?(presentation: MarketChartPresentation): void;
+  setTimeAxis?(axis?: MarketTimeAxis): void;
+  setDiscontinuities?(gaps: readonly MarketTimeGap[]): void;
+  /** Geometry-only calendar/grid nudge; no synthetic observation is created. */
+  shiftTime?(time: MarketTime, steps: number): MarketTime | null;
   setData(data: OhlcBar[]): void;
   appendOrUpdate(bar: OhlcBar): void;
   setChartType(type: MarketChartType): void;
@@ -89,12 +132,15 @@ export interface MarketChartEngine {
   setIndicatorSeries(series: IndicatorRenderSeries[]): void;
   setOverlays(overlays: ChartOverlayState[]): void;
   setRenderLayers(layers: MarketRenderLayer[]): void;
+  setPanes?(panes: TechnicalPaneState[]): void;
+  setViewport?(viewport: MarketViewportOptions): void;
+  setScale?(scale: MarketScaleOptions): void;
   setPaneSizes(sizes: Record<string, number>): void;
   setVolumeVisible(visible: boolean): void;
   resize(width: number, height: number): void;
-  fitContent(): void;
-  scrollToRealtime(): void;
-  setVisibleRange(range: VisibleRange): void;
+  fitContent(metadata?:MarketChartChangeMetadata): void;
+  scrollToRealtime(metadata?:MarketChartChangeMetadata): void;
+  setVisibleRange(range: VisibleRange,metadata?:MarketChartChangeMetadata): void;
   setCrosshairPosition(time: MarketTime, price: number): void;
   clearCrosshairPosition(): void;
   coordinateForTime(time: MarketTime): number | null;

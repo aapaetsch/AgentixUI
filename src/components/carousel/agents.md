@@ -38,7 +38,7 @@ Carousel - Advanced image/content carousel with multiple transition effects
 ## Dependencies
 - `embla-carousel-react` - Core carousel functionality
 - `embla-carousel-autoplay` - Optional autoplay plugin
-- `lucide-react` - ChevronLeft, ChevronRight icons
+- `aapaetsch-icons` - ChevronLeft, ChevronRight icons
 - `class-variance-authority` - CVA for variants
 - Internal: `Button`, `cn` utility
 

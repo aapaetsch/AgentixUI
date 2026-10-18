@@ -1,17 +1,17 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
-  Plus,
-  Settings,
-  Heart,
-  Share2,
-  Download,
-  Trash2,
-  Edit,
-  Copy,
-  Info,
-  HelpCircle,
-} from "lucide-react";
+  PlusIcon as Plus,
+  SettingsIcon as Settings,
+  HeartIcon as Heart,
+  ShareIcon as Share2,
+  DownloadIcon as Download,
+  TrashIcon as Trash2,
+  EditIcon as Edit,
+  DuplicateIcon as Copy,
+  InfoCircleIcon as Info,
+  HelpCircleIcon as HelpCircle,
+} from "aapaetsch-icons";
 import {
   Tooltip,
   TooltipTrigger,

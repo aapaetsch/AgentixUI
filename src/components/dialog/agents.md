@@ -96,7 +96,7 @@ const { isMobile, position } = useResponsiveDialog(640); // breakpoint in px
 
 - `@radix-ui/react-dialog` - Core dialog primitive with accessibility
 - `class-variance-authority` - CVA for variant management
-- `lucide-react` - X icon for close button
+- `aapaetsch-icons` - X icon for close button
 - `../../lib/utils` - `cn()` utility function
 
 ## Styling Decisions

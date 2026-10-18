@@ -1,19 +1,19 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
-  Home,
-  User,
-  Settings,
-  Bell,
-  Mail,
-  Calendar,
-  FileText,
-  Image,
-  Video,
-  Music,
-  Heart,
-  Star,
-} from "lucide-react";
+  HomeIcon as Home,
+  UserIcon as User,
+  SettingsIcon as Settings,
+  BellIcon as Bell,
+  MailIcon as Mail,
+  CalendarIcon as Calendar,
+  FileTextIcon as FileText,
+  ImageIcon as Image,
+  VideoIcon as Video,
+  MusicIcon as Music,
+  HeartIcon as Heart,
+  StarIcon as Star,
+} from "aapaetsch-icons";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./index";
 
 /**

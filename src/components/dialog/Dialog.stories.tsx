@@ -1,19 +1,19 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
-  User,
-  Settings,
-  CreditCard,
-  Mail,
-  Lock,
-  ChevronLeft,
-  ChevronRight,
-  AlertTriangle,
-  Trash2,
-  Save,
-  X,
-  Check,
-} from "lucide-react";
+  UserIcon as User,
+  SettingsIcon as Settings,
+  CreditCardIcon as CreditCard,
+  MailIcon as Mail,
+  LockIcon as Lock,
+  ChevronLeftIcon as ChevronLeft,
+  ChevronRightIcon as ChevronRight,
+  WarningTriangleIcon as AlertTriangle,
+  TrashIcon as Trash2,
+  SaveIcon as Save,
+  CloseIcon as X,
+  CheckIcon as Check,
+} from "aapaetsch-icons";
 import {
   Dialog,
   DialogTrigger,
@@ -27,8 +27,8 @@ import {
   useDialogPages,
   useResponsiveDialog,
 } from "./index";
-import { Button } from "../Button";
-import { Input } from "../Input";
+import { Button } from "../button";
+import { Input } from "../input";
 
 /**
  * A modal dialog component for displaying content that requires user interaction.

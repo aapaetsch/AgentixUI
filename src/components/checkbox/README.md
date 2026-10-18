@@ -119,7 +119,7 @@ const [checked, setChecked] = React.useState(false);
 
 - `@radix-ui/react-checkbox` - Accessible checkbox primitive
 - `class-variance-authority` - Variant management
-- `lucide-react` - Check and Minus icons
+- `aapaetsch-icons` - Check and Minus icons
 
 ## License
 

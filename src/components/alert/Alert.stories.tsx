@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import {
-  AlertCircle,
-  AlertTriangle,
-  CheckCircle2,
-  Info,
-  Terminal,
-  Rocket,
-  Shield,
-  Zap,
-} from "lucide-react";
+  WarningCircleIcon as AlertCircle,
+  WarningTriangleIcon as AlertTriangle,
+  CheckCircleIcon as CheckCircle2,
+  InfoCircleIcon as Info,
+  TerminalIcon as Terminal,
+  RocketIcon as Rocket,
+  ShieldIcon as Shield,
+  ZapIcon as Zap,
+} from "aapaetsch-icons";
 
 import { Alert, AlertTitle, AlertDescription, AlertAction } from "./index";
 import { Button } from "../button";

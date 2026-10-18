@@ -7,7 +7,7 @@ A comprehensive navigation system for React applications featuring Navbar, Navra
 The navigation components are included in the `aapaetsch-ui-kit` package. Ensure you have the required dependencies:
 
 ```bash
-npm install @radix-ui/react-dialog @radix-ui/react-slot lucide-react
+npm install @radix-ui/react-dialog @radix-ui/react-slot aapaetsch-icons
 ```
 
 ## Quick Start
@@ -26,7 +26,7 @@ import {
   NavItem,
   NavSection,
 } from "aapaetsch-ui-kit";
-import { Home, Settings, Users } from "lucide-react";
+import { HomeIcon as Home, SettingsIcon as Settings, UsersIcon as Users } from "aapaetsch-icons";
 
 function App() {
   return (

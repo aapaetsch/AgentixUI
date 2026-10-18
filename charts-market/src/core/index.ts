@@ -45,6 +45,8 @@ export type {
   MarketChartEngineFactory,
   MarketChartEngineOptions,
   MarketChartTheme,
+  MarketSeriesRendererContext,
+  MarketSeriesRendererDefinition,
   IndicatorRenderSeries,
   MarketRenderLayer,
   MarketRenderLayerContext,
@@ -58,3 +60,10 @@ export {
 } from "./validation";
 export type { MarketDataIssue } from "./validation";
 export { MarketDataBuffer } from "./data-buffer";
+
+export * from "./technical-chart-state";
+export * from "./supplied-results";
+export * from "./time-axis";
+export type { MarketRenderBounds } from "./engine";
+export * from "./presentation";
+export * from "./data-revision";

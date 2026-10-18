@@ -1,12 +1,12 @@
 import { defineConfig, type Options } from "tsup";
 
 const shared: Options = {
-  format: ["esm"],
+  format: ["esm", "cjs"],
   dts: true,
   splitting: false,
   sourcemap: true,
   treeshake: true,
-  external: ["aapaetsch-ui-kit", "react", "react-dom"],
+  external: ["aapaetsch-icons", "aapaetsch-ui-kit", "react", "react-dom"],
 };
 
 export default defineConfig([

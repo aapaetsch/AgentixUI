@@ -8,7 +8,18 @@ import {
 } from "./api";
 import { Button } from "../button";
 import { Avatar } from "../avatar";
-import { Trash2, Send, Download, Upload, Mail, Bell, Save, Loader2, CheckCircle2, XCircle } from "lucide-react";
+import {
+  TrashIcon as Trash2,
+  SendIcon as Send,
+  DownloadIcon as Download,
+  UploadIcon as Upload,
+  MailIcon as Mail,
+  BellIcon as Bell,
+  SaveIcon as Save,
+  LoaderIcon as Loader2,
+  CheckCircleIcon as CheckCircle2,
+  ErrorCircleIcon as XCircle,
+} from "aapaetsch-icons";
 
 const meta: Meta = {
   title: "Feedback/Toast",

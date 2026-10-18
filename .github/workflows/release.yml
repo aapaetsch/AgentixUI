@@ -1,9 +1,11 @@
 name: Release packages to npm
 
-# Publishes the UI kit and both chart workspaces to npm with Sigstore provenance when a tag
-# matching `v*` is pushed. Provenance requires:
+# Publishes original icons, the UI kit and both chart workspaces with Sigstore provenance when a tag
+# matching a package release tag is pushed. `v*` coordinates all unpublished
+# package versions; icons/chart tags release one workspace independently.
+# Provenance requires:
 #   - `id-token: write` permission (below)
-#   - an `NPM_TOKEN` repo secret with publish rights on all three packages
+#   - an `NPM_TOKEN` repo secret with publish rights on all four packages
 #   - Actions: "Allow GitHub Actions to create and approve pull requests"
 #     is NOT required; workflow permissions must allow `id-token: write`.
 #
@@ -14,6 +16,9 @@ on:
   push:
     tags:
       - "v*"
+      - "charts-v*"
+      - "charts-market-v*"
+      - "icons-v*"
 
 permissions:
   contents: read
@@ -45,22 +50,56 @@ jobs:
           cache: npm
           registry-url: "https://registry.npmjs.org/"
 
-      - name: Verify tag matches package.json version
+      - name: Resolve release targets
+        id: release
         run: |
-          PKG_VERSION=$(node -p "require('./package.json').version")
-          TAG_VERSION="${GITHUB_REF_NAME#v}"
-          echo "package.json: $PKG_VERSION"
-          echo "tag:          $TAG_VERSION"
-          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
-            echo "::error::Tag $TAG_VERSION does not match package.json version $PKG_VERSION"
+          case "$GITHUB_REF_NAME" in
+            icons-v*)
+              PACKAGE_PATH="icons/package.json"
+              TAG_VERSION="${GITHUB_REF_NAME#icons-v}"
+              TARGETS="icons"
+              ;;
+            charts-market-v*)
+              PACKAGE_PATH="charts-market/package.json"
+              TAG_VERSION="${GITHUB_REF_NAME#charts-market-v}"
+              TARGETS="market"
+              ;;
+            charts-v*)
+              PACKAGE_PATH="charts/package.json"
+              TAG_VERSION="${GITHUB_REF_NAME#charts-v}"
+              TARGETS="charts"
+              ;;
+            v*)
+              PACKAGE_PATH="package.json"
+              TAG_VERSION="${GITHUB_REF_NAME#v}"
+              TARGETS="icons ui charts market"
+              ;;
+            *)
+              echo "::error::Unsupported release tag $GITHUB_REF_NAME"
+              exit 1
+              ;;
+          esac
+
+          PACKAGE_VERSION=$(node -p "require('./${PACKAGE_PATH}').version")
+          echo "${PACKAGE_PATH}: ${PACKAGE_VERSION}"
+          echo "tag: ${TAG_VERSION}"
+          if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
+            echo "::error::Tag version $TAG_VERSION does not match ${PACKAGE_PATH} version $PACKAGE_VERSION"
             exit 1
           fi
+          echo "targets=${TARGETS}" >> "$GITHUB_OUTPUT"
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Build icon dependency for source checks
+        run: npm run build:icons
+
       - name: Lint
         run: npm run lint
+
+      - name: Verify generated icons and migration
+        run: npm run icons:check
 
       - name: Typecheck
         run: npm run typecheck
@@ -91,27 +130,88 @@ jobs:
           test -f charts-market/dist/drawings.js
           test -f charts-market/dist/workspace.js
 
+      - name: Verify clean React 18 chart consumer
+        run: npm run verify:chart-consumer
+
+      - name: Verify packed icon consumers
+        run: npm run verify:icons
+
+      - name: Verify Next.js icon consumer
+        run: npm run verify:icons-next
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
       - name: Dry-run package contents
         run: |
           npm pack --dry-run --ignore-scripts
+          npm pack --dry-run --ignore-scripts --workspace aapaetsch-icons
           npm pack --dry-run --ignore-scripts --workspace aapaetsch-charts
           npm pack --dry-run --ignore-scripts --workspace aapaetsch-charts-market
 
+      - name: Freeze release archives and integrity evidence
+        run: npm run evidence:icons
+
+      - name: Save exact release archives
+        uses: actions/upload-artifact@v4
+        with:
+          name: packages-${{ github.ref_name }}
+          path: |
+            .icon-validation/artifacts/*.tgz
+            docs/evidence/icons-artifacts.json
+          include-hidden-files: true
+          if-no-files-found: error
+
+      - name: Detect unpublished package versions
+        id: unpublished
+        shell: bash
+        run: |
+          should_publish() {
+            local target="$1"
+            local name="$2"
+            local manifest="$3"
+            local version
+            version=$(node -p "require('./${manifest}').version")
+
+            if [[ " ${{ steps.release.outputs.targets }} " != *" ${target} "* ]]; then
+              echo "${target}=false" >> "$GITHUB_OUTPUT"
+            elif npm view "${name}@${version}" version >/dev/null 2>&1; then
+              echo "::notice::Skipping ${name}@${version}; it is already published"
+              echo "${target}=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "${target}=true" >> "$GITHUB_OUTPUT"
+            fi
+          }
+
+          should_publish icons aapaetsch-icons icons/package.json
+          should_publish ui aapaetsch-ui-kit package.json
+          should_publish charts aapaetsch-charts charts/package.json
+          should_publish market aapaetsch-charts-market charts-market/package.json
+
+      - name: Publish original icons
+        if: steps.unpublished.outputs.icons == 'true'
+        run: npm publish .icon-validation/artifacts/aapaetsch-icons-*.tgz --provenance --access public --tag beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publish UI kit
+        if: steps.unpublished.outputs.ui == 'true'
         # Explicit `--tag beta` so a pre-release version never lands
         # under `latest`. publishConfig.tag would normally drive this,
         # but npm's pre-publish notice has been observed defaulting to
         # `latest` in CI, so the flag is kept explicit for safety.
-        run: npm publish --provenance --access public --tag beta
+        run: npm publish .icon-validation/artifacts/aapaetsch-ui-kit-*.tgz --provenance --access public --tag beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish general charts
-        run: npm publish --workspace aapaetsch-charts --provenance --access public --tag beta
+        if: steps.unpublished.outputs.charts == 'true'
+        run: npm publish .icon-validation/artifacts/aapaetsch-charts-0*.tgz --provenance --access public --tag beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish market charts
-        run: npm publish --workspace aapaetsch-charts-market --provenance --access public --tag beta
+        if: steps.unpublished.outputs.market == 'true'
+        run: npm publish .icon-validation/artifacts/aapaetsch-charts-market-*.tgz --provenance --access public --tag beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

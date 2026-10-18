@@ -8,7 +8,14 @@ import {
 } from "./primitives";
 import { Button } from "../button";
 import { Avatar, AvatarImage, AvatarFallback } from "../avatar";
-import { Bell, Download, Mail, Send, Trash2, Upload } from "lucide-react";
+import {
+  BellIcon as Bell,
+  DownloadIcon as Download,
+  MailIcon as Mail,
+  SendIcon as Send,
+  TrashIcon as Trash2,
+  UploadIcon as Upload,
+} from "aapaetsch-icons";
 
 const meta: Meta<typeof ToastProvider> = {
   title: "Feedback/Toast Base",

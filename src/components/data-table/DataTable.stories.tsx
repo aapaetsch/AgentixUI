@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Copy, Eye } from "lucide-react";
+import { DuplicateIcon as Copy, EyeIcon as Eye } from "aapaetsch-icons";
 
 import { Badge } from "../badge";
 import { DataTable, DataTableColumnHeader } from ".";

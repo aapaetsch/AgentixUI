@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Search } from "lucide-react";
+import { SearchIcon as Search } from "aapaetsch-icons";
 
 import { EmptyState } from "./index";
 import { Button } from "../button";
@@ -40,7 +40,7 @@ const meta: Meta<typeof EmptyState> = {
     icon: {
       control: false,
       description:
-        "Icon slot. Pass `null`/`false` to hide. Defaults to the lucide `Inbox` icon.",
+        "Icon slot. Pass `null`/`false` to hide. Defaults to the original AgentixUI `Inbox` icon.",
     },
     title: {
       control: "text",

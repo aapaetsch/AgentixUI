@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Check, ChevronDown, X, Search } from "lucide-react";
+import { CheckIcon as Check, ChevronDownIcon as ChevronDown, CloseIcon as X, SearchIcon as Search } from "aapaetsch-icons";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
 import { cn } from "../../lib/utils";

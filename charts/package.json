@@ -23,10 +23,14 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "NOTICE"
   ],
   "exports": {
     ".": {
@@ -39,22 +43,24 @@
       "import": "./dist/quant.js",
       "require": "./dist/quant.cjs"
     },
+    "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && tailwindcss -c tailwind.config.cjs -i src/styles.css -o dist/styles.css --minify",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
   "peerDependencies": {
-    "aapaetsch-ui-kit": ">=0.2.0-beta.1",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "aapaetsch-ui-kit": ">=0.2.0-beta.3",
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0"
   },
   "dependencies": {
     "recharts": "^3.10.1"
   },
   "devDependencies": {
+    "aapaetsch-ui-kit": "file:..",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.3.2",
     "@types/react": "19.2.0",

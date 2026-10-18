@@ -34,7 +34,7 @@ It wraps `cmdk` inside the kit's `Dialog` and `ScrollArea` for consistent stylin
 - `cmdk` (headless)
 - `@radix-ui/react-dialog` (via `Dialog`)
 - `ScrollArea`, `Spinner`, `Badge` (from the kit)
-- `lucide-react` (Search icon)
+- `aapaetsch-icons` (Search icon)
 - `cn()`, `class-variance-authority`
 
 ## Styling Decisions

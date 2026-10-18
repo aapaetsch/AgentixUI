@@ -13,7 +13,7 @@ Toast
 ## Dependencies
 - `@radix-ui/react-toast` for the underlying accessible toast primitives and viewport lifecycle.
 - `class-variance-authority` for toast shell and viewport variants.
-- `lucide-react` for status, close, loading, and undo-related icons.
+- `aapaetsch-icons` for status, close, loading, and undo-related icons.
 - `src/lib/utils.ts` for `cn()` class merging.
 
 ## Styling Decisions

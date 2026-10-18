@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { Table } from "@tanstack/react-table";
-import { X } from "lucide-react";
+import { CloseIcon as X } from "aapaetsch-icons";
 
 import { Button } from "../button";
 import { Input } from "../input";

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ChevronRight, MoreHorizontal } from "lucide-react";
+import { ChevronRightIcon as ChevronRight, MoreHorizontalIcon as MoreHorizontal } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 import {

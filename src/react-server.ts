@@ -1,4 +1,5 @@
 // Server-safe root entrypoint.
+export * from "aapaetsch-icons";
 //
 // This entry is used by the `react-server` export condition so Next.js App
 // Router server components do not evaluate the full client-heavy root barrel.

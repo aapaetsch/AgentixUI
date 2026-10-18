@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 import { cva, type VariantProps } from "class-variance-authority";
-import { X } from "lucide-react";
+import { CloseIcon as X } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 import { IconButton } from "../button/icon-button";

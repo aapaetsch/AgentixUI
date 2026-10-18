@@ -1,6 +1,9 @@
 // aapaetsch-ui-kit - Shared Design System
 // Export all components from this file
 
+// Original, independently usable icon family (names carry an Icon suffix).
+export * from "aapaetsch-icons";
+
 // =============================================================================
 // Utilities
 // =============================================================================
@@ -1649,3 +1652,7 @@ export type {
 // =============================================================================
 
 // (No templates implemented yet)
+
+// Controlled dashboard layout (client component; pure geometry helpers share its entry).
+export { DashboardGrid, dashboardGridConstraints, validateDashboardGridItems, dashboardGridColumns, projectDashboardGridWidth, packDashboardGrid, applyDashboardGridCommand, snapDashboardGridHeight, findDashboardGridInsertion } from "./components/dashboard-grid";
+export type { DashboardGridProps, DashboardGridHandle, DashboardGridItem, DashboardGridWidth, DashboardGridColumns, DashboardGridPlacement, DashboardGridCommand, DashboardGridHitRect, DashboardGridInsertion } from "./components/dashboard-grid";

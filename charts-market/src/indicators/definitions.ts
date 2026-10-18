@@ -74,7 +74,13 @@ export const atrIndicator: IndicatorDefinition<PeriodParameters> = {
   createRuntime: (parameters) => createAtrRuntime(parameters.period),
 };
 
+export const stochasticIndicator: IndicatorDefinition = {
+  createRuntime(parameters) { let bars: import('../core').OhlcBar[]=[]; const calculate=()=>stochasticIndicator.calculate(bars,parameters); return { reset(data) { bars=Array.from(data); return calculate(); }, appendOrUpdate(bar) { if(bars.at(-1)?.time===bar.time) bars[bars.length-1]=bar; else bars.push(bar); const count=Number(parameters.period??14)+Number(parameters.smooth??3); return stochasticIndicator.calculate(bars.slice(-count),parameters).at(-1)!; } }; },
+  id: 'stochastic', version: 1, label: 'Stochastic', placement: 'pane', defaultParameters: { period: 14, smooth: 3 }, fixedDomain: [0,100], referenceLines: [{value:20,label:'Lower band'},{value:80,label:'Upper band'}], lines: [{id:'k',label:'%K',color:'hsl(var(--chart-1))'},{id:'d',label:'%D',color:'hsl(var(--chart-2))'}],
+  calculate(data, parameters) { const period=Math.max(1,Math.floor(Number(parameters.period)||14)); const smooth=Math.max(1,Math.floor(Number(parameters.smooth)||3)); const ks: Array<number|null>=[]; return data.map((bar,i)=>{ if(i<period-1) {ks.push(null); return {time:bar.time,values:{k:null,d:null}};} const window=data.slice(i-period+1,i+1); const high=window.reduce((n,b)=>Math.max(n,b.high),-Infinity); const low=window.reduce((n,b)=>Math.min(n,b.low),Infinity); const k=high===low?50:100*(bar.close-low)/(high-low); ks.push(k); const values=ks.slice(-smooth); return {time:bar.time,values:{k,d:values.length===smooth && values.every(v=>v!=null)?values.reduce<number>((a,b)=>a+(b??0),0)/smooth:null}}; }); }
+};
 export const builtInIndicators: IndicatorDefinition[] = [
+  stochasticIndicator,
   smaIndicator,
   emaIndicator,
   vwapIndicator,

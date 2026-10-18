@@ -168,7 +168,7 @@ import { AnimatedChevron } from 'aapaetsch-ui-kit';
 
 - `@radix-ui/react-accordion` - Accessible accordion primitives
 - `class-variance-authority` - Variant management
-- `lucide-react` - Fallback ChevronDown icon
+- `aapaetsch-icons` - Fallback ChevronDown icon
 - `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License

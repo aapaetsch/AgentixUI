@@ -1,0 +1,7 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {"baseUrl":".","paths":{},"types":["vitest/globals","@testing-library/jest-dom/vitest","node"]},
+  "include":["src/**/*.ts","src/**/*.tsx"],
+  "exclude":["dist","node_modules","**/*.stories.tsx"]
+}
+

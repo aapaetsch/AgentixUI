@@ -15,7 +15,7 @@ ticks, legends, tooltips, crosshairs, color scales, or domain logic — lives in
 ## Why split
 
 1. **Different dependency profile.** `aapaetsch-ui-kit` is intentionally lightweight
-   (`cn`, `clsx`, `tailwind-merge`, Radix primitives, `lucide-react`).
+   (`cn`, `clsx`, `tailwind-merge`, Radix primitives, `aapaetsch-icons`).
    Charts pull in scale/shape/axis code and specialized Canvas/WebGL renderers.
    Bundling chart weights into `aapaetsch-ui-kit` forces every
    consumer — settings pages, auth flows, marketing forms — to ship megabytes of
@@ -60,8 +60,11 @@ aapaetsch-ui-kit ✗  aapaetsch-charts    (UI MUST NOT depend on charts)
   primitives (`Sparkline`, `NumericText`, `TrendIndicator`, `MiniBars`, `Gauge`,
   `SegmentedProgress`).
 - `aapaetsch-ui-kit` never imports from `aapaetsch-charts`.
-- `globals.css` remains the **single source of truth** for theming. Charts define
-  zero CSS variables of their own; they read tokens defined by the UI kit.
+- `globals.css` remains the **single source of truth** for theme variables. Charts
+  define zero CSS variables of their own; they read tokens defined by the UI kit.
+  Each chart package ships a compiled `styles.css` containing only its Tailwind
+  utilities, which keeps package releases independent and requires no consumer
+  source scanning.
 - Charts MAY define new CSS variables for chart‑specific concerns (e.g.
   `--chart-1`…`--chart-5`), but those live in `aapaetsch-ui-kit`'s `globals.css` so the
   UI kit stays the single owner of visual identity across both packages.

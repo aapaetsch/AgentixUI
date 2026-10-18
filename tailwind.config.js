@@ -2,6 +2,7 @@
 module.exports = {
   darkMode: ["class"],
   content: [
+    "./icons/src/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
     "./charts/src/**/*.{ts,tsx}",
     "./charts-market/src/**/*.{ts,tsx}",

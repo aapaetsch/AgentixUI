@@ -4,7 +4,13 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ChevronRight, Menu, X, PanelLeftClose, PanelLeft } from "lucide-react";
+import {
+  ChevronRightIcon as ChevronRight,
+  MenuIcon as Menu,
+  CloseIcon as X,
+  PanelLeftCollapseIcon as PanelLeftClose,
+  PanelLeftIcon as PanelLeft,
+} from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 

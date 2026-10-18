@@ -61,7 +61,7 @@ A premium multi-selection component that enables users to select multiple items 
 
 - `@radix-ui/react-popover` - For dropdown positioning and focus trap
 - `@tanstack/react-virtual` - For virtualization of large lists
-- `lucide-react` - For icons (Check, ChevronDown, X, Search)
+- `aapaetsch-icons` - For icons (Check, ChevronDown, X, Search)
 - `class-variance-authority` - For CVA variant management
 - Internal: `Chip` component for tag display
 - Internal: `Checkbox` component for select all

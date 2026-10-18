@@ -34,7 +34,7 @@ investment-ops dashboard shell.
 ## Dependencies
 
 - `react-resizable-panels` (installed v3 API: `Group`/`Panel`/`Separator`)
-- `lucide-react` for grip and chevron affordances
+- `aapaetsch-icons` for grip and chevron affordances
 - `class-variance-authority`
 - `clsx` + `tailwind-merge` via `cn()`
 

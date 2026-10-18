@@ -50,7 +50,7 @@ The Breadcrumb component provides a navigation trail that helps users understand
 ## Dependencies
 
 - `@radix-ui/react-slot` - For `asChild` pattern in BreadcrumbLink
-- `lucide-react` - ChevronRight and MoreHorizontal icons
+- `aapaetsch-icons` - ChevronRight and MoreHorizontal icons
 - `class-variance-authority` - Variant management
 - `../popover` - For desktop dropdown in ResponsiveBreadcrumb
 - `../sheet` - For mobile drawer in ResponsiveBreadcrumb

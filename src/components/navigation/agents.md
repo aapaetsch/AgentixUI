@@ -30,7 +30,7 @@ Navigation
 - `@radix-ui/react-dialog` for the drawer overlay and content lifecycle.
 - `@radix-ui/react-slot` for `asChild` composition in brand, item, and trigger components.
 - `class-variance-authority` for layout, drawer, rail, section, badge, and premium indicator variants.
-- `lucide-react` for menu, collapse, close, and submenu affordance icons.
+- `aapaetsch-icons` for menu, collapse, close, and submenu affordance icons.
 - `src/lib/utils.ts` for `cn()` class merging.
 - Internal reuse of `AnimatedChevron` and `Accordion` inside premium submenu items.
 

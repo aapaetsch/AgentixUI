@@ -255,7 +255,7 @@ Each nesting level increases z-index by 10:
 
 - `@radix-ui/react-dialog` - Core dialog primitive with accessibility
 - `class-variance-authority` - CVA for variant management
-- `lucide-react` - X icon for close button
+- `aapaetsch-icons` - X icon for close button
 - `aapaetsch-ui-kit/lib/utils` - `cn()` utility function
 
 ## License

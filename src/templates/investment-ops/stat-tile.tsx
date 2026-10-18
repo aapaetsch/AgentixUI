@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowUpIcon as ArrowUp, ArrowDownIcon as ArrowDown } from "aapaetsch-icons";
 import { Slot } from "@radix-ui/react-slot";
 
 import { cn } from "../../lib/utils";
@@ -56,7 +56,7 @@ export interface StatTileProps {
  * StatTile - KPI tile for the investment-ops dashboard.
  *
  * Composes `Card`, `Badge`, `NumericText`, `AnimatedNumber`, and an optional
- * sparkline render slot. The delta row uses `lucide` ArrowUp/ArrowDown colored
+ * sparkline render slot. The delta row uses `original AgentixUI` ArrowUp/ArrowDown colored
  * by sign, paired with a signed `NumericText` so sign is never color-only.
  *
  * @example

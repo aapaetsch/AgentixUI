@@ -18,7 +18,7 @@ Broker-specific terminology and rules belong in the public formatters, labels, v
 
 ## Dependencies
 - `ToggleGroup` (Buy/Sell, Call/Put), `ComboBox` (strike), `InputIncrementor`
-  (contracts), `Button` (delete/duplicate), `lucide-react` icons.
+  (contracts), `Button` (delete/duplicate), `aapaetsch-icons` icons.
 - `lib/finance-types` `OptionLeg`, `OptionType`.
 
 ## Styling Decisions

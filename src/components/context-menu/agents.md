@@ -88,7 +88,7 @@ ContextMenu - Right-click action menu component
 - CVA (`class-variance-authority`) - Variant management
 
 ### Icons (Optional)
-- Lucide React - Standard project icon set (e.g., Copy, Clipboard, Trash2)
+- AgentixUI React - Standard project icon set (e.g., Copy, Clipboard, Trash2)
 
 ## Styling Decisions
 

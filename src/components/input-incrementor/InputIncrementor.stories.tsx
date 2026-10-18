@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { ChevronUp, ChevronDown, Volume2, VolumeX } from "lucide-react";
+import { ChevronUpIcon as ChevronUp, ChevronDownIcon as ChevronDown, VolumeIcon as Volume2, VolumeOffIcon as VolumeX } from "aapaetsch-icons";
 import { InputIncrementor } from "./index";
 
 // ============================================================================

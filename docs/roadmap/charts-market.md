@@ -59,6 +59,7 @@ clients. Consumers own storage.
 | Light/dark, extension, state and workspace Storybook coverage | ✅ Complete |
 | ESM/declaration build and first-party engine boundary | ✅ Passing |
 | Browser/Storybook smoke and static Storybook build | ✅ Complete |
+| Clean packed React 18 consumer, public entrypoints, styles and license files | ✅ Passing |
 
 ## Explicit advanced backlog
 
@@ -71,6 +72,11 @@ pattern recognition remains experimental-plugin backlog.
 The coordinated implementation plan for additional chart types, indicators, drawing
 tools, and chart-analysis workflows is documented in
 [`implementation-plans/market-chart-analysis-expansion-plan.md`](../../implementation-plans/market-chart-analysis-expansion-plan.md).
+
+The implementation handoff for an original, out-of-box professional technical-chart view—with
+integrated price-aligned volume profile, grouped panes, persistent legends/value badges, drawing
+rail, command bar, and status footer—is documented in
+[`implementation-plans/technical-chart-view-handoff.md`](../../implementation-plans/technical-chart-view-handoff.md).
 
 The practical drawing-tools milestone is complete: lifecycle/primitives, all documented
 line variants, four channels, measurements/positions, Fibonacci analysis, anchored and
@@ -85,3 +91,25 @@ comparison-series, and richer data-window expansion remains in progress.
 - 2026-08-26 — Rebuilt drawing around local press-drag-release drafts and pointer capture, eliminating hover-driven controlled updates; added angled trend-line gestures, rays, extended lines, ellipses, Fibonacci retracements, styling controls, Escape cancellation and an Alt snapping bypass.
 - 2026-08-21 — Closed the first-party acceptance audit by adding renderer-neutral OHLC snapping for new and edited SVG drawing points, with configurable opt-out and distance controls.
 - 2026-08-20 — Replaced the external market renderer with the first-party Canvas 2D + SVG engine; added indexed storage, logical time/price scales, pane persistence, incremental indicators, richer crosshair state, controlled indicator UI and stable custom render layers.
+
+## TechnicalChartView — ✅ Complete
+
+One new public composed component (MarketChart preserved), with 12 deterministic Storybook scenarios. The delivered state and engine foundation includes explicit grouped/reorderable panes, shared right offset, manual/automatic scale intents, persistent legends, deterministic axis badges, first-party profile calculations/Canvas clipping/inspection, serializable state helpers and a series-renderer registry. The built-in indicator catalog now includes stochastic (8 definitions).
+
+- [x] State and geometry foundation, legacy pane adapter and unit coverage.
+- [x] Integrated supplied-level/bar-derived volume profile, POC/VAH/VAL fixtures and range settings.
+- [x] RSI / price / MACD+volume / stochastic pane composition and persistent legends.
+- [x] Responsive commands, drawing rail, settings, host intents and status footer.
+- [x] Final browser, accessibility, performance and independent Dev Runner verification.
+
+Release evidence: 94 tests in 16 files; root typecheck/build and current market declarations/Storybook build passed. Eleven state/theme stories and the narrow settings dialog have zero automated WCAG A/AA violations. Chromium pointer, keyboard, touch, 200% zoom and forced-color smoke passed. Production stress measured 60.06 fps (16.65 ms mean / 18.40 ms p95) on Ryzen 7 7800X3D / 64 GB with 100,000 bars, 100 drawings and 100 profile rows. Four reviewed visual baselines are in `charts-market/visual-baselines`.
+
+Evidence and operational notes: `output/technical-chart-verification/`; browser runner: `scripts/technical-chart-browser-smoke.cjs`.
+
+### Usability refinement — ✅ Complete
+
+Implemented supplied earnings pins/date and EPS inspection, dedicated hover/keyboard OHLC, filled latest-value badges, tighter price margins with round ticks, blue/amber VPVR with full-width POC, and taller shaded RSI/stochastic panes. Expanded date-placement and axis tests; browser smoke now exercises OHLC and earnings keyboard/dialog accessibility. All 94 tests, root typecheck/package build, independent Dev Runner Storybook build and production browser checks passed. Eleven stories plus earnings and narrow settings dialogs have zero automated WCAG A/AA violations. Four production visual baselines refreshed.
+
+### VPVR density refinement — ✅ Complete
+
+Reduced the derived VPVR default from 32 to 24 rows so each row covers a broader price range and renders with greater visual height. Explicit consumer row settings remain authoritative. All 95 market tests, root typecheck, package build and independent Dev Runner Storybook build passed.

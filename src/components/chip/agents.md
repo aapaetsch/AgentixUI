@@ -47,7 +47,7 @@ interface ChipGroupProps {
 ## Dependencies
 - `@radix-ui/react-slot` - Polymorphic component (asChild prop)
 - `class-variance-authority` - Variant management
-- `lucide-react` - X and Check icons
+- `aapaetsch-icons` - X and Check icons
 - `../../lib/utils` - `cn()` utility
 
 ## Styling Decisions

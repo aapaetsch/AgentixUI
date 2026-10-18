@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { Row } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontalIcon as MoreHorizontal } from "aapaetsch-icons";
 
 import { Button } from "../button";
 import {

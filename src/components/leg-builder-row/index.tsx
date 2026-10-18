@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Trash2, CopyPlus } from "lucide-react";
+import { TrashIcon as Trash2, DuplicatePlusIcon as CopyPlus } from "aapaetsch-icons";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "../../lib/utils";

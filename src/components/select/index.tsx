@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Check, ChevronDown, ChevronUp, type LucideIcon } from "lucide-react";
+import { CheckIcon as Check, ChevronDownIcon as ChevronDown, ChevronUpIcon as ChevronUp, type IconComponent } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 import { AnimatedChevron, type ChevronAnimationPreset } from "../animated-chevron";
@@ -142,7 +142,7 @@ export interface SelectTriggerProps
    * Custom icon component to show in the trigger (defaults to ChevronDown)
    * Ignored when useAnimatedChevron is true
    */
-  icon?: LucideIcon;
+  icon?: IconComponent;
   /**
    * Whether to hide the dropdown icon
    * @default false

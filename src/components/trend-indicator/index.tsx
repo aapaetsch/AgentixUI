@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ArrowUp, ArrowDown, Minus } from "lucide-react";
+import { ArrowUpIcon as ArrowUp, ArrowDownIcon as ArrowDown, MinusIcon as Minus } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 import { pnlColorClass } from "../../lib/color-utils";

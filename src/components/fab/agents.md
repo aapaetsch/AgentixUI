@@ -73,7 +73,7 @@ interface FABMenuProps {
 
 ## Dependencies
 - `class-variance-authority` - Variant management
-- `lucide-react` - Icons (used in stories)
+- `aapaetsch-icons` - Icons (used in stories)
 - `../../lib/utils` - `cn()` utility
 
 ## Styling Decisions

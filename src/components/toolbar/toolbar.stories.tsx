@@ -10,7 +10,14 @@ import {
   ToolbarLabel,
 } from "./index";
 import { ToggleGroupItem } from "../toggle-group";
-import { RotateCw, Download, Filter, CandlestickChart, LineChart, AreaChart } from "lucide-react";
+import {
+  RefreshIcon as RotateCw,
+  DownloadIcon as Download,
+  FilterIcon as Filter,
+  ChartCandlestickIcon as CandlestickChart,
+  ChartLineIcon as LineChart,
+  ChartAreaIcon as AreaChart,
+} from "aapaetsch-icons";
 
 const meta: Meta<typeof Toolbar> = {
   title: "Components/Toolbar",

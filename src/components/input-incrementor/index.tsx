@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { cva } from "class-variance-authority";
-import { Minus, Plus } from "lucide-react";
+import { MinusIcon as Minus, PlusIcon as Plus } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 

@@ -1,10 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import {
-  Home,
-  Inbox,
-  Calendar,
-  Search,
-} from "lucide-react";
+import { HomeIcon as Home, InboxIcon as Inbox, CalendarIcon as Calendar, SearchIcon as Search } from "aapaetsch-icons";
 
 import {
   NavigationProvider,

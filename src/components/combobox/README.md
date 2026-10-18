@@ -18,7 +18,7 @@ This component is part of the `aapaetsch-ui-kit` library. No additional installa
 The following dependencies are used by this component:
 - `@headlessui/react` - Combobox primitives
 - `class-variance-authority` - Variant management
-- `lucide-react` - Icons
+- `aapaetsch-icons` - Icons
 
 ## Usage
 
@@ -71,7 +71,7 @@ function MyComponent() {
 
 ```tsx
 import { ComboBox, type ComboBoxOption } from "aapaetsch-ui-kit";
-import { Apple, Banana, Cherry } from "lucide-react";
+import { AppleIcon as Apple, BananaIcon as Banana, CherryIcon as Cherry } from "aapaetsch-icons";
 
 const fruits: ComboBoxOption[] = [
   { value: "apple", label: "Apple", icon: <Apple className="size-4" /> },

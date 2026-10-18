@@ -8,7 +8,7 @@
 
 ## Overview
 `TrendIndicator` is a tiny signed-value text primitive. It renders a directional arrow icon
-(`ArrowUp` / `ArrowDown` / `Minus` from `lucide-react`) alongside a colorized text label. Color
+(`ArrowUp` / `ArrowDown` / `Minus` from `aapaetsch-icons`) alongside a colorized text label. Color
 is derived from the sign of `value` via `pnlColorClass`, keeping the visual language consistent
 with `NumericText` and the rest of the finance surfaces.
 
@@ -28,7 +28,7 @@ interface TrendIndicatorProps extends React.HTMLAttributes<HTMLSpanElement>,
 
 ## Dependencies
 - `class-variance-authority` — size variants (`trendIndicatorVariants`)
-- `lucide-react` — `ArrowUp`, `ArrowDown`, `Minus`
+- `aapaetsch-icons` — `ArrowUp`, `ArrowDown`, `Minus`
 - `../../lib/utils` — `cn()`
 - `../../lib/color-utils` — `pnlColorClass`
 

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { CalendarDays, Info, MapPin, User } from "lucide-react";
+import { CalendarDaysIcon as CalendarDays, InfoCircleIcon as Info, MapPinIcon as MapPin, UserIcon as User } from "aapaetsch-icons";
 
 import {
   HoverCard,

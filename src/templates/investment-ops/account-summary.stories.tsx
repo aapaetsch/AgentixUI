@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
-import { AlertTriangle } from "lucide-react";
+import { WarningTriangleIcon as AlertTriangle } from "aapaetsch-icons";
 
 import { AccountSummary } from "./account-summary";
 import type { StatTileProps } from "./stat-tile";

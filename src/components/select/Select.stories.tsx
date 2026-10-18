@@ -1,22 +1,22 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
-  ChevronDown,
-  ChevronsUpDown,
-  ArrowDown,
-  Settings,
-  User,
-  Mail,
-  Phone,
-  Home,
-  Building,
-  Flag,
-  Globe,
-  Palette,
-  Sun,
-  Moon,
-  Monitor,
-} from "lucide-react";
+  ChevronDownIcon as ChevronDown,
+  ChevronsUpDownIcon as ChevronsUpDown,
+  ArrowDownIcon as ArrowDown,
+  SettingsIcon as Settings,
+  UserIcon as User,
+  MailIcon as Mail,
+  PhoneIcon as Phone,
+  HomeIcon as Home,
+  BuildingIcon as Building,
+  FlagIcon as Flag,
+  GlobeIcon as Globe,
+  PaletteIcon as Palette,
+  SunIcon as Sun,
+  MoonIcon as Moon,
+  MonitorIcon as Monitor,
+} from "aapaetsch-icons";
 import {
   Select,
   SelectTrigger,

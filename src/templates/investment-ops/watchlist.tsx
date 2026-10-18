@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { ColumnDef } from "@tanstack/react-table";
-import { ChevronRight } from "lucide-react";
+import { ChevronRightIcon as ChevronRight } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 import { DataTable } from "../../components/data-table";

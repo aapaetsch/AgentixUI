@@ -1,5 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Plus, Edit, Heart, Share2, Download, Folder, File, Settings, X } from "lucide-react";
+import {
+  PlusIcon as Plus,
+  EditIcon as Edit,
+  HeartIcon as Heart,
+  ShareIcon as Share2,
+  DownloadIcon as Download,
+  FolderIcon as Folder,
+  FileIcon as File,
+  SettingsIcon as Settings,
+  CloseIcon as X,
+} from "aapaetsch-icons";
 import { FAB } from "./index";
 import { ExtendedFAB } from "./extended-fab";
 import { FABMenu, type FABMenuItem } from "./fab-menu";

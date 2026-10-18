@@ -57,9 +57,11 @@ const packages = Object.entries(lock.packages)
 const sourceCounts = {};
 const licenseCounts = {};
 for (const item of packages) {
-  const source = item.resolved
-    ? new URL(item.resolved).origin
-    : "lockfile-without-resolved";
+  let source = "lockfile-without-resolved";
+  if (item.resolved) {
+    try { source = new URL(item.resolved).origin; }
+    catch { source = "local-workspace-or-file"; }
+  }
   sourceCounts[source] = (sourceCounts[source] ?? 0) + 1;
   const license = item.license ?? "UNKNOWN";
   licenseCounts[license] = (licenseCounts[license] ?? 0) + 1;

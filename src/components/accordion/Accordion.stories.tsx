@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import {
-  Plus,
-  ChevronRight,
-  User,
-  CreditCard,
-  Bell,
-  Shield,
-  HelpCircle,
-  FileText,
-  Truck,
-  RotateCcw,
-} from "lucide-react";
+  PlusIcon as Plus,
+  ChevronRightIcon as ChevronRight,
+  UserIcon as User,
+  CreditCardIcon as CreditCard,
+  BellIcon as Bell,
+  ShieldIcon as Shield,
+  HelpCircleIcon as HelpCircle,
+  FileTextIcon as FileText,
+  TruckIcon as Truck,
+  ResetIcon as RotateCcw,
+} from "aapaetsch-icons";
 import {
   Accordion,
   AccordionItem,

@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import {
-  Home,
-  Settings,
-  BarChart3,
-  FileText,
-  Inbox,
-  Layout,
-  Layers,
-  Bell,
-  Menu,
-  LogOut,
-} from "lucide-react";
+  HomeIcon as Home,
+  SettingsIcon as Settings,
+  ChartBarIcon as BarChart3,
+  FileTextIcon as FileText,
+  InboxIcon as Inbox,
+  PanelsIcon as Layout,
+  LayersIcon as Layers,
+  BellIcon as Bell,
+  MenuIcon as Menu,
+  SignOutIcon as LogOut,
+} from "aapaetsch-icons";
 
 import { PremiumNavGroup, PremiumNavItem } from "./index";
 import {

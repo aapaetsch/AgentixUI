@@ -368,5 +368,5 @@ Example: `snapPoints={[0.25, 0.5, 1]}` creates three snap positions at quarter, 
 - `@radix-ui/react-dialog` - Dialog primitive
 - `@use-gesture/react` - Gesture detection
 - `@react-spring/web` - Spring animations
-- `lucide-react` - Icons
+- `aapaetsch-icons` - Icons
 

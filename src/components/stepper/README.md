@@ -7,7 +7,7 @@ Advanced stepper component with vertical orientation, non-linear navigation, and
 This stepper API is part of the unified library. Ensure you have the required dependencies:
 
 ```bash
-npm install @radix-ui/react-collapsible @radix-ui/react-slot class-variance-authority lucide-react
+npm install @radix-ui/react-collapsible @radix-ui/react-slot class-variance-authority aapaetsch-icons
 ```
 
 ## Basic Usage

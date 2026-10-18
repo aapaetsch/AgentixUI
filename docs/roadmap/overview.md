@@ -16,6 +16,8 @@ This overview contains the high-level roadmap context and summary metrics. For d
 
 ## Summary
 
+Original icons are tracked independently: 158 complete icons in `aapaetsch-icons`, including a 20-icon portfolio pilot. Icon totals do not change the UI-component counts below. See `icons.md` for package status and evidence.
+
 | Category | Implemented | Planned | Total |
 |----------|-------------|---------|-------|
 | **Components** | 38 | 1 (Typography) | 39 |
@@ -32,3 +34,7 @@ This overview contains the high-level roadmap context and summary metrics. For d
 <!-- LLM-REF: docs/roadmap/changelog.md -->
 <!-- LLM-REF: docs/roadmap/toast-research.md -->
 <!-- LLM-REF: docs/roadmap/existing-components.md -->
+
+## Market chart composition
+
+Two primary chart surfaces are complete in `aapaetsch-charts-market`: the low-level `MarketChart` and the composed `TechnicalChartView` (added 2026-09-10). The composed view has 12 deterministic stories; the package has 8 built-in indicator definitions. These package surfaces are tracked separately from the UI-primitives summary above.

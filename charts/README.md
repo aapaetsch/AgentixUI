@@ -11,8 +11,13 @@ UI bundle.
 npm install aapaetsch-charts aapaetsch-ui-kit recharts
 ```
 
-Import `aapaetsch-ui-kit/globals.css` once in the host application, then use a
-typed chart component:
+Import the UI kit's theme and the chart package's compiled utilities once in
+the host application, then use a typed chart component:
+
+```tsx
+import "aapaetsch-ui-kit/globals.css";
+import "aapaetsch-charts/styles.css";
+```
 
 ```tsx
 import { LineChart } from "aapaetsch-charts";

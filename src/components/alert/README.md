@@ -81,7 +81,7 @@ The Alert component comes with five semantic variants:
 ### Custom Icon
 
 ```tsx
-import { Terminal } from "lucide-react";
+import { TerminalIcon as Terminal } from "aapaetsch-icons";
 
 <Alert icon={<Terminal className="size-4" />}>
   <AlertTitle>Terminal Command</AlertTitle>

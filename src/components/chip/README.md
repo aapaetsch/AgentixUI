@@ -243,4 +243,4 @@ function ProductFilters() {
 ## Dependencies
 
 - `@radix-ui/react-slot` - Polymorphic component support
-- `lucide-react` - X and Check icons
+- `aapaetsch-icons` - X and Check icons

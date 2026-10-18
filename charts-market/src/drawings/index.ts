@@ -11,6 +11,14 @@ export interface DrawingChangeMetadata {
   transactionId?: string;
 }
 
+/** Runtime command mailbox; IDs make retries/controlled rerenders idempotent. */
+export interface MarketDrawingCommandRequest { id: string | number; command: MarketDrawingCommand }
+export type MarketDrawingCommand =
+  | {type:"undo"|"redo"|"delete"|"cancel"}
+  | {type:"select";ids:string[]}
+  | {type:"style";parameters:SerializableParameters};
+export interface MarketDrawingHistorySnapshot {canUndo:boolean;canRedo:boolean;selectedIds:string[];drawingCount:number}
+
 export type DrawingCommand =
   | { type: "add"; drawing: DrawingState }
   | { type: "update"; id: string; changes: Partial<Omit<DrawingState, "id" | "type">> }
@@ -44,7 +52,8 @@ export function stripTransientDrawingState(drawings: readonly DrawingState[]): D
 }
 
 export function drawingDocumentsEqual(first: readonly DrawingState[], second: readonly DrawingState[]): boolean {
-  return JSON.stringify(stripTransientDrawingState(first)) === JSON.stringify(stripTransientDrawingState(second));
+  const canonical=(value:unknown):unknown=>Array.isArray(value)?value.map(canonical):value&&typeof value==="object"?Object.fromEntries(Object.entries(value).sort(([a],[b])=>a.localeCompare(b)).map(([key,item])=>[key,canonical(item)])):value;
+  return JSON.stringify(canonical(stripTransientDrawingState(first))) === JSON.stringify(canonical(stripTransientDrawingState(second)));
 }
 
 function commit(history: DrawingHistory, present: DrawingState[], transactionId?: string): DrawingHistory {

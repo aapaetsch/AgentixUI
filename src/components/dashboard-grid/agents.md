@@ -1,0 +1,6 @@
+# DashboardGrid
+
+- **Props:** Controlled canonical item IDs/widths/heights, editing/disabled, arbitrary renderItem, getItemLabel, onItemsChange and onAnnouncement. Ref executes shared commands or cancels a transient gesture.
+- **Dependencies:** React, installed Button/Popover primitives, AgentixUI and cn. No data, persistence or drag library.
+- **Styling Decisions:** No read-mode frame; exact four-column packing and 12 CSS-pixel gutters. Tokens style edit overlays. Handles have a 44 CSS-pixel floor; only move/resize handles use touch-action:none. Dynamic inline styles are geometry only.
+- **Maintenance Notes:** Never insert a wrapper per row (would remount children when rows change). Keep keyed items as siblings and content behind the measured memo boundary. Width projection must not emit/persist changes. All commits pass strict pure commands, which strip opaque product fields. Read mode must not install layout pointer listeners. Capture only handles; cancel on external geometry/mode/disabled/container/orientation changes, lost capture, Escape and unmount. Stop all frames/listeners/capture. No global provider/storage/financial work. DashboardGrid is client-only; do not bundle it into the server-safe barrel.

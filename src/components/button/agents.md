@@ -150,7 +150,7 @@ interface ConnectedButtonGroupItemProps {
 ## Dependencies
 - `@radix-ui/react-slot` - Polymorphic component (Button only)
 - `class-variance-authority` - Variant management
-- `lucide-react` - Icons (SplitButton chevron, stories)
+- `aapaetsch-icons` - Icons (SplitButton chevron, stories)
 - `../../lib/utils` - `cn()` utility
 
 ## Styling Decisions

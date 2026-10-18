@@ -4,13 +4,13 @@ import * as React from "react";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
-  X,
-  CheckCircle2,
-  AlertTriangle,
-  XCircle,
-  Info,
-  type LucideIcon,
-} from "lucide-react";
+  CloseIcon as X,
+  CheckCircleIcon as CheckCircle2,
+  WarningTriangleIcon as AlertTriangle,
+  ErrorCircleIcon as XCircle,
+  InfoCircleIcon as Info,
+  type IconComponent,
+} from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 import { Button } from "../button";
@@ -277,7 +277,7 @@ const ToastContext = React.createContext<ToastStore | null>(null);
 /**
  * Default icons for each variant
  */
-const variantIcons: Record<ToastVariant, LucideIcon> = {
+const variantIcons: Record<ToastVariant, IconComponent> = {
   default: Info,
   success: CheckCircle2,
   warning: AlertTriangle,

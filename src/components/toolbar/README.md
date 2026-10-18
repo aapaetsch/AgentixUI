@@ -75,7 +75,7 @@ interface ToolbarButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 - `@radix-ui/react-toolbar`
 - `class-variance-authority`, `cn()`
 - Existing `Tooltip` and Phase 1 `ToggleGroup` from the kit
-- `lucide-react` icons in stories
+- `aapaetsch-icons` icons in stories
 
 ## Variants
 

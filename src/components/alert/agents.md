@@ -21,7 +21,7 @@ Alert - Non-modal notification element for inline informational messages
 
 ## Dependencies
 - `class-variance-authority` - CVA for variant management
-- `lucide-react` - Icons (AlertCircle, AlertTriangle, CheckCircle2, Info, X)
+- `aapaetsch-icons` - Icons (AlertCircle, AlertTriangle, CheckCircle2, Info, X)
 
 ## Styling Decisions
 1. **CSS Grid Layout**: Uses CSS grid with `has-[>svg]` selector for automatic icon layout handling

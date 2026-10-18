@@ -190,7 +190,7 @@ interface FABMenuProps {
 ## Dependencies
 
 - `class-variance-authority` - Variant management
-- `lucide-react` - Icons (used in stories)
+- `aapaetsch-icons` - Icons (used in stories)
 - `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License

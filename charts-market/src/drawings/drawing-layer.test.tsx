@@ -29,6 +29,12 @@ const trend = (id: string, offset = 0, locked = false) => ({
 });
 
 describe("DrawingLayer", () => {
+  it("retains endpoint marker footprints when gaps reach both plot boundaries", () => {
+    const api={...engine,coordinateForTime:(time:unknown)=>Number(time),getSnapshot:()=>({visibleRange:{from:0,to:200},panes:[{id:"price",left:0,top:0,width:200,height:200}],scales:{},crosshair:null})} as MarketChartEngine;
+    const view=render(<DrawingLayer engine={api} clipToPricePane discontinuities={[{from:0,to:50},{from:100,to:200}]} drawings={[]} onDrawingsChange={()=>{}}/>);
+    const clips=[...view.container.querySelectorAll("clipPath rect")].map(rect=>[Number(rect.getAttribute("x")),Number(rect.getAttribute("width"))]);
+    expect(clips).toEqual([[0,3],[47,56],[197,3]]);
+  });
   beforeEach(() => {
     vi.restoreAllMocks();
     vi.spyOn(SVGElement.prototype, "getBoundingClientRect").mockReturnValue({ x: 0, y: 0, left: 0, top: 0, right: 200, bottom: 200, width: 200, height: 200, toJSON: () => ({}) });
@@ -51,6 +57,30 @@ describe("DrawingLayer", () => {
     );
   });
 
+  it("retains new keyboard geometry through the drawing-selected fallback", () => {
+    const onDrawingsChange = vi.fn();
+    const { rerender } = render(<DrawingLayer aria-label="Drawings" engine={engine} drawings={[]} activeTool={horizontalLineDrawing} onDrawingsChange={onDrawingsChange} />);
+    fireEvent.keyDown(screen.getByLabelText("Drawings"), { key: "Enter" });
+    const creation = onDrawingsChange.mock.calls.find(([, metadata]) => metadata.type === "create");
+    expect(creation).toBeDefined();
+    const created = creation![0][0];
+    expect(onDrawingsChange).toHaveBeenLastCalledWith(
+      [{ ...created, selected: true }],
+      expect.objectContaining({ type: "selection", drawingIds: [created.id] }),
+    );
+    rerender(<DrawingLayer aria-label="Drawings" engine={engine} drawings={[{ ...created, selected: true }]} onDrawingsChange={onDrawingsChange} />);
+    fireEvent.keyDown(screen.getByLabelText("Drawings"), { key: "Delete" });
+    expect(onDrawingsChange).toHaveBeenLastCalledWith([], expect.objectContaining({ type: "selection", drawingIds: [] }));
+  });
+  it.each(["Delete drawing", "Hide drawing"])("preserves the direct-layer %s mutation while clearing selection", action => {
+    const onDrawingsChange = vi.fn(), drawing = { ...trend("selected"), selected: true };
+    render(<DrawingLayer aria-label="Drawings" engine={engine} drawings={[drawing]} onDrawingsChange={onDrawingsChange} />);
+    fireEvent.click(screen.getByRole("button", { name: action }));
+    expect(onDrawingsChange).toHaveBeenLastCalledWith(
+      action === "Delete drawing" ? [] : [{ ...drawing, visible: false, selected: undefined }],
+      expect.objectContaining({ type: "selection", drawingIds: [] }),
+    );
+  });
   it("does not emit drawing changes while merely moving over the chart", () => {
     const onDrawingsChange = vi.fn();
     render(<DrawingLayer aria-label="Drawings" engine={engine} drawings={[]} activeTool={trendLineDrawing} onDrawingsChange={onDrawingsChange} />);
@@ -155,7 +185,8 @@ describe("DrawingLayer", () => {
     rerender(<DrawingLayer aria-label="Drawings" engine={engine} drawings={[first, locked]} tools={[trendLineDrawing]} selectedDrawingIds={[locked.id]} onSelectedDrawingIdsChange={onSelection} onDrawingsChange={onDrawingsChange} />);
     fireEvent.keyDown(layer, { key: "ArrowUp" }); expect(onDrawingsChange).not.toHaveBeenCalled();
     rerender(<DrawingLayer aria-label="Drawings" engine={engine} drawings={[]} activeTool={horizontalLineDrawing} onDrawingsChange={onDrawingsChange} />);
-    fireEvent.keyDown(layer, { key: "Enter" }); expect(onDrawingsChange).toHaveBeenLastCalledWith(expect.any(Array), expect.objectContaining({ type: "create" }));
+    fireEvent.keyDown(layer, { key: "Enter" }); expect(onDrawingsChange).toHaveBeenCalledWith(expect.any(Array), expect.objectContaining({ type: "create" }));
+    expect(onDrawingsChange).toHaveBeenLastCalledWith([expect.objectContaining({ type: "horizontal-line", selected: true })], expect.objectContaining({ type: "selection" }));
   });
 
   it("creates fixed multi-click tools only after their final point", () => {

@@ -1,27 +1,27 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
-  Grid,
-  List,
-  Bold,
-  Italic,
-  Underline,
-  Plus,
-  Settings,
-  ArrowRight,
-  Copy,
-  Clipboard,
-  MoreHorizontal,
-  AlignLeft,
-  AlignCenter,
-  AlignRight,
-  AlignJustify,
-  Heart,
-  HeartOff,
-  Bookmark,
-  BookmarkCheck,
-  Star,
-} from "lucide-react";
+  LayoutGridIcon as Grid,
+  ListIcon as List,
+  BoldIcon as Bold,
+  ItalicIcon as Italic,
+  UnderlineIcon as Underline,
+  PlusIcon as Plus,
+  SettingsIcon as Settings,
+  ArrowRightIcon as ArrowRight,
+  DuplicateIcon as Copy,
+  ClipboardIcon as Clipboard,
+  MoreHorizontalIcon as MoreHorizontal,
+  AlignLeftIcon as AlignLeft,
+  AlignCenterIcon as AlignCenter,
+  AlignRightIcon as AlignRight,
+  AlignJustifyIcon as AlignJustify,
+  HeartIcon as Heart,
+  HeartOffIcon as HeartOff,
+  BookmarkIcon as Bookmark,
+  BookmarkCheckIcon as BookmarkCheck,
+  StarIcon as Star,
+} from "aapaetsch-icons";
 import { Button } from "./index";
 import { IconButton } from "./icon-button";
 import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText } from "./button-group";

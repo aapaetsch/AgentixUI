@@ -1,5 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Copy, Download, MoreHorizontal, Settings, Trash2 } from "lucide-react";
+import {
+  DuplicateIcon as Copy,
+  DownloadIcon as Download,
+  MoreHorizontalIcon as MoreHorizontal,
+  SettingsIcon as Settings,
+  TrashIcon as Trash2,
+} from "aapaetsch-icons";
 
 import { Button } from "../button";
 import {

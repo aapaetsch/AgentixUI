@@ -347,7 +347,7 @@ Labels on Previous/Next buttons are hidden on mobile by default (can be enabled 
 
 ## Dependencies
 
-- `lucide-react` - Icons (ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal)
+- `aapaetsch-icons` - Icons (ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal)
 - `class-variance-authority` - Variant management
 - `aapaetsch-ui-kit/button` - Button styles
 - `aapaetsch-ui-kit/select` - Page size selector

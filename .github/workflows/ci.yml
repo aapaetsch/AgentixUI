@@ -36,8 +36,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build icon dependency for source checks
+        run: npm run build:icons
+
       - name: Lint
         run: npm run lint
+
+      - name: Verify generated icons and migration
+        run: npm run icons:check
 
       - name: Typecheck
         run: npm run typecheck
@@ -59,3 +65,15 @@ jobs:
           test -f dist/finance.js
           test -f dist/finance.mjs
           test -f dist/templates/investment-ops/index.js
+
+      - name: Verify clean React 18 chart consumer
+        run: npm run verify:chart-consumer
+
+      - name: Verify packed icon consumers
+        run: npm run verify:icons
+
+      - name: Verify Next.js icon consumer
+        run: npm run verify:icons-next
+
+      - name: Build Storybook
+        run: npm run build-storybook

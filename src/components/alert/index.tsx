@@ -3,13 +3,13 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
-  X,
-  AlertCircle,
-  AlertTriangle,
-  CheckCircle2,
-  Info,
-  type LucideIcon,
-} from "lucide-react";
+  CloseIcon as X,
+  WarningCircleIcon as AlertCircle,
+  WarningTriangleIcon as AlertTriangle,
+  CheckCircleIcon as CheckCircle2,
+  InfoCircleIcon as Info,
+  type IconComponent,
+} from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 
@@ -157,7 +157,7 @@ export interface AlertActionProps
 // Default Icons Map
 // ============================================================================
 
-const variantIcons: Record<AlertVariant, LucideIcon> = {
+const variantIcons: Record<AlertVariant, IconComponent> = {
   default: Info,
   destructive: AlertCircle,
   success: CheckCircle2,

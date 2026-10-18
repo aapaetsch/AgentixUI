@@ -2,7 +2,20 @@
 
 import * as React from "react";
 import { Button, ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuTrigger, cn } from "aapaetsch-ui-kit";
-import { ArrowDown, ArrowUp, Copy, Eye, EyeOff, Group, Layers, Lock, Pencil, Trash2, Ungroup, Unlock } from "lucide-react";
+import {
+  ArrowDownIcon as ArrowDown,
+  ArrowUpIcon as ArrowUp,
+  DuplicateIcon as Copy,
+  EyeIcon as Eye,
+  EyeOffIcon as EyeOff,
+  GroupIcon as Group,
+  LayersIcon as Layers,
+  LockIcon as Lock,
+  EditIcon as Pencil,
+  TrashIcon as Trash2,
+  UngroupIcon as Ungroup,
+  UnlockIcon as Unlock,
+} from "aapaetsch-icons";
 import type { DrawingState } from "../core";
 
 export interface DrawingObjectTreeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {

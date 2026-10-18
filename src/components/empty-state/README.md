@@ -27,7 +27,7 @@ import { EmptyState } from "aapaetsch-ui-kit";
 
 ```tsx
 import { EmptyState, Button } from "aapaetsch-ui-kit";
-import { Search } from "lucide-react";
+import { SearchIcon as Search } from "aapaetsch-icons";
 
 export function NoResults() {
   return (
@@ -58,7 +58,7 @@ export function NoResults() {
 
 | Prop          | Type                       | Default          | Description                                                |
 | ------------- | -------------------------- | ---------------- | ---------------------------------------------------------- |
-| `icon`        | `React.ReactNode`          | lucide `Inbox`   | Icon slot. Pass `null`/`false` to hide.                    |
+| `icon`        | `React.ReactNode`          | original AgentixUI `InboxIcon`   | Icon slot. Pass `null`/`false` to hide.                    |
 | `title`       | `React.ReactNode`          | `"Nothing here"` | Title under the icon.                                      |
 | `description` | `React.ReactNode`          | —                | Secondary copy under the title. Omitted when not provided. |
 | `action`      | `React.ReactNode`          | —                | CTA rendered below the description (typically a `Button`). |

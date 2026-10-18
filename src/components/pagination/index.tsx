@@ -3,12 +3,12 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-  MoreHorizontal,
-} from "lucide-react";
+  ChevronLeftIcon as ChevronLeft,
+  ChevronRightIcon as ChevronRight,
+  ChevronsLeftIcon as ChevronsLeft,
+  ChevronsRightIcon as ChevronsRight,
+  MoreHorizontalIcon as MoreHorizontal,
+} from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 import {

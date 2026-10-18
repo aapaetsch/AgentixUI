@@ -143,7 +143,7 @@ function CurrencyInput() {
 ### Custom Icons
 
 ```tsx
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUpIcon as ChevronUp, ChevronDownIcon as ChevronDown } from "aapaetsch-icons";
 
 function VolumeControl() {
   const [volume, setVolume] = useState(50);
@@ -318,7 +318,7 @@ Override styles using the `containerClassName`, `inputClassName`, and `buttonCla
 
 ## Dependencies
 
-- `lucide-react` - Icon set
+- `aapaetsch-icons` - Icon set
 - `class-variance-authority` - Variant management
 - `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 

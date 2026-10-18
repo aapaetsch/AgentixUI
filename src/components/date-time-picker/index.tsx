@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { CalendarIcon, Clock, X } from "lucide-react";
+import { CalendarIcon, ClockIcon as Clock, CloseIcon as X } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 import { Button } from "../button";

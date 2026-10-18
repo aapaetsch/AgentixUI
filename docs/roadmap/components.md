@@ -17,7 +17,7 @@
 | **Typography** | ✅ Complete | `Typography`, `typographyVariants`, `NumericText`, `numericTextVariants` | Headings/prose with MD3 type scale; `NumericText` is the finance-grade colorized-number renderer |
 | **Label** | ✅ Complete | `Label` | Plain `<label>` per shadcn (no Radix Label dependency) |
 | **Field** | ✅ Complete | `Field`, `FieldLabel`, `FieldDescription`, `FieldError`, `FieldContent` | Flat-composition form wrapper (label + description + error + content). v1 is context-free; consumer wires `aria-invalid`/`aria-describedby` |
-| **TrendIndicator** | ✅ Complete | `TrendIndicator`, `trendIndicatorVariants` | Signed value + up/down/minus arrow (`lucide-react`) + `text-positive`/`text-negative`/`text-muted-foreground` colorization via existing `pnlColorClass` |
+| **TrendIndicator** | ✅ Complete | `TrendIndicator`, `trendIndicatorVariants` | Signed value + up/down/minus arrow (`aapaetsch-icons`) + `text-positive`/`text-negative`/`text-muted-foreground` colorization via existing `pnlColorClass` |
 | **Kbd** | ✅ Complete | `Kbd` | Inline `<kbd>` key indicator for shortcut documentation |
 | **VisuallyHidden** | ✅ Complete | `VisuallyHidden` | sr-only a11y primitive with `focus:not-sr-only` reveal; polymorphic `as` prop |
 | **Badge** | ✅ Complete | `Badge`, `BadgeAnchor`, `AnimatedBadge` | Notification badges |
@@ -61,7 +61,7 @@
 | **SegmentedProgress** | ✅ Complete | `SegmentedProgress`, `segmentedProgressVariants`, `Segment` type | Multi-segment range bar (siblings of `LinearProgress`); horizontal/vertical, optional value labels, `--chart-1`…`--chart-5` palette fallback |
 | **Sparkline** | ✅ Complete | `Sparkline`, `sparklineContainerVariants`; variants line/area/bar | Dependency-free inline SVG micro-chart; drop-in for `StatTile.sparklineRenderSlot`. Closes the `aapaetsch-charts` boundary case (`docs/chart-library-strategy.md`) |
 | **MiniBars** | ✅ Complete | `MiniBars`, `miniBarsContainerVariants` | One-row SVG divergent histogram; sibling of `Sparkline` |
-| **EmptyState** | ✅ Complete | `EmptyState`, `emptyStateIconVariants`, `emptyStateTitleVariants` | Zero/empty-state composer (muted icon + title + description + CTA `action` slot). Default `lucide-react` `Inbox` icon |
+| **EmptyState** | ✅ Complete | `EmptyState`, `emptyStateIconVariants`, `emptyStateTitleVariants` | Zero/empty-state composer (muted icon + title + description + CTA `action` slot). Default `aapaetsch-icons` `InboxIcon` icon |
 
 ### Internal/Utility
 

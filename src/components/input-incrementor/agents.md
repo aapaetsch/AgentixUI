@@ -42,7 +42,7 @@ and decimal precision.
 
 ## Dependencies
 
-- `lucide-react` - Plus/Minus icons
+- `aapaetsch-icons` - Plus/Minus icons
 - `class-variance-authority` - Variant management
 - `../../lib/utils` - `cn()` utility
 
@@ -147,7 +147,7 @@ const [value, setValue] = useState(50);
 
 ## Maintenance Notes
 
-- Button icons from lucide-react should match IconButton sizing
+- Button icons from aapaetsch-icons should match IconButton sizing
 - Keyboard handling in input prevents default browser spinbutton behavior
 - Format/parse functions should be inverses of each other
 - Step validation happens on blur, not on every keystroke

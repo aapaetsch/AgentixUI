@@ -16,7 +16,7 @@ A breadcrumb navigation component that helps users understand their location wit
 The Breadcrumb component requires the following dependencies:
 
 ```bash
-npm install @radix-ui/react-slot lucide-react
+npm install @radix-ui/react-slot aapaetsch-icons
 ```
 
 ## Usage
@@ -77,7 +77,7 @@ import Link from 'next/link';
 Set a separator for all items via the `Breadcrumb` component:
 
 ```tsx
-import { Slash, ArrowRight, Circle } from "lucide-react";
+import { SlashIcon as Slash, ArrowRightIcon as ArrowRight, CircleIcon as Circle } from "aapaetsch-icons";
 
 // Slash separator
 <Breadcrumb separator={<Slash className="h-4 w-4" />}>
@@ -176,7 +176,7 @@ import Link from 'next/link';
 #### With Custom Separator
 
 ```tsx
-import { Slash } from "lucide-react";
+import { SlashIcon as Slash } from "aapaetsch-icons";
 
 <ResponsiveBreadcrumb
   items={items}

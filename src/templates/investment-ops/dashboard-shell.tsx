@@ -5,7 +5,15 @@ import { Resizable, ResizablePanel, ResizableHandle } from "../../components/res
 import { PremiumNavItem as NavItem } from "../../components/navigation/items";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/tabs";
 import { ExtendedFAB } from "../../components/fab/extended-fab";
-import { Plus, Star, Briefcase, Filter, Newspaper, Bell, Settings } from "lucide-react";
+import {
+  PlusIcon as Plus,
+  StarIcon as Star,
+  BriefcaseIcon as Briefcase,
+  FilterIcon as Filter,
+  NewspaperIcon as Newspaper,
+  BellIcon as Bell,
+  SettingsIcon as Settings,
+} from "aapaetsch-icons";
 
 import { AccountSummary } from "./account-summary";
 import { Watchlist } from "./watchlist";

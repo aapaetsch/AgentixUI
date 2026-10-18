@@ -95,7 +95,7 @@ interface CommandItemProps {
 - `cmdk` — headless command menu primitive
 - `@radix-ui/react-dialog` (via existing `Dialog`)
 - Existing `ScrollArea`, `Spinner`, `Badge` from the kit
-- `lucide-react` for the search icon
+- `aapaetsch-icons` for the search icon
 - `class-variance-authority` and `cn()`
 
 ## Styling Decisions

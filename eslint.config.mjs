@@ -12,6 +12,13 @@ export default [
   {
     ignores: [
       "dist/**",
+      ".icon-validation/**",
+      ".chart-refinement-validation/**",
+      ".chart-supplied-validation/**",
+      ".dashboard-grid-validation/**",
+      "charts-market/.cache/**",
+      "icons/dist/**",
+      "icons/src/**/*.stories.tsx",
       "charts/dist/**",
       "charts-market/dist/**",
       "storybook-static/**",
@@ -20,13 +27,14 @@ export default [
       "charts/src/**/*.stories.tsx",
       "charts-market/src/**/*.stories.tsx",
       ".npm-cache/**",
+      "output/**",
       "coverage/**",
       "fixtures/**/.next/**",
     ],
   },
   js.configs.recommended,
   {
-    files: ["src/**/*.{ts,tsx}", "charts/src/**/*.{ts,tsx}", "charts-market/src/**/*.{ts,tsx}"],
+    files: ["src/**/*.{ts,tsx}", "icons/src/**/*.{ts,tsx}", "charts/src/**/*.{ts,tsx}", "charts-market/src/**/*.{ts,tsx}"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -42,6 +50,8 @@ export default [
         // browser runtime as a real global.
         process: "readonly",
         NodeJS: "readonly",
+        ResizeObserverCallback: "readonly",
+        FrameRequestCallback: "readonly",
       },
     },
     plugins: {
@@ -79,12 +89,16 @@ export default [
       "*.cjs",
       "*.ts",
       "*.mjs",
+      "scripts/**/*.cjs",
       "scripts/**/*.mjs",
+      "icons/scripts/**/*.mjs",
       "fixtures/**/*.mjs",
     ],
     languageOptions: {
       globals: {
         ...globals.node,
+        ...globals.browser,
+        axe: "readonly",
       },
     },
     rules: {

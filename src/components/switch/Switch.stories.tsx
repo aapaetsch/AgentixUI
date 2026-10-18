@@ -1,6 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { Check, X, Moon, Sun, Volume2, VolumeX } from "lucide-react";
+import {
+  CheckIcon as Check,
+  CloseIcon as X,
+  MoonIcon as Moon,
+  SunIcon as Sun,
+  VolumeIcon as Volume2,
+  VolumeOffIcon as VolumeX,
+} from "aapaetsch-icons";
 import { Switch } from "./index";
 
 /**

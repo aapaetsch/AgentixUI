@@ -1,6 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
-import { Heart, MoreVertical, Share2, Bookmark, Play, Star, MapPin, Clock, User } from "lucide-react";
+import {
+  HeartIcon as Heart,
+  MoreVerticalIcon as MoreVertical,
+  ShareIcon as Share2,
+  BookmarkIcon as Bookmark,
+  PlayIcon as Play,
+  StarIcon as Star,
+  MapPinIcon as MapPin,
+  ClockIcon as Clock,
+  UserIcon as User,
+} from "aapaetsch-icons";
 
 import {
   Card,

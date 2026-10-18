@@ -20,7 +20,7 @@ DropdownMenu
 ## Dependencies
 - `@radix-ui/react-dropdown-menu`
 - `class-variance-authority`
-- `lucide-react`
+- `aapaetsch-icons`
 - `src/lib/utils.ts`
 
 ## Styling Decisions

@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import {
-  Home,
-  Layout,
-  Bell,
-  Search,
-  Package,
-  ShoppingCart,
-  Users,
-  HelpCircle,
-} from "lucide-react";
+  HomeIcon as Home,
+  PanelsIcon as Layout,
+  BellIcon as Bell,
+  SearchIcon as Search,
+  PackageIcon as Package,
+  ShoppingCartIcon as ShoppingCart,
+  UsersIcon as Users,
+  HelpCircleIcon as HelpCircle,
+} from "aapaetsch-icons";
 
 import { PremiumNavGroup, PremiumNavItem } from "./index";
 import {

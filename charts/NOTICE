@@ -1,0 +1,8 @@
+aapaetsch-charts
+Copyright (c) Aidan Paetsch
+
+This package is licensed under the MIT License. See LICENSE.
+
+React, React DOM, and aapaetsch-ui-kit remain external peer dependencies.
+Recharts is installed as an external runtime dependency and is not bundled
+into the package output.

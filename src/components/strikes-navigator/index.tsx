@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUpIcon as ChevronUp, ChevronDownIcon as ChevronDown } from "aapaetsch-icons";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "../../lib/utils";

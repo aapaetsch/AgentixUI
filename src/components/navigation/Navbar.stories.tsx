@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import {
-  Home,
-  Inbox,
-  Calendar,
-  Search,
-  Settings,
-  Users,
-  BarChart3,
-  Bell,
-  LogOut,
-  ShoppingCart,
-  Layers,
-} from "lucide-react";
+  HomeIcon as Home,
+  InboxIcon as Inbox,
+  CalendarIcon as Calendar,
+  SearchIcon as Search,
+  SettingsIcon as Settings,
+  UsersIcon as Users,
+  ChartBarIcon as BarChart3,
+  BellIcon as Bell,
+  SignOutIcon as LogOut,
+  ShoppingCartIcon as ShoppingCart,
+  LayersIcon as Layers,
+} from "aapaetsch-icons";
 
 import {
   NavigationProvider,

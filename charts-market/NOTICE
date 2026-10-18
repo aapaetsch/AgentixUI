@@ -1,0 +1,8 @@
+aapaetsch-charts-market
+Copyright (c) Aidan Paetsch
+
+This package is licensed under the MIT License. See LICENSE.
+
+React, React DOM, and aapaetsch-ui-kit remain external peer dependencies.
+aapaetsch-icons is an external runtime dependency. The first-party Canvas 2D
+and SVG chart engine is distributed under the package's MIT License.

@@ -1,24 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import {
-  Home,
-  Inbox,
-  Search,
-  Settings,
-  Users,
-  BarChart3,
-  FileText,
-  Mail,
-  Bell,
-  HelpCircle,
-  LogOut,
-  Package,
-  ShoppingCart,
-  CreditCard,
-  User,
-  Layers,
-  Folder,
-} from "lucide-react";
+  HomeIcon as Home,
+  InboxIcon as Inbox,
+  SearchIcon as Search,
+  SettingsIcon as Settings,
+  UsersIcon as Users,
+  ChartBarIcon as BarChart3,
+  FileTextIcon as FileText,
+  MailIcon as Mail,
+  BellIcon as Bell,
+  HelpCircleIcon as HelpCircle,
+  SignOutIcon as LogOut,
+  PackageIcon as Package,
+  ShoppingCartIcon as ShoppingCart,
+  CreditCardIcon as CreditCard,
+  UserIcon as User,
+  LayersIcon as Layers,
+  FolderIcon as Folder,
+} from "aapaetsch-icons";
 
 import {
   NavigationProvider,

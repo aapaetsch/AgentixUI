@@ -21,7 +21,7 @@ import {
   ToastPosition,
   ToastActionConfig,
 } from "./primitives";
-import { Loader2, CheckCircle2, XCircle } from "lucide-react";
+import { LoaderIcon as Loader2, CheckCircleIcon as CheckCircle2, ErrorCircleIcon as XCircle } from "aapaetsch-icons";
 
 // ============================================================================
 // Premium Toast Types

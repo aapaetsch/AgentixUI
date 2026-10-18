@@ -4,7 +4,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
 import { useDrag } from "@use-gesture/react";
-import { X } from "lucide-react";
+import { CloseIcon as X } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 

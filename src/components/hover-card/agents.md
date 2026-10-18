@@ -41,7 +41,7 @@ Extends `IconButton` props. Used for close button in click mode.
 ## Dependencies
 - `@radix-ui/react-hover-card` - Core primitive
 - `class-variance-authority` - Variant system
-- `lucide-react` - X icon for close button
+- `aapaetsch-icons` - X icon for close button
 - Internal: `cn` utility, `IconButton` component
 
 ## Styling Decisions

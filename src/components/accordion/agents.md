@@ -73,7 +73,7 @@ interface AccordionContentProps {
 ## Dependencies
 - `@radix-ui/react-accordion` - Accessible accordion primitives
 - `class-variance-authority` - Variant management
-- `lucide-react` - Fallback ChevronDown icon
+- `aapaetsch-icons` - Fallback ChevronDown icon
 - `../../lib/utils` - `cn()` utility
 
 ## Styling Decisions
@@ -159,7 +159,7 @@ When `icon` prop is provided to `AccordionTrigger`:
 
 ### Chevron vs AnimatedChevron
 The AccordionTrigger uses a **rotating ChevronDown icon** by default, which is different from the standalone **AnimatedChevron** component:
-- **AccordionTrigger default**: Lucide ChevronDown icon that rotates 180°
+- **AccordionTrigger default**: AgentixUI ChevronDown icon that rotates 180°
 - **AnimatedChevron**: Standalone component with morphing SVG path animation
 
 If you want the morphing chevron animation in your accordion, you can pass the AnimatedChevron as a custom icon:

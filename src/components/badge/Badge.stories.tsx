@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Badge, BadgeAnchor, AnimatedBadge } from "./index";
 import {
-  Bell,
-  Mail,
-  ShoppingCart,
-  Heart,
-  MessageCircle,
-  Check,
-  AlertTriangle,
-  X,
-  Star,
-  Inbox,
-} from "lucide-react";
+  BellIcon as Bell,
+  MailIcon as Mail,
+  ShoppingCartIcon as ShoppingCart,
+  HeartIcon as Heart,
+  MessageCircleIcon as MessageCircle,
+  CheckIcon as Check,
+  WarningTriangleIcon as AlertTriangle,
+  CloseIcon as X,
+  StarIcon as Star,
+  InboxIcon as Inbox,
+} from "aapaetsch-icons";
 import { useState } from "react";
 
 const meta: Meta<typeof Badge> = {

@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import {
-  Trash2,
-  LogOut,
-  AlertTriangle,
-  CreditCard,
-  Mail,
-  Settings,
-  Shield,
-} from "lucide-react";
+  TrashIcon as Trash2,
+  SignOutIcon as LogOut,
+  WarningTriangleIcon as AlertTriangle,
+  CreditCardIcon as CreditCard,
+  MailIcon as Mail,
+  SettingsIcon as Settings,
+  ShieldIcon as Shield,
+} from "aapaetsch-icons";
 
 import {
   AlertDialog,

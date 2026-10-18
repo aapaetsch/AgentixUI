@@ -16,7 +16,7 @@ description → optional CTA action, all in muted styling.
 ```typescript
 interface EmptyStateProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
-  /** Icon slot. `null`/`false` hides it; `undefined` falls back to lucide `Inbox`. */
+  /** Icon slot. `null`/`false` hides it; `undefined` falls back to original AgentixUI `InboxIcon`. */
   icon?: React.ReactNode;
   /** Title under the icon. @default "Nothing here" */
   title?: React.ReactNode;
@@ -35,7 +35,7 @@ interface EmptyStateProps
 
 - `react` — `forwardRef`, `HTMLAttributes`.
 - `class-variance-authority` — size variants for icon + title.
-- `lucide-react` — default `Inbox` icon.
+- `aapaetsch-icons` — default `InboxIcon` icon.
 - `../../lib/utils` — `cn()`.
 
 ## Styling Decisions

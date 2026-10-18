@@ -13,7 +13,7 @@ You are maintaining a shared React UI library using **TypeScript, React, Tailwin
 ## Tech Stack & Constraints
 * **Core:** React 18+, TypeScript 5+.
 * **Styling:** Tailwind CSS (primary), `class-variance-authority` (CVA) for variants.
-* **Icons:** `lucide-react` (standard shadcn icon set).
+* **Icons:** `aapaetsch-icons` (original rounded-outline family; shadcn-compatible SVG components).
 * **Build:** `tsup` (Output: ESM & CJS).
 * **Docs:** Storybook.
 

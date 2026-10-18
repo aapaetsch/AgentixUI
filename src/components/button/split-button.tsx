@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDownIcon as ChevronDown } from "aapaetsch-icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 import { AnimatedChevron } from "../animated-chevron";

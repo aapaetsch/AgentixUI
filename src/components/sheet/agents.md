@@ -63,7 +63,7 @@ Extends the SheetContent API with gesture-aware features:
 - `@use-gesture/react` - Gesture handling (drag, swipe)
 - `@react-spring/web` - Physics-based spring animations
 - `class-variance-authority` - Variant management
-- `lucide-react` - Close icon
+- `aapaetsch-icons` - Close icon
 - `tailwind-merge` via `cn()` - Class merging
 
 ## Styling Decisions

@@ -54,7 +54,7 @@ import {
 </Select>
 
 // Custom icon
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDownIcon as ChevronsUpDown } from "aapaetsch-icons";
 
 <Select>
   <SelectTrigger icon={ChevronsUpDown} className="w-[180px]">
@@ -122,7 +122,7 @@ Wraps `@radix-ui/react-select` Root - accepts all Radix Select props:
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size variant matching Button component |
-| `icon` | `LucideIcon` | `ChevronDown` | Custom icon for the dropdown indicator (ignored when useAnimatedChevron is true) |
+| `icon` | `IconComponent` | `ChevronDownIcon` | Custom SVG component for the dropdown indicator (ignored when useAnimatedChevron is true) |
 | `hideIcon` | `boolean` | `false` | Hide the dropdown icon entirely |
 | `useAnimatedChevron` | `boolean` | `false` | Use the AnimatedChevron component with morphing animation instead of rotation |
 | `chevronAnimation` | `'smooth' \| 'bounce' \| 'sharp'` | `'smooth'` | Animation preset for AnimatedChevron (only used when useAnimatedChevron is true) |
@@ -157,7 +157,7 @@ Sizes match the Button component using rem units for scalability:
 
 ### Custom Icon Support
 
-The `icon` prop accepts any Lucide icon component, allowing customization of the dropdown indicator. Common alternatives:
+The `icon` prop accepts any AgentixUI icon component, allowing customization of the dropdown indicator. Common alternatives:
 - `ChevronsUpDown` - For combobox-style appearance
 - `ArrowDown` - Simple arrow indicator
 - Custom icons for branded designs
@@ -211,7 +211,7 @@ The Select component uses React Context internally to track open state and pass 
 
 - `@radix-ui/react-select` - Core primitive
 - `class-variance-authority` - Variant management
-- `lucide-react` - Icon library (ChevronDown, ChevronUp, Check)
+- `aapaetsch-icons` - Icon library (ChevronDown, ChevronUp, Check)
 - `aapaetsch-ui-kit/AnimatedChevron` - Optional morphing chevron animation (internal component)
 
 ## License

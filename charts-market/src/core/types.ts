@@ -6,6 +6,10 @@ export type MarketTime =
 
 export interface OhlcBar {
   time: MarketTime;
+  /** Producer-supplied exchange session date; independent of the UTC instant. */
+  sessionDate?: string;
+  /** Producer marks a still-forming bar. Rendered hollow/dashed and labeled in tables. */
+  incomplete?: boolean;
   open: number;
   high: number;
   low: number;
@@ -60,6 +64,7 @@ export interface MarketCrosshairSnapshot {
 }
 
 export interface MarketPaneGeometry {
+  left?: number;
   id: string;
   top: number;
   height: number;
@@ -74,6 +79,9 @@ export interface MarketScaleSnapshot {
 }
 
 export interface MarketChartSnapshot {
+  /** Exact runtime state for disposal/recreation; no serializer change. */
+  viewport?: import("./technical-chart-state").MarketViewportOptions;
+  scale?: import("./technical-chart-state").MarketScaleOptions;
   visibleRange: VisibleRange | null;
   panes: MarketPaneGeometry[];
   scales: Record<string, MarketScaleSnapshot>;

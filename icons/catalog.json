@@ -1,0 +1,5452 @@
+[
+  {
+    "name": "AlignCenterIcon",
+    "slug": "align-center",
+    "title": "Align Center",
+    "category": "Layout",
+    "keywords": [
+      "aligncenter",
+      "align",
+      "center"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "AlignCenter"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "AlignCenter",
+        "localName": "AlignCenter"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "AlignCenter",
+        "localName": "AlignCenter"
+      }
+    ]
+  },
+  {
+    "name": "AlignJustifyIcon",
+    "slug": "align-justify",
+    "title": "Align Justify",
+    "category": "Layout",
+    "keywords": [
+      "alignjustify",
+      "align",
+      "justify"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "AlignJustify"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "AlignJustify",
+        "localName": "AlignJustify"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "AlignJustify",
+        "localName": "AlignJustify"
+      }
+    ]
+  },
+  {
+    "name": "AlignLeftIcon",
+    "slug": "align-left",
+    "title": "Align Left",
+    "category": "Layout",
+    "keywords": [
+      "alignleft",
+      "align",
+      "left"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "AlignLeft"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "AlignLeft",
+        "localName": "AlignLeft"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "AlignLeft",
+        "localName": "AlignLeft"
+      }
+    ]
+  },
+  {
+    "name": "AlignRightIcon",
+    "slug": "align-right",
+    "title": "Align Right",
+    "category": "Layout",
+    "keywords": [
+      "alignright",
+      "align",
+      "right"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "AlignRight"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "AlignRight",
+        "localName": "AlignRight"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "AlignRight",
+        "localName": "AlignRight"
+      }
+    ]
+  },
+  {
+    "name": "AppleIcon",
+    "slug": "apple",
+    "title": "Apple",
+    "category": "Nature",
+    "keywords": [
+      "apple"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Apple"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/combobox/Combobox.stories.tsx",
+        "importedName": "Apple",
+        "localName": "Apple"
+      },
+      {
+        "file": "src/components/multi-select/MultiSelect.stories.tsx",
+        "importedName": "Apple",
+        "localName": "Apple"
+      }
+    ]
+  },
+  {
+    "name": "ArchiveIcon",
+    "slug": "archive",
+    "title": "Archive",
+    "category": "Files",
+    "keywords": [
+      "archive"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Archive"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Archive",
+        "localName": "Archive"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Archive",
+        "localName": "Archive"
+      }
+    ]
+  },
+  {
+    "name": "ArrowDownIcon",
+    "slug": "arrow-down",
+    "title": "Arrow Down",
+    "category": "Navigation",
+    "keywords": [
+      "arrowdown",
+      "arrow",
+      "down"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ArrowDown"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/data-table/data-table-column-header.tsx",
+        "importedName": "ArrowDown",
+        "localName": "ArrowDown"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "ArrowDown",
+        "localName": "ArrowDown"
+      },
+      {
+        "file": "src/components/trend-indicator/index.tsx",
+        "importedName": "ArrowDown",
+        "localName": "ArrowDown"
+      },
+      {
+        "file": "src/templates/investment-ops/stat-tile.tsx",
+        "importedName": "ArrowDown",
+        "localName": "ArrowDown"
+      },
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "ArrowDown",
+        "localName": "ArrowDown"
+      },
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "ArrowDown",
+        "localName": "ArrowDown"
+      }
+    ]
+  },
+  {
+    "name": "ArrowRightIcon",
+    "slug": "arrow-right",
+    "title": "Arrow Right",
+    "category": "Navigation",
+    "keywords": [
+      "arrowright",
+      "arrow",
+      "right"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ArrowRight"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/breadcrumb/Breadcrumb.stories.tsx",
+        "importedName": "ArrowRight",
+        "localName": "ArrowRight"
+      },
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "ArrowRight",
+        "localName": "ArrowRight"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "ArrowRight",
+        "localName": "ArrowRight"
+      }
+    ]
+  },
+  {
+    "name": "ArrowUpIcon",
+    "slug": "arrow-up",
+    "title": "Arrow Up",
+    "category": "Navigation",
+    "keywords": [
+      "arrowup",
+      "arrow",
+      "up"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ArrowUp"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/data-table/data-table-column-header.tsx",
+        "importedName": "ArrowUp",
+        "localName": "ArrowUp"
+      },
+      {
+        "file": "src/components/trend-indicator/index.tsx",
+        "importedName": "ArrowUp",
+        "localName": "ArrowUp"
+      },
+      {
+        "file": "src/templates/investment-ops/stat-tile.tsx",
+        "importedName": "ArrowUp",
+        "localName": "ArrowUp"
+      },
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "ArrowUp",
+        "localName": "ArrowUp"
+      },
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "ArrowUp",
+        "localName": "ArrowUp"
+      }
+    ]
+  },
+  {
+    "name": "ArrowUpDownIcon",
+    "slug": "arrow-up-down",
+    "title": "Arrow Up Down",
+    "category": "Navigation",
+    "keywords": [
+      "arrowupdown",
+      "arrow",
+      "up",
+      "down"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ArrowUpDown"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/data-table/data-table-column-header.tsx",
+        "importedName": "ArrowUpDown",
+        "localName": "ArrowUpDown"
+      }
+    ]
+  },
+  {
+    "name": "BananaIcon",
+    "slug": "banana",
+    "title": "Banana",
+    "category": "Nature",
+    "keywords": [
+      "banana"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Banana"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/combobox/Combobox.stories.tsx",
+        "importedName": "Banana",
+        "localName": "Banana"
+      },
+      {
+        "file": "src/components/multi-select/MultiSelect.stories.tsx",
+        "importedName": "Banana",
+        "localName": "Banana"
+      }
+    ]
+  },
+  {
+    "name": "BellIcon",
+    "slug": "bell",
+    "title": "Bell",
+    "category": "Feedback",
+    "keywords": [
+      "bell"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Bell"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/Accordion.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/components/badge/Badge.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavbar.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavdrawer.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavrail.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/components/toast/PremiumToast.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/components/toast/Toast.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/templates/investment-ops/dashboard-shell.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "src/templates/investment-ops/investment-ops-dashboard.stories.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Bell",
+        "localName": "Bell"
+      }
+    ]
+  },
+  {
+    "name": "BoldIcon",
+    "slug": "bold",
+    "title": "Bold",
+    "category": "Actions",
+    "keywords": [
+      "bold"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Bold"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Bold",
+        "localName": "Bold"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Bold",
+        "localName": "Bold"
+      }
+    ]
+  },
+  {
+    "name": "BookmarkIcon",
+    "slug": "bookmark",
+    "title": "Bookmark",
+    "category": "Files",
+    "keywords": [
+      "bookmark"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Bookmark"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Bookmark",
+        "localName": "Bookmark"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Bookmark",
+        "localName": "Bookmark"
+      },
+      {
+        "file": "src/components/card/Card.stories.tsx",
+        "importedName": "Bookmark",
+        "localName": "Bookmark"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Bookmark",
+        "localName": "Bookmark"
+      }
+    ]
+  },
+  {
+    "name": "BookmarkCheckIcon",
+    "slug": "bookmark-check",
+    "title": "Bookmark Check",
+    "category": "Files",
+    "keywords": [
+      "bookmarkcheck",
+      "bookmark",
+      "check"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "BookmarkCheck"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "BookmarkCheck",
+        "localName": "BookmarkCheck"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "BookmarkCheck",
+        "localName": "BookmarkCheck"
+      }
+    ]
+  },
+  {
+    "name": "BotIcon",
+    "slug": "bot",
+    "title": "Bot",
+    "category": "Identity",
+    "keywords": [
+      "bot"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Bot"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/avatar/Avatar.stories.tsx",
+        "importedName": "Bot",
+        "localName": "Bot"
+      }
+    ]
+  },
+  {
+    "name": "BriefcaseIcon",
+    "slug": "briefcase",
+    "title": "Briefcase",
+    "category": "Commerce",
+    "keywords": [
+      "briefcase"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Briefcase"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/templates/investment-ops/dashboard-shell.tsx",
+        "importedName": "Briefcase",
+        "localName": "Briefcase"
+      }
+    ]
+  },
+  {
+    "name": "BuildingIcon",
+    "slug": "building",
+    "title": "Building",
+    "category": "Identity",
+    "keywords": [
+      "building",
+      "building2"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Building",
+      "Building2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/avatar/Avatar.stories.tsx",
+        "importedName": "Building2",
+        "localName": "Building2"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Building",
+        "localName": "Building"
+      },
+      {
+        "file": "src/components/combobox/Combobox.stories.tsx",
+        "importedName": "Building2",
+        "localName": "Building2"
+      },
+      {
+        "file": "src/components/multi-select/MultiSelect.stories.tsx",
+        "importedName": "Building",
+        "localName": "Building"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Building",
+        "localName": "Building"
+      }
+    ]
+  },
+  {
+    "name": "CalendarIcon",
+    "slug": "calendar",
+    "title": "Calendar",
+    "category": "Actions",
+    "keywords": [
+      "calendar",
+      "calendaricon"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Calendar",
+      "CalendarIcon"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Calendar",
+        "localName": "Calendar"
+      },
+      {
+        "file": "src/components/date-picker/index.tsx",
+        "importedName": "CalendarIcon",
+        "localName": "CalendarIcon"
+      },
+      {
+        "file": "src/components/date-time-picker/index.tsx",
+        "importedName": "CalendarIcon",
+        "localName": "CalendarIcon"
+      },
+      {
+        "file": "src/components/navigation/Accessibility.stories.tsx",
+        "importedName": "Calendar",
+        "localName": "Calendar"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "Calendar",
+        "localName": "Calendar"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "Calendar",
+        "localName": "Calendar"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "Calendar",
+        "localName": "Calendar"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Calendar",
+        "localName": "Calendar"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "Calendar",
+        "localName": "Calendar"
+      }
+    ]
+  },
+  {
+    "name": "CalendarDaysIcon",
+    "slug": "calendar-days",
+    "title": "Calendar Days",
+    "category": "Actions",
+    "keywords": [
+      "calendardays",
+      "calendar",
+      "days"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "CalendarDays"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/hover-card/HoverCard.stories.tsx",
+        "importedName": "CalendarDays",
+        "localName": "CalendarDays"
+      }
+    ]
+  },
+  {
+    "name": "CalendarRangeIcon",
+    "slug": "calendar-range",
+    "title": "Calendar Range",
+    "category": "Actions",
+    "keywords": [
+      "calendarrange",
+      "calendar",
+      "range"
+    ],
+    "pilot": true,
+    "legacyNames": [],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": []
+  },
+  {
+    "name": "CameraIcon",
+    "slug": "camera",
+    "title": "Camera",
+    "category": "Media",
+    "keywords": [
+      "camera"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Camera"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Camera",
+        "localName": "Camera"
+      }
+    ]
+  },
+  {
+    "name": "CarIcon",
+    "slug": "car",
+    "title": "Car",
+    "category": "Commerce",
+    "keywords": [
+      "car"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Car"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Car",
+        "localName": "Car"
+      }
+    ]
+  },
+  {
+    "name": "ChartAreaIcon",
+    "slug": "chart-area",
+    "title": "Chart Area",
+    "category": "Charts",
+    "keywords": [
+      "chartarea",
+      "chart",
+      "area",
+      "areachart"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "AreaChart"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/toolbar/toolbar.stories.tsx",
+        "importedName": "AreaChart",
+        "localName": "AreaChart"
+      }
+    ]
+  },
+  {
+    "name": "ChartBarIcon",
+    "slug": "chart-bar",
+    "title": "Chart Bar",
+    "category": "Charts",
+    "keywords": [
+      "chartbar",
+      "chart",
+      "bar",
+      "barchart3"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "BarChart3"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "BarChart3",
+        "localName": "BarChart3"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "BarChart3",
+        "localName": "BarChart3"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "BarChart3",
+        "localName": "BarChart3"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "BarChart3",
+        "localName": "BarChart3"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavdrawer.stories.tsx",
+        "importedName": "BarChart3",
+        "localName": "BarChart3"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavrail.stories.tsx",
+        "importedName": "BarChart3",
+        "localName": "BarChart3"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "BarChart3",
+        "localName": "BarChart3"
+      }
+    ]
+  },
+  {
+    "name": "ChartCandlestickIcon",
+    "slug": "chart-candlestick",
+    "title": "Chart Candlestick",
+    "category": "Charts",
+    "keywords": [
+      "chartcandlestick",
+      "chart",
+      "candlestick",
+      "candlestickchart"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "CandlestickChart"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/toolbar/toolbar.stories.tsx",
+        "importedName": "CandlestickChart",
+        "localName": "CandlestickChart"
+      }
+    ]
+  },
+  {
+    "name": "ChartLineIcon",
+    "slug": "chart-line",
+    "title": "Chart Line",
+    "category": "Charts",
+    "keywords": [
+      "chartline",
+      "chart",
+      "line",
+      "linechart"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "LineChart"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/toolbar/toolbar.stories.tsx",
+        "importedName": "LineChart",
+        "localName": "LineChart"
+      }
+    ]
+  },
+  {
+    "name": "CheckIcon",
+    "slug": "check",
+    "title": "Check",
+    "category": "Feedback",
+    "keywords": [
+      "check"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Check"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/badge/Badge.stories.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/button/connected-button-group.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/checkbox/index.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/chip/index.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/combobox/index.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/context-menu/index.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/dropdown-menu/index.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/multi-select/index.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/select/index.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/stepper/index.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      },
+      {
+        "file": "src/components/switch/Switch.stories.tsx",
+        "importedName": "Check",
+        "localName": "Check"
+      }
+    ]
+  },
+  {
+    "name": "CheckCircleIcon",
+    "slug": "check-circle",
+    "title": "Check Circle",
+    "category": "Feedback",
+    "keywords": [
+      "checkcircle",
+      "check",
+      "circle",
+      "checkcircle2"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "CheckCircle",
+      "CheckCircle2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert/Alert.stories.tsx",
+        "importedName": "CheckCircle2",
+        "localName": "CheckCircle2"
+      },
+      {
+        "file": "src/components/alert/index.tsx",
+        "importedName": "CheckCircle2",
+        "localName": "CheckCircle2"
+      },
+      {
+        "file": "src/components/stepper/PremiumStepper.stories.tsx",
+        "importedName": "CheckCircle",
+        "localName": "CheckCircle"
+      },
+      {
+        "file": "src/components/toast/api.tsx",
+        "importedName": "CheckCircle2",
+        "localName": "CheckCircle2"
+      },
+      {
+        "file": "src/components/toast/PremiumToast.stories.tsx",
+        "importedName": "CheckCircle2",
+        "localName": "CheckCircle2"
+      },
+      {
+        "file": "src/components/toast/primitives.tsx",
+        "importedName": "CheckCircle2",
+        "localName": "CheckCircle2"
+      }
+    ]
+  },
+  {
+    "name": "CherryIcon",
+    "slug": "cherry",
+    "title": "Cherry",
+    "category": "Nature",
+    "keywords": [
+      "cherry"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Cherry"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/combobox/Combobox.stories.tsx",
+        "importedName": "Cherry",
+        "localName": "Cherry"
+      },
+      {
+        "file": "src/components/multi-select/MultiSelect.stories.tsx",
+        "importedName": "Cherry",
+        "localName": "Cherry"
+      }
+    ]
+  },
+  {
+    "name": "ChevronDownIcon",
+    "slug": "chevron-down",
+    "title": "Chevron Down",
+    "category": "Navigation",
+    "keywords": [
+      "chevrondown",
+      "chevron",
+      "down"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "ChevronDown"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/index.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/button/split-button.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/combobox/index.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/data-table/data-table-column-visibility.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/input-incrementor/InputIncrementor.stories.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/multi-select/index.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/resizable/index.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/select/index.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "src/components/strikes-navigator/index.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      },
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "ChevronDown",
+        "localName": "ChevronDown"
+      }
+    ]
+  },
+  {
+    "name": "ChevronLeftIcon",
+    "slug": "chevron-left",
+    "title": "Chevron Left",
+    "category": "Navigation",
+    "keywords": [
+      "chevronleft",
+      "chevron",
+      "left"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ChevronLeft"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/carousel/index.tsx",
+        "importedName": "ChevronLeft",
+        "localName": "ChevronLeft"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "ChevronLeft",
+        "localName": "ChevronLeft"
+      },
+      {
+        "file": "src/components/data-table/data-table-pagination.tsx",
+        "importedName": "ChevronLeft",
+        "localName": "ChevronLeft"
+      },
+      {
+        "file": "src/components/date-picker/calendar.tsx",
+        "importedName": "ChevronLeft",
+        "localName": "ChevronLeft"
+      },
+      {
+        "file": "src/components/date-picker/year-selector.tsx",
+        "importedName": "ChevronLeft",
+        "localName": "ChevronLeft"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "ChevronLeft",
+        "localName": "ChevronLeft"
+      },
+      {
+        "file": "src/components/pagination/index.tsx",
+        "importedName": "ChevronLeft",
+        "localName": "ChevronLeft"
+      }
+    ]
+  },
+  {
+    "name": "ChevronRightIcon",
+    "slug": "chevron-right",
+    "title": "Chevron Right",
+    "category": "Navigation",
+    "keywords": [
+      "chevronright",
+      "chevron",
+      "right"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "ChevronRight"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/Accordion.stories.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/breadcrumb/Breadcrumb.stories.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/breadcrumb/index.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/carousel/index.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRightIcon"
+      },
+      {
+        "file": "src/components/data-table/data-table-pagination.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/date-picker/calendar.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/date-picker/year-selector.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/dropdown-menu/index.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/navigation/items.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/navigation/layout.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/pagination/index.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/components/resizable/index.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      },
+      {
+        "file": "src/templates/investment-ops/watchlist.tsx",
+        "importedName": "ChevronRight",
+        "localName": "ChevronRight"
+      }
+    ]
+  },
+  {
+    "name": "ChevronUpIcon",
+    "slug": "chevron-up",
+    "title": "Chevron Up",
+    "category": "Navigation",
+    "keywords": [
+      "chevronup",
+      "chevron",
+      "up"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ChevronUp"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/input-incrementor/InputIncrementor.stories.tsx",
+        "importedName": "ChevronUp",
+        "localName": "ChevronUp"
+      },
+      {
+        "file": "src/components/select/index.tsx",
+        "importedName": "ChevronUp",
+        "localName": "ChevronUp"
+      },
+      {
+        "file": "src/components/strikes-navigator/index.tsx",
+        "importedName": "ChevronUp",
+        "localName": "ChevronUp"
+      }
+    ]
+  },
+  {
+    "name": "ChevronsLeftIcon",
+    "slug": "chevrons-left",
+    "title": "Chevrons Left",
+    "category": "Navigation",
+    "keywords": [
+      "chevronsleft",
+      "chevrons",
+      "left"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ChevronsLeft"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/data-table/data-table-pagination.tsx",
+        "importedName": "ChevronsLeft",
+        "localName": "ChevronsLeft"
+      },
+      {
+        "file": "src/components/pagination/index.tsx",
+        "importedName": "ChevronsLeft",
+        "localName": "ChevronsLeft"
+      }
+    ]
+  },
+  {
+    "name": "ChevronsRightIcon",
+    "slug": "chevrons-right",
+    "title": "Chevrons Right",
+    "category": "Navigation",
+    "keywords": [
+      "chevronsright",
+      "chevrons",
+      "right"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ChevronsRight"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/data-table/data-table-pagination.tsx",
+        "importedName": "ChevronsRight",
+        "localName": "ChevronsRight"
+      },
+      {
+        "file": "src/components/pagination/index.tsx",
+        "importedName": "ChevronsRight",
+        "localName": "ChevronsRight"
+      }
+    ]
+  },
+  {
+    "name": "ChevronsUpDownIcon",
+    "slug": "chevrons-up-down",
+    "title": "Chevrons Up Down",
+    "category": "Navigation",
+    "keywords": [
+      "chevronsupdown",
+      "chevrons",
+      "up",
+      "down"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ChevronsUpDown"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "ChevronsUpDown",
+        "localName": "ChevronsUpDown"
+      }
+    ]
+  },
+  {
+    "name": "CircleIcon",
+    "slug": "circle",
+    "title": "Circle",
+    "category": "Actions",
+    "keywords": [
+      "circle"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Circle"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/breadcrumb/Breadcrumb.stories.tsx",
+        "importedName": "Circle",
+        "localName": "Circle"
+      },
+      {
+        "file": "src/components/dropdown-menu/index.tsx",
+        "importedName": "Circle",
+        "localName": "Circle"
+      }
+    ]
+  },
+  {
+    "name": "CircleDashedIcon",
+    "slug": "circle-dashed",
+    "title": "Circle Dashed",
+    "category": "Actions",
+    "keywords": [
+      "circledashed",
+      "circle",
+      "dashed"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "CircleDashed"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "CircleDashed",
+        "localName": "CircleDashed"
+      }
+    ]
+  },
+  {
+    "name": "CitrusIcon",
+    "slug": "citrus",
+    "title": "Citrus",
+    "category": "Nature",
+    "keywords": [
+      "citrus"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Citrus"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/combobox/Combobox.stories.tsx",
+        "importedName": "Citrus",
+        "localName": "Citrus"
+      }
+    ]
+  },
+  {
+    "name": "ClearIcon",
+    "slug": "clear",
+    "title": "Clear",
+    "category": "Actions",
+    "keywords": [
+      "clear"
+    ],
+    "pilot": true,
+    "legacyNames": [],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": []
+  },
+  {
+    "name": "ClipboardIcon",
+    "slug": "clipboard",
+    "title": "Clipboard",
+    "category": "Files",
+    "keywords": [
+      "clipboard"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Clipboard"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Clipboard",
+        "localName": "Clipboard"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Clipboard",
+        "localName": "Clipboard"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Clipboard",
+        "localName": "Clipboard"
+      }
+    ]
+  },
+  {
+    "name": "ClockIcon",
+    "slug": "clock",
+    "title": "Clock",
+    "category": "Feedback",
+    "keywords": [
+      "clock"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Clock"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/card/Card.stories.tsx",
+        "importedName": "Clock",
+        "localName": "Clock"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Clock",
+        "localName": "Clock"
+      },
+      {
+        "file": "src/components/date-time-picker/index.tsx",
+        "importedName": "Clock",
+        "localName": "Clock"
+      },
+      {
+        "file": "src/components/time-picker/index.tsx",
+        "importedName": "Clock",
+        "localName": "Clock"
+      }
+    ]
+  },
+  {
+    "name": "CloseIcon",
+    "slug": "close",
+    "title": "Close",
+    "category": "Actions",
+    "keywords": [
+      "close",
+      "x"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "X"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert/index.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/badge/Badge.stories.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/chip/index.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/combobox/index.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/data-table/data-table-toolbar.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/date-picker/index.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/date-time-picker/index.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/dialog/index.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/fab/FAB.stories.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/hover-card/index.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/multi-select/index.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/navigation/layout.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/sheet/index.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/switch/Switch.stories.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "src/components/toast/primitives.tsx",
+        "importedName": "X",
+        "localName": "X"
+      },
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "X",
+        "localName": "X"
+      }
+    ]
+  },
+  {
+    "name": "CoffeeIcon",
+    "slug": "coffee",
+    "title": "Coffee",
+    "category": "Nature",
+    "keywords": [
+      "coffee"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Coffee"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Coffee",
+        "localName": "Coffee"
+      }
+    ]
+  },
+  {
+    "name": "ColumnsIcon",
+    "slug": "columns",
+    "title": "Columns",
+    "category": "Layout",
+    "keywords": [
+      "columns"
+    ],
+    "pilot": false,
+    "legacyNames": [],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": []
+  },
+  {
+    "name": "CreditCardIcon",
+    "slug": "credit-card",
+    "title": "Credit Card",
+    "category": "Commerce",
+    "keywords": [
+      "creditcard",
+      "credit",
+      "card"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "CreditCard"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/Accordion.stories.tsx",
+        "importedName": "CreditCard",
+        "localName": "CreditCard"
+      },
+      {
+        "file": "src/components/alert-dialog/AlertDialog.stories.tsx",
+        "importedName": "CreditCard",
+        "localName": "CreditCard"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "CreditCard",
+        "localName": "CreditCard"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "CreditCard",
+        "localName": "CreditCard"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "CreditCard",
+        "localName": "CreditCard"
+      },
+      {
+        "file": "src/components/stepper/PremiumStepper.stories.tsx",
+        "importedName": "CreditCard",
+        "localName": "CreditCard"
+      }
+    ]
+  },
+  {
+    "name": "CrosshairIcon",
+    "slug": "crosshair",
+    "title": "Crosshair",
+    "category": "Charts",
+    "keywords": [
+      "crosshair"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Crosshair"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "Crosshair",
+        "localName": "Crosshair"
+      }
+    ]
+  },
+  {
+    "name": "CursorIcon",
+    "slug": "cursor",
+    "title": "Cursor",
+    "category": "Charts",
+    "keywords": [
+      "cursor",
+      "mousepointer2"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "MousePointer2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "MousePointer2",
+        "localName": "MousePointer2"
+      }
+    ]
+  },
+  {
+    "name": "DotIcon",
+    "slug": "dot",
+    "title": "Dot",
+    "category": "Actions",
+    "keywords": [
+      "dot"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Dot"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/index.tsx",
+        "importedName": "Dot",
+        "localName": "Dot"
+      }
+    ]
+  },
+  {
+    "name": "DownloadIcon",
+    "slug": "download",
+    "title": "Download",
+    "category": "Files",
+    "keywords": [
+      "download"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Download"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Download",
+        "localName": "Download"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Download",
+        "localName": "Download"
+      },
+      {
+        "file": "src/components/dropdown-menu/DropdownMenu.stories.tsx",
+        "importedName": "Download",
+        "localName": "Download"
+      },
+      {
+        "file": "src/components/fab/FAB.stories.tsx",
+        "importedName": "Download",
+        "localName": "Download"
+      },
+      {
+        "file": "src/components/toast/PremiumToast.stories.tsx",
+        "importedName": "Download",
+        "localName": "Download"
+      },
+      {
+        "file": "src/components/toast/Toast.stories.tsx",
+        "importedName": "Download",
+        "localName": "Download"
+      },
+      {
+        "file": "src/components/toolbar/toolbar.stories.tsx",
+        "importedName": "Download",
+        "localName": "Download"
+      },
+      {
+        "file": "src/components/tooltip/Tooltip.stories.tsx",
+        "importedName": "Download",
+        "localName": "Download"
+      },
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "Download",
+        "localName": "Download"
+      }
+    ]
+  },
+  {
+    "name": "DuplicateIcon",
+    "slug": "duplicate",
+    "title": "Duplicate",
+    "category": "Actions",
+    "keywords": [
+      "duplicate",
+      "copy"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Copy"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Copy",
+        "localName": "Copy"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Copy",
+        "localName": "Copy"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Copy",
+        "localName": "Copy"
+      },
+      {
+        "file": "src/components/data-table/DataTable.stories.tsx",
+        "importedName": "Copy",
+        "localName": "Copy"
+      },
+      {
+        "file": "src/components/dropdown-menu/DropdownMenu.stories.tsx",
+        "importedName": "Copy",
+        "localName": "Copy"
+      },
+      {
+        "file": "src/components/tooltip/Tooltip.stories.tsx",
+        "importedName": "Copy",
+        "localName": "Copy"
+      },
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "Copy",
+        "localName": "Copy"
+      }
+    ]
+  },
+  {
+    "name": "DuplicatePlusIcon",
+    "slug": "duplicate-plus",
+    "title": "Duplicate Plus",
+    "category": "Actions",
+    "keywords": [
+      "duplicateplus",
+      "duplicate",
+      "plus",
+      "copyplus"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "CopyPlus"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/leg-builder-row/index.tsx",
+        "importedName": "CopyPlus",
+        "localName": "CopyPlus"
+      }
+    ]
+  },
+  {
+    "name": "EditIcon",
+    "slug": "edit",
+    "title": "Edit",
+    "category": "Actions",
+    "keywords": [
+      "edit",
+      "edit2",
+      "pencil"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Edit",
+      "Edit2",
+      "Pencil"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Edit",
+        "localName": "Edit"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Edit2",
+        "localName": "Edit2"
+      },
+      {
+        "file": "src/components/fab/FAB.stories.tsx",
+        "importedName": "Edit",
+        "localName": "Edit"
+      },
+      {
+        "file": "src/components/tooltip/Tooltip.stories.tsx",
+        "importedName": "Edit",
+        "localName": "Edit"
+      },
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "Pencil",
+        "localName": "Pencil"
+      }
+    ]
+  },
+  {
+    "name": "ErrorCircleIcon",
+    "slug": "error-circle",
+    "title": "Error Circle",
+    "category": "Feedback",
+    "keywords": [
+      "errorcircle",
+      "error",
+      "circle",
+      "xcircle"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "XCircle"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/toast/api.tsx",
+        "importedName": "XCircle",
+        "localName": "XCircle"
+      },
+      {
+        "file": "src/components/toast/PremiumToast.stories.tsx",
+        "importedName": "XCircle",
+        "localName": "XCircle"
+      },
+      {
+        "file": "src/components/toast/primitives.tsx",
+        "importedName": "XCircle",
+        "localName": "XCircle"
+      }
+    ]
+  },
+  {
+    "name": "ExitFullscreenIcon",
+    "slug": "exit-fullscreen",
+    "title": "Exit Fullscreen",
+    "category": "Navigation",
+    "keywords": [
+      "exitfullscreen",
+      "exit",
+      "fullscreen"
+    ],
+    "pilot": false,
+    "legacyNames": [],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": []
+  },
+  {
+    "name": "ExternalLinkIcon",
+    "slug": "external-link",
+    "title": "External Link",
+    "category": "Navigation",
+    "keywords": [
+      "externallink",
+      "external",
+      "link"
+    ],
+    "pilot": true,
+    "legacyNames": [],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": []
+  },
+  {
+    "name": "EyeIcon",
+    "slug": "eye",
+    "title": "Eye",
+    "category": "Actions",
+    "keywords": [
+      "eye"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Eye"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/data-table/DataTable.stories.tsx",
+        "importedName": "Eye",
+        "localName": "Eye"
+      },
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "Eye",
+        "localName": "Eye"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Eye",
+        "localName": "Eye"
+      },
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "Eye",
+        "localName": "Eye"
+      }
+    ]
+  },
+  {
+    "name": "EyeOffIcon",
+    "slug": "eye-off",
+    "title": "Eye Off",
+    "category": "Actions",
+    "keywords": [
+      "eyeoff",
+      "eye",
+      "off"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "EyeOff"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "EyeOff",
+        "localName": "EyeOff"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "EyeOff",
+        "localName": "EyeOff"
+      },
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "EyeOff",
+        "localName": "EyeOff"
+      }
+    ]
+  },
+  {
+    "name": "FileIcon",
+    "slug": "file",
+    "title": "File",
+    "category": "Files",
+    "keywords": [
+      "file"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "File"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "File",
+        "localName": "File"
+      },
+      {
+        "file": "src/components/fab/FAB.stories.tsx",
+        "importedName": "File",
+        "localName": "File"
+      }
+    ]
+  },
+  {
+    "name": "FileTextIcon",
+    "slug": "file-text",
+    "title": "File Text",
+    "category": "Files",
+    "keywords": [
+      "filetext",
+      "file",
+      "text"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "FileText"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/Accordion.stories.tsx",
+        "importedName": "FileText",
+        "localName": "FileText"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "FileText",
+        "localName": "FileText"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "FileText",
+        "localName": "FileText"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "FileText",
+        "localName": "FileText"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "FileText",
+        "localName": "FileText"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavdrawer.stories.tsx",
+        "importedName": "FileText",
+        "localName": "FileText"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavrail.stories.tsx",
+        "importedName": "FileText",
+        "localName": "FileText"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "FileText",
+        "localName": "FileText"
+      },
+      {
+        "file": "src/components/stepper/PremiumStepper.stories.tsx",
+        "importedName": "FileText",
+        "localName": "FileText"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "FileText",
+        "localName": "FileText"
+      }
+    ]
+  },
+  {
+    "name": "FilterIcon",
+    "slug": "filter",
+    "title": "Filter",
+    "category": "Actions",
+    "keywords": [
+      "filter"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Filter"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Filter",
+        "localName": "Filter"
+      },
+      {
+        "file": "src/components/toolbar/toolbar.stories.tsx",
+        "importedName": "Filter",
+        "localName": "Filter"
+      },
+      {
+        "file": "src/templates/investment-ops/dashboard-shell.tsx",
+        "importedName": "Filter",
+        "localName": "Filter"
+      }
+    ]
+  },
+  {
+    "name": "FlagIcon",
+    "slug": "flag",
+    "title": "Flag",
+    "category": "Actions",
+    "keywords": [
+      "flag"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Flag"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Flag",
+        "localName": "Flag"
+      }
+    ]
+  },
+  {
+    "name": "FolderIcon",
+    "slug": "folder",
+    "title": "Folder",
+    "category": "Files",
+    "keywords": [
+      "folder"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Folder"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Folder",
+        "localName": "Folder"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Folder",
+        "localName": "Folder"
+      },
+      {
+        "file": "src/components/fab/FAB.stories.tsx",
+        "importedName": "Folder",
+        "localName": "Folder"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "Folder",
+        "localName": "Folder"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "Folder",
+        "localName": "Folder"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "Folder",
+        "localName": "Folder"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Folder",
+        "localName": "Folder"
+      }
+    ]
+  },
+  {
+    "name": "FolderOpenIcon",
+    "slug": "folder-open",
+    "title": "Folder Open",
+    "category": "Files",
+    "keywords": [
+      "folderopen",
+      "folder",
+      "open"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "FolderOpen"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "FolderOpen",
+        "localName": "FolderOpen"
+      }
+    ]
+  },
+  {
+    "name": "FullscreenIcon",
+    "slug": "fullscreen",
+    "title": "Fullscreen",
+    "category": "Navigation",
+    "keywords": [
+      "fullscreen"
+    ],
+    "pilot": false,
+    "legacyNames": [],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": []
+  },
+  {
+    "name": "GlobeIcon",
+    "slug": "globe",
+    "title": "Globe",
+    "category": "Actions",
+    "keywords": [
+      "globe"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Globe"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/combobox/Combobox.stories.tsx",
+        "importedName": "Globe",
+        "localName": "Globe"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Globe",
+        "localName": "Globe"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Globe",
+        "localName": "Globe"
+      }
+    ]
+  },
+  {
+    "name": "GrapeIcon",
+    "slug": "grape",
+    "title": "Grape",
+    "category": "Nature",
+    "keywords": [
+      "grape"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Grape"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/combobox/Combobox.stories.tsx",
+        "importedName": "Grape",
+        "localName": "Grape"
+      },
+      {
+        "file": "src/components/multi-select/MultiSelect.stories.tsx",
+        "importedName": "Grape",
+        "localName": "Grape"
+      }
+    ]
+  },
+  {
+    "name": "GripIcon",
+    "slug": "grip",
+    "title": "Grip",
+    "category": "Layout",
+    "keywords": [
+      "grip"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Grip"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/dashboard-grid/index.tsx",
+        "importedName": "Grip",
+        "localName": "Grip"
+      }
+    ]
+  },
+  {
+    "name": "GripVerticalIcon",
+    "slug": "grip-vertical",
+    "title": "Grip Vertical",
+    "category": "Layout",
+    "keywords": [
+      "gripvertical",
+      "grip",
+      "vertical"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "GripVertical"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/resizable/index.tsx",
+        "importedName": "GripVertical",
+        "localName": "GripVertical"
+      }
+    ]
+  },
+  {
+    "name": "GroupIcon",
+    "slug": "group",
+    "title": "Group",
+    "category": "Actions",
+    "keywords": [
+      "group"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Group"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "Group",
+        "localName": "Group"
+      }
+    ]
+  },
+  {
+    "name": "HashIcon",
+    "slug": "hash",
+    "title": "Hash",
+    "category": "Actions",
+    "keywords": [
+      "hash"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Hash"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Hash",
+        "localName": "Hash"
+      }
+    ]
+  },
+  {
+    "name": "HeartIcon",
+    "slug": "heart",
+    "title": "Heart",
+    "category": "Actions",
+    "keywords": [
+      "heart"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Heart"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/badge/Badge.stories.tsx",
+        "importedName": "Heart",
+        "localName": "Heart"
+      },
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Heart",
+        "localName": "Heart"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Heart",
+        "localName": "Heart"
+      },
+      {
+        "file": "src/components/card/Card.stories.tsx",
+        "importedName": "Heart",
+        "localName": "Heart"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Heart",
+        "localName": "Heart"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Heart",
+        "localName": "Heart"
+      },
+      {
+        "file": "src/components/fab/FAB.stories.tsx",
+        "importedName": "Heart",
+        "localName": "Heart"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "Heart",
+        "localName": "Heart"
+      },
+      {
+        "file": "src/components/tooltip/Tooltip.stories.tsx",
+        "importedName": "Heart",
+        "localName": "Heart"
+      }
+    ]
+  },
+  {
+    "name": "HeartOffIcon",
+    "slug": "heart-off",
+    "title": "Heart Off",
+    "category": "Actions",
+    "keywords": [
+      "heartoff",
+      "heart",
+      "off"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "HeartOff"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "HeartOff",
+        "localName": "HeartOff"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "HeartOff",
+        "localName": "HeartOff"
+      }
+    ]
+  },
+  {
+    "name": "HelpCircleIcon",
+    "slug": "help-circle",
+    "title": "Help Circle",
+    "category": "Feedback",
+    "keywords": [
+      "helpcircle",
+      "help",
+      "circle"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "HelpCircle"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/Accordion.stories.tsx",
+        "importedName": "HelpCircle",
+        "localName": "HelpCircle"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "HelpCircle",
+        "localName": "HelpCircle"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "HelpCircle",
+        "localName": "HelpCircle"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "HelpCircle",
+        "localName": "HelpCircle"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavbar.stories.tsx",
+        "importedName": "HelpCircle",
+        "localName": "HelpCircle"
+      },
+      {
+        "file": "src/components/tooltip/Tooltip.stories.tsx",
+        "importedName": "HelpCircle",
+        "localName": "HelpCircle"
+      }
+    ]
+  },
+  {
+    "name": "HomeIcon",
+    "slug": "home",
+    "title": "Home",
+    "category": "Navigation",
+    "keywords": [
+      "home"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Home"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/navigation/Accessibility.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavbar.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavdrawer.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavrail.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "Home",
+        "localName": "Home"
+      }
+    ]
+  },
+  {
+    "name": "ImageIcon",
+    "slug": "image",
+    "title": "Image",
+    "category": "Media",
+    "keywords": [
+      "image"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Image"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Image",
+        "localName": "Image"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Image",
+        "localName": "Image"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "Image",
+        "localName": "Image"
+      }
+    ]
+  },
+  {
+    "name": "InboxIcon",
+    "slug": "inbox",
+    "title": "Inbox",
+    "category": "Files",
+    "keywords": [
+      "inbox"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Inbox"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/badge/Badge.stories.tsx",
+        "importedName": "Inbox",
+        "localName": "Inbox"
+      },
+      {
+        "file": "src/components/empty-state/index.tsx",
+        "importedName": "Inbox",
+        "localName": "Inbox"
+      },
+      {
+        "file": "src/components/navigation/Accessibility.stories.tsx",
+        "importedName": "Inbox",
+        "localName": "Inbox"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "Inbox",
+        "localName": "Inbox"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "Inbox",
+        "localName": "Inbox"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "Inbox",
+        "localName": "Inbox"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "Inbox",
+        "localName": "Inbox"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavdrawer.stories.tsx",
+        "importedName": "Inbox",
+        "localName": "Inbox"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavrail.stories.tsx",
+        "importedName": "Inbox",
+        "localName": "Inbox"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Inbox",
+        "localName": "Inbox"
+      }
+    ]
+  },
+  {
+    "name": "IndicatorsIcon",
+    "slug": "indicators",
+    "title": "Indicators",
+    "category": "Charts",
+    "keywords": [
+      "indicators",
+      "chartnoaxescombined"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ChartNoAxesCombined"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "ChartNoAxesCombined",
+        "localName": "ChartNoAxesCombined"
+      }
+    ]
+  },
+  {
+    "name": "InfoCircleIcon",
+    "slug": "info-circle",
+    "title": "Info Circle",
+    "category": "Feedback",
+    "keywords": [
+      "infocircle",
+      "info",
+      "circle"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Info"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert/Alert.stories.tsx",
+        "importedName": "Info",
+        "localName": "Info"
+      },
+      {
+        "file": "src/components/alert/index.tsx",
+        "importedName": "Info",
+        "localName": "Info"
+      },
+      {
+        "file": "src/components/hover-card/HoverCard.stories.tsx",
+        "importedName": "Info",
+        "localName": "Info"
+      },
+      {
+        "file": "src/components/toast/primitives.tsx",
+        "importedName": "Info",
+        "localName": "Info"
+      },
+      {
+        "file": "src/components/tooltip/Tooltip.stories.tsx",
+        "importedName": "Info",
+        "localName": "Info"
+      }
+    ]
+  },
+  {
+    "name": "ItalicIcon",
+    "slug": "italic",
+    "title": "Italic",
+    "category": "Actions",
+    "keywords": [
+      "italic"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Italic"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Italic",
+        "localName": "Italic"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Italic",
+        "localName": "Italic"
+      }
+    ]
+  },
+  {
+    "name": "KeepDrawingIcon",
+    "slug": "keep-drawing",
+    "title": "Keep Drawing",
+    "category": "Charts",
+    "keywords": [
+      "keepdrawing",
+      "keep",
+      "drawing",
+      "repeat2"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Repeat2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Repeat2",
+        "localName": "Repeat2"
+      }
+    ]
+  },
+  {
+    "name": "LayersIcon",
+    "slug": "layers",
+    "title": "Layers",
+    "category": "Actions",
+    "keywords": [
+      "layers"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Layers"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "Layers",
+        "localName": "Layers"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "Layers",
+        "localName": "Layers"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "Layers",
+        "localName": "Layers"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "Layers",
+        "localName": "Layers"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavdrawer.stories.tsx",
+        "importedName": "Layers",
+        "localName": "Layers"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavrail.stories.tsx",
+        "importedName": "Layers",
+        "localName": "Layers"
+      },
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "Layers",
+        "localName": "Layers"
+      }
+    ]
+  },
+  {
+    "name": "LayoutGridIcon",
+    "slug": "layout-grid",
+    "title": "Layout Grid",
+    "category": "Layout",
+    "keywords": [
+      "layoutgrid",
+      "layout",
+      "grid"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Grid"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Grid",
+        "localName": "Grid"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Grid",
+        "localName": "Grid"
+      }
+    ]
+  },
+  {
+    "name": "ListIcon",
+    "slug": "list",
+    "title": "List",
+    "category": "Layout",
+    "keywords": [
+      "list"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "List"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "List",
+        "localName": "List"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "List",
+        "localName": "List"
+      }
+    ]
+  },
+  {
+    "name": "LoaderIcon",
+    "slug": "loader",
+    "title": "Loader",
+    "category": "Feedback",
+    "keywords": [
+      "loader",
+      "loader2"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Loader2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/toast/api.tsx",
+        "importedName": "Loader2",
+        "localName": "Loader2"
+      },
+      {
+        "file": "src/components/toast/PremiumToast.stories.tsx",
+        "importedName": "Loader2",
+        "localName": "Loader2"
+      }
+    ]
+  },
+  {
+    "name": "LockIcon",
+    "slug": "lock",
+    "title": "Lock",
+    "category": "Identity",
+    "keywords": [
+      "lock"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Lock"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "Lock",
+        "localName": "Lock"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Lock",
+        "localName": "Lock"
+      },
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "Lock",
+        "localName": "Lock"
+      }
+    ]
+  },
+  {
+    "name": "MagnetIcon",
+    "slug": "magnet",
+    "title": "Magnet",
+    "category": "Charts",
+    "keywords": [
+      "magnet"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Magnet"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "Magnet",
+        "localName": "Magnet"
+      }
+    ]
+  },
+  {
+    "name": "MailIcon",
+    "slug": "mail",
+    "title": "Mail",
+    "category": "Communication",
+    "keywords": [
+      "mail"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Mail"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert-dialog/AlertDialog.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/badge/Badge.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/stepper/PremiumStepper.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/toast/PremiumToast.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      },
+      {
+        "file": "src/components/toast/Toast.stories.tsx",
+        "importedName": "Mail",
+        "localName": "Mail"
+      }
+    ]
+  },
+  {
+    "name": "MapPinIcon",
+    "slug": "map-pin",
+    "title": "Map Pin",
+    "category": "Actions",
+    "keywords": [
+      "mappin",
+      "map",
+      "pin"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "MapPin"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/card/Card.stories.tsx",
+        "importedName": "MapPin",
+        "localName": "MapPin"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "MapPin",
+        "localName": "MapPin"
+      },
+      {
+        "file": "src/components/hover-card/HoverCard.stories.tsx",
+        "importedName": "MapPin",
+        "localName": "MapPin"
+      },
+      {
+        "file": "src/components/multi-select/MultiSelect.stories.tsx",
+        "importedName": "MapPin",
+        "localName": "MapPin"
+      }
+    ]
+  },
+  {
+    "name": "MaximizeIcon",
+    "slug": "maximize",
+    "title": "Maximize",
+    "category": "Layout",
+    "keywords": [
+      "maximize",
+      "maximize2"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Maximize2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Maximize2",
+        "localName": "Maximize2"
+      },
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "Maximize2",
+        "localName": "Maximize2"
+      }
+    ]
+  },
+  {
+    "name": "MenuIcon",
+    "slug": "menu",
+    "title": "Menu",
+    "category": "Navigation",
+    "keywords": [
+      "menu"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Menu"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/navigation/layout.tsx",
+        "importedName": "Menu",
+        "localName": "Menu"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavdrawer.stories.tsx",
+        "importedName": "Menu",
+        "localName": "Menu"
+      }
+    ]
+  },
+  {
+    "name": "MessageCircleIcon",
+    "slug": "message-circle",
+    "title": "Message Circle",
+    "category": "Communication",
+    "keywords": [
+      "messagecircle",
+      "message",
+      "circle"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "MessageCircle"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/badge/Badge.stories.tsx",
+        "importedName": "MessageCircle",
+        "localName": "MessageCircle"
+      }
+    ]
+  },
+  {
+    "name": "MinusIcon",
+    "slug": "minus",
+    "title": "Minus",
+    "category": "Feedback",
+    "keywords": [
+      "minus"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Minus"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/checkbox/index.tsx",
+        "importedName": "Minus",
+        "localName": "Minus"
+      },
+      {
+        "file": "src/components/input-incrementor/index.tsx",
+        "importedName": "Minus",
+        "localName": "Minus"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Minus",
+        "localName": "Minus"
+      },
+      {
+        "file": "src/components/trend-indicator/index.tsx",
+        "importedName": "Minus",
+        "localName": "Minus"
+      }
+    ]
+  },
+  {
+    "name": "MonitorIcon",
+    "slug": "monitor",
+    "title": "Monitor",
+    "category": "Media",
+    "keywords": [
+      "monitor"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Monitor"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Monitor",
+        "localName": "Monitor"
+      }
+    ]
+  },
+  {
+    "name": "MoonIcon",
+    "slug": "moon",
+    "title": "Moon",
+    "category": "Nature",
+    "keywords": [
+      "moon"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Moon"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Moon",
+        "localName": "Moon"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Moon",
+        "localName": "Moon"
+      },
+      {
+        "file": "src/components/slider/PremiumSlider.stories.tsx",
+        "importedName": "Moon",
+        "localName": "Moon"
+      },
+      {
+        "file": "src/components/slider/Slider.stories.tsx",
+        "importedName": "Moon",
+        "localName": "Moon"
+      },
+      {
+        "file": "src/components/switch/Switch.stories.tsx",
+        "importedName": "Moon",
+        "localName": "Moon"
+      }
+    ]
+  },
+  {
+    "name": "MoreHorizontalIcon",
+    "slug": "more-horizontal",
+    "title": "More Horizontal",
+    "category": "Actions",
+    "keywords": [
+      "morehorizontal",
+      "more",
+      "horizontal"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "MoreHorizontal"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/breadcrumb/index.tsx",
+        "importedName": "MoreHorizontal",
+        "localName": "MoreHorizontal"
+      },
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "MoreHorizontal",
+        "localName": "MoreHorizontal"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "MoreHorizontal",
+        "localName": "MoreHorizontal"
+      },
+      {
+        "file": "src/components/data-table/data-table-row-actions.tsx",
+        "importedName": "MoreHorizontal",
+        "localName": "MoreHorizontal"
+      },
+      {
+        "file": "src/components/dropdown-menu/DropdownMenu.stories.tsx",
+        "importedName": "MoreHorizontal",
+        "localName": "MoreHorizontal"
+      },
+      {
+        "file": "src/components/pagination/index.tsx",
+        "importedName": "MoreHorizontal",
+        "localName": "MoreHorizontal"
+      },
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "MoreHorizontal",
+        "localName": "MoreHorizontal"
+      }
+    ]
+  },
+  {
+    "name": "MoreVerticalIcon",
+    "slug": "more-vertical",
+    "title": "More Vertical",
+    "category": "Actions",
+    "keywords": [
+      "morevertical",
+      "more",
+      "vertical"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "MoreVertical"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/card/Card.stories.tsx",
+        "importedName": "MoreVertical",
+        "localName": "MoreVertical"
+      }
+    ]
+  },
+  {
+    "name": "MoveIcon",
+    "slug": "move",
+    "title": "Move",
+    "category": "Layout",
+    "keywords": [
+      "move"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Move"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/dashboard-grid/index.tsx",
+        "importedName": "Move",
+        "localName": "Move"
+      }
+    ]
+  },
+  {
+    "name": "MusicIcon",
+    "slug": "music",
+    "title": "Music",
+    "category": "Media",
+    "keywords": [
+      "music"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Music"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Music",
+        "localName": "Music"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Music",
+        "localName": "Music"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "Music",
+        "localName": "Music"
+      }
+    ]
+  },
+  {
+    "name": "NewspaperIcon",
+    "slug": "newspaper",
+    "title": "Newspaper",
+    "category": "Actions",
+    "keywords": [
+      "newspaper"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Newspaper"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/templates/investment-ops/dashboard-shell.tsx",
+        "importedName": "Newspaper",
+        "localName": "Newspaper"
+      }
+    ]
+  },
+  {
+    "name": "PackageIcon",
+    "slug": "package",
+    "title": "Package",
+    "category": "Commerce",
+    "keywords": [
+      "package"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Package"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "Package",
+        "localName": "Package"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "Package",
+        "localName": "Package"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavbar.stories.tsx",
+        "importedName": "Package",
+        "localName": "Package"
+      }
+    ]
+  },
+  {
+    "name": "PaletteIcon",
+    "slug": "palette",
+    "title": "Palette",
+    "category": "Charts",
+    "keywords": [
+      "palette"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Palette"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Palette",
+        "localName": "Palette"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Palette",
+        "localName": "Palette"
+      }
+    ]
+  },
+  {
+    "name": "PanelLeftIcon",
+    "slug": "panel-left",
+    "title": "Panel Left",
+    "category": "Navigation",
+    "keywords": [
+      "panelleft",
+      "panel",
+      "left"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "PanelLeft"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/navigation/layout.tsx",
+        "importedName": "PanelLeft",
+        "localName": "PanelLeft"
+      },
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "PanelLeft",
+        "localName": "PanelLeft"
+      }
+    ]
+  },
+  {
+    "name": "PanelLeftCollapseIcon",
+    "slug": "panel-left-collapse",
+    "title": "Panel Left Collapse",
+    "category": "Navigation",
+    "keywords": [
+      "panelleftcollapse",
+      "panel",
+      "left",
+      "collapse",
+      "panelleftclose"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "PanelLeftClose"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/navigation/layout.tsx",
+        "importedName": "PanelLeftClose",
+        "localName": "PanelLeftClose"
+      }
+    ]
+  },
+  {
+    "name": "PanelRightIcon",
+    "slug": "panel-right",
+    "title": "Panel Right",
+    "category": "Navigation",
+    "keywords": [
+      "panelright",
+      "panel",
+      "right"
+    ],
+    "pilot": true,
+    "legacyNames": [],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": []
+  },
+  {
+    "name": "PanelsIcon",
+    "slug": "panels",
+    "title": "Panels",
+    "category": "Layout",
+    "keywords": [
+      "panels",
+      "layout"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Layout"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/navigation/PremiumNavbar.stories.tsx",
+        "importedName": "Layout",
+        "localName": "Layout"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavdrawer.stories.tsx",
+        "importedName": "Layout",
+        "localName": "Layout"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavrail.stories.tsx",
+        "importedName": "Layout",
+        "localName": "Layout"
+      }
+    ]
+  },
+  {
+    "name": "PauseIcon",
+    "slug": "pause",
+    "title": "Pause",
+    "category": "Media",
+    "keywords": [
+      "pause"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Pause"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Pause",
+        "localName": "Pause"
+      }
+    ]
+  },
+  {
+    "name": "PhoneIcon",
+    "slug": "phone",
+    "title": "Phone",
+    "category": "Communication",
+    "keywords": [
+      "phone"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Phone"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Phone",
+        "localName": "Phone"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Phone",
+        "localName": "Phone"
+      }
+    ]
+  },
+  {
+    "name": "PizzaIcon",
+    "slug": "pizza",
+    "title": "Pizza",
+    "category": "Nature",
+    "keywords": [
+      "pizza"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Pizza"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Pizza",
+        "localName": "Pizza"
+      }
+    ]
+  },
+  {
+    "name": "PlaneIcon",
+    "slug": "plane",
+    "title": "Plane",
+    "category": "Commerce",
+    "keywords": [
+      "plane"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Plane"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Plane",
+        "localName": "Plane"
+      }
+    ]
+  },
+  {
+    "name": "PlayIcon",
+    "slug": "play",
+    "title": "Play",
+    "category": "Media",
+    "keywords": [
+      "play"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Play"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/card/Card.stories.tsx",
+        "importedName": "Play",
+        "localName": "Play"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Play",
+        "localName": "Play"
+      }
+    ]
+  },
+  {
+    "name": "PlusIcon",
+    "slug": "plus",
+    "title": "Plus",
+    "category": "Actions",
+    "keywords": [
+      "plus"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Plus"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/Accordion.stories.tsx",
+        "importedName": "Plus",
+        "localName": "Plus"
+      },
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Plus",
+        "localName": "Plus"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Plus",
+        "localName": "Plus"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Plus",
+        "localName": "Plus"
+      },
+      {
+        "file": "src/components/fab/FAB.stories.tsx",
+        "importedName": "Plus",
+        "localName": "Plus"
+      },
+      {
+        "file": "src/components/input-incrementor/index.tsx",
+        "importedName": "Plus",
+        "localName": "Plus"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Plus",
+        "localName": "Plus"
+      },
+      {
+        "file": "src/components/tooltip/Tooltip.stories.tsx",
+        "importedName": "Plus",
+        "localName": "Plus"
+      },
+      {
+        "file": "src/templates/investment-ops/dashboard-shell.tsx",
+        "importedName": "Plus",
+        "localName": "Plus"
+      },
+      {
+        "file": "src/templates/investment-ops/multi-leg-order-ticket.tsx",
+        "importedName": "Plus",
+        "localName": "Plus"
+      }
+    ]
+  },
+  {
+    "name": "RedoIcon",
+    "slug": "redo",
+    "title": "Redo",
+    "category": "Actions",
+    "keywords": [
+      "redo",
+      "redo2"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Redo",
+      "Redo2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Redo",
+        "localName": "Redo"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Redo2",
+        "localName": "Redo2"
+      }
+    ]
+  },
+  {
+    "name": "RefreshIcon",
+    "slug": "refresh",
+    "title": "Refresh",
+    "category": "Actions",
+    "keywords": [
+      "refresh",
+      "rotatecw"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "RotateCw"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "RotateCw",
+        "localName": "RotateCw"
+      },
+      {
+        "file": "src/components/toolbar/toolbar.stories.tsx",
+        "importedName": "RotateCw",
+        "localName": "RotateCw"
+      }
+    ]
+  },
+  {
+    "name": "ResetIcon",
+    "slug": "reset",
+    "title": "Reset",
+    "category": "Actions",
+    "keywords": [
+      "reset",
+      "rotateccw"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "RotateCcw"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/Accordion.stories.tsx",
+        "importedName": "RotateCcw",
+        "localName": "RotateCcw"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "RotateCcw",
+        "localName": "RotateCcw"
+      }
+    ]
+  },
+  {
+    "name": "ResizeIcon",
+    "slug": "resize",
+    "title": "Resize",
+    "category": "Layout",
+    "keywords": [
+      "resize",
+      "scaling"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Scaling"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/dashboard-grid/index.tsx",
+        "importedName": "Scaling",
+        "localName": "Scaling"
+      }
+    ]
+  },
+  {
+    "name": "RestoreIcon",
+    "slug": "restore",
+    "title": "Restore",
+    "category": "Layout",
+    "keywords": [
+      "restore",
+      "minimize2"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Minimize2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "Minimize2",
+        "localName": "Minimize2"
+      }
+    ]
+  },
+  {
+    "name": "RocketIcon",
+    "slug": "rocket",
+    "title": "Rocket",
+    "category": "Commerce",
+    "keywords": [
+      "rocket"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Rocket"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert/Alert.stories.tsx",
+        "importedName": "Rocket",
+        "localName": "Rocket"
+      }
+    ]
+  },
+  {
+    "name": "SaveIcon",
+    "slug": "save",
+    "title": "Save",
+    "category": "Actions",
+    "keywords": [
+      "save"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Save"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Save",
+        "localName": "Save"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "Save",
+        "localName": "Save"
+      },
+      {
+        "file": "src/components/toast/PremiumToast.stories.tsx",
+        "importedName": "Save",
+        "localName": "Save"
+      }
+    ]
+  },
+  {
+    "name": "ScissorsIcon",
+    "slug": "scissors",
+    "title": "Scissors",
+    "category": "Actions",
+    "keywords": [
+      "scissors"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Scissors"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Scissors",
+        "localName": "Scissors"
+      }
+    ]
+  },
+  {
+    "name": "SearchIcon",
+    "slug": "search",
+    "title": "Search",
+    "category": "Actions",
+    "keywords": [
+      "search"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Search"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/components/command-palette/index.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/components/empty-state/empty-state.stories.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/components/multi-select/index.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/components/navigation/Accessibility.stories.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavbar.stories.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavrail.stories.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "src/templates/investment-ops/investment-ops-dashboard.stories.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Search",
+        "localName": "Search"
+      }
+    ]
+  },
+  {
+    "name": "SendIcon",
+    "slug": "send",
+    "title": "Send",
+    "category": "Communication",
+    "keywords": [
+      "send"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Send"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Send",
+        "localName": "Send"
+      },
+      {
+        "file": "src/components/toast/PremiumToast.stories.tsx",
+        "importedName": "Send",
+        "localName": "Send"
+      },
+      {
+        "file": "src/components/toast/Toast.stories.tsx",
+        "importedName": "Send",
+        "localName": "Send"
+      }
+    ]
+  },
+  {
+    "name": "SettingsIcon",
+    "slug": "settings",
+    "title": "Settings",
+    "category": "Actions",
+    "keywords": [
+      "settings"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Settings"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert-dialog/AlertDialog.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/dropdown-menu/DropdownMenu.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/fab/FAB.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavdrawer.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavrail.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/stepper/PremiumStepper.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/components/tooltip/Tooltip.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/templates/investment-ops/dashboard-shell.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      },
+      {
+        "file": "src/templates/investment-ops/investment-ops-dashboard.stories.tsx",
+        "importedName": "Settings",
+        "localName": "Settings"
+      }
+    ]
+  },
+  {
+    "name": "ShareIcon",
+    "slug": "share",
+    "title": "Share",
+    "category": "Communication",
+    "keywords": [
+      "share",
+      "share2"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Share2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/card/Card.stories.tsx",
+        "importedName": "Share2",
+        "localName": "Share2"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Share2",
+        "localName": "Share2"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Share2",
+        "localName": "Share2"
+      },
+      {
+        "file": "src/components/fab/FAB.stories.tsx",
+        "importedName": "Share2",
+        "localName": "Share2"
+      },
+      {
+        "file": "src/components/tooltip/Tooltip.stories.tsx",
+        "importedName": "Share2",
+        "localName": "Share2"
+      }
+    ]
+  },
+  {
+    "name": "ShieldIcon",
+    "slug": "shield",
+    "title": "Shield",
+    "category": "Identity",
+    "keywords": [
+      "shield"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Shield"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/Accordion.stories.tsx",
+        "importedName": "Shield",
+        "localName": "Shield"
+      },
+      {
+        "file": "src/components/alert/Alert.stories.tsx",
+        "importedName": "Shield",
+        "localName": "Shield"
+      },
+      {
+        "file": "src/components/alert-dialog/AlertDialog.stories.tsx",
+        "importedName": "Shield",
+        "localName": "Shield"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Shield",
+        "localName": "Shield"
+      }
+    ]
+  },
+  {
+    "name": "ShoppingCartIcon",
+    "slug": "shopping-cart",
+    "title": "Shopping Cart",
+    "category": "Commerce",
+    "keywords": [
+      "shoppingcart",
+      "shopping",
+      "cart"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "ShoppingCart"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/badge/Badge.stories.tsx",
+        "importedName": "ShoppingCart",
+        "localName": "ShoppingCart"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "ShoppingCart",
+        "localName": "ShoppingCart"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "ShoppingCart",
+        "localName": "ShoppingCart"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "ShoppingCart",
+        "localName": "ShoppingCart"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavbar.stories.tsx",
+        "importedName": "ShoppingCart",
+        "localName": "ShoppingCart"
+      }
+    ]
+  },
+  {
+    "name": "SignOutIcon",
+    "slug": "sign-out",
+    "title": "Sign Out",
+    "category": "Navigation",
+    "keywords": [
+      "signout",
+      "sign",
+      "out",
+      "logout"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "LogOut"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert-dialog/AlertDialog.stories.tsx",
+        "importedName": "LogOut",
+        "localName": "LogOut"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "LogOut",
+        "localName": "LogOut"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "LogOut",
+        "localName": "LogOut"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "LogOut",
+        "localName": "LogOut"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "LogOut",
+        "localName": "LogOut"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavdrawer.stories.tsx",
+        "importedName": "LogOut",
+        "localName": "LogOut"
+      }
+    ]
+  },
+  {
+    "name": "SlashIcon",
+    "slug": "slash",
+    "title": "Slash",
+    "category": "Actions",
+    "keywords": [
+      "slash"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Slash"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/breadcrumb/Breadcrumb.stories.tsx",
+        "importedName": "Slash",
+        "localName": "Slash"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Slash",
+        "localName": "Slash"
+      }
+    ]
+  },
+  {
+    "name": "SlidersHorizontalIcon",
+    "slug": "sliders-horizontal",
+    "title": "Sliders Horizontal",
+    "category": "Actions",
+    "keywords": [
+      "slidershorizontal",
+      "sliders",
+      "horizontal"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "SlidersHorizontal"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "SlidersHorizontal",
+        "localName": "SlidersHorizontal"
+      }
+    ]
+  },
+  {
+    "name": "SortAscendingIcon",
+    "slug": "sort-ascending",
+    "title": "Sort Ascending",
+    "category": "Actions",
+    "keywords": [
+      "sortascending",
+      "sort",
+      "ascending"
+    ],
+    "pilot": false,
+    "legacyNames": [],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": []
+  },
+  {
+    "name": "SortDescendingIcon",
+    "slug": "sort-descending",
+    "title": "Sort Descending",
+    "category": "Actions",
+    "keywords": [
+      "sortdescending",
+      "sort",
+      "descending"
+    ],
+    "pilot": false,
+    "legacyNames": [],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": []
+  },
+  {
+    "name": "SparklesIcon",
+    "slug": "sparkles",
+    "title": "Sparkles",
+    "category": "Actions",
+    "keywords": [
+      "sparkles"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Sparkles"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Sparkles",
+        "localName": "Sparkles"
+      }
+    ]
+  },
+  {
+    "name": "SquareIcon",
+    "slug": "square",
+    "title": "Square",
+    "category": "Actions",
+    "keywords": [
+      "square"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Square"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Square",
+        "localName": "Square"
+      }
+    ]
+  },
+  {
+    "name": "StarIcon",
+    "slug": "star",
+    "title": "Star",
+    "category": "Actions",
+    "keywords": [
+      "star"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Star"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/badge/Badge.stories.tsx",
+        "importedName": "Star",
+        "localName": "Star"
+      },
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Star",
+        "localName": "Star"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Star",
+        "localName": "Star"
+      },
+      {
+        "file": "src/components/card/Card.stories.tsx",
+        "importedName": "Star",
+        "localName": "Star"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Star",
+        "localName": "Star"
+      },
+      {
+        "file": "src/components/multi-select/MultiSelect.stories.tsx",
+        "importedName": "Star",
+        "localName": "Star"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Star",
+        "localName": "Star"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "Star",
+        "localName": "Star"
+      },
+      {
+        "file": "src/templates/investment-ops/dashboard-shell.tsx",
+        "importedName": "Star",
+        "localName": "Star"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Star",
+        "localName": "Star"
+      }
+    ]
+  },
+  {
+    "name": "SunIcon",
+    "slug": "sun",
+    "title": "Sun",
+    "category": "Nature",
+    "keywords": [
+      "sun",
+      "sunmedium"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Sun",
+      "SunMedium"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Sun",
+        "localName": "Sun"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "Sun",
+        "localName": "Sun"
+      },
+      {
+        "file": "src/components/slider/PremiumSlider.stories.tsx",
+        "importedName": "Sun",
+        "localName": "Sun"
+      },
+      {
+        "file": "src/components/slider/PremiumSlider.stories.tsx",
+        "importedName": "SunMedium",
+        "localName": "SunMedium"
+      },
+      {
+        "file": "src/components/slider/Slider.stories.tsx",
+        "importedName": "Sun",
+        "localName": "Sun"
+      },
+      {
+        "file": "src/components/switch/Switch.stories.tsx",
+        "importedName": "Sun",
+        "localName": "Sun"
+      },
+      {
+        "file": "src/templates/investment-ops/investment-ops-dashboard.stories.tsx",
+        "importedName": "Sun",
+        "localName": "Sun"
+      }
+    ]
+  },
+  {
+    "name": "TableIcon",
+    "slug": "table",
+    "title": "Table",
+    "category": "Layout",
+    "keywords": [
+      "table",
+      "table2"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Table2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/components/technical-chart-view/index.tsx",
+        "importedName": "Table2",
+        "localName": "Table2"
+      }
+    ]
+  },
+  {
+    "name": "TagIcon",
+    "slug": "tag",
+    "title": "Tag",
+    "category": "Actions",
+    "keywords": [
+      "tag"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Tag"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Tag",
+        "localName": "Tag"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Tag",
+        "localName": "Tag"
+      }
+    ]
+  },
+  {
+    "name": "TerminalIcon",
+    "slug": "terminal",
+    "title": "Terminal",
+    "category": "Actions",
+    "keywords": [
+      "terminal"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Terminal"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert/Alert.stories.tsx",
+        "importedName": "Terminal",
+        "localName": "Terminal"
+      }
+    ]
+  },
+  {
+    "name": "ThermometerIcon",
+    "slug": "thermometer",
+    "title": "Thermometer",
+    "category": "Nature",
+    "keywords": [
+      "thermometer"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Thermometer"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/slider/PremiumSlider.stories.tsx",
+        "importedName": "Thermometer",
+        "localName": "Thermometer"
+      }
+    ]
+  },
+  {
+    "name": "TrashIcon",
+    "slug": "trash",
+    "title": "Trash",
+    "category": "Actions",
+    "keywords": [
+      "trash",
+      "trash2"
+    ],
+    "pilot": true,
+    "legacyNames": [
+      "Trash",
+      "Trash2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert-dialog/AlertDialog.stories.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "src/components/dropdown-menu/DropdownMenu.stories.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "src/components/leg-builder-row/index.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Trash",
+        "localName": "Trash"
+      },
+      {
+        "file": "src/components/toast/PremiumToast.stories.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "src/components/toast/Toast.stories.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "src/components/tooltip/Tooltip.stories.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      },
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "Trash2",
+        "localName": "Trash2"
+      }
+    ]
+  },
+  {
+    "name": "TrendingUpIcon",
+    "slug": "trending-up",
+    "title": "Trending Up",
+    "category": "Charts",
+    "keywords": [
+      "trendingup",
+      "trending",
+      "up"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "TrendingUp"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/templates/investment-ops/stat-tile.stories.tsx",
+        "importedName": "TrendingUp",
+        "localName": "TrendingUp"
+      }
+    ]
+  },
+  {
+    "name": "TruckIcon",
+    "slug": "truck",
+    "title": "Truck",
+    "category": "Commerce",
+    "keywords": [
+      "truck"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Truck"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/Accordion.stories.tsx",
+        "importedName": "Truck",
+        "localName": "Truck"
+      }
+    ]
+  },
+  {
+    "name": "UnderlineIcon",
+    "slug": "underline",
+    "title": "Underline",
+    "category": "Actions",
+    "keywords": [
+      "underline"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Underline"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Underline",
+        "localName": "Underline"
+      },
+      {
+        "file": "src/components/button/ButtonGroup.stories.tsx",
+        "importedName": "Underline",
+        "localName": "Underline"
+      }
+    ]
+  },
+  {
+    "name": "UndoIcon",
+    "slug": "undo",
+    "title": "Undo",
+    "category": "Actions",
+    "keywords": [
+      "undo",
+      "undo2"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Undo",
+      "Undo2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "Undo",
+        "localName": "Undo"
+      },
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Undo2",
+        "localName": "Undo2"
+      }
+    ]
+  },
+  {
+    "name": "UngroupIcon",
+    "slug": "ungroup",
+    "title": "Ungroup",
+    "category": "Actions",
+    "keywords": [
+      "ungroup"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Ungroup"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "Ungroup",
+        "localName": "Ungroup"
+      }
+    ]
+  },
+  {
+    "name": "UnlockIcon",
+    "slug": "unlock",
+    "title": "Unlock",
+    "category": "Identity",
+    "keywords": [
+      "unlock"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Unlock"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "charts-market/src/drawings/drawing-layer.tsx",
+        "importedName": "Unlock",
+        "localName": "Unlock"
+      },
+      {
+        "file": "charts-market/src/drawings/object-tree.tsx",
+        "importedName": "Unlock",
+        "localName": "Unlock"
+      }
+    ]
+  },
+  {
+    "name": "UploadIcon",
+    "slug": "upload",
+    "title": "Upload",
+    "category": "Files",
+    "keywords": [
+      "upload"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Upload"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/button/Button.stories.tsx",
+        "importedName": "Upload",
+        "localName": "Upload"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Upload",
+        "localName": "Upload"
+      },
+      {
+        "file": "src/components/toast/PremiumToast.stories.tsx",
+        "importedName": "Upload",
+        "localName": "Upload"
+      },
+      {
+        "file": "src/components/toast/Toast.stories.tsx",
+        "importedName": "Upload",
+        "localName": "Upload"
+      }
+    ]
+  },
+  {
+    "name": "UserIcon",
+    "slug": "user",
+    "title": "User",
+    "category": "Identity",
+    "keywords": [
+      "user"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "User"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/accordion/Accordion.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/avatar/Avatar.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/card/Card.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/combobox/Combobox.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/context-menu/ContextMenu.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/hover-card/HoverCard.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/select/Select.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/stepper/PremiumStepper.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "User",
+        "localName": "User"
+      }
+    ]
+  },
+  {
+    "name": "UsersIcon",
+    "slug": "users",
+    "title": "Users",
+    "category": "Identity",
+    "keywords": [
+      "users"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Users"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/multi-select/MultiSelect.stories.tsx",
+        "importedName": "Users",
+        "localName": "Users"
+      },
+      {
+        "file": "src/components/navigation/Layouts.stories.tsx",
+        "importedName": "Users",
+        "localName": "Users"
+      },
+      {
+        "file": "src/components/navigation/Navbar.stories.tsx",
+        "importedName": "Users",
+        "localName": "Users"
+      },
+      {
+        "file": "src/components/navigation/Navdrawer.stories.tsx",
+        "importedName": "Users",
+        "localName": "Users"
+      },
+      {
+        "file": "src/components/navigation/Navrail.stories.tsx",
+        "importedName": "Users",
+        "localName": "Users"
+      },
+      {
+        "file": "src/components/navigation/PremiumNavbar.stories.tsx",
+        "importedName": "Users",
+        "localName": "Users"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Users",
+        "localName": "Users"
+      }
+    ]
+  },
+  {
+    "name": "VideoIcon",
+    "slug": "video",
+    "title": "Video",
+    "category": "Media",
+    "keywords": [
+      "video"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Video"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Video",
+        "localName": "Video"
+      },
+      {
+        "file": "src/components/navigation/Submenus.stories.tsx",
+        "importedName": "Video",
+        "localName": "Video"
+      },
+      {
+        "file": "src/components/tabs/Tabs.stories.tsx",
+        "importedName": "Video",
+        "localName": "Video"
+      }
+    ]
+  },
+  {
+    "name": "VolumeIcon",
+    "slug": "volume",
+    "title": "Volume",
+    "category": "Media",
+    "keywords": [
+      "volume",
+      "volume2"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Volume2"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/input-incrementor/InputIncrementor.stories.tsx",
+        "importedName": "Volume2",
+        "localName": "Volume2"
+      },
+      {
+        "file": "src/components/slider/PremiumSlider.stories.tsx",
+        "importedName": "Volume2",
+        "localName": "Volume2"
+      },
+      {
+        "file": "src/components/slider/Slider.stories.tsx",
+        "importedName": "Volume2",
+        "localName": "Volume2"
+      },
+      {
+        "file": "src/components/switch/Switch.stories.tsx",
+        "importedName": "Volume2",
+        "localName": "Volume2"
+      }
+    ]
+  },
+  {
+    "name": "VolumeOffIcon",
+    "slug": "volume-off",
+    "title": "Volume Off",
+    "category": "Media",
+    "keywords": [
+      "volumeoff",
+      "volume",
+      "off",
+      "volumex"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "VolumeX"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/input-incrementor/InputIncrementor.stories.tsx",
+        "importedName": "VolumeX",
+        "localName": "VolumeX"
+      },
+      {
+        "file": "src/components/slider/PremiumSlider.stories.tsx",
+        "importedName": "VolumeX",
+        "localName": "VolumeX"
+      },
+      {
+        "file": "src/components/slider/Slider.stories.tsx",
+        "importedName": "VolumeX",
+        "localName": "VolumeX"
+      },
+      {
+        "file": "src/components/switch/Switch.stories.tsx",
+        "importedName": "VolumeX",
+        "localName": "VolumeX"
+      }
+    ]
+  },
+  {
+    "name": "VolumeProfileIcon",
+    "slug": "volume-profile",
+    "title": "Volume Profile",
+    "category": "Charts",
+    "keywords": [
+      "volumeprofile",
+      "volume",
+      "profile"
+    ],
+    "pilot": false,
+    "legacyNames": [],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": []
+  },
+  {
+    "name": "WalletIcon",
+    "slug": "wallet",
+    "title": "Wallet",
+    "category": "Commerce",
+    "keywords": [
+      "wallet"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Wallet"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/templates/investment-ops/stat-tile.stories.tsx",
+        "importedName": "Wallet",
+        "localName": "Wallet"
+      }
+    ]
+  },
+  {
+    "name": "WarningCircleIcon",
+    "slug": "warning-circle",
+    "title": "Warning Circle",
+    "category": "Feedback",
+    "keywords": [
+      "warningcircle",
+      "warning",
+      "circle",
+      "alertcircle"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "AlertCircle"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert/Alert.stories.tsx",
+        "importedName": "AlertCircle",
+        "localName": "AlertCircle"
+      },
+      {
+        "file": "src/components/alert/index.tsx",
+        "importedName": "AlertCircle",
+        "localName": "AlertCircle"
+      },
+      {
+        "file": "src/components/stepper/index.tsx",
+        "importedName": "AlertCircle",
+        "localName": "AlertCircle"
+      }
+    ]
+  },
+  {
+    "name": "WarningTriangleIcon",
+    "slug": "warning-triangle",
+    "title": "Warning Triangle",
+    "category": "Feedback",
+    "keywords": [
+      "warningtriangle",
+      "warning",
+      "triangle",
+      "alerttriangle"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "AlertTriangle"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert/Alert.stories.tsx",
+        "importedName": "AlertTriangle",
+        "localName": "AlertTriangle"
+      },
+      {
+        "file": "src/components/alert/index.tsx",
+        "importedName": "AlertTriangle",
+        "localName": "AlertTriangle"
+      },
+      {
+        "file": "src/components/alert-dialog/AlertDialog.stories.tsx",
+        "importedName": "AlertTriangle",
+        "localName": "AlertTriangle"
+      },
+      {
+        "file": "src/components/badge/Badge.stories.tsx",
+        "importedName": "AlertTriangle",
+        "localName": "AlertTriangle"
+      },
+      {
+        "file": "src/components/dialog/Dialog.stories.tsx",
+        "importedName": "AlertTriangle",
+        "localName": "AlertTriangle"
+      },
+      {
+        "file": "src/components/toast/primitives.tsx",
+        "importedName": "AlertTriangle",
+        "localName": "AlertTriangle"
+      },
+      {
+        "file": "src/templates/investment-ops/account-summary.stories.tsx",
+        "importedName": "AlertTriangle",
+        "localName": "AlertTriangle"
+      }
+    ]
+  },
+  {
+    "name": "ZapIcon",
+    "slug": "zap",
+    "title": "Zap",
+    "category": "Actions",
+    "keywords": [
+      "zap"
+    ],
+    "pilot": false,
+    "legacyNames": [
+      "Zap"
+    ],
+    "provenance": "Original AgentixUI geometry authored for this library; not traced or copied from another icon set.",
+    "migrationUsages": [
+      {
+        "file": "src/components/alert/Alert.stories.tsx",
+        "importedName": "Zap",
+        "localName": "Zap"
+      },
+      {
+        "file": "src/components/chip/Chip.stories.tsx",
+        "importedName": "Zap",
+        "localName": "Zap"
+      }
+    ]
+  }
+]

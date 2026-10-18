@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
-import { Wallet, TrendingUp } from "lucide-react";
+import { WalletIcon as Wallet, TrendingUpIcon as TrendingUp } from "aapaetsch-icons";
 
 import { StatTile } from "./stat-tile";
 import { Sparkline } from "../../components/sparkline";

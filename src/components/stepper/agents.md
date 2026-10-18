@@ -28,7 +28,7 @@ The Stepper extends the base stepper API with advanced features including vertic
 - `@radix-ui/react-collapsible` - Collapsible content for vertical orientation
 - `@radix-ui/react-slot` - Slot pattern for custom trigger elements
 - `class-variance-authority` - Variant management
-- `lucide-react` - Icons (Check, AlertCircle, ChevronRight)
+- `aapaetsch-icons` - Icons (Check, AlertCircle, ChevronRight)
 
 ## Key Features
 
@@ -162,7 +162,7 @@ Stepper
 - `@radix-ui/react-collapsible` for vertical inline content.
 - `@radix-ui/react-slot` for `asChild` trigger composition.
 - `class-variance-authority` for root, item, trigger, indicator, label, connector, and content variants.
-- `lucide-react` for `Check`, `Circle`, `AlertCircle`, and `ChevronRight` icons.
+- `aapaetsch-icons` for `Check`, `Circle`, `AlertCircle`, and `ChevronRight` icons.
 - `src/lib/utils.ts` for `cn()` class merging.
 
 ## Styling Decisions

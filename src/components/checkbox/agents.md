@@ -111,7 +111,7 @@ const [checked, setChecked] = React.useState(false);
 
 - `@radix-ui/react-checkbox` - Accessible checkbox primitive
 - `class-variance-authority` - Variant management
-- `lucide-react` - Check and Minus icons
+- `aapaetsch-icons` - Check and Minus icons
 
 ## Styling Decisions
 
@@ -145,6 +145,6 @@ const [checked, setChecked] = React.useState(false);
 - Label is wrapped in a `<label>` element for proper click-to-toggle behavior
 - The ripple effect is triggered on click and animates the full state layer area
 - Error state changes both border color (unselected) and background color (selected)
-- Indeterminate state uses the Minus icon from lucide-react
+- Indeterminate state uses the Minus icon from aapaetsch-icons
 
 

@@ -377,7 +377,7 @@ When using `styleVariant="md3"`:
 
 - `@radix-ui/react-slot` - Polymorphic component (Button only)
 - `class-variance-authority` - Variant management
-- `lucide-react` - Icons (SplitButton chevron, stories)
+- `aapaetsch-icons` - Icons (SplitButton chevron, stories)
 - `aapaetsch-ui-kit/lib/utils` - `cn()` utility
 
 ## License

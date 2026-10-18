@@ -5,6 +5,8 @@ node_modules/
 dist/
 build/
 coverage/
+.npm-cache/
+output/
 
 # ---------------------------------------------------------
 # Logs
@@ -40,6 +42,11 @@ lerna-debug.log*
 # ---------------------------------------------------------
 storybook-static/
 .storybook-out/
+.icon-validation/
+.chart-refinement-validation/
+.chart-supplied-validation/
+.dashboard-grid-validation/
+charts-market/.cache/
 .out/
 
 # ---------------------------------------------------------

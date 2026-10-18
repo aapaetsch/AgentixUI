@@ -59,5 +59,5 @@ import {
 ## Notes
 
 - Use `DropdownMenuTrigger asChild` whenever the trigger should inherit the sizing and focus behavior of another component.
-- Pair `DropdownMenuItem` with the library `Button` and `lucide-react` icons for consistent visuals.
+- Pair `DropdownMenuItem` with the library `Button` and `aapaetsch-icons` icons for consistent visuals.
 - `DropdownMenuShortcut` is a visual affordance only; keyboard handlers still need to be implemented by the consumer.

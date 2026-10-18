@@ -61,7 +61,7 @@ interface ComboBoxOption<T = string> {
 ## Dependencies
 - `@headlessui/react`: Core Combobox component (Headless UI v2)
 - `class-variance-authority`: CVA for variant management
-- `lucide-react`: Icons (Check, ChevronDown, X)
+- `aapaetsch-icons`: Icons (Check, ChevronDown, X)
 - `AnimatedChevron`: Internal component for animated indicator
 
 ## Styling Decisions

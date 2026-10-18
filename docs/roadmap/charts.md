@@ -13,7 +13,7 @@ theme contract in `src/globals.css`; the UI kit does not depend on charts.
 | Unit testing | ✅ Complete | Dedicated Vitest/jsdom project integrated into the root test command |
 | Storybook | ✅ Complete | `Charts/` stories discovered by the shared Storybook workspace |
 | Engine | ✅ Complete | Recharts v3, externalized from the package bundle; shadcn-style composition |
-| Theme contract | ✅ Complete | Reads `--chart-1`…`--chart-5` and all surface/text/border tokens from the UI kit |
+| Theme contract | ✅ Complete | Reads `--chart-1`…`--chart-5` and all surface/text/border tokens from the UI kit; ships `./styles.css` with package-owned compiled utilities |
 | Accessibility baseline | ✅ Complete | Required accessible names plus Recharts `accessibilityLayer` enabled by default |
 
 ## Chart chrome — ✅ Complete

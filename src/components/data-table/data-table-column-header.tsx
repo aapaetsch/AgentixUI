@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { Column } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
+import { ArrowDownIcon as ArrowDown, ArrowUpIcon as ArrowUp, ArrowUpDownIcon as ArrowUpDown } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 import { Button } from "../button";

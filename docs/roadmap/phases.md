@@ -1,5 +1,13 @@
 # Development Phases
 
+## Original Icon Library
+
+- [x] Define the rounded-outline family and review the 20-icon pilot in kit controls.
+- [x] Deliver 158 original icons with React, raw SVG, generation, and documentation.
+- [x] Migrate UI/chart source, templates, stories, and current documentation.
+- [x] Verify package builds, 260 tests, Storybook, React 18/19, Next.js, and browser accessibility.
+- [x] Prepare local archive integrity evidence; publication and portfolio adoption remain separate.
+
 ## Phase 1: Foundation Components
 **Goal:** Complete the base component primitives
 

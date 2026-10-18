@@ -14,7 +14,7 @@ import {
   type LayoutChangedMeta,
 } from "react-resizable-panels";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ChevronRight, ChevronDown, GripVertical } from "lucide-react";
+import { ChevronRightIcon as ChevronRight, ChevronDownIcon as ChevronDown, GripVerticalIcon as GripVertical } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 

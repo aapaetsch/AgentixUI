@@ -15,3 +15,9 @@ export {
   PriceScale,
   RenderScheduler,
 } from "./engine";
+
+export * from "./components/technical-chart-view";
+export * from "./engine/volume-profile";
+export * from "./engine/volume-profile-layer";
+export * from "./engine/axis-badges";
+export * from "./engine/series-renderers";

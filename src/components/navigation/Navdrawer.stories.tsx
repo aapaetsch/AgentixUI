@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import {
-  Home,
-  Inbox,
-  Calendar,
-  Settings,
-  Users,
-  BarChart3,
-  FileText,
-  Mail,
-  HelpCircle,
-  LogOut,
-  Layers,
-  Folder,
-} from "lucide-react";
+  HomeIcon as Home,
+  InboxIcon as Inbox,
+  CalendarIcon as Calendar,
+  SettingsIcon as Settings,
+  UsersIcon as Users,
+  ChartBarIcon as BarChart3,
+  FileTextIcon as FileText,
+  MailIcon as Mail,
+  HelpCircleIcon as HelpCircle,
+  SignOutIcon as LogOut,
+  LayersIcon as Layers,
+  FolderIcon as Folder,
+} from "aapaetsch-icons";
 
 import {
   NavigationProvider,

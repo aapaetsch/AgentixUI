@@ -4,7 +4,7 @@ import * as React from "react";
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Check, AlertCircle } from "lucide-react";
+import { CheckIcon as Check, WarningCircleIcon as AlertCircle } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 

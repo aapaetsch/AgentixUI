@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { Table } from "@tanstack/react-table";
-import { ChevronDown } from "lucide-react";
+import { ChevronDownIcon as ChevronDown } from "aapaetsch-icons";
 
 import { Button } from "../button";
 import {

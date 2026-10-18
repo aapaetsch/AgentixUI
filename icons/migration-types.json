@@ -1,0 +1,9 @@
+{
+  "description": "Type-only import replacements complement the artwork usages in catalog.json.",
+  "mappings": { "LucideIcon": "IconComponent", "LucideProps": "IconProps" },
+  "usages": [
+    { "file": "src/components/alert/index.tsx", "from": "LucideIcon", "to": "IconComponent" },
+    { "file": "src/components/select/index.tsx", "from": "LucideIcon", "to": "IconComponent" },
+    { "file": "src/components/toast/primitives.tsx", "from": "LucideIcon", "to": "IconComponent" }
+  ]
+}

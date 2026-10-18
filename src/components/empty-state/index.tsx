@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Inbox } from "lucide-react";
+import { InboxIcon as Inbox } from "aapaetsch-icons";
 
 import { cn } from "../../lib/utils";
 
@@ -61,7 +61,7 @@ export interface EmptyStateProps
    * Icon slot rendered at the top of the stack.
    *
    * Pass `null` or `false` to omit the icon entirely. When omitted (left
-   * `undefined`), a neutral `Inbox` icon from `lucide-react` is rendered
+   * `undefined`), a neutral `Inbox` icon from `aapaetsch-icons` is rendered
    * using the size-appropriate muted styling.
    */
   icon?: React.ReactNode;

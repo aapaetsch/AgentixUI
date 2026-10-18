@@ -1,4 +1,4 @@
-import type { JsonValue, OhlcBar, SerializableParameters } from "./types";
+import type { JsonValue, MarketTime, OhlcBar, SerializableParameters } from "./types";
 
 export interface IndicatorLineDefinition {
   id: string;
@@ -113,6 +113,8 @@ export interface DrawingHitResult {
 }
 
 export interface DrawingRendererContext {
+  /** Runtime visible bounds permit bounded supplied-path rendering and hit tests. */
+  visibleRange?: import("./types").VisibleRange | null;
   drawing: DrawingState;
   points: Array<DrawingCoordinate | null>;
   bounds: DrawingBounds;
@@ -120,6 +122,8 @@ export interface DrawingRendererContext {
   data: readonly OhlcBar[];
   resolveRange(first: DrawingPoint, second: DrawingPoint): readonly OhlcBar[];
   coordinateFor(point: DrawingPoint): DrawingCoordinate | null;
+  /** Host-supplied discontinuities, independent of source observation density. */
+  isTimeSegmentContinuous?: (from: MarketTime, to: MarketTime) => boolean;
 }
 
 export interface DrawingRendererDefinition {

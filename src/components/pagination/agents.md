@@ -81,7 +81,7 @@ interface PaginationPageSizeSelectorProps {
 ```
 
 ## Dependencies
-- `lucide-react` - Icons (ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal)
+- `aapaetsch-icons` - Icons (ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal)
 - `class-variance-authority` - Variant management
 - `../button` - Button variants for styling
 - `../select` - Page size selector dropdown

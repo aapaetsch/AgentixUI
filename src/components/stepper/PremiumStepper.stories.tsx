@@ -15,7 +15,14 @@ import { Button } from "../button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../card";
 import { Input } from "../input";
 import { Textarea } from "../textarea";
-import { User, Mail, CheckCircle, Settings, FileText, CreditCard } from "lucide-react";
+import {
+  UserIcon as User,
+  MailIcon as Mail,
+  CheckCircleIcon as CheckCircle,
+  SettingsIcon as Settings,
+  FileTextIcon as FileText,
+  CreditCardIcon as CreditCard,
+} from "aapaetsch-icons";
 
 const meta: Meta<typeof PremiumStepper> = {
   title: "Navigation/Stepper",

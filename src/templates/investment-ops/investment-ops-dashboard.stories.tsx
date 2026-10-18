@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
-import { Search, Bell, Settings, Sun } from "lucide-react";
+import { SearchIcon as Search, BellIcon as Bell, SettingsIcon as Settings, SunIcon as Sun } from "aapaetsch-icons";
 
 import { InvestmentOpsDashboard } from "./dashboard-shell";
 import { Navbar, NavbarContent, NavbarActions } from "../../components/navigation/layout";

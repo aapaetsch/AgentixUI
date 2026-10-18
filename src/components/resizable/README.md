@@ -84,7 +84,7 @@ interface ResizableHandleProps {
 ## Dependencies
 
 - `react-resizable-panels` — core layout primitive
-- `lucide-react` — `GripVertical` / chevron icons for handle affordances
+- `aapaetsch-icons` — `GripVertical` / chevron icons for handle affordances
 - `class-variance-authority` — variant management
 - `clsx` + `tailwind-merge` via `cn()`
 

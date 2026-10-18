@@ -25,11 +25,8 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  // lucide-react 0.474.0 advertises a CommonJS file inside a type=module
-  // package. Bundle the selected icons so the documented native CommonJS
-  // entrypoints remain executable; THIRD_PARTY_NOTICES preserves its ISC text.
-  noExternal: ["lucide-react"],
   external: [
+    "aapaetsch-icons",
     // Never bundle peer deps.
     "react",
     "react-dom",

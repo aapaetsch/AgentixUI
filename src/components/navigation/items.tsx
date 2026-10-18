@@ -13,7 +13,7 @@
 
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ChevronRight } from "lucide-react";
+import { ChevronRightIcon as ChevronRight } from "aapaetsch-icons";
 import { cn } from "../../lib/utils";
 import { AnimatedChevron } from "../animated-chevron";
 import {

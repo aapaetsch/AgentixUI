@@ -1,6 +1,6 @@
 {
   "name": "aapaetsch-ui-kit",
-  "version": "0.2.0-beta.2",
+  "version": "0.2.0-beta.3",
   "description": "Modern React UI library with free and premium components, built with TypeScript, Tailwind CSS, and shadcn/ui patterns",
   "author": "Aidan Paetsch",
   "repository": {
@@ -18,11 +18,12 @@
     "tag": "beta"
   },
   "engines": {
-    "node": "22.17.0",
-    "npm": "10.9.2"
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   },
   "packageManager": "npm@10.9.2",
   "workspaces": [
+    "icons",
     "charts",
     "charts-market"
   ],
@@ -88,7 +89,12 @@
     }
   },
   "scripts": {
-    "build": "npm run build:ui && npm run build:charts && npm run build:charts-market",
+    "build": "npm run build:icons && npm run build:ui && npm run build:charts && npm run build:charts-market",
+    "build:icons": "npm run build --workspace aapaetsch-icons",
+    "icons:generate": "npm run generate --workspace aapaetsch-icons",
+    "icons:check": "npm run check --workspace aapaetsch-icons && node scripts/check-icon-migration.mjs",
+    "verify:icons": "npm run verify:consumer --workspace aapaetsch-icons",
+    "verify:icons-next": "node icons/scripts/verify-next.mjs",
     "build:ui": "npm run build:js && npm run build:css",
     "build:charts": "npm run build --workspace aapaetsch-charts",
     "build:charts-market": "npm run build --workspace aapaetsch-charts-market",
@@ -96,20 +102,22 @@
     "build:css": "tailwindcss -c tailwind.config.js -i src/globals.css -o dist/globals.css --minify",
     "dev": "tsup --watch",
     "lint": "eslint .",
-    "typecheck": "npm run typecheck:ui && npm run typecheck --workspace aapaetsch-charts && npm run typecheck --workspace aapaetsch-charts-market",
+    "typecheck": "npm run typecheck --workspace aapaetsch-icons && npm run typecheck:ui && npm run typecheck --workspace aapaetsch-charts && npm run typecheck --workspace aapaetsch-charts-market",
     "typecheck:ui": "tsc --noEmit",
-    "test": "vitest run && npm run test --workspace aapaetsch-charts && npm run test --workspace aapaetsch-charts-market",
+    "test": "npm run test --workspace aapaetsch-icons && vitest run && npm run test --workspace aapaetsch-charts && npm run test --workspace aapaetsch-charts-market",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "pack:check": "npm pack --dry-run --ignore-scripts",
     "pack:artifact": "npm pack --ignore-scripts",
-    "evidence:dependencies": "node scripts/package-evidence.mjs"
+    "verify:chart-consumer": "node scripts/verify-chart-consumer.mjs",
+    "evidence:dependencies": "node scripts/package-evidence.mjs",
+    "evidence:icons": "node scripts/package-icon-evidence.mjs"
   },
   "peerDependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "3.2.7",
@@ -182,7 +190,7 @@
     "date-fns": "4.1.0",
     "embla-carousel-autoplay": "8.6.0",
     "embla-carousel-react": "8.6.0",
-    "lucide-react": "0.474.0",
+    "aapaetsch-icons": "0.1.0-beta.0",
     "react-day-picker": "9.13.0",
     "react-resizable-panels": "4.12.2",
     "tailwind-merge": "2.6.0"
