@@ -1,0 +1,47 @@
+{
+  "status": "blocked-npm-403",
+  "published": false,
+  "sourceCommit": "4fa6f4407bb8577cfd4ce56055a3e9bacd4e63ec",
+  "releaseTag": "v0.2.0-beta.3",
+  "workflow": "https://github.com/aapaetsch/AgentixUI/actions/runs/39088908976",
+  "node": "v22.17.0",
+  "lockSha256": "60fa3ba428ca90e679a9cd32692f921722ff61a630812f9411bf76ac02589e97",
+  "packages": [
+    {
+      "name": "aapaetsch-icons",
+      "version": "0.1.0-beta.0",
+      "sha256": "4ecace9459b4b7143905a9bddcbc5d11db19eb7c96c47930f233c2115cb9eea3",
+      "integrity": "sha512-RRAvgpj0tECOIWBuH48PB76Xd203TAGZKCvo3qsR0TXKAqA+O7/RZUAx0HsrnnAmT7h3usgkBM9L00F+9nouvQ==",
+      "size": 132902,
+      "unpackedSize": 1072659,
+      "fileCount": 1757
+    },
+    {
+      "name": "aapaetsch-ui-kit",
+      "version": "0.2.0-beta.3",
+      "sha256": "e5115dafc3a0e20a652bba377745790ba58ed3a6c56668cc4716b134c79d14d7",
+      "integrity": "sha512-7b7lwhNzuLc6Mvw+cS6f2Uxq0mdO2D+WdfRjIWl0TefUOfCsQvqSjoHV2HcjRIoP1OUkKudatKMrsue6CChzFg==",
+      "size": 2285508,
+      "unpackedSize": 11821573,
+      "fileCount": 55
+    },
+    {
+      "name": "aapaetsch-charts",
+      "version": "0.1.0-beta.0",
+      "sha256": "10f9d1152bbe401f1c708a6428c289740776257fe36da50fef9f1010cb7812c8",
+      "integrity": "sha512-TfcNEQTgANgrBPEAeOi462iH70MbBh2LksSqGpLWjhUQVrMxfDjA0IvZFkWc+Uue3NBBFbzTkoPWVVlgOWuHFA==",
+      "size": 74948,
+      "unpackedSize": 351239,
+      "fileCount": 19
+    },
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.2",
+      "sha256": "51bce4897d443b2e57796a528b3bba919d203a1ca0526c458b9e717bc4637bf5",
+      "integrity": "sha512-xpl61MB9L8FQRXBMjWiIpiUYE/knIPQB+7BHLKOaucRB62+6wKGEj75bX31nxtLiPFFHB0GHIiekwqJBypcIeQ==",
+      "size": 579682,
+      "unpackedSize": 2679047,
+      "fileCount": 70
+    }
+  ]
+}

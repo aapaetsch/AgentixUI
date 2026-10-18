@@ -1,0 +1,102 @@
+name: Stage reviewed coordinated icon UI and chart archives
+on:
+  push:
+    branches:
+      - release/coordinated-icons-ui-charts-20261017
+    paths:
+      - .github/workflows/stage-reviewed-coordinated.yml
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: stage-coordinated-icons-ui-charts-20261017
+  cancel-in-progress: false
+jobs:
+  stage:
+    if: github.repository == 'aapaetsch/AgentixUI'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: releases/coordinated-icons-ui-charts-20261017
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+          registry-url: https://registry.npmjs.org/
+      - name: Prepare verified isolated staging-capable npm CLI
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import {createHash} from 'node:crypto';
+          import {execFileSync} from 'node:child_process';
+          const directory = path.join(process.env.RUNNER_TEMP,'npm-stage-12.2.0');
+          fs.mkdirSync(directory,{recursive:true});
+          const response = await fetch('https://registry.npmjs.org/npm/-/npm-12.2.0.tgz');
+          if (!response.ok) throw Error('npm CLI download failed: '+response.status);
+          const bytes = Buffer.from(await response.arrayBuffer());
+          const integrity = 'sha512-'+createHash('sha512').update(bytes).digest('base64');
+          if (integrity !== 'sha512-ZsJjKpTnlmSXOLLXiU1xDCzC4Wlok4IwZmh/aw2KUuXytU7q6qMv/cUT7MoeSf95Slwuw/lRXYefGzGCspHPNQ==') throw Error('npm CLI integrity mismatch');
+          const archive = path.join(directory,'npm.tgz');
+          fs.writeFileSync(archive,bytes);
+          execFileSync('tar',['-xzf',archive,'-C',directory]);
+          const cli = path.join(directory,'package/bin/npm-cli.js');
+          if (execFileSync(process.execPath,[cli,'--version'],{encoding:'utf8'}).trim() !== '12.2.0') throw Error('Unexpected npm version');
+          fs.appendFileSync(process.env.GITHUB_ENV,`NPM_STAGING_CLI=${cli}\n`);
+          console.log('Verified npm 12.2.0 CLI prepared without replacing the runner npm installation.');
+          NODE
+      - name: Verify all reviewed artifacts and source
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';import{createHash}from'node:crypto';import{execFileSync}from'node:child_process';
+          const expected=[{"name":"aapaetsch-icons","version":"0.1.0-beta.0","filename":"aapaetsch-icons-0.1.0-beta.0.tgz","sha256":"4ecace9459b4b7143905a9bddcbc5d11db19eb7c96c47930f233c2115cb9eea3","integrity":"sha512-RRAvgpj0tECOIWBuH48PB76Xd203TAGZKCvo3qsR0TXKAqA+O7/RZUAx0HsrnnAmT7h3usgkBM9L00F+9nouvQ==","size":132902},{"name":"aapaetsch-ui-kit","version":"0.2.0-beta.3","filename":"aapaetsch-ui-kit-0.2.0-beta.3.tgz","sha256":"e5115dafc3a0e20a652bba377745790ba58ed3a6c56668cc4716b134c79d14d7","integrity":"sha512-7b7lwhNzuLc6Mvw+cS6f2Uxq0mdO2D+WdfRjIWl0TefUOfCsQvqSjoHV2HcjRIoP1OUkKudatKMrsue6CChzFg==","size":2285508},{"name":"aapaetsch-charts","version":"0.1.0-beta.0","filename":"aapaetsch-charts-0.1.0-beta.0.tgz","sha256":"10f9d1152bbe401f1c708a6428c289740776257fe36da50fef9f1010cb7812c8","integrity":"sha512-TfcNEQTgANgrBPEAeOi462iH70MbBh2LksSqGpLWjhUQVrMxfDjA0IvZFkWc+Uue3NBBFbzTkoPWVVlgOWuHFA==","size":74948},{"name":"aapaetsch-charts-market","version":"0.1.0-beta.2","filename":"aapaetsch-charts-market-0.1.0-beta.2.tgz","sha256":"51bce4897d443b2e57796a528b3bba919d203a1ca0526c458b9e717bc4637bf5","integrity":"sha512-xpl61MB9L8FQRXBMjWiIpiUYE/knIPQB+7BHLKOaucRB62+6wKGEj75bX31nxtLiPFFHB0GHIiekwqJBypcIeQ==","size":579682}];
+          const hash=(bytes,algorithm='sha256',encoding='hex')=>createHash(algorithm).update(bytes).digest(encoding);
+          if(hash(fs.readFileSync('source.tgz'))!=='c0e2424aec76ecd91e8242a1fb95d63c0d54631084545ffed12cdc2516b0e6a7')throw Error('Source snapshot hash mismatch');
+          const lock=execFileSync('tar',['-xOf','source.tgz','package-lock.json']);
+          if(hash(lock)!=='5cfeac083625c8baf023dc0495699c6f0a4a199fa0a097edc041581bbd898e51')throw Error('Raw archived lock mismatch');
+          const normalizedLock=Buffer.from(lock.toString('utf8').split(String.fromCharCode(13,10)).join(String.fromCharCode(10)));
+          if(hash(normalizedLock)!=='60fa3ba428ca90e679a9cd32692f921722ff61a630812f9411bf76ac02589e97')throw Error('LF-normalized Linux CI lock mismatch');
+          for(const item of expected){const bytes=fs.readFileSync(item.filename),pm=JSON.parse(execFileSync('tar',['-xOf',item.filename,'package/package.json'],{encoding:'utf8'}));if(hash(bytes)!==item.sha256||'sha512-'+hash(bytes,'sha512','base64')!==item.integrity||bytes.length!==item.size)throw Error('Frozen archive mismatch: '+item.name);if(pm.name!==item.name||pm.version!==item.version||pm.license!=='MIT'||pm.publishConfig?.provenance!==true||pm.publishConfig.access!=='public'||pm.publishConfig.tag!=='beta')throw Error('Package policy mismatch');for(const hook of ['preinstall','install','postinstall','prepare','prepublish','prepublishOnly','prepack','postpack'])if(pm.scripts?.[hook])throw Error('Unexpected lifecycle hook');}
+          console.log('Verified four exact original CI archives and source/lock snapshot.');
+          NODE
+      - name: Stage all four exact archives and verify downloads
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';import{createHash}from'node:crypto';import{execFileSync}from'node:child_process';
+          const expected=[{"name":"aapaetsch-icons","version":"0.1.0-beta.0","filename":"aapaetsch-icons-0.1.0-beta.0.tgz","sha256":"4ecace9459b4b7143905a9bddcbc5d11db19eb7c96c47930f233c2115cb9eea3","integrity":"sha512-RRAvgpj0tECOIWBuH48PB76Xd203TAGZKCvo3qsR0TXKAqA+O7/RZUAx0HsrnnAmT7h3usgkBM9L00F+9nouvQ==","size":132902},{"name":"aapaetsch-ui-kit","version":"0.2.0-beta.3","filename":"aapaetsch-ui-kit-0.2.0-beta.3.tgz","sha256":"e5115dafc3a0e20a652bba377745790ba58ed3a6c56668cc4716b134c79d14d7","integrity":"sha512-7b7lwhNzuLc6Mvw+cS6f2Uxq0mdO2D+WdfRjIWl0TefUOfCsQvqSjoHV2HcjRIoP1OUkKudatKMrsue6CChzFg==","size":2285508},{"name":"aapaetsch-charts","version":"0.1.0-beta.0","filename":"aapaetsch-charts-0.1.0-beta.0.tgz","sha256":"10f9d1152bbe401f1c708a6428c289740776257fe36da50fef9f1010cb7812c8","integrity":"sha512-TfcNEQTgANgrBPEAeOi462iH70MbBh2LksSqGpLWjhUQVrMxfDjA0IvZFkWc+Uue3NBBFbzTkoPWVVlgOWuHFA==","size":74948},{"name":"aapaetsch-charts-market","version":"0.1.0-beta.2","filename":"aapaetsch-charts-market-0.1.0-beta.2.tgz","sha256":"51bce4897d443b2e57796a528b3bba919d203a1ca0526c458b9e717bc4637bf5","integrity":"sha512-xpl61MB9L8FQRXBMjWiIpiUYE/knIPQB+7BHLKOaucRB62+6wKGEj75bX31nxtLiPFFHB0GHIiekwqJBypcIeQ==","size":579682}];
+          if(!process.env.NPM_STAGING_CLI)throw Error('Missing verified staging CLI');
+          const hash=(bytes,algorithm='sha256',encoding='hex')=>createHash(algorithm).update(bytes).digest(encoding),newline=String.fromCharCode(10);
+          fs.mkdirSync('stage-data',{recursive:true});const receipts=[];
+          for(const item of expected){
+           const output=execFileSync(process.execPath,[process.env.NPM_STAGING_CLI,'stage','publish','./'+item.filename,'--provenance','--access','public','--tag','beta','--ignore-scripts','--registry=https://registry.npmjs.org/','--json'],{encoding:'utf8'});fs.writeFileSync('stage-data/'+item.name+'-publish.json',output);
+           const raw=JSON.parse(output),entry=raw.stageId?raw:raw[item.name]??(Array.isArray(raw)?raw[0]:null),id=entry?.stageId;
+           if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id??'')||entry.name!==item.name||entry.version!==item.version)throw Error('Invalid stage identity');
+           for(const operation of ['view','download'])fs.writeFileSync('stage-data/'+item.name+'-'+operation+'.json',execFileSync(process.execPath,[process.env.NPM_STAGING_CLI,'stage',operation,id,'--json','--registry=https://registry.npmjs.org/'],{encoding:'utf8'}));
+           const filename=`${item.name}-${item.version}-${id}.tgz`,bytes=fs.readFileSync(filename),sha256=hash(bytes),integrity='sha512-'+hash(bytes,'sha512','base64'),pm=JSON.parse(execFileSync('tar',['-xOf',filename,'package/package.json'],{encoding:'utf8'}));
+           if(sha256!==item.sha256||integrity!==item.integrity||bytes.length!==item.size||pm.name!==item.name||pm.version!==item.version)throw Error('Registry-staged bytes mismatch: '+item.name);
+           const receipt={...item,stageId:id,downloadedFilename:filename,sha256,integrity,published:false,approvalRequired:true};receipts.push(receipt);fs.writeFileSync('stage-data/'+item.name+'-staging-receipt.json',JSON.stringify(receipt,null,2)+newline);fs.writeFileSync('stage-summary.json',JSON.stringify({sourceCommit:'4fa6f4407bb8577cfd4ce56055a3e9bacd4e63ec',published:false,approvalRequired:true,complete:receipts.length===4,packages:receipts},null,2)+newline);
+          }
+          NODE
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Verify complete four-package staging receipt
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';import{createHash}from'node:crypto';
+          const expected=[{"name":"aapaetsch-icons","version":"0.1.0-beta.0","filename":"aapaetsch-icons-0.1.0-beta.0.tgz","sha256":"4ecace9459b4b7143905a9bddcbc5d11db19eb7c96c47930f233c2115cb9eea3","integrity":"sha512-RRAvgpj0tECOIWBuH48PB76Xd203TAGZKCvo3qsR0TXKAqA+O7/RZUAx0HsrnnAmT7h3usgkBM9L00F+9nouvQ==","size":132902},{"name":"aapaetsch-ui-kit","version":"0.2.0-beta.3","filename":"aapaetsch-ui-kit-0.2.0-beta.3.tgz","sha256":"e5115dafc3a0e20a652bba377745790ba58ed3a6c56668cc4716b134c79d14d7","integrity":"sha512-7b7lwhNzuLc6Mvw+cS6f2Uxq0mdO2D+WdfRjIWl0TefUOfCsQvqSjoHV2HcjRIoP1OUkKudatKMrsue6CChzFg==","size":2285508},{"name":"aapaetsch-charts","version":"0.1.0-beta.0","filename":"aapaetsch-charts-0.1.0-beta.0.tgz","sha256":"10f9d1152bbe401f1c708a6428c289740776257fe36da50fef9f1010cb7812c8","integrity":"sha512-TfcNEQTgANgrBPEAeOi462iH70MbBh2LksSqGpLWjhUQVrMxfDjA0IvZFkWc+Uue3NBBFbzTkoPWVVlgOWuHFA==","size":74948},{"name":"aapaetsch-charts-market","version":"0.1.0-beta.2","filename":"aapaetsch-charts-market-0.1.0-beta.2.tgz","sha256":"51bce4897d443b2e57796a528b3bba919d203a1ca0526c458b9e717bc4637bf5","integrity":"sha512-xpl61MB9L8FQRXBMjWiIpiUYE/knIPQB+7BHLKOaucRB62+6wKGEj75bX31nxtLiPFFHB0GHIiekwqJBypcIeQ==","size":579682}];
+          const summary=JSON.parse(fs.readFileSync('stage-summary.json','utf8'));if(summary.complete!==true||summary.published!==false||summary.packages.length!==4||new Set(summary.packages.map(x=>x.name)).size!==4)throw Error('Incomplete coordinated staging');
+          for(const item of expected){const receipt=summary.packages.find(x=>x.name===item.name);if(!receipt||receipt.version!==item.version||receipt.sha256!==item.sha256||receipt.integrity!==item.integrity||receipt.published!==false||receipt.approvalRequired!==true)throw Error('Unexpected stage receipt');const bytes=fs.readFileSync(receipt.downloadedFilename);if(createHash('sha256').update(bytes).digest('hex')!==item.sha256||'sha512-'+createHash('sha512').update(bytes).digest('base64')!==item.integrity||bytes.length!==item.size)throw Error('Staged download changed');}
+          console.log('All four staged downloads match reviewed bytes. Maintainer npm approval remains required.');
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coordinated-staging-receipts
+          if-no-files-found: warn
+          path: |-
+            releases/coordinated-icons-ui-charts-20261017/stage-data/*.json
+            releases/coordinated-icons-ui-charts-20261017/stage-summary.json

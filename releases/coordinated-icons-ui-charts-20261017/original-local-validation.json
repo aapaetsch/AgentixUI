@@ -1,0 +1,40 @@
+{
+  "role": "Independent Dev Runner release-readiness verification",
+  "sourceCommit": "4fa6f4407bb8577cfd4ce56055a3e9bacd4e63ec",
+  "host": "Windows, Node v22.22.2",
+  "commands": [
+    {"command": "npm run icons:check", "exitCode": 0, "log": "icons-check.log", "detail": "158 icons and 634 deterministic files; migration check passed"},
+    {"command": "npm run lint", "exitCode": 0, "log": "lint.log", "detail": "Zero errors; ten existing hook dependency warnings"},
+    {"command": "npm run typecheck", "exitCode": 0, "log": "typecheck.log", "detail": "All four packages passed"},
+    {"command": "npm test", "exitCode": 0, "log": "test.log", "detail": "265 tests in 44 files passed: icons 15; UI 75; charts 20; market 155, including five new volume-axis tests"},
+    {"command": "npm run build", "exitCode": 0, "log": "build.log", "detail": "All four packages, declarations and styles passed; current dist includes volume-axis fix"},
+    {"command": "npm run build-storybook", "exitCode": 0, "log": "storybook.log", "detail": "Current source including dialog import-case correction and volume-axis fix passed; preview built in 42 seconds"}
+  ],
+  "linuxSourceAudit": {
+    "relativeImportsChecked": 1944,
+    "unresolvedOrWrongCaseOrUntrackedRelativeImports": [],
+    "missingTrackedReleaseInputs": [],
+    "detail": "Audited tracked case-sensitive import targets across UI, icons, charts, market charts and Storybook; checked raw SVGs/catalog/scripts, chart style configurations, licenses and notices"
+  },
+  "workflowReview": {
+    "tag": "v0.2.0-beta.3",
+    "targets": ["aapaetsch-icons@0.1.0-beta.0", "aapaetsch-ui-kit@0.2.0-beta.3", "aapaetsch-charts@0.1.0-beta.0", "aapaetsch-charts-market@0.1.0-beta.2"],
+    "allExactVersionsAbsentAtReview": true,
+    "iconsBuiltBeforeSourceChecks": true,
+    "frozenArchivesAndIntegrityEvidence": true,
+    "uploadIncludesHiddenArchiveDirectory": true,
+    "publishesFrozenArchivesWithProvenance": true,
+    "iconsPublishedFirst": true,
+    "blockingFindings": []
+  },
+  "correctedReadinessFindings": [
+    "Dialog story imports ../Button and ../Input corrected to tracked lowercase paths for Linux",
+    "Detected volume-axis source changes after the earlier final build; repeated all current-source checks and build before candidate refresh"
+  ],
+  "warnings": ["Existing hooks warnings", "Expected invalid-data test diagnostics and existing MarketChart act warnings", "Existing Tailwind ambiguity and outdated Browserslist data", "Existing Storybook Rollup sourcemap-location diagnostics and large-chunk warnings"],
+  "limitations": [
+    "Actual clean Linux execution and npm authentication/provenance must be confirmed by GitHub Actions; local verification ran on Windows",
+    "Parent will refresh exact current candidates and rerun packed consumers before publication",
+    "No publication, installation, Git mutations or implementation edits performed by this agent"
+  ]
+}
