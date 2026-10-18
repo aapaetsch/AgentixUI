@@ -1,0 +1,91 @@
+diff --git a/charts-market/src/engine/canvas-engine.ts b/charts-market/src/engine/canvas-engine.ts
+index 5bdd85f..fcfccab 100644
+--- a/charts-market/src/engine/canvas-engine.ts
++++ b/charts-market/src/engine/canvas-engine.ts
+@@ -433,6 +433,16 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
+       width: Math.max(1, p.width - this.plotLeft),
+     }));
+   }
++  private volumePanes() {
++    return this.paneGeometry().filter((pane) => this.panes
++      ? this.panes.find((definition) => definition.id === pane.id)?.showVolume
++      : this.showVolume && pane.id === "volume");
++  }
++  private hasVolumeAxis(paneId: string): boolean {
++    return paneId !== "price" && !this.indicatorSeries.some(
++      (series) => series.placement === "pane" && series.paneId === paneId,
++    );
++  }
+   private reconcilePanes(): void {
+     this.timeScale.setLeftInset(this.plotLeft);
+     const paneIds = this.panes
+@@ -611,10 +621,6 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
+     this.options.onError?.(error);
+     if (!this.scaleOptions.autoScale && this.scaleOptions.manualRange)
+       this.scales.get("price")?.setRange(this.scaleOptions.manualRange);
+-    if (this.showVolume)
+-      this.scales
+-        .get("volume")
+-        ?.autoscale([0, ...visible.map((bar) => bar.volume ?? 0)], undefined);
+     const paneSeries = new Map<string, IndicatorRenderSeries[]>();
+     this.indicatorSeries
+       .filter((series) => series.placement === "pane")
+@@ -635,6 +641,16 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
+       )?.fixedDomain;
+       this.scales.get(paneId)?.autoscale(values, undefined, fixedDomain);
+     });
++    // Explicit volume panes are independent of the legacy showVolume switch.
++    // Keep their axis and histogram in the same supplied volume units.
++    const maximumVolume = visible.reduce((maximum, bar) =>
++      Number.isFinite(bar.volume) ? Math.max(maximum, bar.volume ?? 0) : maximum, 0);
++    this.volumePanes().forEach((pane) => {
++      if (!this.hasVolumeAxis(pane.id)) return;
++      const scale = this.scales.get(pane.id);
++      scale?.setMode("normal");
++      scale?.setRange({minimum: 0, maximum: maximumVolume > 0 ? Math.min(Number.MAX_VALUE, maximumVolume * 1.1) : 1});
++    });
+   }
+ 
+   private layerContext(
+@@ -794,15 +810,11 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
+     startIndex: number,
+     visible: readonly OhlcBar[],
+   ): void {
+-    const panes = this.panes
+-      ? this.paneGeometry().filter(
+-          (p) => this.panes?.find((d) => d.id === p.id)?.showVolume,
+-        )
+-      : this.showVolume
+-        ? this.paneGeometry().filter((p) => p.id === "volume")
+-        : [];
++    const panes = this.volumePanes();
+     panes.forEach((pane) => {
+       const maximum = visible.reduce((n, b) => Math.max(n, b.volume ?? 0), 1);
++      const scale = this.hasVolumeAxis(pane.id) ? this.scales.get(pane.id) : undefined;
++      const baseline = scale?.toCoordinate(0) ?? pane.top + pane.height;
+       const width = Math.max(1, Math.min(12, this.timeScale.barSpacing * 0.7));
+       context.save();
+       context.beginPath();
+@@ -810,10 +822,10 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
+       context.clip();
+       visible.forEach((bar, offset) => {
+         if (isMarketTimeInGap(bar.time, this.discontinuities)) return;
++        if (bar.volume == null || !Number.isFinite(bar.volume) || bar.volume <= 0) return;
+         const height =
+-          ((bar.volume ?? 0) / maximum) *
+-          (pane.height - 30) *
+-          (pane.id === "volume" ? 0.85 : 0.35);
++          scale ? baseline - scale.toCoordinate(bar.volume)! :
++          (bar.volume / maximum) * (pane.height - 30) * (pane.id === "volume" ? 0.85 : 0.35);
+         context.fillStyle =
+           bar.close >= bar.open
+             ? this.options.theme.positive
+@@ -821,7 +833,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
+         context.globalAlpha = 0.25;
+         context.fillRect(
+           this.timeScale.indexToCoordinate(startIndex + offset) - width / 2,
+-          pane.top + pane.height - height,
++          baseline - height,
+           width,
+           height,
+         );
