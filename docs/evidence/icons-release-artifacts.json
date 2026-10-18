@@ -1,6 +1,6 @@
 {
-  "status": "blocked-npm-403",
-  "published": false,
+  "status": "published-exact-versions",
+  "published": true,
   "sourceCommit": "4fa6f4407bb8577cfd4ce56055a3e9bacd4e63ec",
   "releaseTag": "v0.2.0-beta.3",
   "workflow": "https://github.com/aapaetsch/AgentixUI/actions/runs/39088908976",
@@ -43,5 +43,21 @@
       "unpackedSize": 2679047,
       "fileCount": 70
     }
-  ]
+  ],
+  "publicationReceipt": "https://github.com/aapaetsch/AgentixUI/releases/tag/coordinated-candidate-v0.2.0-beta.3",
+  "publicationWorkflow": "https://github.com/aapaetsch/AgentixUI/actions/runs/39090364972",
+  "registryVerification": {
+    "allVersionsExist": true,
+    "allIntegrityValuesMatch": true,
+    "allHaveProvenanceAttestations": true
+  },
+  "portfolioInstallation": {
+    "ui": "0.2.0-beta.3",
+    "market": "0.1.0-beta.2",
+    "icons": "0.1.0-beta.0",
+    "approvedLockSha256": "221e1ab14b31d3dd4348f56554000fa595f7302d71645f6c712bdb2fc493162c",
+    "installedManifestsVerified": true,
+    "strictPolicyVerified": true
+  },
+  "pendingFollowUp": "Market beta alias still selects 0.1.0-beta.1-refinement.20261017.2; use exact 0.1.0-beta.2."
 }

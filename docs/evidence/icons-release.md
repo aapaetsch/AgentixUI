@@ -15,12 +15,18 @@ The refreshed local archives passed the clean React 18 ESM/CommonJS chart/UI con
 
 [GitHub release workflow](https://github.com/aapaetsch/AgentixUI/actions/runs/39088908976) builds and validates from the immutable tag, freezes archives, saves their integrity evidence, and publishes those exact archives with provenance, icons first.
 
-All Linux checks passed, including Next.js, React 18/19 packed consumers, and Storybook. The first publication (`aapaetsch-icons`) was rejected by npm with `E403: You may not perform that action with these credentials`. Subsequent publication steps were skipped; no release package was published. Provenance signing succeeded before the registry rejected the write.
+All Linux checks passed, including Next.js, React 18/19 packed consumers, and Storybook. The initial publication was rejected with npm E403. That historical run remains failed; the later coordinated release completed publication through reviewed staging and promotion.
 
 The CI archives were downloaded and their SHA-256 values independently verified. Their durable identities are in `icons-release-artifacts.json`; the full inventories remain in the workflow artifact `packages-v0.2.0-beta.3` and local `.icon-validation/github-release/`.
 
-Resume by privately updating the repository's `NPM_TOKEN` secret with a credential authorized to publish these packages, then rerunning the failed release job. Do not put a token in source, evidence, or chat. After publication, compare registry integrity against the archived CI identities before preparing the product lock.
+The [coordinated release receipt](https://github.com/aapaetsch/AgentixUI/releases/tag/coordinated-candidate-v0.2.0-beta.3) records all four published exact versions, source commit, archive hashes and provenance. Its [successful staging workflow](https://github.com/aapaetsch/AgentixUI/actions/runs/39090364972) promoted the original Linux archives without rebuilding them. Current registry metadata was independently checked: every exact version exists, every SHA-512 integrity matches the frozen CI archive, and all four expose provenance attestations.
+
+One alias follow-up remains: market charts' beta tag points at 0.1.0-beta.1-refinement.20261017.2. Use the selected exact version 0.1.0-beta.2. The other three beta aliases point at this release's selected versions. Stable/latest tags were not moved by these verification steps.
 
 ## Portfolio installation
 
-Installation is being coordinated with the active PortfolioTrackAndScreen chart work. Its live manifest and approved lock remain unchanged. Its dependency policy requires separate approval of the resulting exact lock hash before installation. A proposed dependency record or downloaded archive does not imply that installation has happened. Registry publication must succeed before that exact registry lock can be resolved.
+PortfolioTrackAndScreen now pins UI kit 0.2.0-beta.3 and market charts 0.1.0-beta.2. Both installed packages resolve the original icons 0.1.0-beta.0. The unused general-chart package was not added to the application.
+
+The owner separately approved complete lock SHA-256 221e1ab14b31d3dd4348f56554000fa595f7302d71645f6c712bdb2fc493162c and scripts-disabled installation. Actual installed package manifests match those exact versions, and a fresh strict npm-policy verification passes. Product evidence reports frontend typechecking, all 281 core tests, the production build, healthy rebuilt frontend, and both-account desktop/narrow browser acceptance.
+
+Product receipts: E:/Projects/PortfolioTrackAndScreen/dependencies/npm-requests/2026-10-17-coordinated-chart-lock.md and E:/Projects/PortfolioTrackAndScreen/docs/validation/charts/coordinated-release-2026-10-17.md. This adoption does not activate provider acquisition or streaming flags.
