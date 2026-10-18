@@ -1,0 +1,44 @@
+name: Correct selected coordinated market beta tag
+on:
+  push:
+    branches:
+      - release/coordinated-beta-tag-20261017
+    paths:
+      - .github/workflows/promote-reviewed-coordinated-tag.yml
+permissions:
+  contents: read
+concurrency:
+  group: coordinated-market-beta-tag-20261017
+  cancel-in-progress: false
+jobs:
+  correct:
+    if: github.repository == 'aapaetsch/AgentixUI'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: releases/coordinated-beta-tag-20261017
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+          registry-url: https://registry.npmjs.org/
+      - name: Verify exact selected public archive and before tags
+        run: node preflight.mjs
+      - name: Correct only market beta tag
+        run: node apply-tag.mjs
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Verify selected public beta and unchanged latest
+        run: node verify-tag.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coordinated-market-beta-tag-receipt
+          if-no-files-found: warn
+          path: |-
+            releases/coordinated-beta-tag-20261017/before-tag.json
+            releases/coordinated-beta-tag-20261017/tag-fix-receipt.json
