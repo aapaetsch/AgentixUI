@@ -1,0 +1,24 @@
+{
+  "authorizedBy": "Human: Can you publish and then handoff to the portfolio project?",
+  "authorizedAt": "2026-10-20T00:02:17.760Z",
+  "package": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.3-adaptive.1",
+  "parent": "6770d3b8f90abdd5737740a6acf6cff6aabace44",
+  "branch": "release/market-adaptive-20261019",
+  "workflow": ".github/workflows/stage-reviewed-market-adaptive.yml",
+  "releasePath": "releases/market-adaptive-20261019",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-adaptive.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-adaptive.1.tgz",
+      "sha256": "21309360739e23a6c65d051376dbd19fcc53385cb14dfde4f54eb6f8bc612b71",
+      "integrity": "sha512-SQgl+5IiTVQF3vIxt8QKiWopQ14exclkcKka5le9/YXi8/yhE/OkTWt7ExaIkQkyoRq47VH3rt8HeYwALGId8A==",
+      "size": 509607
+    }
+  ],
+  "sourceSha256": "79a75f29089ef8172793996be16f474565b48aae4629f802acacfe83802b5439",
+  "sourceBindingSha256": "354ba2055c6a8a5860e2b4969b45b92787897feb6a6a1035c7b856d4914bee48",
+  "published": false,
+  "qualification": "Promote exact locally reviewed frozen archive with CI provenance; CI performs no rebuild or repack. Workspace version and lock remain unchanged. Portfolio adoption remains subject to its dependency and complete-lock approval gate."
+}

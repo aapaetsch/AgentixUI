@@ -1,0 +1,90 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-19T23:55:11.059Z",
+  "candidate": ".chart-adaptive-width-validation/candidates/adaptive-354ba2055c6a",
+  "packageSha256": "21309360739e23a6c65d051376dbd19fcc53385cb14dfde4f54eb6f8bc612b71",
+  "packageIntegrity": "sha512-SQgl+5IiTVQF3vIxt8QKiWopQ14exclkcKka5le9/YXi8/yhE/OkTWt7ExaIkQkyoRq47VH3rt8HeYwALGId8A==",
+  "packageSize": 509607,
+  "version": "0.1.0-beta.3-adaptive.1",
+  "sourceArchiveSha256": "79a75f29089ef8172793996be16f474565b48aae4629f802acacfe83802b5439",
+  "sourceBindingSha256": "354ba2055c6a8a5860e2b4969b45b92787897feb6a6a1035c7b856d4914bee48",
+  "runtimeBindingSha256": "1de78ce4aea5a29bf667c06983e48385db2d18b2bf3be19cd175a31dc3010b09",
+  "sourceFiles": 140,
+  "packageFiles": 72,
+  "distFiles": 63,
+  "evidenceFiles": 41,
+  "screenshots": 25,
+  "manifestOnlyVersionOverride": true,
+  "sourceAndPackedDistMatchValidatedBytes": true,
+  "sourceArchiveInventoryMatches": true,
+  "evidenceAndLogsHashVerified": true,
+  "nativeModules": [
+    {
+      "subpath": ".",
+      "exports": 159
+    },
+    {
+      "subpath": "./core",
+      "exports": 21
+    },
+    {
+      "subpath": "./indicators",
+      "exports": 24
+    },
+    {
+      "subpath": "./drawings",
+      "exports": 81
+    },
+    {
+      "subpath": "./overlays",
+      "exports": 9
+    },
+    {
+      "subpath": "./controls",
+      "exports": 1
+    },
+    {
+      "subpath": "./workspace",
+      "exports": 7
+    }
+  ],
+  "packedSsrThemes": [
+    "light",
+    "dark"
+  ],
+  "license": "MIT",
+  "hooks": [],
+  "dependencies": {
+    "aapaetsch-icons": "0.1.0-beta.0"
+  },
+  "peerDependencies": {
+    "aapaetsch-ui-kit": ">=0.2.0-beta.3",
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0"
+  },
+  "protectedBaselineCounts": {
+    "dependencyHashes": 14,
+    "rootUiIconHashes": 2748,
+    "priorCandidateHashes": 117,
+    "priorValidationReceipts": 3
+  },
+  "headUnchanged": true,
+  "outsideScopeChanges": [],
+  "sealedReceiptSha256": "f33ce18b5cda10e4a427edbbc73a5c5d57dc0e98b4fc5c7742301a5154f794d1",
+  "published": false,
+  "limitations": [
+    "Local immutable candidate; separate publication approval required.",
+    "Browser/golden claims are parent evidence, hash-verified here; Dev Runner did not repeat browser actions.",
+    "Read-only filesystem attributes are verified separately in candidate-readonly.json."
+  ],
+  "readOnlySeal": {
+    "status": "pass",
+    "filesChecked": 117
+  },
+  "packedStrictPublicTypes": {
+    "status": "pass",
+    "skipLibCheck": false,
+    "examples": "charts-market/examples/*.tsx",
+    "log": "candidate-public-typecheck.log"
+  }
+}
