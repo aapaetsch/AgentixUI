@@ -1,0 +1,90 @@
+name: Stage reviewed value-only market endpoint archive
+on:
+  push:
+    branches:
+      - release/market-endpoints-20261020
+    paths:
+      - .github/workflows/stage-reviewed-market-endpoints.yml
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: stage-market-endpoints-20261020
+  cancel-in-progress: false
+jobs:
+  stage:
+    if: github.repository == 'aapaetsch/AgentixUI'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: releases/market-endpoints-20261020
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+          registry-url: https://registry.npmjs.org/
+      - name: Prepare verified isolated staging-capable npm CLI
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import {createHash} from 'node:crypto';
+          import {execFileSync} from 'node:child_process';
+          const directory = path.join(process.env.RUNNER_TEMP,'npm-stage-12.2.0');
+          fs.mkdirSync(directory,{recursive:true});
+          const response = await fetch('https://registry.npmjs.org/npm/-/npm-12.2.0.tgz');
+          if (!response.ok) throw Error('npm CLI download failed: '+response.status);
+          const bytes = Buffer.from(await response.arrayBuffer());
+          const integrity = 'sha512-'+createHash('sha512').update(bytes).digest('base64');
+          if (integrity !== 'sha512-ZsJjKpTnlmSXOLLXiU1xDCzC4Wlok4IwZmh/aw2KUuXytU7q6qMv/cUT7MoeSf95Slwuw/lRXYefGzGCspHPNQ==') throw Error('npm CLI integrity mismatch');
+          const archive = path.join(directory,'npm.tgz');
+          fs.writeFileSync(archive,bytes);
+          execFileSync('tar',['-xzf',archive,'-C',directory]);
+          const cli = path.join(directory,'package/bin/npm-cli.js');
+          if (execFileSync(process.execPath,[cli,'--version'],{encoding:'utf8'}).trim() !== '12.2.0') throw Error('Unexpected npm version');
+          fs.appendFileSync(process.env.GITHUB_ENV,`NPM_STAGING_CLI=${cli}\n`);
+          console.log('Verified npm 12.2.0 CLI prepared without replacing the runner npm installation.');
+          NODE
+      - name: Verify exact reviewed archive and source
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';import {createHash} from 'node:crypto';import {execFileSync} from 'node:child_process';
+          const hash=(b,a='sha256',e='hex')=>createHash(a).update(b).digest(e);
+          const expected=[{"name":"aapaetsch-charts-market","version":"0.1.0-beta.3-endpoints.1","filename":"aapaetsch-charts-market-0.1.0-beta.3-endpoints.1.tgz","sha256":"2f9f7b2d66beb7f09a27777783c9a9983add5f6644f3bbd413f0a134d91ff90f","integrity":"sha512-GwsOY8KByoLAt0Mzz/tiLh5RvddiqIaIjuUgrYeGN5fM7twxZ4XtnRB2xxpvv41AffF4DbsmtfCMnhsRre4eFw==","size":528671}];
+          if(hash(fs.readFileSync('reviewed-source.tar.gz'))!=="37e32ae14065a7def21f1c023e5278d59a5f0b17f8d1c3e2e0fc203849c5c6cb")throw Error('Reviewed source mismatch');
+          if(hash(fs.readFileSync('candidate-receipt.json'))!=="9995749397c7a3bb00c5f6c5aed6ee60b529f50e11b0431edc7062358fb97ee6")throw Error('Candidate receipt mismatch');
+          for(const p of expected){const b=fs.readFileSync(p.filename);if(hash(b)!==p.sha256||'sha512-'+hash(b,'sha512','base64')!==p.integrity||b.length!==p.size)throw Error('Reviewed archive mismatch');const m=JSON.parse(execFileSync('tar',['-xOf',p.filename,'package/package.json'],{encoding:'utf8'}));if(m.name!==p.name||m.version!==p.version||m.publishConfig?.provenance!==true||m.publishConfig?.tag!=='beta'||m.publishConfig?.access!=='public')throw Error('Package identity mismatch');}
+          console.log('Exact reviewed value-only endpoint archive and source verified; no rebuild or repack.');
+          NODE
+      - name: Stage exact reviewed archive and verify registry download
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';import{createHash}from'node:crypto';import{execFileSync}from'node:child_process';
+          const expected=[{"name":"aapaetsch-charts-market","version":"0.1.0-beta.3-endpoints.1","filename":"aapaetsch-charts-market-0.1.0-beta.3-endpoints.1.tgz","sha256":"2f9f7b2d66beb7f09a27777783c9a9983add5f6644f3bbd413f0a134d91ff90f","integrity":"sha512-GwsOY8KByoLAt0Mzz/tiLh5RvddiqIaIjuUgrYeGN5fM7twxZ4XtnRB2xxpvv41AffF4DbsmtfCMnhsRre4eFw==","size":528671}];
+          if(!process.env.NPM_STAGING_CLI)throw Error('Missing verified staging CLI');
+          const hash=(bytes,algorithm='sha256',encoding='hex')=>createHash(algorithm).update(bytes).digest(encoding),newline=String.fromCharCode(10);
+          fs.mkdirSync('stage-data',{recursive:true});const receipts=[];
+          for(const item of expected){
+           const output=execFileSync(process.execPath,[process.env.NPM_STAGING_CLI,'stage','publish','./'+item.filename,'--provenance','--access','public','--tag','beta','--ignore-scripts','--registry=https://registry.npmjs.org/','--json'],{encoding:'utf8'});fs.writeFileSync('stage-data/'+item.name+'-publish.json',output);
+           const raw=JSON.parse(output),entry=raw.stageId?raw:raw[item.name]??(Array.isArray(raw)?raw[0]:null),id=entry?.stageId;
+           if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id??'')||entry.name!==item.name||entry.version!==item.version)throw Error('Invalid stage identity');
+           for(const operation of ['view','download'])fs.writeFileSync('stage-data/'+item.name+'-'+operation+'.json',execFileSync(process.execPath,[process.env.NPM_STAGING_CLI,'stage',operation,id,'--json','--registry=https://registry.npmjs.org/'],{encoding:'utf8'}));
+           const filename=`${item.name}-${item.version}-${id}.tgz`,bytes=fs.readFileSync(filename),sha256=hash(bytes),integrity='sha512-'+hash(bytes,'sha512','base64'),pm=JSON.parse(execFileSync('tar',['-xOf',filename,'package/package.json'],{encoding:'utf8'}));
+           if(sha256!==item.sha256||integrity!==item.integrity||bytes.length!==item.size||pm.name!==item.name||pm.version!==item.version)throw Error('Registry-staged bytes mismatch: '+item.name);
+           const receipt={...item,stageId:id,downloadedFilename:filename,sha256,integrity,published:false,approvalRequired:true};receipts.push(receipt);fs.writeFileSync('stage-data/'+item.name+'-staging-receipt.json',JSON.stringify(receipt,null,2)+newline);fs.writeFileSync('stage-summary.json',JSON.stringify({sourceCommit:"dc166fc6337c255a9fe5a238d44e3ecc672ad603",published:false,approvalRequired:true,complete:receipts.length===1,packages:receipts},null,2)+newline);
+          }
+          NODE
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: endpoint-staging-receipts
+          if-no-files-found: warn
+          path: |-
+            releases/market-endpoints-20261020/stage-data/*.json
+            releases/market-endpoints-20261020/stage-summary.json

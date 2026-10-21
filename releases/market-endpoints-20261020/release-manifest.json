@@ -1,0 +1,25 @@
+{
+  "authorizedBy": "Human: publish and commit and push",
+  "authorizedAt": "2026-10-21T01:01:20.764Z",
+  "package": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.3-endpoints.1",
+  "parent": "dc166fc6337c255a9fe5a238d44e3ecc672ad603",
+  "reviewBase": "6770d3b8f90abdd5737740a6acf6cff6aabace44",
+  "branch": "release/market-endpoints-20261020",
+  "workflow": ".github/workflows/stage-reviewed-market-endpoints.yml",
+  "releasePath": "releases/market-endpoints-20261020",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-endpoints.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-endpoints.1.tgz",
+      "sha256": "2f9f7b2d66beb7f09a27777783c9a9983add5f6644f3bbd413f0a134d91ff90f",
+      "integrity": "sha512-GwsOY8KByoLAt0Mzz/tiLh5RvddiqIaIjuUgrYeGN5fM7twxZ4XtnRB2xxpvv41AffF4DbsmtfCMnhsRre4eFw==",
+      "size": 528671
+    }
+  ],
+  "sourceSha256": "37e32ae14065a7def21f1c023e5278d59a5f0b17f8d1c3e2e0fc203849c5c6cb",
+  "sourceBindingSha256": "0b8fe7ce9baf23b2531d7e4bd6d9ba15db5060370b01ce26f6a9070849b94580",
+  "published": false,
+  "qualification": "Promote exact locally reviewed frozen archive with CI provenance; CI performs no rebuild or repack. Workspace version and lock remain unchanged. Portfolio adoption remains subject to its dependency and complete-lock approval gate."
+}

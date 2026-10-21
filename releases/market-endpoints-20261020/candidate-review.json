@@ -1,0 +1,120 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-20T20:19:54.787Z",
+  "candidate": ".chart-readability-validation/endpoint-alignment/candidates/endpoint-labels-0b8fe7ce9baf",
+  "package": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.3-endpoints.1",
+  "packageSha256": "2f9f7b2d66beb7f09a27777783c9a9983add5f6644f3bbd413f0a134d91ff90f",
+  "packageIntegrity": "sha512-GwsOY8KByoLAt0Mzz/tiLh5RvddiqIaIjuUgrYeGN5fM7twxZ4XtnRB2xxpvv41AffF4DbsmtfCMnhsRre4eFw==",
+  "size": 528671,
+  "sourceArchiveSha256": "37e32ae14065a7def21f1c023e5278d59a5f0b17f8d1c3e2e0fc203849c5c6cb",
+  "sourceBindingSha256": "0b8fe7ce9baf23b2531d7e4bd6d9ba15db5060370b01ce26f6a9070849b94580",
+  "runtimeBindingSha256": "0b1fbb04b9b21254ec9fb189ded2aab7ce255698579678fb4f92bd4af1c049b9",
+  "sourceFiles": 153,
+  "packageFiles": 74,
+  "distFiles": 63,
+  "evidenceFiles": 27,
+  "screenshots": 24,
+  "manifestOnlyVersionOverride": true,
+  "sourceAndDistMatchLatestValidatedBytes": true,
+  "evidenceHashesVerified": true,
+  "externalValidationLogHashesVerified": true,
+  "nativeModules": [
+    {
+      "subpath": ".",
+      "exports": 159
+    },
+    {
+      "subpath": "./core",
+      "exports": 21
+    },
+    {
+      "subpath": "./indicators",
+      "exports": 24
+    },
+    {
+      "subpath": "./drawings",
+      "exports": 81
+    },
+    {
+      "subpath": "./overlays",
+      "exports": 9
+    },
+    {
+      "subpath": "./controls",
+      "exports": 1
+    },
+    {
+      "subpath": "./workspace",
+      "exports": 7
+    }
+  ],
+  "packedSsrThemes": [
+    "light",
+    "dark"
+  ],
+  "packedSsrCases": 6,
+  "declarationsPresent": true,
+  "license": "MIT",
+  "dependencies": {
+    "aapaetsch-icons": "0.1.0-beta.0"
+  },
+  "peerDependencies": {
+    "aapaetsch-ui-kit": ">=0.2.0-beta.3",
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0"
+  },
+  "protectedBaselineCounts": {
+    "dependencyHashes": 14,
+    "rootUiIconHashes": 2748,
+    "priorCandidateHashes": 341,
+    "priorValidationReceipts": 12
+  },
+  "headUnchanged": true,
+  "outsideScopeChanges": [],
+  "receiptSha256": "9995749397c7a3bb00c5f6c5aed6ee60b529f50e11b0431edc7062358fb97ee6",
+  "candidateUnchanged": true,
+  "sealing": "Pending parent read-only seal after this independent pass.",
+  "testsQualification": {
+    "full": 214,
+    "files": 36,
+    "description": "Latest frozen runtime full suite plus one independent inspection regression."
+  },
+  "published": false,
+  "limitations": [
+    "No installation/download/publication/remote operation or implementation/candidate writes.",
+    "Candidate copied27evidencefiles include24screenshots and3JSONreceipts; full execution logs are hash-bound and verified from the external validation directory.",
+    "Browser/network-buffer qualification comes from parent receipt; independent review verifies its source binding and hashes, not a new browser run.",
+    "Strict curated66 story types pass; legacy broad-story diagnostics remain explicitly disclosed in final-results.json."
+  ],
+  "packedStrictPublicTypes": {
+    "status": "pass",
+    "strict": true,
+    "skipLibCheck": false,
+    "examples": "charts-market/examples/*.tsx",
+    "contract": "public-contract.ts",
+    "log": "candidate-public-typecheck.log",
+    "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "browserEvidence": {
+    "status": "verified-parent-receipt",
+    "cases": 16,
+    "interactionRecords": 16,
+    "screenshots": 24,
+    "screenshotHashesCrossChecked": true,
+    "network": {
+      "scope": "Per-case request observations for15endpoint fixtures",
+      "allObservedOriginsLocal": true,
+      "truncated": false,
+      "qualification": "Local static Storybook asset requests only in recorded fixtures; zero-financial-source/calculate/runtime operations independently covered by unit spies."
+    },
+    "limits": [
+      "Synthetic supplied samples only; no real Portfolio cached acceptance or product adoption.",
+      "Desktop Chromium with resized viewport and DPR1/2, not physical mobile or Safari/Firefox.",
+      "Font sizes11/16.5 tested; not an exhaustive OS/font/browser-zoom matrix.",
+      "Manual keyboard/accessibility-name/evidence checks; automated axe not run for these stories.",
+      "No dependency downloads or new React-peer installation."
+    ]
+  },
+  "reviewCompleteAt": "2026-10-20T20:20:43.948Z"
+}
