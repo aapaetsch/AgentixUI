@@ -5,6 +5,10 @@ export interface VolumeProfileHit {
   profileId: string;
   row: VolumeProfileResult["rows"][number];
 }
+/** Shared by Canvas and the public legend so defaults and overrides cannot diverge. */
+export function volumeProfileColors(settings: VolumeProfileState) {
+  return {up: settings.upColor ?? '#168ac4', down: settings.downColor ?? '#d5a51f', poc: settings.pocColor ?? '#ef4444'};
+}
 /** Precalculated results are reused for every frame, including crosshair movement. */
 export function createVolumeProfileLayer(
   settings: VolumeProfileState,
@@ -30,7 +34,7 @@ export function createVolumeProfileLayer(
     id: settings.id,
     paneId: "price",
     zIndex: 15,
-    draw({ canvas: c, panes, priceToCoordinate, theme }) {
+    draw({ canvas: c, panes, priceToCoordinate, theme, resolveColor = color => color }) {
       hitBoxes = [];
       if (!settings.visible) return;
       const pane = panes.find((p) => p.id === "price");
@@ -64,8 +68,8 @@ export function createVolumeProfileLayer(
         const upWidth = settings.splitVolume && row.volume == null
           ? (barWidth * row.upVolume) / (row.upVolume + row.downVolume || 1)
           : barWidth;
-        const upColor = settings.upColor ?? "#168ac4";
-        const downColor = settings.downColor ?? "#d5a51f";
+        const profileColors = volumeProfileColors(settings);
+        const upColor = resolveColor(profileColors.up), downColor = resolveColor(profileColors.down);
         const downFirst =
           settings.splitVolume && row.volume == null && settings.placement === "right";
         const firstWidth = downFirst ? barWidth - upWidth : upWidth;
@@ -95,7 +99,7 @@ export function createVolumeProfileLayer(
         const y = priceToCoordinate(value);
         if (y == null) return;
         c.strokeStyle =
-          label === "POC" ? (settings.pocColor ?? "#ef4444") : theme.text;
+          label === "POC" ? resolveColor(volumeProfileColors(settings).poc) : theme.text;
         c.setLineDash(label === "POC" ? [] : [3, 4]);
         c.beginPath();
         c.moveTo(

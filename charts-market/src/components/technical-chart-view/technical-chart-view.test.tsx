@@ -61,8 +61,8 @@ describe("TechnicalChartView controlled intents", () => {
     await waitFor(() =>
       expect(screen.getAllByRole("separator")).toHaveLength(3),
     );
-    expect(screen.getByLabelText("RSI pane legend")).toBeInTheDocument();
-    expect(screen.getByLabelText("MACD pane legend")).toBeInTheDocument();
+    expect(screen.getByLabelText("Relative strength index 14 pane legend")).toBeInTheDocument();
+    expect(screen.getByLabelText("MACD 12, 26, 9 pane legend")).toBeInTheDocument();
     expect(screen.getByLabelText("Volume profile summary")).toHaveTextContent(
       "Approximate",
     );

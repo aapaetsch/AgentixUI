@@ -6,6 +6,9 @@ import type {
   TechnicalPaneState,
 } from "../core";
 import { layoutAxisBadges, type AxisBadge } from "./axis-badges";
+import {automaticStudyDomain, layoutStudyTicks, tickPrecision, studyTickLabels} from './study-scale';
+import {adaptiveBarGeometry} from './bar-geometry';
+import {MovingAverageAxisLayer, type MovingAverageLabel} from './moving-average-labels';
 import type {
   ChartOverlayState,
   DrawingPoint,
@@ -80,6 +83,9 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
   };
   private lastNotifiedBar = -1;
   private canvas: HTMLCanvasElement;
+  private surface: HTMLDivElement;
+  private movingAverageAxis: MovingAverageAxisLayer;
+  private endpointAxes = new Map<string, MovingAverageAxisLayer>();
   private context: CanvasRenderingContext2D | null;
   private store: IndexedOhlcStore;
   private timeScale: LogicalTimeScale;
@@ -121,14 +127,14 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     this.store = new IndexedOhlcStore(options.data);
     this.width = Math.max(1, container.clientWidth || 1);
     this.height = Math.max(1, options.height);
-    this.timeScale = new LogicalTimeScale(this.store, this.width, AXIS_WIDTH);
+    this.timeScale = new LogicalTimeScale(this.store, this.width, this.axisWidth);
     this.timeScale.setAxis(options.timeAxis);
     this.timeAxisKey = JSON.stringify(options.timeAxis ?? { mode: "compressed" });
     this.discontinuities = options.discontinuities ?? [];
     const geometryErrors = validateMarketTimeGeometry(options.timeAxis, this.discontinuities);
     if (geometryErrors.length) throw new Error(geometryErrors.join(" "));
     this.layout = new PaneLayout(
-      this.width - AXIS_WIDTH,
+      this.width - this.axisWidth,
       this.height,
       TIME_AXIS_HEIGHT,
     );
@@ -148,7 +154,11 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     this.canvas.style.touchAction = "pan-y";
     this.canvas.style.userSelect = "none";
     this.context = this.canvas.getContext("2d");
-    this.container.appendChild(this.canvas);
+    this.surface = document.createElement('div');
+    this.surface.className = 'relative w-full';
+    this.surface.appendChild(this.canvas);
+    this.container.appendChild(this.surface);
+    this.movingAverageAxis = new MovingAverageAxisLayer(this.surface);
     this.scheduler = new RenderScheduler(() => this.render());
     this.panes = options.panes;
     if (this.panes) this.canvas.style.touchAction = "none";
@@ -172,7 +182,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
   }
 
   setTheme(theme: MarketChartTheme): void { this.options.theme = {...theme}; this.badgeColors.clear(); this.scheduler.invalidate(); }
-  setPresentation(presentation: MarketChartPresentation): void { validateMarketPresentation(presentation); this.options.presentation=presentation; this.scheduler.invalidate(); }
+  setPresentation(presentation: MarketChartPresentation): void { validateMarketPresentation(presentation); this.options.presentation=presentation; this.resize(this.width, this.height); }
   setTimeAxis(axis?: MarketTimeAxis): void {
     const key = JSON.stringify(axis ?? { mode: "compressed" });
     if (key === this.timeAxisKey) return;
@@ -346,7 +356,8 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     this.canvas.height = Math.round(this.height * ratio);
     this.canvas.style.height = `${this.height}px`;
     this.timeScale.setWidth(this.width);
-    this.layout.setGeometry(this.width - AXIS_WIDTH, this.height);
+    this.timeScale.setRightInset(this.axisWidth);
+    this.layout.setGeometry(this.width - this.axisWidth, this.height);
     this.scheduler.invalidate();
   }
   fitContent(metadata:MarketChartChangeMetadata={source:"api"}): void {
@@ -416,9 +427,16 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     this.scheduler.destroy();
     this.unbindEvents();
     if (this.longPressTimer) clearTimeout(this.longPressTimer);
-    this.canvas.remove();
+    this.movingAverageAxis.destroy();
+    this.endpointAxes.forEach(layer => layer.destroy());
+    this.surface.remove();
   }
 
+  private get allEndpointValues(): boolean { return this.options.presentation?.badges?.endpointValues === 'all-visible' && this.options.presentation.badges.visible !== false; }
+  private get endpointFontSize(): number { return Math.max(11, this.options.presentation?.badges?.fontSize ?? 11) * Math.max(1, (Number.parseFloat(getComputedStyle(this.container).fontSize) || 16) / 16); }
+  private get endpointGutterWidth(): number { return this.allEndpointValues ? Math.ceil(Math.max(40, Math.min(Math.max(96, this.endpointFontSize * 6.5 + 28), this.width - AXIS_WIDTH - this.plotLeft - 48))) : 0; }
+  private get axisWidth(): number { return AXIS_WIDTH + this.endpointGutterWidth; }
+  private get rightScaleX(): number { return this.width - AXIS_WIDTH; }
   private get plotLeft(): number {
     return this.panes?.some(
       (p) => p.visible !== false && p.scaleSide === "left",
@@ -562,6 +580,8 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
         layer.draw(layerContext);
         context.restore();
       });
+    this.drawMovingAverageLabels();
+    this.drawEndpointLabels();
   }
 
   private configureScales(
@@ -575,22 +595,23 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     this.scales.forEach((scale, id) => {
       const pane = paneById.get(id);
       if (pane) {
+        const header = this.options.presentation?.paneHeaderHeights?.[id] ?? 28;
         scale.setGeometry(
           pane.top +
             (this.panes
               ? id === "price"
                 ? pane.width < 400
-                  ? 60
-                  : 52
-                : 28
+                  ? header + 32
+                  : this.options.presentation?.paneHeaderHeights?.[id] != null ? header + 32 : header + 24
+                : header
               : 6),
           pane.height -
             (this.panes
               ? id === "price"
                 ? pane.width < 400
-                  ? 88
-                  : 80
-                : 38
+                  ? header + 60
+                  : this.options.presentation?.paneHeaderHeights?.[id] != null ? header + 60 : header + 52
+                : header + 10
               : 12),
         );
         scale.setMode(
@@ -604,9 +625,12 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     this.indicatorSeries
       .filter((series) => series.placement === "overlay")
       .forEach((series) =>
-        this.visibleStudyPoints(series)
+        this.visibleStudyPoints(series, false)
           .forEach((point) => {
-            if (point.value != null) priceValues.push(point.value);
+            // A tagged MA that cannot exist on a log axis remains in its explicit
+            // unpositioned value box; it must not blank otherwise valid OHLC data.
+            const unpositionableMovingAverage = (this.allEndpointValues || this.options.presentation?.badges?.movingAverages === 'all-visible' && series.axisLabel?.kind === 'moving-average') && this.scaleMode === 'logarithmic' && point.value != null && point.value <= 0;
+            if (point.value != null && !unpositionableMovingAverage) priceValues.push(point.value);
           }),
       );
     const error =
@@ -632,14 +656,16 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
       );
     paneSeries.forEach((seriesGroup, paneId) => {
       const values = seriesGroup.flatMap((series) =>
-        this.visibleStudyPoints(series)
+        this.visibleStudyPoints(series, false)
           .filter((point) => point.value != null)
           .map((point) => point.value as number),
       );
       const fixedDomain = seriesGroup.find(
         (series) => series.fixedDomain,
       )?.fixedDomain;
-      this.scales.get(paneId)?.autoscale(values, undefined, fixedDomain);
+      const references = seriesGroup.flatMap(series => series.referenceLines?.map(line => line.value) ?? []);
+      const policy = seriesGroup.find(series => series.automaticDomain)?.automaticDomain;
+      this.scales.get(paneId)?.autoscale(values, undefined, fixedDomain ?? automaticStudyDomain(values, references, policy));
     });
     // Explicit volume panes are independent of the legacy showVolume switch.
     // Keep their axis and histogram in the same supplied volume units.
@@ -659,7 +685,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     const plotBounds = {
       x: this.plotLeft,
       y: 0,
-      width: this.width - AXIS_WIDTH - this.plotLeft,
+      width: this.width - this.axisWidth - this.plotLeft,
       height: this.height - TIME_AXIS_HEIGHT,
     };
     const reservedWidth = Math.min(
@@ -681,7 +707,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
             x:
               this.panes?.find((d) => d.id === p.id)?.scaleSide === "left"
                 ? 0
-                : this.width - AXIS_WIDTH,
+                : this.rightScaleX,
             y: p.top,
             width: AXIS_WIDTH,
             height: p.height,
@@ -697,6 +723,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
       visibleData,
       panes: this.paneGeometry(),
       theme: this.options.theme,
+      resolveColor: color => this.presentationColor(color, this.options.theme.primary),
       canvas: this.context!,
       timeToCoordinate: (time) => this.timeScale.timeToCoordinate(time),
       priceToCoordinate: (price, paneId = "price") =>
@@ -705,6 +732,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
   }
 
   private drawGridAndAxes(context: CanvasRenderingContext2D): void {
+    this.referenceTickPositions.clear();
     context.strokeStyle = this.options.theme.grid;
     context.lineWidth = 1;
     context.fillStyle = this.options.theme.text;
@@ -715,10 +743,11 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
       const definition = this.panes?.find((p) => p.id === pane.id);
       if (definition?.collapsed) return;
       const axisX =
-        definition?.scaleSide === "left" ? 7 : this.width - AXIS_WIDTH + 7;
+        definition?.scaleSide === "left" ? 7 : this.rightScaleX + 7;
       const bounded = this.indicatorSeries.find(
         (s) => s.paneId === pane.id && s.fixedDomain,
       );
+      const references = [...new Set(this.indicatorSeries.filter(series => series.placement === 'pane' && series.paneId === pane.id).flatMap(series => series.referenceLines?.map(line => line.value) ?? []))];
       const ticks = bounded?.fixedDomain
         ? [
             ...new Set([
@@ -729,15 +758,19 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
             ]),
           ].sort((a, b) => a - b)
         : scale.ticks(Math.max(2, Math.floor(pane.height / (this.options.presentation?.axis?.minimumTickSpacing ?? 48))));
-      ticks.forEach((value) => {
-        const y = scale.toCoordinate(value);
-        if (y == null) return;
+      const fontSize = this.options.presentation?.axis?.fontSize ?? 11;
+      const contentTop = pane.top + (this.options.presentation?.paneHeaderHeights?.[pane.id] ?? 28);
+      const placed = layoutStudyTicks(ticks, references, value => scale.toCoordinate(value), contentTop, pane.top + pane.height - 7, Math.max(fontSize + 8, Math.min(this.options.presentation?.axis?.minimumTickSpacing ?? 48, 32)));
+      this.referenceTickPositions.set(pane.id, placed.filter(tick => tick.reference).map(tick => tick.y));
+      const precision = definition?.precision ?? (pane.id === 'price' ? 2 : bounded ? 0 : tickPrecision(placed.map(tick => tick.value)));
+      const automaticLabels = definition?.precision == null && pane.id !== 'price' && !bounded && (scale.mode === 'normal' || scale.mode === 'logarithmic') ? studyTickLabels(placed.map(tick => tick.value)) : undefined;
+      placed.forEach(({value, y}, index) => {
         context.beginPath();
         context.moveTo(pane.left ?? 0, y + 0.5);
         context.lineTo((pane.left ?? 0) + pane.width, y + 0.5);
         if(this.options.presentation?.grid?.horizontal!==false){context.globalAlpha=this.options.presentation?.grid?.opacity??1;context.stroke();context.globalAlpha=1;}
         this.axisText(context,
-          scale.formatPrice(value, bounded ? 0 : (definition?.precision ?? 2)),
+          automaticLabels?.[index] ?? scale.formatPrice(value, precision),
           axisX,
           y + 4,
         );
@@ -751,13 +784,13 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     });
     const timeTickCount = Math.max(
       1,
-      Math.min(12, Math.floor((this.width - AXIS_WIDTH - this.plotLeft) / (this.options.presentation?.axis?.timeTickSpacing ?? 160))),
+      Math.min(12, Math.floor((this.width - this.axisWidth - this.plotLeft) / (this.options.presentation?.axis?.timeTickSpacing ?? 160))),
     );
     let previousLabelEnd=-Infinity;
     for (let tick = 0; tick <= timeTickCount; tick += 1) {
       const x =
         this.plotLeft +
-        ((this.width - AXIS_WIDTH - this.plotLeft) * tick) / timeTickCount;
+        ((this.width - this.axisWidth - this.plotLeft) * tick) / timeTickCount;
       context.beginPath();
       context.moveTo(x + 0.5, 0);
       context.lineTo(x + 0.5, this.height - TIME_AXIS_HEIGHT);
@@ -768,12 +801,12 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
           ? undefined
           : this.store.at(this.timeScale.coordinateToIndex(x));
       const tickTime = this.timeScale.isCalendar ? this.timeScale.coordinateToTime(x) : bar?.time;
-      if(tickTime!=null){const label=formatTime(tickTime,this.options.locale,this.options.timeZone),labelWidth=(context.measureText(label)?.width??label.length*6);const left=Math.max(this.plotLeft+2,Math.min(this.width-AXIS_WIDTH-labelWidth-2,x-labelWidth/2));if(left>=previousLabelEnd+8){context.fillText(label,left,this.height-9);previousLabelEnd=left+labelWidth;}}
+      if(tickTime!=null){const label=formatTime(tickTime,this.options.locale,this.options.timeZone),labelWidth=(context.measureText(label)?.width??label.length*6);const left=Math.max(this.plotLeft+2,Math.min(this.width-this.axisWidth-labelWidth-2,x-labelWidth/2));if(left>=previousLabelEnd+8){context.fillText(label,left,this.height-9);previousLabelEnd=left+labelWidth;}}
     }
     context.strokeStyle = this.options.theme.border;
     context.beginPath();
-    context.moveTo(this.width - AXIS_WIDTH + 0.5, 0);
-    context.lineTo(this.width - AXIS_WIDTH + 0.5, this.height);
+    context.moveTo(this.width - this.axisWidth + 0.5, 0);
+    context.lineTo(this.width - this.axisWidth + 0.5, this.height);
     context.stroke();
   }
 
@@ -797,6 +830,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
       visible,
       startIndex,
       barSpacing: this.timeScale.barSpacing,
+      pixelRatio: Math.max(1, globalThis.devicePixelRatio || 1),
       logicalToCoordinate: (index) => this.timeScale.indexToCoordinate(index),
       timeToCoordinate: time => this.timeScale.timeToCoordinate(time),
       isTimeSegmentContinuous: (a,b) => !crossesMarketTimeGap(a,b,this.discontinuities),
@@ -823,6 +857,11 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
       visible.forEach((bar, offset) => {
         if (isMarketTimeInGap(bar.time, this.discontinuities)) return;
         if (bar.volume == null || !Number.isFinite(bar.volume) || bar.volume <= 0) return;
+        const center = this.timeScale.indexToCoordinate(startIndex + offset);
+        const geometry = this.options.presentation?.volume?.widthMode === 'adaptive'
+          ? adaptiveBarGeometry(center, this.timeScale.barSpacing, this.options.presentation.volume.gap, Math.max(1, globalThis.devicePixelRatio || 1))
+          : {left: center - width / 2, width, center};
+        if (!geometry || !Number.isFinite(center)) return;
         const height =
           scale ? baseline - scale.toCoordinate(bar.volume)! :
           (bar.volume / maximum) * (pane.height - 30) * (pane.id === "volume" ? 0.85 : 0.35);
@@ -832,9 +871,9 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
             : this.options.theme.negative;
         context.globalAlpha = 0.25;
         context.fillRect(
-          this.timeScale.indexToCoordinate(startIndex + offset) - width / 2,
+          geometry.left,
           baseline - height,
-          width,
+          geometry.width,
           height,
         );
       });
@@ -842,17 +881,18 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     });
   }
 
-  private visibleStudyPoints(series: IndicatorRenderSeries) {
+  private visibleStudyPoints(series: IndicatorRenderSeries, includeAdjacent = true) {
     const range = this.timeScale.visibleTimes();
     if (!range) return [];
     // Retain adjacent points for clipped strokes. Nulls remain in the sequence.
     const points = series.points;
     const bound = (key: number, after = false) => { let low=0,high=points.length; while(low<high){const mid=(low+high)>>>1, value=marketTimeKey(points[mid].time);if(value<key||after&&value===key)low=mid+1;else high=mid;}return low; };
     const from = bound(marketTimeKey(range.from)), to = bound(marketTimeKey(range.to), true);
-    return points.slice(Math.max(0, from-1), Math.min(points.length, to+1));
+    return points.slice(Math.max(0, from - (includeAdjacent ? 1 : 0)), Math.min(points.length, to + (includeAdjacent ? 1 : 0)));
   }
   private drawIndicators(context: CanvasRenderingContext2D, _startIndex: number, _visibleLength: number): void {
     const shadedPanes = new Set<string>();
+    const drawnReferences = new Set<string>();
     this.indicatorSeries.forEach((series) => {
       const scale = this.scales.get(
         series.placement === "overlay" ? "price" : series.paneId,
@@ -875,7 +915,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
         const y1 = scale.toCoordinate(series.referenceLines[0].value);
         const y2 = scale.toCoordinate(series.referenceLines[1].value);
         if (y1 != null && y2 != null) {
-          context.fillStyle = series.color;
+          context.fillStyle = this.presentationColor(series.color, this.options.theme.primary);
           shadedPanes.add(pane.id);
           context.globalAlpha = 0.12;
           context.fillRect(
@@ -888,8 +928,8 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
         }
       }
       const visiblePoints = this.visibleStudyPoints(series);
-      context.strokeStyle = series.color;
-      context.fillStyle = series.color;
+      context.strokeStyle = this.presentationColor(series.color, this.options.theme.primary);
+      context.fillStyle = this.presentationColor(series.color, this.options.theme.primary);
       context.lineWidth = series.placement === "pane" ? 1.8 : 1.5;
       context.beginPath();
       let started = false;
@@ -921,16 +961,33 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
       });
       if (series.style === "line") { finishSingleton(); context.stroke(); }
       series.referenceLines?.forEach((line) => {
+        const referenceId = `${pane.id}:${line.value}`;
+        if (drawnReferences.has(referenceId)) return;
+        drawnReferences.add(referenceId);
         const y = scale.toCoordinate(line.value);
         if (y == null) return;
         context.save();
-        context.strokeStyle = line.color ?? this.options.theme.border;
+        context.strokeStyle = this.presentationColor(line.color, this.options.theme.border);
         context.setLineDash([4, 4]);
         context.beginPath();
         context.moveTo(0, y);
-        context.lineTo(this.width - AXIS_WIDTH, y);
+        context.lineTo(this.width - this.axisWidth, y);
         context.stroke();
         context.restore();
+        if (line.label && y >= pane.top + (this.options.presentation?.paneHeaderHeights?.[pane.id] ?? 28) && y <= pane.top + pane.height - 8) {
+          context.save();
+          context.font = `${this.options.presentation?.axis?.fontSize ?? 11}px ui-sans-serif, system-ui`;
+          const maximumWidth = Math.max(0, pane.width - 16);
+          let label = `${line.label} ${line.value}`;
+          while (label.length > 1 && (context.measureText(label)?.width ?? label.length * 6) > maximumWidth) label = label.slice(0, -2) + '…';
+          const labelWidth = context.measureText(label)?.width ?? label.length * 6;
+          context.fillStyle = this.options.theme.background;
+          const labelY = y - 16 >= pane.top + (this.options.presentation?.paneHeaderHeights?.[pane.id] ?? 28) ? y - 5 : Math.min(pane.top + pane.height - 7, y + 14);
+          context.fillRect((pane.left ?? 0) + 6, labelY - 11, labelWidth + 5, 14);
+          context.fillStyle = this.options.theme.text;
+          context.fillText(label, (pane.left ?? 0) + 8, labelY);
+          context.restore();
+        }
       });
       context.restore();
     });
@@ -946,7 +1003,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
       context.setLineDash([5, 4]);
       context.beginPath();
       context.moveTo(0, y);
-      context.lineTo(this.width - AXIS_WIDTH, y);
+      context.lineTo(this.width - this.axisWidth, y);
       context.stroke();
       context.setLineDash([]);
       context.fillStyle = line.color;
@@ -1038,14 +1095,14 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     const appearance=this.options.presentation?.crosshair;if(!this.crosshair||appearance?.visible===false)return;
     const {x,y}=this.crosshair.coordinates;
     context.strokeStyle=this.presentationColor(appearance?.color,this.options.theme.text);context.lineWidth=appearance?.lineWidth??1;context.globalAlpha=appearance?.opacity??.55;
-    context.setLineDash(appearance?.dash==="solid"?[]:appearance?.dash==="dotted"?[1,3]:[3,3]);context.beginPath();context.moveTo(x,0);context.lineTo(x,this.height-TIME_AXIS_HEIGHT);context.moveTo(this.plotLeft,y);context.lineTo(this.width-AXIS_WIDTH,y);context.stroke();context.setLineDash([]);context.globalAlpha=1;
+    context.setLineDash(appearance?.dash==="solid"?[]:appearance?.dash==="dotted"?[1,3]:[3,3]);context.beginPath();context.moveTo(x,0);context.lineTo(x,this.height-TIME_AXIS_HEIGHT);context.moveTo(this.plotLeft,y);context.lineTo(this.width-this.axisWidth,y);context.stroke();context.setLineDash([]);context.globalAlpha=1;
     if(appearance?.labels===false)return;
     const background=this.presentationColor(appearance?.labelBackground,this.options.theme.text),foreground=this.presentationColor(appearance?.labelColor,this.options.theme.background);
     context.font=(this.options.presentation?.axis?.fontSize??11)+"px ui-sans-serif, system-ui";
-    const label=formatTime(this.crosshair.time,this.options.locale,this.options.timeZone),width=Math.min(this.timeScale.plotWidth,(context.measureText(label)?.width??label.length*6)+12),left=Math.max(this.plotLeft,Math.min(this.width-AXIS_WIDTH-width,x-width/2));
+    const label=formatTime(this.crosshair.time,this.options.locale,this.options.timeZone),width=Math.min(this.timeScale.plotWidth,(context.measureText(label)?.width??label.length*6)+12),left=Math.max(this.plotLeft,Math.min(this.width-this.axisWidth-width,x-width/2));
     context.fillStyle=background;roundedRect(context,left,this.height-TIME_AXIS_HEIGHT+3,width,20);context.fillStyle=foreground;context.fillText(label,left+6,this.height-11,width-12);
     const pane=this.paneGeometry().find(p=>p.id===this.crosshair!.paneId),scale=this.scales.get(this.crosshair.paneId),price=scale?.fromCoordinate(y);
-    if(pane&&scale&&price!=null){const h=Math.max(18,(this.options.presentation?.axis?.fontSize??11)+7),axisX=this.panes?.find(p=>p.id===pane.id)?.scaleSide==="left"?0:this.width-AXIS_WIDTH,top=Math.max(pane.top+h/2,Math.min(pane.top+pane.height-h/2,y));context.fillStyle=background;context.fillRect(axisX+1,top-h/2,AXIS_WIDTH-1,h);context.fillStyle=foreground;this.axisText(context,scale.formatPrice(price,this.panes?.find(p=>p.id===pane.id)?.precision??2),axisX+7,top+(this.options.presentation?.axis?.fontSize??11)*.35);}
+    if(pane&&scale&&price!=null){const h=Math.max(18,(this.options.presentation?.axis?.fontSize??11)+7),axisX=this.panes?.find(p=>p.id===pane.id)?.scaleSide==="left"?0:this.rightScaleX,top=Math.max(pane.top+h/2,Math.min(pane.top+pane.height-h/2,y));context.fillStyle=background;context.fillRect(axisX+1,top-h/2,AXIS_WIDTH-1,h);context.fillStyle=foreground;this.axisText(context,scale.formatPrice(price,this.panes?.find(p=>p.id===pane.id)?.precision??2),axisX+7,top+(this.options.presentation?.axis?.fontSize??11)*.35);}
   }
 
   private updateCrosshair(
@@ -1122,7 +1179,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
       lastY: point.y,
       boundary,
       axis:
-        point.x >= this.width - AXIS_WIDTH || point.x < this.plotLeft
+        point.x >= this.width - this.axisWidth || point.x < this.plotLeft
           ? "price"
           : point.y >= this.height - TIME_AXIS_HEIGHT
             ? "time"
@@ -1203,7 +1260,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
   };
   private handleDoubleClick = (event: MouseEvent): void => {
     const point = this.pointerCoordinates(event as PointerEvent);
-    if (point.x >= this.width - AXIS_WIDTH || point.x < this.plotLeft) {
+    if (point.x >= this.width - this.axisWidth || point.x < this.plotLeft) {
       this.scaleOptions = { mode: this.scaleMode, autoScale: true };
       this.options.onScaleChange?.(this.scaleOptions,{source:"user",gesture:"reset"});
       this.scheduler.invalidate();
@@ -1241,11 +1298,11 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
       }
     } else if (event.key === "+" || event.key === "=") {
       event.preventDefault();
-      this.timeScale.zoomAt((this.width - AXIS_WIDTH) / 2, 0.8);
+      this.timeScale.zoomAt((this.width - this.axisWidth) / 2, 0.8);
       this.invalidate(true,{source:"user",gesture:"keyboard"});
     } else if (event.key === "-") {
       event.preventDefault();
-      this.timeScale.zoomAt((this.width - AXIS_WIDTH) / 2, 1.25);
+      this.timeScale.zoomAt((this.width - this.axisWidth) / 2, 1.25);
       this.invalidate(true,{source:"user",gesture:"keyboard"});
     } else if (event.key === "Home") {
       event.preventDefault();
@@ -1283,7 +1340,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
     this.options.onScaleChange?.(this.scaleOptions,{source:"user",gesture:"price-scale"});
   }
   private drawAxisBadges(context: CanvasRenderingContext2D): void {
-    if (!this.panes||this.options.presentation?.badges?.visible===false) return;
+    if (!this.panes||this.options.presentation?.badges?.visible===false||this.allEndpointValues) return;
     context.font = `${this.options.presentation?.badges?.fontSize ?? 11}px ui-sans-serif, system-ui`;
     this.paneGeometry().forEach((pane) => {
       if (this.panes?.find((p) => p.id === pane.id)?.collapsed) return;
@@ -1322,7 +1379,8 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
         )
         .forEach((s) => {
           if(this.options.presentation?.badges?.studyValues===false)return;
-          const value = s.points.at(-1)?.value;
+          if (this.options.presentation?.badges?.movingAverages === 'all-visible' && s.axisLabel?.kind === 'moving-average' && pane.id === 'price') return;
+          const value = bar ? this.indicatorValues.get(s.id)?.get(marketTimeKey(bar.time)) : null;
           if (value == null) return;
           const y = scale.toCoordinate(value);
           if (y != null)
@@ -1330,7 +1388,7 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
               id: s.id,
               y,
               text: scale.formatPrice(value, precision),
-              color: s.color,
+              color: this.presentationColor(s.color, this.options.theme.primary),
               priority: 10,
             });
         });
@@ -1339,14 +1397,80 @@ export class FirstPartyMarketChartEngine implements MarketChartEngine {
           ? 0
           : (pane.left ?? 0) + pane.width;
       const badgeHeight=Math.max(18,(this.options.presentation?.badges?.fontSize??11)+7);
-      layoutAxisBadges(badges, pane.top + 28, pane.height - 28,badgeHeight+1).forEach((b) => {
-        if(this.crosshair?.paneId===pane.id&&this.options.presentation?.crosshair?.labels!==false&&this.options.presentation?.crosshair?.visible!==false&&Math.abs(b.y-this.crosshair.coordinates.y)<(badgeHeight+Math.max(18,(this.options.presentation?.axis?.fontSize??11)+7))/2+2)return;
+      const obstacles = (this.referenceTickPositions.get(pane.id) ?? []).map(y => ({y, height: (this.options.presentation?.axis?.fontSize ?? 11) + 8}));
+      if (this.crosshair?.paneId === pane.id && this.options.presentation?.crosshair?.labels !== false && this.options.presentation?.crosshair?.visible !== false) obstacles.push({y: this.crosshair.coordinates.y, height: Math.max(18, (this.options.presentation?.axis?.fontSize ?? 11) + 7) + 4});
+      const headerHeight = this.options.presentation?.paneHeaderHeights?.[pane.id] ?? 28;
+      layoutAxisBadges(badges, pane.top + headerHeight, pane.height - headerHeight,badgeHeight+1, obstacles).forEach((b) => {
         const outline=this.options.presentation?.badges?.style==="outline";context.fillStyle=outline?this.options.theme.background:b.color;context.fillRect(axisX+1,b.y-badgeHeight/2,AXIS_WIDTH-1,badgeHeight);if(outline){context.strokeStyle=b.color;context.strokeRect(axisX+1,b.y-badgeHeight/2,AXIS_WIDTH-2,badgeHeight);}
         context.fillStyle=outline?this.options.theme.text:this.badgeForeground(b.color);this.axisText(context,b.text,axisX+7,b.y+(this.options.presentation?.badges?.fontSize??11)*.35);
       });
     });
   }
+  private drawMovingAverageLabels(): void {
+    const appearance = this.options.presentation?.badges;
+    const pane = this.paneGeometry().find(p => p.id === 'price');
+    if (this.allEndpointValues || appearance?.movingAverages !== 'all-visible' || appearance.visible === false || appearance.studyValues === false || !pane || this.panes?.find(p => p.id === 'price')?.collapsed) {this.movingAverageAxis.clear(); return;}
+    const scale = this.scales.get('price');
+    if (!scale) {this.movingAverageAxis.clear(); return;}
+    const bounds = this.timeScale.visibleIndexes(0), window = this.timeScale.visible;
+    let endpoint: OhlcBar | undefined;
+    // visibleIndexes includes adjacent compressed slots for drawing; endpoint boxes do not.
+    for (let index = bounds.to - 1; index >= bounds.from; index--) {
+      const bar = this.store.at(index); if (!bar) continue;
+      const logical = this.timeScale.timeToLogical(bar.time);
+      if (logical != null && logical >= window.from && logical <= window.to && !isMarketTimeInGap(bar.time, this.discontinuities)) {endpoint = bar; break;}
+    }
+    const header = Math.min(pane.height, this.options.presentation?.paneHeaderHeights?.price ?? 28);
+    const labels: MovingAverageLabel[] = this.indicatorSeries.filter(series => series.placement === 'overlay' && series.axisLabel?.kind === 'moving-average').map(series => {
+      const sample = endpoint ? this.indicatorValues.get(series.id)?.get(marketTimeKey(endpoint.time)) : null;
+      const value = sample != null && Number.isFinite(sample) ? sample : null;
+      const location = value == null ? {coordinate: null} : scale.locateValue(value);
+      return {id: series.id, label: series.axisLabel!.label, shortLabel: series.axisLabel!.shortLabel, color: this.presentationColor(series.color, this.options.theme.primary), value,
+        time: endpoint?.time, status: series.axisLabel!.status ?? 'Supplied output', anchorY: location.coordinate, scaleEdge: location.edge ?? 'inside',
+        scaleIssue: location.edge === 'undefined' ? this.scaleMode === 'logarithmic' && value != null && value <= 0 ? 'nonpositive log value' : 'value is not representable on current scale' : undefined,
+        anchorX: endpoint ? this.timeScale.timeToCoordinate(endpoint.time) : null};
+    });
+    this.movingAverageAxis.update(labels, {axisX: this.width - this.axisWidth, top: pane.top + header, height: Math.max(0, pane.height - header), width: AXIS_WIDTH, fontSize: appearance.fontSize ?? 11}, this.options.theme);
+  }
+  private drawEndpointLabels(): void {
+    if (!this.allEndpointValues) {this.endpointAxes.forEach(layer => layer.clear()); return;}
+    const appearance = this.options.presentation!.badges!;
+    const bounds = this.timeScale.visibleIndexes(0), window = this.timeScale.visible;
+    let endpoint: OhlcBar | undefined;
+    for (let index = bounds.to - 1; index >= bounds.from; index--) {
+      const bar = this.store.at(index); if (!bar) continue;
+      const logical = this.timeScale.timeToLogical(bar.time);
+      if (logical != null && logical >= window.from && logical <= window.to && !isMarketTimeInGap(bar.time, this.discontinuities)) {endpoint = bar; break;}
+    }
+    const active = new Set<string>();
+    this.paneGeometry().forEach(pane => {
+      if (this.panes?.find(p => p.id === pane.id)?.collapsed) return;
+      const scale = this.scales.get(pane.id); if (!scale) return;
+      active.add(pane.id);
+      const labels: MovingAverageLabel[] = [];
+      const make = (id: string, label: string, shortLabel: string | undefined, color: string, sample: number | null | undefined, status: string): MovingAverageLabel => {
+        const value = sample != null && Number.isFinite(sample) ? sample : null;
+        const location = value == null ? {coordinate: null} : scale.locateValue(value);
+        return {id, label, shortLabel, color, value, time: endpoint?.time, status,
+          anchorY: location.coordinate, anchorX: endpoint ? this.timeScale.timeToCoordinate(endpoint.time) : null,
+          scaleEdge: location.edge ?? 'inside', scaleIssue: location.edge === 'undefined' ? scale.mode === 'logarithmic' && value != null && value <= 0 ? 'nonpositive log value' : 'value is not representable on current scale' : undefined};
+      };
+      if (pane.id === 'price' && appearance.lastPrice !== false) labels.push(make('price', 'Price close', 'Price', endpoint && endpoint.close >= endpoint.open ? this.options.theme.positive : this.options.theme.negative, endpoint?.close, endpoint?.incomplete ? 'Accepted bar · Incomplete bar' : 'Accepted bar'));
+      if (appearance.studyValues !== false) this.indicatorSeries.filter(series => (series.placement === 'overlay' ? 'price' : series.paneId) === pane.id).forEach(series => {
+        labels.push(make(series.id, series.axisLabel?.label ?? 'Study output', series.axisLabel?.shortLabel, this.presentationColor(series.color, this.options.theme.primary), endpoint ? this.indicatorValues.get(series.id)?.get(marketTimeKey(endpoint.time)) : null, series.axisLabel?.status ?? 'Accepted output'));
+      });
+      let layer = this.endpointAxes.get(pane.id);
+      if (!layer) {layer = new MovingAverageAxisLayer(this.surface); this.endpointAxes.set(pane.id, layer);}
+      const header = this.options.presentation?.paneHeaderHeights?.[pane.id] ?? 28;
+      // Price OHLC readout is separate from the measured legend. Keep full rows
+      // below it and inside the separator, without moving any scale or source value.
+      const top = Math.min(pane.top + pane.height, pane.top + header + (pane.id === 'price' ? 34 : 2));
+      layer.update(labels, {axisX: this.width - this.axisWidth, top, height: Math.max(0, pane.top + pane.height - 4 - top), width: this.endpointGutterWidth, fontSize: this.endpointFontSize, paneId: pane.id, dedicated: true}, this.options.theme);
+    });
+    this.endpointAxes.forEach((layer, id) => {if (!active.has(id)) layer.clear();});
+  }
   private badgeColors = new Map<string, string>();
+  private referenceTickPositions = new Map<string, number[]>();
   private badgeForeground(color: string): string {
     const cached = this.badgeColors.get(color);
     if (cached) return cached;

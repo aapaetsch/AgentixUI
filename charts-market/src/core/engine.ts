@@ -20,7 +20,10 @@ export interface IndicatorRenderSeries {
   placement: "overlay" | "pane";
   style: "line" | "histogram";
   color: string;
+  /** Host/definition display metadata. Does not calculate or identify financial results. */
+  axisLabel?: {kind: 'moving-average' | 'study'; label: string; shortLabel?: string; status?: string};
   fixedDomain?: readonly [number, number];
+  automaticDomain?: import('./extensions').IndicatorAutomaticDomain;
   referenceLines?: Array<{ value: number; label?: string; color?: string }>;
   formatValue?: (value: number) => string;
   points: Array<{ time: MarketTime; value: number | null }>;
@@ -35,6 +38,8 @@ export interface MarketRenderLayerContext {
   readonly visibleData: readonly OhlcBar[];
   readonly panes: readonly MarketPaneGeometry[];
   readonly theme: MarketChartTheme;
+  /** Resolve scoped theme CSS variables for Canvas layers; SVG/DOM can use the original CSS color. */
+  readonly resolveColor?: (color: string) => string;
   readonly canvas: CanvasRenderingContext2D;
   readonly timeToCoordinate: (time: MarketTime) => number | null;
   readonly priceToCoordinate: (price: number, paneId?: string) => number | null;
@@ -75,6 +80,8 @@ export interface MarketSeriesRendererContext {
   visible: readonly OhlcBar[];
   startIndex: number;
   barSpacing: number;
+  /** Canvas backing-store ratio for matching adaptive candle/volume boundaries. Defaults to 1 for external renderer calls. */
+  pixelRatio?: number;
   logicalToCoordinate(index: number): number;
   /** Observation-time coordinates for custom renderers on common calendars. */
   timeToCoordinate?: (time: MarketTime) => number | null;

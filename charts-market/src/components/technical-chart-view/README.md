@@ -1,5 +1,9 @@
 # TechnicalChartView
 
+Opt in to separate-gutter price and all-study endpoint boxes with `appearance.badges.endpointValues='all-visible'`. Includes oscillator outputs, exact visible endpoints and per-pane collision/overflow semantics; defaults and host pane geometry remain intact. See [ENDPOINT-LABELS.md](../../../ENDPOINT-LABELS.md).
+
+`appearance.badges.movingAverages='all-visible'` retains outlined boxes for every tagged visible moving-average price overlay. Values come from the exact last accepted visible bar; historic pan, missing/null samples, off-scale/log values, connectors and bounded overflow are documented in [MOVING-AVERAGE-LABELS.md](../../../MOVING-AVERAGE-LABELS.md). Defaults and host pane minimums remain unchanged.
+
 Dedicated volume-only panes (`showVolume: true`, outside the price pane and without study series) use the supplied bar volume units on a normal zero-based axis. Axis labels and histogram heights share the same scale; this is not a normalized 0–1 chart. Price-pane or study-pane volume overlays keep the existing small relative overlay, without changing that pane's price/study units. Missing volume draws no bar; an empty/all-zero volume pane has a neutral 0–1 fallback. This correction is local pending a separately reviewed release; the immutable refinement.20261017.1 publication is preserved.
 
 A complete technical-analysis workspace built on the existing `MarketChart` engine. Supply OHLCV and a single controlled state object; the component supplies command menus, drawing tools, grouped panes, persistent legends, value badges, integrated volume profiles and a range/status footer.
@@ -90,4 +94,12 @@ Calendar geometry: pass timeAxis and discontinuities to align sparse/dense board
 # Research workspace runtime additions
 
 See [REFINEMENT.md](../../../REFINEMENT.md) for the additive appearance/height, compact supplied-details callback, `chartApiRef`, drawing allowlist/commands/history, revisioned snapshot and origin metadata contracts. The forwarded ref remains a DOM ref; version-1 saved chart documents remain unchanged. Full authoritative snapshots are O(N); visible rendering is bounded and supplied mode performs no financial calculation.
+
+# Readability follow-up
+
+See [READABILITY.md](../../../READABILITY.md) for visible theme/override-matched study/VWAP/volume/profile legends, exact-time readouts, compact evidence, reference-aware automatic scales and integrated navigation slots. Existing version-1 state and supplied request identities remain unchanged. This local candidate requires separate publication/adoption approval.
+
+# Adaptive candle and volume geometry
+
+Set `appearance.candles` and `appearance.volume` to `{widthMode: 'adaptive', gap: 2}` for matching widths based on the current shared time-scale slots. Omission preserves legacy geometry. See [ADAPTIVE-WIDTHS.md](../../../ADAPTIVE-WIDTHS.md) for proportional precedence, dense zoom, DPI, validation and runtime examples. Appearance changes retain supplied identities, saved documents and shared drawing history.
 

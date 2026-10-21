@@ -1,6 +1,14 @@
 # aapaetsch-charts-market
 
-ESM-only technical-market chart components powered by a dependency-free first-party Canvas 2D + SVG engine.
+See [ENDPOINT-LABELS.md](./ENDPOINT-LABELS.md) for opt-in price and all-study endpoint boxes in a separate gutter, pane-relative anchors, minimal collision displacement and accessible bounded overflow. This includes oscillator line/histogram outputs and preserves existing defaults.
+
+See [MOVING-AVERAGE-LABELS.md](./MOVING-AVERAGE-LABELS.md) for opt-in outlined boxes for every visible moving-average price overlay, exact historical endpoints, collision connectors, off-scale markers and bounded overflow. Other consumers retain the legacy badge behavior.
+
+ESM and CommonJS technical-market chart components powered by a dependency-free first-party Canvas 2D + SVG engine.
+
+See [READABILITY.md](./READABILITY.md) for visible study/VWAP/volume/profile legends, timestamp-aligned display values, accessible compact details, reference-aware automatic scales and integrated navigation. Source changes are a local publication candidate until separately approved.
+
+See [ADAPTIVE-WIDTHS.md](./ADAPTIVE-WIDTHS.md) for opt-in matching candle/volume widths with a configurable CSS-pixel gap, dense/DPI behavior and unchanged proportional defaults.
 
 Import the UI kit theme and the package's compiled utilities once in the host application:
 

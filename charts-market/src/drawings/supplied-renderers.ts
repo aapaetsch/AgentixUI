@@ -16,7 +16,7 @@ export function visibleSuppliedDrawingPoints(points:readonly SuppliedPoint[],ran
 export const suppliedGeometricDrawingTypes = ["trend-line", "horizontal-line", "vertical-line", "rectangle"] as const;
 
 /** Never delegate to consumer renderers, derived callbacks or financial built-ins. */
-export function createSuppliedDrawingRenderers(ids: string[], results: SuppliedCalculationResults): DrawingRendererDefinition[] {
+export function createSuppliedDrawingRenderers(ids: string[], results: SuppliedCalculationResults, showEvidenceLabels = true): DrawingRendererDefinition[] {
   return [...new Set([...ids, "date-price-range"])].map(id => {
     const geometric = suppliedGeometricDrawingTypes.some(type => type === id)
       ? builtInDrawingRenderers.find(renderer => renderer.id === id) : undefined;
@@ -46,7 +46,7 @@ export function createSuppliedDrawingRenderers(ids: string[], results: SuppliedC
           });
           flush();
         }
-        primitives.push({ id: "supplied-status", kind: "multiline-text", at: context.points[0] ?? { x: 8, y: 20 }, background: true,
+        if (showEvidenceLabels) primitives.push({ id: "supplied-status", kind: "multiline-text", at: context.points[0] ?? { x: 8, y: 20 }, background: true,
           lines: available ? [result.provenanceLabel, ...Object.entries(result.derivedValues ?? {}).map(([key, value]) => `${key}: ${value}`)] : ["Calculation unavailable · supplied result required"] });
         cache.set(context,primitives);return primitives;
       },

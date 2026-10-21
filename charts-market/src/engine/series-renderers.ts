@@ -1,4 +1,5 @@
 import type { MarketChartType, OhlcBar } from "../core";
+import {adaptiveBarGeometry} from './bar-geometry';
 import type {
   MarketSeriesRendererContext,
   MarketSeriesRendererDefinition,
@@ -16,6 +17,7 @@ function drawSeries(
     visible,
     startIndex,
     barSpacing,
+    pixelRatio,
     logicalToCoordinate,
     timeToCoordinate,
     isTimeSegmentContinuous,
@@ -25,6 +27,7 @@ function drawSeries(
 ): void {
   if (!visible.length) return;
   const spacing = barSpacing;
+  const adaptive = presentation?.candles?.widthMode === 'adaptive';
   const bodyWidth = Math.max(1, Math.floor(Math.min(presentation?.candles?.maximumWidth ?? 14, spacing * (presentation?.candles?.bodyRatio ?? 0.7))));
   if (["line", "area", "baseline"].includes(type)) {
     const points = visible
@@ -73,8 +76,10 @@ function drawSeries(
     return;
   }
   visible.forEach((bar, offset) => {
-    const x = logicalToCoordinate(startIndex + offset);
-    if (!Number.isFinite(x) || isTimeSegmentContinuous?.(bar.time, bar.time) === false) return;
+    const x = adaptive && timeToCoordinate ? timeToCoordinate(bar.time) : logicalToCoordinate(startIndex + offset);
+    if (x == null || !Number.isFinite(x) || isTimeSegmentContinuous?.(bar.time, bar.time) === false) return;
+    const geometry = adaptive ? adaptiveBarGeometry(x, spacing, presentation?.candles?.gap, pixelRatio) : {left: x - bodyWidth / 2, width: bodyWidth, center: x};
+    if (!geometry) return;
     const open = scale.toCoordinate(bar.open);
     const high = scale.toCoordinate(bar.high);
     const low = scale.toCoordinate(bar.low);
@@ -84,35 +89,38 @@ function drawSeries(
     context.setLineDash(bar.incomplete ? [3, 3] : []);
     context.strokeStyle = color;
     context.fillStyle = color;
-    context.lineWidth = presentation?.candles?.wickWidth ?? 1;
+    const strokeWidth = adaptive ? Math.min(presentation?.candles?.wickWidth ?? 1, geometry.width) : presentation?.candles?.wickWidth ?? 1;
+    context.lineWidth = strokeWidth;
     context.beginPath();
-    context.moveTo(Math.round(x) + 0.5, high!);
-    context.lineTo(Math.round(x) + 0.5, low!);
+    context.moveTo(adaptive ? geometry.center : Math.round(x) + 0.5, high!);
+    context.lineTo(adaptive ? geometry.center : Math.round(x) + 0.5, low!);
     context.stroke();
     if (
       type === "candlestick" &&
       theme.positive === theme.negative &&
       bar.close >= bar.open || type === "candlestick" && bar.incomplete
     )
-      context.strokeRect(
-        x - bodyWidth / 2,
-        Math.min(open!, close!),
-        bodyWidth,
-        Math.max(1, Math.abs(close! - open!)),
-      );
+      {
+        const height = Math.max(1, Math.abs(close! - open!));
+        const inset = adaptive ? Math.min(strokeWidth, height) / 2 : 0;
+        if (adaptive) context.lineWidth = inset * 2;
+        if (adaptive && geometry.width <= inset * 2 && height <= inset * 2)
+          context.fillRect(geometry.left, Math.min(open!, close!), geometry.width, height);
+        else context.strokeRect(geometry.left + inset, Math.min(open!, close!) + inset, geometry.width - inset * 2, height - inset * 2);
+      }
     else if (type === "candlestick")
       context.fillRect(
-        x - bodyWidth / 2,
+        geometry.left,
         Math.min(open!, close!),
-        bodyWidth,
+        geometry.width,
         Math.max(1, Math.abs(close! - open!)),
       );
     else {
       context.beginPath();
-      context.moveTo(x - bodyWidth / 2, open!);
+      context.moveTo(geometry.left + (adaptive ? strokeWidth / 2 : 0), open!);
       context.lineTo(x, open!);
       context.moveTo(x, close!);
-      context.lineTo(x + bodyWidth / 2, close!);
+      context.lineTo(geometry.left + geometry.width - (adaptive ? strokeWidth / 2 : 0), close!);
       context.stroke();
     }
     context.setLineDash([]);

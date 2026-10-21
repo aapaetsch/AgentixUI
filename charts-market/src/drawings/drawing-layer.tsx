@@ -52,6 +52,7 @@ export interface DrawingLayerProps extends Omit<React.SVGAttributes<SVGSVGElemen
   cancelRevision?:number;
   calculationMode?: CalculationMode;
   suppliedResults?: SuppliedCalculationResults;
+  suppliedEvidenceLabels?: boolean;
   engine: MarketChartEngine;
   data?: OhlcBar[];
   drawings: DrawingState[];
@@ -125,7 +126,7 @@ function renderPrimitive(primitive: DrawingPrimitive, hitArea = false) {
 
 const noTimeGaps: readonly MarketTimeGap[] = [];
 
-export function DrawingLayer({ cancelRevision, discontinuities = noTimeGaps, calculationMode = "internal", suppliedResults = {}, coordinateRevision, clipToPricePane = false, engine, data = [], drawings, tools = [], renderers: requestedRenderers = builtInDrawingRenderers, activeTool, selectedDrawingIds, interaction, interactionTargetRef, snapToOhlc, snapDistance, onDrawingsChange, onSelectedDrawingIdsChange, onActiveToolComplete, className, ...props }: DrawingLayerProps) {
+export function DrawingLayer({ cancelRevision, discontinuities = noTimeGaps, calculationMode = "internal", suppliedResults = {}, suppliedEvidenceLabels = true, coordinateRevision, clipToPricePane = false, engine, data = [], drawings, tools = [], renderers: requestedRenderers = builtInDrawingRenderers, activeTool, selectedDrawingIds, interaction, interactionTargetRef, snapToOhlc, snapDistance, onDrawingsChange, onSelectedDrawingIdsChange, onActiveToolComplete, className, ...props }: DrawingLayerProps) {
   const svgRef = React.useRef<SVGSVGElement>(null);
   const gestureRef = React.useRef<DrawingGesture | null>(null);
   const multiClickDraftRef = React.useRef<MultiClickDraft | null>(null);
@@ -152,8 +153,8 @@ export function DrawingLayer({ cancelRevision, discontinuities = noTimeGaps, cal
     Object.fromEntries(Object.entries(suppliedResults).filter(([id]) => {
       const original = drawings.find(d => d.id === id), draft = displayedDrawings.find(d => d.id === id);
       return original && draft && JSON.stringify([original.points, original.parameters]) === JSON.stringify([draft.points, draft.parameters]);
-    })),
-  ), [calculationMode, requestedRenderers, tools, displayedDrawings, drawings, suppliedResults]);
+    })), suppliedEvidenceLabels,
+  ), [calculationMode, requestedRenderers, tools, displayedDrawings, drawings, suppliedResults, suppliedEvidenceLabels]);
   const barsByTime = React.useMemo(() => new Map(data.map((bar) => [marketTimeKey(bar.time), bar])), [data]);
 
   React.useLayoutEffect(() => {

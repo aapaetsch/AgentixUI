@@ -35,6 +35,7 @@ export type {
   DrawingToolCategory,
   DrawingToolDefinition,
   IndicatorDefinition,
+  IndicatorAutomaticDomain,
   IndicatorInstance,
   IndicatorLineDefinition,
   IndicatorPoint,

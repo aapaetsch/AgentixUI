@@ -32,6 +32,7 @@ import type {
   VisibleRange,
 } from "../../core";
 import { marketTimeKey, reportMarketDataIssues, validateMarketTimeGeometry, type MarketTimeAxis, type MarketTimeGap } from "../../core";
+import {indicatorDisplayLabel, uniqueIndicatorLabels} from '../../core/indicator-labels';
 import { MarketChartControls } from "../../controls";
 import {
   builtInDrawingRenderers,
@@ -280,6 +281,7 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   const indicatorSeriesRef = React.useRef<IndicatorRenderSeries[]>([]);
   const calculatedSeries = React.useMemo<IndicatorRenderSeries[]>(() => {
     if (calculationMode === "supplied") { indicatorRuntimeRef.current.clear(); return suppliedIndicatorSeries; }
+    const names = uniqueIndicatorLabels(indicators.map(instance => ({id: instance.id, label: indicatorDisplayLabel(instance.parameters, instance.definition)})));
     return indicators.filter((instance) => instance.visible).flatMap((instance) => {
     const runtime = instance.definition.createRuntime?.(instance.parameters);
     const calculated = runtime ? runtime.reset(renderData) : instance.definition.calculate(renderData, instance.parameters);
@@ -291,8 +293,10 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
       style: line.style ?? "line",
       color: instance.colors?.[line.id] ?? line.color ?? "#64748b",
       fixedDomain: instance.definition.fixedDomain,
+      automaticDomain: instance.definition.automaticDomain,
       referenceLines: instance.definition.referenceLines,
       formatValue: instance.definition.formatValue,
+      axisLabel: {kind: instance.definition.axisLabelKind === 'moving-average' ? 'moving-average' as const : 'study' as const, label: `${names.get(instance.id)}${instance.definition.lines.length > 1 ? ` · ${line.label}` : ''}`, shortLabel: indicatorDisplayLabel(instance.parameters, {...instance.definition, label: line.label}), status: 'Internal result'},
       points: calculated.map((item) => ({ time: item.time, value: item.values[line.id] ?? null })),
     }));
   }); }, [indicators, renderData, calculationMode, suppliedIndicatorSeries]);
@@ -568,6 +572,7 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
           discontinuities={discontinuities}
           calculationMode={calculationMode}
           suppliedResults={suppliedDrawingResults}
+          suppliedEvidenceLabels={presentation?.drawingEvidenceLabels}
           engine={engineRef.current}
           coordinateRevision={`${viewportRevision}:${geometryKeyRef.current}`} clipToPricePane={Boolean(panes)}
           data={renderData}

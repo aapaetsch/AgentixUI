@@ -5,6 +5,12 @@ import {suppliedLinePoints} from "../../indicators/supplied-points";
 import {SuppliedStatus,type TechnicalSuppliedDetails} from "./supplied-status";
 export type {TechnicalSuppliedDetails} from "./supplied-status";
 import {useChartGeometry} from "./use-chart-geometry";
+import {studyLabels, studyValueAt} from './study-presentation';
+import {indicatorDisplayLabel} from '../../core/indicator-labels';
+import {StudyLegend, type StudyLegendGroup} from './study-legend';
+import {supplementaryLegendGroups, type TechnicalChartLegendMetadata} from './legend-groups';
+export type {TechnicalChartLegendMetadata} from './legend-groups';
+import {navigateVisibleRange, type ChartNavigationIntent} from './navigation';
 import {useMarketDataRevision} from "../market-chart/use-data-revision";
 import {marketDataCalculationIdentity,type MarketChartPresentation,type TechnicalChartGeometry,type MarketChartChangeMetadata,type MarketDataRevision,type MarketDataAcceptance} from "../../core";
 import type {MarketDrawingCommandRequest,MarketDrawingHistorySnapshot} from "../../drawings";
@@ -108,6 +114,8 @@ export interface TechnicalChartAppearance extends MarketChartPresentation {
   minimumPlotHeight?:number;
   suppliedStatus?:"expanded"|"compact";
   legends?:"expanded"|"compact";
+  /** One combined navigation/scale/evidence strip. Legacy composition remains the default. */
+  navigation?: "standard" | "integrated";
   height: number;
   title: string;
   locale: string;
@@ -147,6 +155,8 @@ export interface TechnicalChartViewProps
   /** Opaque host identity: revise for every dataset/source/currency/price-basis change. Required to render supplied results. */
   calculationIdentity?: string;
   suppliedResults?: SuppliedCalculationResults;
+  /** Display-only names/previously supplied drawing values. Never enters request keys or saved documents. */
+  legendMetadata?: TechnicalChartLegendMetadata;
   onCalculationRequest?: (request: CalculationRequest) => void;
   /** Independent palette, including portaled controls. Custom CSS variables can be passed in style. */
   theme?: TechnicalChartTheme;
@@ -187,6 +197,10 @@ export interface TechnicalChartViewProps
   status?: React.ReactNode;
   clock?: React.ReactNode;
   countdown?: React.ReactNode;
+  /** Host-owned pan/zoom controls, inserted in the existing footer without an extra row. */
+  navigationControls?: React.ReactNode;
+  /** Exact-data or other host actions in the same accessible navigation strip. */
+  footerActions?: React.ReactNode;
   loading?: boolean;
   error?: React.ReactNode;
   emptyMessage?: React.ReactNode;
@@ -250,7 +264,7 @@ export const TechnicalChartView = React.forwardRef<
   TechnicalChartViewProps
 >(function TechnicalChartView(
   {
-    timeAxis, discontinuities, calculationMode = "internal", calculationIdentity:hostCalculationIdentity, suppliedResults = emptySuppliedResults, onCalculationRequest, theme, onVisibleRangeChange,
+    timeAxis, discontinuities, calculationMode = "internal", calculationIdentity:hostCalculationIdentity, suppliedResults = emptySuppliedResults, legendMetadata, onCalculationRequest, theme, onVisibleRangeChange,
     symbol,
     interval,
     data:incomingData, chartApiRef, dataIdentity, dataRevision, onDataAcceptance, onGeometryChange, onRequestSuppliedDetails, drawingToolIds, drawingCommand, onDrawingHistoryChange,
@@ -271,6 +285,8 @@ export const TechnicalChartView = React.forwardRef<
     status,
     clock,
     countdown,
+    navigationControls,
+    footerActions,
     loading,
     error,
     emptyMessage,
@@ -331,6 +347,8 @@ export const TechnicalChartView = React.forwardRef<
   >({});
   const [profileHit, setProfileHit] = React.useState<VolumeProfileHit>();
   const [tableOpen, setTableOpen] = React.useState(false);
+  const [paneHeaderHeights, setPaneHeaderHeights] = React.useState<Record<string, number>>({});
+  const presentation = React.useMemo(() => ({...appearance, drawingEvidenceLabels: appearance?.drawingEvidenceLabels ?? appearance?.legends !== 'compact', paneHeaderHeights}), [appearance, paneHeaderHeights]);
   const [jumpDate, setJumpDate] = React.useState("");
   const [settledRange, setSettledRange] = React.useState<
     VisibleRange | undefined
@@ -448,15 +466,21 @@ export const TechnicalChartView = React.forwardRef<
   const profileResults = React.useMemo<Record<string, VolumeProfileResult>>(() => calculationMode === "internal" ? internalProfileResults : Object.fromEntries(
     Object.entries(matchedResults).flatMap(([id, result]) => result?.kind === "profile" && suppliedResultRenderable(result) ? [[id, result.profile]] : []),
   ), [calculationMode, internalProfileResults, matchedResults]);
-  const suppliedSeries = React.useMemo<IndicatorRenderSeries[]>(() => state.indicators.filter(instance => instance.visible).flatMap(instance => {
+  const suppliedSeries = React.useMemo<IndicatorRenderSeries[]>(() => {
+    const names = studyLabels(state.indicators, availableIndicators);
+    return state.indicators.filter(instance => instance.visible).flatMap(instance => {
     const result = matchedResults[instance.id];
     const definition = availableIndicators.find(item => item.id === instance.definitionId);
-    if (!definition || result?.kind !== "indicator" || !suppliedResultRenderable(result)) return [];
+    if (!definition) return [];
+    const renderable = result?.kind === 'indicator' && suppliedResultRenderable(result);
+    if (!renderable && appearance?.badges?.endpointValues !== 'all-visible' && (definition.axisLabelKind !== 'moving-average' || appearance?.badges?.movingAverages !== 'all-visible')) return [];
     return definition.lines.map(line => ({ id: `${instance.id}:${line.id}`, paneId: instance.id, placement: definition.placement,
-      style: line.style ?? "line", color: instance.colors?.[line.id] ?? line.color ?? "#64748b", fixedDomain: definition.fixedDomain, referenceLines: definition.referenceLines,
-      points: suppliedLinePoints(result.points,line.id),
+      style: line.style ?? "line", color: instance.colors?.[line.id] ?? line.color ?? "#64748b", fixedDomain: definition.fixedDomain, automaticDomain: definition.automaticDomain, referenceLines: definition.referenceLines, formatValue: definition.formatValue,
+      axisLabel: {kind: definition.axisLabelKind === 'moving-average' ? 'moving-average' as const : 'study' as const, label: `${names.get(instance.id)}${definition.lines.length > 1 ? ` · ${line.label}` : ''}`, shortLabel: indicatorDisplayLabel(instance.parameters, {...definition, label: line.label}), status: [result?.status ?? 'Waiting for matching supplied result', result?.stale && 'Stale', result?.approximate && 'Approximate', result?.warning].filter(Boolean).join(' · ')},
+      points: renderable && result?.kind === 'indicator' ? suppliedLinePoints(result.points,line.id) : [],
     }));
-  }), [state.indicators, availableIndicators, matchedResults]);
+    });
+  }, [state.indicators, availableIndicators, matchedResults, appearance?.badges?.movingAverages, appearance?.badges?.endpointValues]);
   const renderData = React.useMemo(() => Array.from(data), [data]);
   const indicators = React.useMemo<IndicatorInstance[]>(
     () =>
@@ -565,11 +589,15 @@ export const TechnicalChartView = React.forwardRef<
     (i) => !availableIndicators.some((d) => d.id === i.definitionId),
   );
   const study = state.indicators.find((i) => i.id === studyId);
-  const labelFor = (instanceId: string) => {
-    const i = state.indicators.find((i) => i.id === instanceId);
-    return i
-      ? `${i.definitionId.toUpperCase()} ${Object.values(i.parameters).join(", ")}`
-      : instanceId;
+  const labels = studyLabels(state.indicators, availableIndicators);
+  const labelFor = (instanceId: string) => labels.get(instanceId) ?? 'Unavailable study';
+  const requestLabels = Object.fromEntries(requests.map(request => [request.instanceId, request.kind === 'indicator' ? labelFor(request.instanceId) : request.kind === 'profile' ? 'Volume profile' : 'VWAP']));
+  const integratedNavigation = appearance?.navigation === 'integrated' && available.footer && state.chrome.footer;
+  const suppliedStatus = calculationMode === 'supplied' && (requests.length > 0 || !calculationIdentity || appearance?.suppliedStatus === 'compact' && dataAvailability)
+    ? <SuppliedStatus availability={dataAvailability} requests={requests} results={matchedResults} incoming={suppliedResults} missingIdentity={!calculationIdentity} compact={appearance?.suppliedStatus === 'compact'} inline={integratedNavigation} labels={requestLabels} onRequestDetails={onRequestSuppliedDetails}/> : null;
+  const navigate = (intent: ChartNavigationIntent) => {
+    const next = navigateVisibleRange(chartRef.current?.getSnapshot()?.visibleRange ?? state.viewport.visibleRange, data, timeAxis, intent);
+    if (next) chartRef.current?.setVisibleRange(next, {source: 'user', gesture: 'keyboard'});
   };
 
   const paneHeaders = (
@@ -586,18 +614,24 @@ export const TechnicalChartView = React.forwardRef<
         const paneLabel =
           pane.id === "price"
             ? symbol
-            : pane.studyIds
-                .map((id) =>
-                  state.indicators
-                    .find((i) => i.id === id)
-                    ?.definitionId.toUpperCase(),
-                )
-                .filter(Boolean)
-                .join(" / ") || pane.id;
+            : pane.studyIds.map(labelFor).join(' / ') || (pane.showVolume ? 'Volume' : 'Study pane');
+        const inspectedTime = snapshot.crosshair?.time ?? data.at(-1)?.time;
+        const timeLabel = inspectedTime == null ? 'No observation' : `${snapshot.crosshair ? 'Inspect' : 'Last'} · ${new Intl.DateTimeFormat(appearance?.locale, {dateStyle: 'medium', timeStyle: 'short', timeZone: appearance?.timeZone ?? 'UTC'}).format(new Date(marketTimeKey(inspectedTime) * 1000))}`;
+        const groups: StudyLegendGroup[] = pane.studyIds.flatMap(id => {
+          const instance = state.indicators.find(item => item.id === id && item.visible);
+          const definition = availableIndicators.find(item => item.id === instance?.definitionId);
+          if (!instance || !definition) return [];
+          return [{id, label: labelFor(id), result: matchedResults[id], references: definition.referenceLines, lines: definition.lines.map(line => {
+            const rendered = paneSeries.find(item => item.id === `${id}:${line.id}`);
+            return {label: line.label, color: rendered?.color ?? instance.colors?.[line.id] ?? line.color ?? '#64748b', style: rendered?.style ?? line.style ?? 'line', value: rendered ? snapshot.crosshair ? snapshot.crosshair.values[rendered.id] ?? null : studyValueAt(rendered.points, inspectedTime) : null, formatValue: definition.formatValue};
+          })}];
+        });
+        groups.push(...supplementaryLegendGroups(state, pane.id, inspectedTime, snapshot.crosshair?.bar ?? data.at(-1), matchedResults, profileResults, legendMetadata, calculationMode !== 'supplied'));
+        const headerHeight = paneHeaderHeights[pane.id] ?? 28;
         return (
           <React.Fragment key={pane.id}>
             <div
-              className="pointer-events-none absolute left-2 right-20 z-10 flex h-7 min-w-0 items-center gap-2 overflow-hidden text-[0.6875rem]"
+              className="pointer-events-none absolute left-2 right-20 z-10 flex min-h-7 min-w-0 items-start gap-1 bg-background/90 text-[0.6875rem]"
               style={{ top: geometry.top, left: (geometry.left ?? 0) + 8 }}
               aria-label={`${paneLabel} pane legend`}
             >
@@ -606,11 +640,11 @@ export const TechnicalChartView = React.forwardRef<
                   <Button
                     size="xs"
                     colorStyle="ghost"
-                    className="pointer-events-auto h-6 shrink-0 bg-background/90 px-1"
+                    className="pointer-events-auto h-7 max-w-[45%] shrink-0 bg-background/90 px-1"
                     aria-label={`${paneLabel} pane actions`}
                   >
-                    {paneLabel}
-                    <ChevronDown className="size-3" />
+                    <span className="min-w-0 truncate" title={paneLabel}>{paneLabel}</span>
+                    <ChevronDown className="size-3 shrink-0" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -717,39 +751,9 @@ export const TechnicalChartView = React.forwardRef<
                 </DropdownMenuContent>
               </DropdownMenu>
               {!pane.collapsed ? (
-                <div className="flex min-w-0 gap-3 overflow-hidden whitespace-nowrap bg-background/85 font-mono tabular-nums">
-                  {paneSeries.map((s) => {
-                    const value = snapshot.crosshair
-                      ? snapshot.crosshair.values[s.id]
-                      : s.points.at(-1)?.value;
-                    return (
-                      <span
-                        key={s.id}
-                        title={`${labelFor(s.id.split(":")[0])}: ${value??"Unavailable"}`}
-                        aria-label={`${s.id}: ${value??"Unavailable"}`}
-                        className="text-foreground"
-                      >
-                        <span aria-hidden="true" style={{ color: s.color }}>
-                          ━{" "}
-                        </span>
-                        {s.placement === "overlay"
-                          ? s.id.split(":")[0].toUpperCase()
-                          : s.id.split(":").at(-1)?.toUpperCase()}{" "}
-                        {value == null
-                          ? "—"
-                          : appearance?.legends==="compact"?new Intl.NumberFormat(appearance.locale,{maximumSignificantDigits:6}).format(value):calculationMode === "supplied" ? String(value) : value.toFixed(pane.precision ?? 2)}
-                      </span>
-                    );
-                  })}
-                  {pane.showVolume ? (
-                    <span>
-                      VOL{" "}
-                      {(
-                        snapshot.crosshair?.bar ?? data.at(-1)
-                      )?.volume?.toLocaleString() ?? "—"}
-                    </span>
-                  ) : null}
-                </div>
+                <StudyLegend groups={groups} width={Math.max(80, geometry.width - (pane.id === 'price' ? 100 : 90))} locale={appearance?.locale} timeLabel={timeLabel} showIdentity={pane.id === 'price' || pane.studyIds.length > 1}
+                  onHeightChange={height => setPaneHeaderHeights(previous => previous[pane.id] == null || Math.abs(previous[pane.id] - height) > 1 ? {...previous, [pane.id]: Math.ceil(height)} : previous)}
+                  onRequestEvidence={onRequestSuppliedDetails ? () => onRequestSuppliedDetails({requests, results: matchedResults, rejectedResults: Object.fromEntries(requests.filter(request => suppliedResults[request.instanceId] && !matchedResults[request.instanceId]).map(request => [request.instanceId, suppliedResults[request.instanceId]])), missingIdentity: !calculationIdentity, availability: dataAvailability}) : undefined}/>
               ) : null}
             </div>
             {pane.id === "price" && !pane.collapsed ? (
@@ -759,9 +763,9 @@ export const TechnicalChartView = React.forwardRef<
                   aria-live="off"
                   className="pointer-events-none absolute right-20 z-10 flex flex-wrap items-baseline gap-x-2 overflow-hidden bg-background/90 font-mono text-[0.6875rem] leading-[0.875rem] tabular-nums"
                   style={{
-                    top: geometry.top + 28,
+                    top: geometry.top + headerHeight,
                     left: (geometry.left ?? 0) + 8,
-                    maxHeight: Math.max(0,Math.min(28,geometry.height-28)),
+                    maxHeight: Math.max(0,Math.min(28,geometry.height-headerHeight)),
                   }}
                 >
                   {(["open", "high", "low", "close"] as const).map((key) => (
@@ -1159,10 +1163,10 @@ export const TechnicalChartView = React.forwardRef<
             settings are preserved.
           </p>
         ) : null}
-        {calculationMode==="supplied"&&(requests.length>0||!calculationIdentity||appearance?.suppliedStatus==="compact"&&dataAvailability)?<SuppliedStatus availability={dataAvailability} requests={requests} results={matchedResults} incoming={suppliedResults} missingIdentity={!calculationIdentity} compact={appearance?.suppliedStatus==="compact"} onRequestDetails={onRequestSuppliedDetails}/>:null}
+        {!integratedNavigation ? suppliedStatus : null}
         {accepted.receipt && ["superseded","identity-mismatch","invalid"].includes(accepted.receipt.status)?<p role="status" aria-label="Bar update status" className="px-3 py-1 text-xs text-foreground">Bar update {accepted.receipt.status}. Last accepted snapshot retained. {accepted.receipt.message}</p>:null}
         <MarketChart
-          presentation={appearance}
+          presentation={presentation}
           drawingToolIds={drawingToolIds}
           drawingCommand={drawingCommand}
           onDrawingHistoryChange={onDrawingHistoryChange}
@@ -1272,6 +1276,9 @@ export const TechnicalChartView = React.forwardRef<
             className="flex min-h-10 flex-wrap items-center gap-1 border-t border-border px-2 py-1 text-xs"
             aria-label="Range and status"
           >
+            {integratedNavigation ? <div className="flex shrink-0 items-center" role="group" aria-label="Chart navigation">
+              {navigationControls ?? (narrow ? <DropdownMenu><DropdownMenuTrigger asChild><Button type="button" size="xs" colorStyle="ghost" className="h-8">Navigate<ChevronDown className="size-3"/></Button></DropdownMenuTrigger><DropdownMenuContent>{([['left', 'Pan left'], ['right', 'Pan right'], ['in', 'Zoom in'], ['out', 'Zoom out']] as const).map(([intent, label]) => <DropdownMenuItem key={intent} onSelect={() => navigate(intent)} disabled={!data.length}>{label}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu> : <>{([['left', 'Pan left', '←'], ['right', 'Pan right', '→'], ['in', 'Zoom in', '+'], ['out', 'Zoom out', '−']] as const).map(([intent, label, glyph]) => <Action key={intent} label={label} onClick={() => navigate(intent)} disabled={!data.length}>{glyph}</Action>)}</>)}
+            </div> : navigationControls}
             {rangeShortcuts.map((shortcut) => (
               <Action
                 key={shortcut.label}
@@ -1351,6 +1358,8 @@ export const TechnicalChartView = React.forwardRef<
             ) : null}
             {status}
             {clock}
+            {integratedNavigation ? suppliedStatus : null}
+            {footerActions}
           </div>
         ) : null}
         {Object.entries(profileResults).length && appearance?.suppliedStatus!=="compact" ? (

@@ -32,6 +32,7 @@ export class LogicalTimeScale {
 
   setStore(store: IndexedOhlcStore): void { this.store = store; this.clamp(); }
   setWidth(width: number): void { this.width = Math.max(1, width); }
+  setRightInset(inset: number): void { this.rightInset = Math.max(0, inset); }
   get visible(): LogicalRange { return { ...this.range }; }
   get plotWidth(): number { return Math.max(1, this.width - this.rightInset - this.leftInset); }
   get barSpacing(): number { return this.plotWidth / Math.max(Number.EPSILON, this.range.to - this.range.from); }

@@ -1,5 +1,9 @@
 # MarketChart
 
+`presentation.badges.endpointValues='all-visible'` enables outlined price/study endpoint boxes in a separate gutter. Supply human `axisLabel` metadata for custom low-level series; use the shared engine rather than host layout patches. See [ENDPOINT-LABELS.md](../../../ENDPOINT-LABELS.md).
+
+Opt-in right-axis moving-average endpoint boxes are described in [MOVING-AVERAGE-LABELS.md](../../../MOVING-AVERAGE-LABELS.md). Use public `presentation.badges.movingAverages='all-visible'` and tagged definition/series metadata; existing callers retain legacy badges.
+
 `MarketChart` is the accessible React surface for the isolated market-chart engine. It supports candlestick, OHLC bar, line, area and baseline series, volume panes, markers, pan/zoom, scale controls, visible-range callbacks and incremental updates.
 
 ```tsx
@@ -29,6 +33,8 @@ Supplied producer results: prefer TechnicalChartView for request identity matchi
 
 Calendar geometry: timeAxis and discontinuities are optional host-owned runtime inputs. coordinateForTime returns unobserved geometry in UTC/calendar modes; use inspected snapshots/data to identify actual observations. See [the full contract](../../../CALENDAR-COORDINATES.md).
 # Research runtime seams
+
+Opt-in matching candle and volume slot widths are supported through `presentation.candles` / `presentation.volume` (`widthMode: 'adaptive', gap: 2`). Runtime updates repaint the existing engine; omitted settings preserve historical defaults. See [ADAPTIVE-WIDTHS.md](../../../ADAPTIVE-WIDTHS.md) for dense/DPI behavior and validation bounds.
 
 `presentation`, `dataIdentity`/`dataRevision`/`onDataAcceptance`, `drawingToolIds`, `drawingCommand` and `onDrawingHistoryChange` are additive. The handle exposes shared drawing commands/history and resetScale. Theme and host availability overlays retain the existing engine. See [REFINEMENT.md](../../../REFINEMENT.md) for precise revision, metadata and compatibility rules.
 

@@ -32,7 +32,11 @@
     "NOTICE",
     "SUPPLIED-RESULTS.md",
     "CALENDAR-COORDINATES.md",
-    "REFINEMENT.md"
+    "REFINEMENT.md",
+    "READABILITY.md",
+    "ADAPTIVE-WIDTHS.md",
+    "MOVING-AVERAGE-LABELS.md",
+    "ENDPOINT-LABELS.md"
   ],
   "exports": {
     ".": {

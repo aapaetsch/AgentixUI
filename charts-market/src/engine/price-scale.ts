@@ -114,6 +114,14 @@ export class PriceScale {
         this.height
     );
   }
+  /** Classify against the actual transformed domain, independently of label/header margins. */
+  locateValue(value: number): {coordinate: number | null; edge?: 'above' | 'below' | 'undefined'} {
+    const transformed = this.transform(value);
+    if (!Number.isFinite(transformed)) return {coordinate: null, edge: 'undefined'};
+    if (transformed > this.maximum) return {coordinate: this.top, edge: 'above'};
+    if (transformed < this.minimum) return {coordinate: this.top + this.height, edge: 'below'};
+    return {coordinate: this.toCoordinate(value)};
+  }
   fromCoordinate(y: number): number | null {
     const transformed =
       this.maximum -

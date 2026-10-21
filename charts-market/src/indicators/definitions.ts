@@ -15,14 +15,14 @@ type BollingerParameters = SerializableParameters & { period: number; standardDe
 type MacdParameters = SerializableParameters & { fastPeriod: number; slowPeriod: number; signalPeriod: number };
 
 export const smaIndicator: IndicatorDefinition<PeriodParameters> = {
-  id: "sma", version: 1, label: "Simple moving average", placement: "overlay",
+  id: "sma", version: 1, label: "Simple moving average", placement: "overlay", axisLabelKind: 'moving-average',
   defaultParameters: { period: 20 }, lines: [{ id: "sma", label: "SMA", color: "hsl(var(--chart-1))" }],
   calculate: (data, parameters) => calculateSma(data, parameters.period),
   createRuntime: (parameters) => createSmaRuntime(parameters.period),
 };
 
 export const emaIndicator: IndicatorDefinition<PeriodParameters> = {
-  id: "ema", version: 1, label: "Exponential moving average", placement: "overlay",
+  id: "ema", version: 1, label: "Exponential moving average", placement: "overlay", axisLabelKind: 'moving-average',
   defaultParameters: { period: 20 }, lines: [{ id: "ema", label: "EMA", color: "hsl(var(--chart-2))" }],
   calculate: (data, parameters) => calculateEma(data, parameters.period),
   createRuntime: (parameters) => createEmaRuntime(parameters.period),
@@ -57,6 +57,7 @@ export const rsiIndicator: IndicatorDefinition<PeriodParameters> = {
 
 export const macdIndicator: IndicatorDefinition<MacdParameters> = {
   id: "macd", version: 1, label: "MACD", placement: "pane",
+  referenceLines: [{value: 0, label: 'Zero'}],
   defaultParameters: { fastPeriod: 12, slowPeriod: 26, signalPeriod: 9 },
   lines: [
     { id: "macd", label: "MACD", color: "hsl(var(--chart-1))" },

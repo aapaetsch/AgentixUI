@@ -19,11 +19,29 @@ export interface IndicatorDefinition<TParameters extends SerializableParameters 
   placement: "overlay" | "pane";
   defaultParameters: TParameters;
   lines: IndicatorLineDefinition[];
+  /** Presentation eligibility only; custom supplied moving-average definitions can opt in. Never a calculation key. */
+  axisLabelKind?: 'moving-average';
+  /** Presentation only; never enters calculation requests or saved instance identity. */
+  formatParameters?: (parameters: TParameters) => string;
+  /** Pane autoscale policy. Ignored when fixedDomain is supplied. */
+  automaticDomain?: IndicatorAutomaticDomain;
   fixedDomain?: readonly [number, number];
   referenceLines?: Array<{ value: number; label?: string; color?: string }>;
   formatValue?: (value: number) => string;
   createRuntime?: (parameters: TParameters) => IndicatorRuntime;
   calculate(data: readonly OhlcBar[], parameters: TParameters): IndicatorPoint[];
+}
+
+/** Raw supplied units; reference inclusion and padding never calculate indicator values. */
+export interface IndicatorAutomaticDomain {
+  /** Include all finite reference levels in the automatic domain. Default true. */
+  includeReferences?: boolean;
+  /** Fraction of the visible span added at each end. Default 0.08. */
+  padding?: number;
+  /** Minimum span before padding. Default 2% of magnitude; zero uses 1. */
+  minimumSpan?: number;
+  /** Domain used for an empty/warmup-only window, unioned with references. Default [0, 1]. */
+  emptyDomain?: readonly [number, number];
 }
 
 export interface IndicatorRuntime {
