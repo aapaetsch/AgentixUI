@@ -1,0 +1,66 @@
+{
+  "status": "proposal-only-awaiting-owner-approval",
+  "published": false,
+  "publicationAuthorized": false,
+  "parent": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "reviewBase": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "branch": "release/market-earnings-20261022",
+  "workflow": ".github/workflows/stage-reviewed-market-earnings.yml",
+  "releasePath": "releases/market-earnings-20261022",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-earnings.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-earnings.1.tgz",
+      "sha256": "8773208645920de7a8738b9a69a06f5613974622733d5556a634a9602e0e6016",
+      "integrity": "sha512-W74Lzo/5zaicFOiB4puINpGabXhTmd7XUov0ldyENfn/wqDFZ7Xu5cTPdBlNvrdhy24njxee2jeWn1kCsTDASg==",
+      "size": 579955
+    }
+  ],
+  "sourceSha256": "f303e67f9a697930980391a7a982920d9ff26baab0c1659b7fabb2416c4626d0",
+  "sourceBindingSha256": "4ba3177294f63d80feeaadb0e1427d8aecf6a8af900d82927278d72fc8a56c06",
+  "candidateReceiptSha256": "7da87b0fc0af77ffb203f132ae72ef99010830d15b35c16cb754150dcf0db4a4",
+  "candidateReviewSha256": "96ecbe3ad4771bd415bebcdf8559461678f3ce56f7e3b5acf1302301ed5eae0b",
+  "relationship": {
+    "predecessor": {
+      "version": "0.1.0-beta.3-interactions.1",
+      "artifactSha256": "07c62737575cc5d2a864c2d936a134426342b30736651f9e7be10eb3ce0363a6",
+      "sourceArchiveSha256": "c6530e7786ce36768dd9e0a50502f085f314095039a0c76b90a4325e3f240426",
+      "publishedReceipt": ".chart-interactions-validation/publication/npm-publication-receipt.json"
+    },
+    "successor": {
+      "version": "0.1.0-beta.3-earnings.1",
+      "artifactSha256": "8773208645920de7a8738b9a69a06f5613974622733d5556a634a9602e0e6016",
+      "sourceArchiveSha256": "f303e67f9a697930980391a7a982920d9ff26baab0c1659b7fabb2416c4626d0"
+    },
+    "changedRuntime": [
+      "charts-market/src/components/technical-chart-view/earnings.ts",
+      "charts-market/src/components/technical-chart-view/index.tsx"
+    ],
+    "changedPriorInputs": [
+      "charts-market/src/components/technical-chart-view/earnings.test.ts",
+      "charts-market/src/components/technical-chart-view/earnings.ts",
+      "charts-market/src/components/technical-chart-view/index.tsx"
+    ],
+    "addedInputs": [
+      "charts-market/src/components/technical-chart-view/earnings-timeline.stories.tsx",
+      "charts-market/src/components/technical-chart-view/earnings-timeline.test.tsx"
+    ],
+    "publicDeclarationsByteIdentical": true,
+    "qualification": "Successor preserves all prior interaction/pane runtime inputs except the two earnings-renderer files. Old archives stay byte-identical; this is a separately versioned archive requiring its own publication/adoption approval."
+  },
+  "pendingAcceptance": [
+    {
+      "gate": "Physical iPad Safari and real trackpad",
+      "reason": "Only desktop Chrome and synthetic CDP touch are available; existing interaction device qualifications remain pending."
+    },
+    {
+      "gate": "Actual200% browser zoom",
+      "reason": "Not exercised; requested viewport sizes use CSS pixels at the reported desktop DPR."
+    },
+    {
+      "gate": "Portfolio adoption and real two-workspace marker acceptance",
+      "reason": "No product write/install/deployment occurred; the receiving product must approve exact version/resolution/complete-lock/scripts-disabled install then verify real visible clickable E markers before committing/pushing."
+    }
+  ]
+}

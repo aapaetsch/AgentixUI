@@ -1,0 +1,211 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-22T18:56:29.296Z",
+  "candidate": ".chart-earnings-validation/candidates/earnings-4ba3177294f6",
+  "package": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.3-earnings.1",
+  "packageSha256": "8773208645920de7a8738b9a69a06f5613974622733d5556a634a9602e0e6016",
+  "integrity": "sha512-W74Lzo/5zaicFOiB4puINpGabXhTmd7XUov0ldyENfn/wqDFZ7Xu5cTPdBlNvrdhy24njxee2jeWn1kCsTDASg==",
+  "size": 579955,
+  "sourceArchiveSha256": "f303e67f9a697930980391a7a982920d9ff26baab0c1659b7fabb2416c4626d0",
+  "sourceBindingSha256": "4ba3177294f63d80feeaadb0e1427d8aecf6a8af900d82927278d72fc8a56c06",
+  "runtimeBindingSha256": "911b80a6bc12beaca9094ed68ef004a61bf77c1855b186ff1f436c85a1fcf387",
+  "sourceFiles": 164,
+  "packageFiles": 75,
+  "distFiles": 63,
+  "evidenceFiles": 15,
+  "screenshots": 9,
+  "candidateFiles": 94,
+  "candidateFileHashes": {
+    "aapaetsch-charts-market-0.1.0-beta.3-earnings.1.tgz": "8773208645920de7a8738b9a69a06f5613974622733d5556a634a9602e0e6016",
+    "evidence/browser-results.json": "a76d90d5d46f375a20448462b114d0946915e0327902b507469493aa3ad7b59e",
+    "evidence/dev-runner/red-corrected-results.json": "05a665afeb167c8417aa8e1f13f80d6d69435a9e0a2e94ce44c0a365ad5a1f1e",
+    "evidence/dev-runner/results.json": "af5d124e299fac9263bb21cb2e17b561e26a128797459a7c693c23ee332a8eda",
+    "evidence/dev-runner/review.json": "dc35beb235f6678201142aa27444c52b407b9a02a608c4e0a3d2ccbf3f2ecb86",
+    "evidence/preservation.json": "f7d4e3b820006945af3213115f62b4c327f9c1d204d79450fe1349843061388f",
+    "evidence/README.md": "5040e1ae484432cb4d4cd47382fdcde315393f6ff98cf2dbee6f2c66762c6266",
+    "evidence/screenshots/compact-dark-390.png": "0e58811d304caa0cf9019d5aa32e9a175f066892cf6374b55542000648594ef8",
+    "evidence/screenshots/compact-light-390.png": "666280b770234344bb1b3076a343d706af1f320f25c0d390bcaa3cbbb9324b00",
+    "evidence/screenshots/dark-1440.png": "d10b29de75126ec7176d2de695cac3ef02064871d11cbefdb9c80433f0c3b03f",
+    "evidence/screenshots/dark-390.png": "16c5111fc800964af6caf089730c07454bd8a608bfd414e76986b2f211ccb711",
+    "evidence/screenshots/focus-compact.png": "937b31eb98f7a312077441063488da7ccdefa0c2accbb9d5fb279f573b412336",
+    "evidence/screenshots/light-1440.png": "8aa6d7b7e232daa054410cd4a819e2cbe780946e1ea97f72f0122580a8d9d37a",
+    "evidence/screenshots/light-390.png": "25c20c647e6ccbd51147034fd321be12317935d8d9bfaea4f5b490ae535959ca",
+    "evidence/screenshots/mouse-details.png": "f64639ee4134e4d65287a75ffe8bfbdb4cfbe755501ca2ea91d357f4a19e4caa",
+    "evidence/screenshots/touch-details.png": "000d878295b5a46cbb5f867cf2cf2eec7bba9112a317514ed1bfd443f7861712",
+    "package-staging/ADAPTIVE-WIDTHS.md": "bb04c415f906c56530b435dca346607094b49d0d283449d437419ccd4d7ce509",
+    "package-staging/CALENDAR-COORDINATES.md": "555ffa7e24beacb0a9ccfe56e574f82aadcfec85bee6df31986eacae3c6ce5e8",
+    "package-staging/dist/chunk-5NTEEW5U.js": "3a75b693c129311a12f803ac8be39b6025c6fa5fb8c8f175861a49ca533819b1",
+    "package-staging/dist/chunk-5NTEEW5U.js.map": "3c674f8824133130039b7ae51ec0ba9b8302430515bd5c93889825a59b84b0d0",
+    "package-staging/dist/chunk-AHEGFOLG.cjs": "8f15ff78d809a38b3f1e185641aeed37bac1b147ba94c6b88ea6624f713ae220",
+    "package-staging/dist/chunk-AHEGFOLG.cjs.map": "5fb1438434978b1ad720f039e9ff50d29ec11d9260daf709f9b1a0a06b9717f7",
+    "package-staging/dist/chunk-DJZ7B476.cjs": "c6de5a3d94284eb069fb5fc275fefbf1d4f3b75fda5363040f6b21da0110850c",
+    "package-staging/dist/chunk-DJZ7B476.cjs.map": "187014ffc4e51cff6df9c40daeea6730091ac159c422074ba53901fad5495fbe",
+    "package-staging/dist/chunk-IFQ2BLD5.js": "d2fe3162f576f670d7265516bd97aef4d9e29d9fce729927baa1a0c648a6d905",
+    "package-staging/dist/chunk-IFQ2BLD5.js.map": "75de0973ec2659f6a45888a8a6064a6d12bd0d1b5895d9fecf45f83927b80457",
+    "package-staging/dist/chunk-LUUMX2ZI.js": "ff246416f2c9a90e10684c25deab6cccf66693b291bc879174e827c8d0dd2d29",
+    "package-staging/dist/chunk-LUUMX2ZI.js.map": "52f35cb6da006b5640cf068e332a54d4af48fab4b76ad022237979aa8b03e4ee",
+    "package-staging/dist/chunk-PYPVVDUY.cjs": "758b995c4d1e5ae2bfe486d070ce4f345e3523de93a37f4bcc6a7c28977e8a39",
+    "package-staging/dist/chunk-PYPVVDUY.cjs.map": "dd0afd5ff32e2a1167872cba23be30bb1ae44de6709388f66be2786297d1af61",
+    "package-staging/dist/controls.cjs": "10fa20d892e9f389cd08e0a4d9adcd4ee3bc2761836d7bbfc4904c636d1c57c5",
+    "package-staging/dist/controls.cjs.map": "e13159357b4e5847b3405dcace5c050a601829835d5f6228de9d65138fa00f42",
+    "package-staging/dist/controls.d.cts": "8e93854fe0c2b76ae80762ef2a178e63d030d5dd2a215c9f26ec7275d434994a",
+    "package-staging/dist/controls.d.ts": "8f5c153d538fcebcf189c8fb2b4723f96e54fe71e808852900f38e5ed21d45e9",
+    "package-staging/dist/controls.js": "ed94c990925ad5d80cd9fd7199b7c1288e1fde2c5c6566ef690b7cc14d9b3646",
+    "package-staging/dist/controls.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/dist/core.cjs": "8da17a64e9912d27b706a34130a7b4bbd5bf04da77912bedcc0eca5895febdfa",
+    "package-staging/dist/core.cjs.map": "aed672831e6cdecdfe1418f7f14e8ac9cb5dd9df2ef7dbaf3af9bf1abdd641be",
+    "package-staging/dist/core.d.cts": "012de4bbabe426e360599085b97bcefebcf271edff6e2a3d5fc2e01cf5b0130b",
+    "package-staging/dist/core.d.ts": "1d8e41e29912ee2b49307591fb50dd9602fc5849758c3969a43d505b149bebf7",
+    "package-staging/dist/core.js": "1cf52a75a2811916abe25ffb291b65fbdb9d93d2014b67f87c3286a6fea3881f",
+    "package-staging/dist/core.js.map": "a1a0a3e9224b1ccaeabb7e1dd47f0cc823a66975f0bb0c9011ddfafde992278b",
+    "package-staging/dist/drawings.cjs": "13fcd3eeb536eaeb0b13c8adfb9e35f7720b6cbcd4144b95c99558164f482fd2",
+    "package-staging/dist/drawings.cjs.map": "57b5fd0442125b6dea4e933e4eed56eade7ec031270fc37ddd5694d88e8c4813",
+    "package-staging/dist/drawings.d.cts": "72632a3faa25ee77da0275f369d5b46ac5fc5c7492ef7deebc7b74f3271c57e8",
+    "package-staging/dist/drawings.d.ts": "4fd934b21eaec14d4669e9b3423bca3a5bee1a21cad521c2f5ca7c912d2327fd",
+    "package-staging/dist/drawings.js": "25cea8da3f26e0bef44cec3c10cbd67ae2e1f254291a1e71be31cf4d6518aea3",
+    "package-staging/dist/drawings.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/dist/index-BfhgGu8w.d.cts": "8019146d87e62718d10ab04107a06614d29ef5f932ec7d1451d12358b525ec93",
+    "package-staging/dist/index-BFWtQQUP.d.ts": "d7784d02e96d8b149a97b37dfe2758f4378bfab3055eec53df9d8837f9569c08",
+    "package-staging/dist/index-Dvz_QCPl.d.ts": "ed0baea69f1773a90219fbefb81c413530eed76061eb42a0b064469fdf915ce0",
+    "package-staging/dist/index-N13bbNc5.d.cts": "8cbf073c76da69da0422ff5002d5fd48bdf8bc5fe198e6594de3187b060b0fa0",
+    "package-staging/dist/index.cjs": "094687aa3fae673a7a1b44febf26125eda457436e35fa135e6410bfba37c631d",
+    "package-staging/dist/index.cjs.map": "10846861aea43b05e960f485a981fff14aa27b7bd20379c7576f8562d493560a",
+    "package-staging/dist/index.d.cts": "0a380d44db6de680bf6078a3cfe523850319067db11f40d77b9b3d369b065f96",
+    "package-staging/dist/index.d.ts": "9e0ad4dec40a003562baee41c89c92c52541ac05f46a31abd5b79a42b0895c53",
+    "package-staging/dist/index.js": "8844624f1838f70584f05cbc7680e87fe254c91ffe5eddd269de876fa115df94",
+    "package-staging/dist/index.js.map": "805bae5f984ce7758d6c07b0ea07562c6e6a153329eea01dc055a22dcb5bf122",
+    "package-staging/dist/indicators.cjs": "09a911f86f26124f40f18973a2a818e2e3b63484fbae00a7703518b8514204ff",
+    "package-staging/dist/indicators.cjs.map": "0c61e88559c5afe037cb3d3e4e4bbe18317226bce7035f2295fcf41193dc7a52",
+    "package-staging/dist/indicators.d.cts": "d735a6092f839ee3389fdaccaec0b68a09ae20cead93a35f8dcbe77b8bf5a941",
+    "package-staging/dist/indicators.d.ts": "5a404f739ea4f0877b8001904aebc629df0e22fbdff3d792e3e4d2a02f14a0f6",
+    "package-staging/dist/indicators.js": "5b3f32c0735b2320ae4e0e7cbd236d8f5db5bcd5812bb61a20bb8e1cc28443cc",
+    "package-staging/dist/indicators.js.map": "c72f870bb261cca7ed340bde1badda12365a658c1ce8dcbad07052889390e77f",
+    "package-staging/dist/overlays.cjs": "017effb1387d3e4f57914b468766d50d52ce099f8a17108099f0eddacae39e84",
+    "package-staging/dist/overlays.cjs.map": "22b5d247eec44258114fb5b97fbd85dd21d29661c6e59940e8e2bb4de2cb2889",
+    "package-staging/dist/overlays.d.cts": "6980788ccb9be980bd82005f4daaa1a932c8ee2b583e5cb3644857911bb4c7d5",
+    "package-staging/dist/overlays.d.ts": "949dbc632e734f2013ec6c2d829c27c31d3bded154f06771577d004701feacc7",
+    "package-staging/dist/overlays.js": "4280bcf8ba913e2293121c13fc9da41f736b022054770d674431857435f7923f",
+    "package-staging/dist/overlays.js.map": "b26b0cff5b2bb32a943fbf9f0c71d73147593b24923c3ae23619bf1ae526a21b",
+    "package-staging/dist/styles.css": "fd4ae788f8737d34faeaaa8763d79012368a5d70a7af5af6770a125fa25e21c4",
+    "package-staging/dist/types-DerJeMSz.d.cts": "59c8e065079dc539ec51bf39c529808c484a1f66b47344736cdea75544f0af78",
+    "package-staging/dist/types-DerJeMSz.d.ts": "59c8e065079dc539ec51bf39c529808c484a1f66b47344736cdea75544f0af78",
+    "package-staging/dist/types-Kf-bQZCw.d.cts": "4b8194fe095c1077ac34c0f927a8a5daa95ff91c415fabeb8572822acdd3a501",
+    "package-staging/dist/types-Kf-bQZCw.d.ts": "4b8194fe095c1077ac34c0f927a8a5daa95ff91c415fabeb8572822acdd3a501",
+    "package-staging/dist/workspace.cjs": "61b7040e92f0c20707a1b3b9e2b8a8ab0fded5ec3e2f920daf1de652928c39b2",
+    "package-staging/dist/workspace.cjs.map": "d0753701f16403ae1f8afb7d93b46c476d92162981a114c2a3b7863af63de2be",
+    "package-staging/dist/workspace.d.cts": "439453fad6c0d3405ce12228bc06f7197d928f3f87e2ad2e683b21dac6720c8a",
+    "package-staging/dist/workspace.d.ts": "f6f1c3b05390f18f2502621a03e3dcc63cff23e94bf104cf7852e3158b79e611",
+    "package-staging/dist/workspace.js": "e85a0192357bf00a948ebf30e43291882c96cc5891d2d6eb27b1ee91d9f923f4",
+    "package-staging/dist/workspace.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/ENDPOINT-LABELS.md": "cd013006af5027867277e1c5e384faccdb0e8de82f849d74344a6dc92e4c6ce8",
+    "package-staging/INTERACTIONS.md": "9e52cd2bcbe905da5262af92221dea864d85c3c16ab4e109d2157763e8794bb5",
+    "package-staging/LICENSE": "e80e9406bfe34b32e65f41b41b494d6050138bf6b1968b33e5038a6bfd102bb3",
+    "package-staging/MOVING-AVERAGE-LABELS.md": "a17072b60bef45c68a0d13d80ea81b042646659e3132f76bbb7970909b162f08",
+    "package-staging/NOTICE": "2bcb86f62060897acecdc15780f7b02f6df98b0dfd8e44bd039f44f7f7638472",
+    "package-staging/package.json": "e14c7e5d98a0acf77afdaf764bfd7d09497eb08c6c042e844ae5d70a72f37906",
+    "package-staging/READABILITY.md": "8101062fd9125cee29f26879ce5a81303fa6b4927630754f1b8922e4f481733d",
+    "package-staging/README.md": "7ca11d6c17a6d44e3332375e2f1d6396beb3d5bf032d058d8f6a85280df3a9eb",
+    "package-staging/REFINEMENT.md": "0ee6e827043cd6a5e7a93e99d8b89cbdbe3254ecac0fc05929b0919d0a324165",
+    "package-staging/SUPPLIED-RESULTS.md": "5cbdc33282e556a8a94c950aeff9b77b99a2d5cdb0079a84d3bca2cbbf296c58",
+    "receipt.json": "7da87b0fc0af77ffb203f132ae72ef99010830d15b35c16cb754150dcf0db4a4",
+    "reviewed-source.tar.gz": "f303e67f9a697930980391a7a982920d9ff26baab0c1659b7fabb2416c4626d0",
+    "source-files.txt": "ad9bb0ebd9cc7ea2d6ec276f09cfe526590386b88efaa5d51fadf9837b36dacc"
+  },
+  "candidateUnchanged": true,
+  "manifestOnlyVersionOverride": true,
+  "dependencies": {
+    "aapaetsch-icons": "0.1.0-beta.0"
+  },
+  "peerDependencies": {
+    "aapaetsch-ui-kit": ">=0.2.0-beta.3",
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0"
+  },
+  "license": "MIT",
+  "noLifecycleHooks": true,
+  "publicModules": [
+    {
+      "subpath": ".",
+      "exports": 161
+    },
+    {
+      "subpath": "./core",
+      "exports": 23
+    },
+    {
+      "subpath": "./indicators",
+      "exports": 24
+    },
+    {
+      "subpath": "./drawings",
+      "exports": 81
+    },
+    {
+      "subpath": "./overlays",
+      "exports": 9
+    },
+    {
+      "subpath": "./controls",
+      "exports": 1
+    },
+    {
+      "subpath": "./workspace",
+      "exports": 7
+    }
+  ],
+  "publicExportsUnchanged": true,
+  "publicDeclarationsByteIdentical": true,
+  "packedPublicTypes": {
+    "strict": true,
+    "skipLibCheck": false,
+    "allSevenEntrypoints": true,
+    "allCurrentExamples": true,
+    "status": "pass"
+  },
+  "packedSsrCases": 4,
+  "protectedFiles": 5149,
+  "protectedHashesUnchanged": true,
+  "headUnchanged": true,
+  "outsideScopeChanges": [],
+  "documentationOnlyPostCheckDelta": [
+    {
+      "file": "docs/ROADMAP.md",
+      "previous": "412bd44d1c31ae8cbdd6132dde6b66001bbebe98a63bf0c6c229dd44c9c1dba9",
+      "current": "647dd81506dacfe27dc9683ba3944e14bf95521ad3324282d5e4e86da54b4222"
+    }
+  ],
+  "browserEvidence": {
+    "status": "verified-parent-receipt",
+    "observations": 29,
+    "actions": 13,
+    "screenshots": 9,
+    "limitations": [
+      "Browser fixtures are synthetic and contain14 unchanged price rows; no private product data is included.",
+      "One immediate post-resize probe preceded the asynchronous frame update; settled geometry passed and is the accepted result.",
+      "Mouse/keyboard/touch and DOM point-hit checks establish this Chrome session only; synthetic touch is not physical iPad Safari."
+    ]
+  },
+  "tests": {
+    "full": 240,
+    "focusedGreen": 11,
+    "correctedRedFailed": 5,
+    "correctedRedPassed": 6
+  },
+  "checklist": {
+    "archivesAndContents": true,
+    "sourceAndValidatedDistBinding": true,
+    "manifestAndLicenseAndPeers": true,
+    "protectedScopeAndFinalDocumentation": true,
+    "packedExportsTypesAndSSR": true,
+    "evidenceHashesAndQualifiedBrowser": true
+  },
+  "published": false,
+  "sealing": "Pending parent bundling this review and read-only seal.",
+  "limitations": [
+    "No candidate/source writes, rebuild, repack, install, artifact download, publication or remote operations. Archives read in memory; native smoke uses byte-identical package-staging files.",
+    "Corrected RED uses copied baseline runtime and valid price-only fixtures; initial momentum/ResizeObserver mock issues are explicitly qualified as harness problems.",
+    "Parent browser receipt and screenshot hashes verified, not independently rerun. Immediate pre-settle RAF probe remains qualified by settled assertions.",
+    "Physical-device, downstream product/dependency/complete-lock and publication gates remain separate as documented."
+  ]
+}
