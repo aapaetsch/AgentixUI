@@ -1,0 +1,48 @@
+{
+  "authorizedBy": "Owner-authorized sealed publication; additional GitHub delivery commit/workflow awaits scope approval",
+  "authorizedAt": "2026-10-21T23:18:39.526Z",
+  "package": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.3-interactions.1",
+  "parent": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "reviewBase": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "branch": "release/market-interactions-20261021",
+  "workflow": ".github/workflows/stage-reviewed-market-interactions.yml",
+  "releasePath": "releases/market-interactions-20261021",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-interactions.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-interactions.1.tgz",
+      "sha256": "07c62737575cc5d2a864c2d936a134426342b30736651f9e7be10eb3ce0363a6",
+      "integrity": "sha512-DyVP61GCvjFjrUpaAlhT/yKndCk36patI4OjjhsrLOt38fz4mg34IaEmBs5olcWdZgWHUGWER0O9wJiJRK4nsw==",
+      "size": 578544
+    }
+  ],
+  "sourceSha256": "c6530e7786ce36768dd9e0a50502f085f314095039a0c76b90a4325e3f240426",
+  "sourceBindingSha256": "71329abef1f5c4ac95b45040d343c753c3e0aeb307b4c98a14dab3398d1e5480",
+  "published": false,
+  "status": "prepared-awaiting-delivery-authorization",
+  "pendingAcceptance": [
+    {
+      "gate": "Physical iPad Safari",
+      "reason": "No physical iPad Safari session is available on this Windows workstation. Scroll/pinch/cancellation arbitration requires actual hardware."
+    },
+    {
+      "gate": "Real trackpad",
+      "reason": "No physical trackpad gesture session was available; CDP wheel axis input is synthetic."
+    },
+    {
+      "gate": "Physical browser zoom200%",
+      "reason": "720x450 half-size CSS layout and a separate mounted DPR2 case were exercised; this is not actual browser zoom200%."
+    },
+    {
+      "gate": "Product/account/data boundary",
+      "reason": "Portfolio/OpenBB are read-only. No product installation, provider acquisition counters, two-account acceptance, deployment, or physical-device financial-evidence checks were executed."
+    }
+  ],
+  "emulationLimitations": [
+    "Some first post-snapshot Chrome CDP touch sequences produced no observed pan/scroll; uninterrupted repeats did. Input transport/coalescing versus device behavior was not established. Physical-device acceptance remains required.",
+    "IAB does not support Input.dispatchTouchEvent; touch used a dedicated Chrome tab. Runtime DPR-only changes without CSS resize required reload in earlier inspection."
+  ],
+  "qualification": "Promote exact locally reviewed frozen archive with CI provenance; CI performs no rebuild or repack. Workspace version and lock remain unchanged. Portfolio adoption remains subject to its dependency and complete-lock approval gate."
+}

@@ -1,0 +1,263 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-21T20:45:20.571Z",
+  "candidate": ".chart-interactions-validation/candidates/interactions-71329abef1f5",
+  "package": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.3-interactions.1",
+  "packageSha256": "07c62737575cc5d2a864c2d936a134426342b30736651f9e7be10eb3ce0363a6",
+  "packageIntegrity": "sha512-DyVP61GCvjFjrUpaAlhT/yKndCk36patI4OjjhsrLOt38fz4mg34IaEmBs5olcWdZgWHUGWER0O9wJiJRK4nsw==",
+  "size": 578544,
+  "sourceArchiveSha256": "c6530e7786ce36768dd9e0a50502f085f314095039a0c76b90a4325e3f240426",
+  "sourceBindingSha256": "71329abef1f5c4ac95b45040d343c753c3e0aeb307b4c98a14dab3398d1e5480",
+  "runtimeBindingSha256": "673238785e3d9ca5e46ea9feb8d2345f2f67b3718278691b3e6100cb79958e16",
+  "sourceFiles": 163,
+  "packageFiles": 75,
+  "distFiles": 63,
+  "evidenceFiles": 23,
+  "screenshots": 15,
+  "manifestOnlyVersionOverride": true,
+  "sourceAndDistMatchLatestValidatedBytes": true,
+  "evidenceHashesVerified": true,
+  "externalValidationLogHashesVerified": true,
+  "nativeModules": [
+    {
+      "subpath": ".",
+      "exports": 161
+    },
+    {
+      "subpath": "./core",
+      "exports": 23
+    },
+    {
+      "subpath": "./indicators",
+      "exports": 24
+    },
+    {
+      "subpath": "./drawings",
+      "exports": 81
+    },
+    {
+      "subpath": "./overlays",
+      "exports": 9
+    },
+    {
+      "subpath": "./controls",
+      "exports": 1
+    },
+    {
+      "subpath": "./workspace",
+      "exports": 7
+    }
+  ],
+  "packedSsrCases": 12,
+  "declarationsPresent": true,
+  "license": "MIT",
+  "dependencies": {
+    "aapaetsch-icons": "0.1.0-beta.0"
+  },
+  "peerDependencies": {
+    "aapaetsch-ui-kit": ">=0.2.0-beta.3",
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0"
+  },
+  "lifecycleHooks": [],
+  "unchangedFinancialSources": [
+    "charts-market/src/core/data-revision.ts",
+    "charts-market/src/core/supplied-results.ts",
+    "charts-market/src/drawings/calculations.ts",
+    "charts-market/src/indicators/calculations.ts",
+    "charts-market/src/indicators/definitions.ts",
+    "charts-market/src/indicators/incremental.ts",
+    "charts-market/src/indicators/index.ts",
+    "charts-market/src/indicators/indicators.test.ts",
+    "charts-market/src/indicators/supplied-points.test.ts",
+    "charts-market/src/indicators/supplied-points.ts",
+    "charts-market/src/indicators/supplied.ts",
+    "charts-market/src/overlays/index.ts"
+  ],
+  "protectedBaselineCounts": {
+    "outsideAllowlist": 1495,
+    "priorArtifacts": 50,
+    "dependencyHashes": 14,
+    "rootUiIconHashes": 2748
+  },
+  "headUnchanged": true,
+  "outsideScopeChanges": [],
+  "receiptSha256": "59fa8519dc4a3937dcb9f3a10c4c33fa1d89c389069a6acb11c50358b62fddc2",
+  "candidateFiles": {
+    "aapaetsch-charts-market-0.1.0-beta.3-interactions.1.tgz": "07c62737575cc5d2a864c2d936a134426342b30736651f9e7be10eb3ce0363a6",
+    "evidence/browser-interactions-pre-menu-fix.json": "f077d6732220b73136e751dd6d900db9a73bd3c80f676ca907c93b4197553a76",
+    "evidence/browser-matrix.json": "c79e0ffae94801f683d1dda383f0976d34335b3f3681390ff0112e0288b47537",
+    "evidence/browser-results.json": "63ce9dc3ad9adac9392e09202a3f6ce0749fac5e51b807d571006866ae97dad7",
+    "evidence/dev-runner/final-audit.json": "1b7786a1d694fecb4c5f21f64468413a820e34731f89e3754fd68674b51dc8c8",
+    "evidence/dev-runner/final-results.json": "6ffca3144d77893c544a7b719ca0ace8233cb554edb0e5b5a9cf1215de0e3200",
+    "evidence/screenshots/chrome-dpr2.png": "64699ac561b1c5eeb917212c31f8075b2e39b22e3a8d03dc011230bf7fb152f5",
+    "evidence/screenshots/chrome-touch-final.png": "2455af1512dbf36ff2a08c7a9378b506871e37b4dcd5b13b26e062fdced20fc1",
+    "evidence/screenshots/custom-theme.png": "4aa34267c14dbf3c93d552da9916f49b0514cd592c317b3781f50a4013e50e5c",
+    "evidence/screenshots/dark1440.png": "0c365763f53b7a51d3958f1069e5d80ead069066ca3637196f25e2497af751b1",
+    "evidence/screenshots/final-interactions.png": "6d4ce15190c19731e147c76084a4058a2e06ae25bf7f280f941ada70802b8c26",
+    "evidence/screenshots/four-charts.png": "782a493566abba28fc3d143133616dbe17b10cc2c13d59aa67b2f2bf17a9ee3d",
+    "evidence/screenshots/hidden-host-final-maximized.png": "8d23e3ddf1d8abc5480b03b07a9264af7e5660c798a892067a83e83de868ee57",
+    "evidence/screenshots/hidden-host-final.png": "0c365763f53b7a51d3958f1069e5d80ead069066ca3637196f25e2497af751b1",
+    "evidence/screenshots/light1440.png": "3c0ebf16f8aa0033675cb07e1752612552914a78d235005ee7f8b248203a5933",
+    "evidence/screenshots/narrow320-footer.png": "be6c43bac0d2fcf9a06acd5bf6aae3a4028d2d1008d87c04dd4f1a0b82aa3c1e",
+    "evidence/screenshots/narrow320.png": "5f2934093603c7abf4f409dcc6fd3e8ac9ccebb4c18b78e0f888bc6e81551a29",
+    "evidence/screenshots/narrow390-footer.png": "543eb6defe02d235e0b8718016b82de841bc94406fd76c245b69ba57d6612732",
+    "evidence/screenshots/narrow390.png": "33acb2f5bbf8fcae02c3d66855b2babd8717e6b55b6d2daf31fc709f19474dc6",
+    "evidence/screenshots/two-charts.png": "2a2bd41ee2c91e3c75ae105613f796d3846bb73e6c8034eba9f48a5bbf6be8f8",
+    "evidence/screenshots/zoom-layout-200.png": "e3c4e39330e85d602dc46e2c6cc81d086be323611ea690173c32b7e7f3a0f5c2",
+    "evidence/traces/final-inputs.json": "23451c9ffe4821ded321aa494a2c9b3d84b215ddc38efd8fc096995c9d8db47c",
+    "evidence/traces/final-pan-zoom.json": "c366355553da59558e6e75a00d2c8dccefb7f10d4428f146f806319abe50434f",
+    "evidence/traces/final-performance.json": "978c5345994ad4397519a77e81f25000535d1ef3f008c64a50c3785c5108f231",
+    "package-staging/ADAPTIVE-WIDTHS.md": "bb04c415f906c56530b435dca346607094b49d0d283449d437419ccd4d7ce509",
+    "package-staging/CALENDAR-COORDINATES.md": "555ffa7e24beacb0a9ccfe56e574f82aadcfec85bee6df31986eacae3c6ce5e8",
+    "package-staging/dist/chunk-42TMBWPM.js": "42d6d9faacbcbd46fac9ddfcb2d64b8d822a10ff0d7c6df82a8ab358b0cccf69",
+    "package-staging/dist/chunk-42TMBWPM.js.map": "aff3d5f16bde7235c6bfde7691f328234d82f74fa3dc75fd5afa72d977dc472b",
+    "package-staging/dist/chunk-4XX57SPT.cjs": "9f5a16a11f4fb7dd927ffa6b03fb8ad58f178ff1ffa4b25a5e4d1a4b93a43531",
+    "package-staging/dist/chunk-4XX57SPT.cjs.map": "a3e00dd3628cd61ff1c72e32bc29b18adaaa9a31718fb1f3057c89f9bc3c8029",
+    "package-staging/dist/chunk-7OU7I7RU.js": "cdbb0fb1aa740ec942c2f62f1338134cbc25313467e1fedd75d7b421220149d5",
+    "package-staging/dist/chunk-7OU7I7RU.js.map": "82ba8d88f00df1ab21912393fd714821df6ff84be18592bf634ec15c1b1772b6",
+    "package-staging/dist/chunk-JRFCU6X2.cjs": "5ae08fd5374e75c5e61f518094e9c959c5b301f4a7214fbd547cc190aeaf5d02",
+    "package-staging/dist/chunk-JRFCU6X2.cjs.map": "36b4eb2ed57b5ac23f80bae11f6ac0f03e5f9fec1df955f9f94f09ad1583cf19",
+    "package-staging/dist/chunk-SBETJQQI.js": "54f1fb8251544449f63c9fb0855a4887c2061fcefc1e2e624e584c36400e7e05",
+    "package-staging/dist/chunk-SBETJQQI.js.map": "47d73b639e3620e5c487c4a9dc535c470bcac088ead4c9c4c076221d963abda6",
+    "package-staging/dist/chunk-W2QPFXTE.cjs": "8bdf4a1bfa1760c39dcf60bb1d4dd288ec8f925b409d819feea7951b53bff1df",
+    "package-staging/dist/chunk-W2QPFXTE.cjs.map": "7d72976ecacc313714237e73bfa749f0108bc3565d357de1c589f1ec901d7484",
+    "package-staging/dist/controls.cjs": "06ae212887a1c500563c47b20ddf9d7b59e452c6af33b1187e766cce08653dfb",
+    "package-staging/dist/controls.cjs.map": "6b23e7e10ee5e55e64d57c26b4cdc3fcdf6668eae4d3c1c2722ffe719dcba5eb",
+    "package-staging/dist/controls.d.cts": "8e93854fe0c2b76ae80762ef2a178e63d030d5dd2a215c9f26ec7275d434994a",
+    "package-staging/dist/controls.d.ts": "8f5c153d538fcebcf189c8fb2b4723f96e54fe71e808852900f38e5ed21d45e9",
+    "package-staging/dist/controls.js": "513c68dbb1973e9fcb03f2ba3fa9443c3465d06a66cc51e765b969fbc6bb5afc",
+    "package-staging/dist/controls.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/dist/core.cjs": "8da17a64e9912d27b706a34130a7b4bbd5bf04da77912bedcc0eca5895febdfa",
+    "package-staging/dist/core.cjs.map": "315bdc2f677bcb359fc782cfbd0f3c139ed403524552398ac020b7dac8cf4218",
+    "package-staging/dist/core.d.cts": "012de4bbabe426e360599085b97bcefebcf271edff6e2a3d5fc2e01cf5b0130b",
+    "package-staging/dist/core.d.ts": "1d8e41e29912ee2b49307591fb50dd9602fc5849758c3969a43d505b149bebf7",
+    "package-staging/dist/core.js": "1cf52a75a2811916abe25ffb291b65fbdb9d93d2014b67f87c3286a6fea3881f",
+    "package-staging/dist/core.js.map": "aa97995ae93f68faeda58d28f9560c3548b0c72ff051efc2ded690c7d087ed12",
+    "package-staging/dist/drawings.cjs": "7500f19f8fa2825a666e13043599bef9c62bc33fc4ccc75c887ce4dea1afbcf3",
+    "package-staging/dist/drawings.cjs.map": "0333170e72bea25e53f0d27f2b2ae54c7603e56a87cce073f5f24a0402f8fce3",
+    "package-staging/dist/drawings.d.cts": "72632a3faa25ee77da0275f369d5b46ac5fc5c7492ef7deebc7b74f3271c57e8",
+    "package-staging/dist/drawings.d.ts": "4fd934b21eaec14d4669e9b3423bca3a5bee1a21cad521c2f5ca7c912d2327fd",
+    "package-staging/dist/drawings.js": "e654b1bb359be09c3f12c70868d6adda6e5ba90699633567e1c91233e7257022",
+    "package-staging/dist/drawings.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/dist/index-BfhgGu8w.d.cts": "8019146d87e62718d10ab04107a06614d29ef5f932ec7d1451d12358b525ec93",
+    "package-staging/dist/index-BFWtQQUP.d.ts": "d7784d02e96d8b149a97b37dfe2758f4378bfab3055eec53df9d8837f9569c08",
+    "package-staging/dist/index-Dvz_QCPl.d.ts": "ed0baea69f1773a90219fbefb81c413530eed76061eb42a0b064469fdf915ce0",
+    "package-staging/dist/index-N13bbNc5.d.cts": "8cbf073c76da69da0422ff5002d5fd48bdf8bc5fe198e6594de3187b060b0fa0",
+    "package-staging/dist/index.cjs": "9331ebfb7145533d7ec161d6400993f34e349c25974a36c44f02c8cdfc944071",
+    "package-staging/dist/index.cjs.map": "eb955367e863bfda0357c72c2661900e97f53e1cce0fa4882f1045b9aed634c2",
+    "package-staging/dist/index.d.cts": "0a380d44db6de680bf6078a3cfe523850319067db11f40d77b9b3d369b065f96",
+    "package-staging/dist/index.d.ts": "9e0ad4dec40a003562baee41c89c92c52541ac05f46a31abd5b79a42b0895c53",
+    "package-staging/dist/index.js": "0334ebb4665f014ee1831e6fcc92ae290092bdd56d42fab97751c0bf978b2450",
+    "package-staging/dist/index.js.map": "734089213c7ba57cf9df44e978f43ca3fe8912a122f9fd0359108c1e8a5b632f",
+    "package-staging/dist/indicators.cjs": "09a911f86f26124f40f18973a2a818e2e3b63484fbae00a7703518b8514204ff",
+    "package-staging/dist/indicators.cjs.map": "f9a938427c3964e3c4848ce7c78675cc3580c4bfb28a0626ce705a09c7cda23b",
+    "package-staging/dist/indicators.d.cts": "d735a6092f839ee3389fdaccaec0b68a09ae20cead93a35f8dcbe77b8bf5a941",
+    "package-staging/dist/indicators.d.ts": "5a404f739ea4f0877b8001904aebc629df0e22fbdff3d792e3e4d2a02f14a0f6",
+    "package-staging/dist/indicators.js": "5b3f32c0735b2320ae4e0e7cbd236d8f5db5bcd5812bb61a20bb8e1cc28443cc",
+    "package-staging/dist/indicators.js.map": "aabec4dbec139103404a562dfc00d79a3a83ed19f8c05ed7bff3382391aa0597",
+    "package-staging/dist/overlays.cjs": "017effb1387d3e4f57914b468766d50d52ce099f8a17108099f0eddacae39e84",
+    "package-staging/dist/overlays.cjs.map": "91fb0f920867c752e4b4004168431210ff556ab2e97d29315441d671fc1afc62",
+    "package-staging/dist/overlays.d.cts": "6980788ccb9be980bd82005f4daaa1a932c8ee2b583e5cb3644857911bb4c7d5",
+    "package-staging/dist/overlays.d.ts": "949dbc632e734f2013ec6c2d829c27c31d3bded154f06771577d004701feacc7",
+    "package-staging/dist/overlays.js": "4280bcf8ba913e2293121c13fc9da41f736b022054770d674431857435f7923f",
+    "package-staging/dist/overlays.js.map": "5bbd32d8a92f7ef4b6e7eeb7eaf8a0297765aa1b4bf2ae3b610abdc8e308d080",
+    "package-staging/dist/styles.css": "1e870a1fe4ecdf2e3a99cd191d6759a4ad400df78b07b196825b06299b0b04dd",
+    "package-staging/dist/types-DerJeMSz.d.cts": "59c8e065079dc539ec51bf39c529808c484a1f66b47344736cdea75544f0af78",
+    "package-staging/dist/types-DerJeMSz.d.ts": "59c8e065079dc539ec51bf39c529808c484a1f66b47344736cdea75544f0af78",
+    "package-staging/dist/types-Kf-bQZCw.d.cts": "4b8194fe095c1077ac34c0f927a8a5daa95ff91c415fabeb8572822acdd3a501",
+    "package-staging/dist/types-Kf-bQZCw.d.ts": "4b8194fe095c1077ac34c0f927a8a5daa95ff91c415fabeb8572822acdd3a501",
+    "package-staging/dist/workspace.cjs": "555aab950ceceb02b91fda9b88c697fb9191add2c2affc3a05b58ecd4faab9fa",
+    "package-staging/dist/workspace.cjs.map": "4aeb54f5d0bfb882f44c0a7e33f3f17c879a31e85ba2a7b42c36ec50218860ff",
+    "package-staging/dist/workspace.d.cts": "439453fad6c0d3405ce12228bc06f7197d928f3f87e2ad2e683b21dac6720c8a",
+    "package-staging/dist/workspace.d.ts": "f6f1c3b05390f18f2502621a03e3dcc63cff23e94bf104cf7852e3158b79e611",
+    "package-staging/dist/workspace.js": "4a8c30090bd134273464599c1ab5e9e5eb39a7ce6c53d704200a8c86f9764bea",
+    "package-staging/dist/workspace.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/ENDPOINT-LABELS.md": "cd013006af5027867277e1c5e384faccdb0e8de82f849d74344a6dc92e4c6ce8",
+    "package-staging/INTERACTIONS.md": "9e52cd2bcbe905da5262af92221dea864d85c3c16ab4e109d2157763e8794bb5",
+    "package-staging/LICENSE": "e80e9406bfe34b32e65f41b41b494d6050138bf6b1968b33e5038a6bfd102bb3",
+    "package-staging/MOVING-AVERAGE-LABELS.md": "a17072b60bef45c68a0d13d80ea81b042646659e3132f76bbb7970909b162f08",
+    "package-staging/NOTICE": "2bcb86f62060897acecdc15780f7b02f6df98b0dfd8e44bd039f44f7f7638472",
+    "package-staging/package.json": "6fc392811c20fe746047265d3c39da4c421ad12ae700546ef437663587eb8fdc",
+    "package-staging/READABILITY.md": "8101062fd9125cee29f26879ce5a81303fa6b4927630754f1b8922e4f481733d",
+    "package-staging/README.md": "cf6403a31886bfbf52016bd36ae00c9aff86dfcf5440084ba06414667fe253fe",
+    "package-staging/REFINEMENT.md": "0ee6e827043cd6a5e7a93e99d8b89cbdbe3254ecac0fc05929b0919d0a324165",
+    "package-staging/SUPPLIED-RESULTS.md": "5cbdc33282e556a8a94c950aeff9b77b99a2d5cdb0079a84d3bca2cbbf296c58",
+    "receipt.json": "59fa8519dc4a3937dcb9f3a10c4c33fa1d89c389069a6acb11c50358b62fddc2",
+    "reviewed-source.tar.gz": "c6530e7786ce36768dd9e0a50502f085f314095039a0c76b90a4325e3f240426",
+    "source-files.txt": "6f38fe6a2a2dfc6ed2c282bd586fe895035faf082e8f3d98390b38d83fd6a5a9"
+  },
+  "candidateUnchanged": true,
+  "sealing": "Pending parent read-only seal after completed independent pass.",
+  "tests": {
+    "full": 234,
+    "files": 39,
+    "independent": 22,
+    "independentFiles": 4
+  },
+  "browserEvidence": {
+    "status": "verified-parent-receipt",
+    "cases": 9,
+    "interactions": 24,
+    "qualification": "Executed final-build browser assertions passed. Physical-device and product/account acceptance remains pending. Earlier supplemental observations are separately qualified.",
+    "pending": [
+      {
+        "gate": "Physical iPad Safari",
+        "reason": "No physical iPad Safari session is available on this Windows workstation. Scroll/pinch/cancellation arbitration requires actual hardware."
+      },
+      {
+        "gate": "Real trackpad",
+        "reason": "No physical trackpad gesture session was available; CDP wheel axis input is synthetic."
+      },
+      {
+        "gate": "Physical browser zoom200%",
+        "reason": "720x450 half-size CSS layout and a separate mounted DPR2 case were exercised; this is not actual browser zoom200%."
+      },
+      {
+        "gate": "Product/account/data boundary",
+        "reason": "Portfolio/OpenBB are read-only. No product installation, provider acquisition counters, two-account acceptance, deployment, or physical-device financial-evidence checks were executed."
+      }
+    ],
+    "emulationLimitations": [
+      "Some first post-snapshot Chrome CDP touch sequences produced no observed pan/scroll; uninterrupted repeats did. Input transport/coalescing versus device behavior was not established. Physical-device acceptance remains required.",
+      "IAB does not support Input.dispatchTouchEvent; touch used a dedicated Chrome tab. Runtime DPR-only changes without CSS resize required reload in earlier inspection."
+    ]
+  },
+  "published": false,
+  "limitations": [
+    "Strict offline review; no installation/download/publication/remote operation or implementation/candidate writes.",
+    "Frozen browser/traces/screenshot hashes and source binding verified; no new browser/device/performance run by this reviewer.",
+    "Physical iPad Safari, real trackpad, actual browser zoom200% and downstream product/account acceptance remain pending as documented.",
+    "Native entrypoint exports/SSR and strict examples are smoke checks, not exhaustive structural compatibility proof."
+  ],
+  "reviewCompleteAt": "2026-10-21T20:46:10.154Z",
+  "packedStrictPublicTypes": {
+    "status": "pass",
+    "strict": true,
+    "skipLibCheck": false,
+    "examples": "charts-market/examples/*.tsx",
+    "contract": "public-contract.ts",
+    "allSevenEntrypointTypes": true,
+    "log": "candidate-public-typecheck.log",
+    "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "installedDependencyLicenses": {
+    "aapaetsch-icons": {
+      "version": "0.1.0-beta.0",
+      "license": "MIT"
+    },
+    "aapaetsch-ui-kit": {
+      "version": "0.2.0-beta.3",
+      "license": "MIT"
+    },
+    "react": {
+      "version": "19.2.8",
+      "license": "MIT"
+    },
+    "react-dom": {
+      "version": "19.2.8",
+      "license": "MIT"
+    }
+  }
+}
