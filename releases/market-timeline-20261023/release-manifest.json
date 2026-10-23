@@ -1,0 +1,31 @@
+{
+  "status": "owner-authorized-exact-archive-publication",
+  "published": false,
+  "publicationAuthorized": true,
+  "parent": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "reviewBase": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "branch": "release/market-timeline-20261023",
+  "workflow": ".github/workflows/stage-reviewed-market-timeline.yml",
+  "releasePath": "releases/market-timeline-20261023",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-timeline.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-timeline.1.tgz",
+      "sha256": "3cf7e5c1fcd693923732b9332bdbf33cf80cc116d09bd0b9fe96183a51af76b0",
+      "integrity": "sha512-asqGxHAapd3BQEtRFIcneAJqHP5vnnGOpj8GY8aegT8Pg9fRuqsKnh1HyRWItv9uPEZKthvgVcX9oFuoJvW1Ng==",
+      "size": 605694
+    }
+  ],
+  "sourceSha256": "f569b38e49b392a46dc1fd9620d8b12cac88db91fa909720737cc476450bcf21",
+  "sourceBindingSha256": "5c2771d1ff87f427c371270200a7dab9ee42d4d311591c6cd574136d041e4d03",
+  "candidateReceiptSha256": "d9488bd1c72513b5469a309dda45d1b7b40ef6094cc935aeaa85755b9e464eb6",
+  "candidateReviewSha256": "a5bc38b0e45d67f13f96d636b1eb0ce956e2c8f06ed2661b621db2a0384848f2",
+  "pendingAcceptance": [
+    "Physical iPad/Safari touch and real trackpad acceptance",
+    "Portfolio exact artifact/dependency-lock approval, installation, rebuild and cached-real earnings/timeline integration verification",
+    "Separate publication authorization and trusted CI/public npm provenance verification"
+  ],
+  "authorization": "Owner: Can you publish this and then hand it off to the portfolio project to implement and verify the timeline controls?",
+  "releasePolicy": "Exact sealed archive; beta only; latest/stable unchanged; no application install, rebuild or repack; release-only remote commit; no source/main/local Git mutation."
+}

@@ -1,0 +1,707 @@
+{
+  "status": "local-candidate-awaiting-separate-publication-approval",
+  "createdAt": "2026-10-23T23:21:14.875Z",
+  "package": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.3-timeline.1",
+  "workspaceVersion": "0.1.0-beta.2",
+  "manifestOnlyVersionOverride": true,
+  "head": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "artifact": "aapaetsch-charts-market-0.1.0-beta.3-timeline.1.tgz",
+  "sha256": "3cf7e5c1fcd693923732b9332bdbf33cf80cc116d09bd0b9fe96183a51af76b0",
+  "integrity": "sha512-asqGxHAapd3BQEtRFIcneAJqHP5vnnGOpj8GY8aegT8Pg9fRuqsKnh1HyRWItv9uPEZKthvgVcX9oFuoJvW1Ng==",
+  "size": 605694,
+  "sourceArchive": "reviewed-source.tar.gz",
+  "sourceArchiveSha256": "f569b38e49b392a46dc1fd9620d8b12cac88db91fa909720737cc476450bcf21",
+  "sourceBindingSha256": "5c2771d1ff87f427c371270200a7dab9ee42d4d311591c6cd574136d041e4d03",
+  "sourceHashes": {
+    ".chart-timeline-validation/README.md": "dedea447d12107d567b35e0ee93d27359285f85e481a92a238bbae01c7ab4cab",
+    "charts-market/ADAPTIVE-WIDTHS.md": "bb04c415f906c56530b435dca346607094b49d0d283449d437419ccd4d7ce509",
+    "charts-market/CALENDAR-COORDINATES.md": "555ffa7e24beacb0a9ccfe56e574f82aadcfec85bee6df31986eacae3c6ce5e8",
+    "charts-market/ENDPOINT-LABELS.md": "cd013006af5027867277e1c5e384faccdb0e8de82f849d74344a6dc92e4c6ce8",
+    "charts-market/INTERACTIONS.md": "55c82ed3aa4c2a9f6841adbbc22e74cc665a4b2e69e69e964cc6a995ddd77455",
+    "charts-market/LICENSE": "e80e9406bfe34b32e65f41b41b494d6050138bf6b1968b33e5038a6bfd102bb3",
+    "charts-market/MOVING-AVERAGE-LABELS.md": "a17072b60bef45c68a0d13d80ea81b042646659e3132f76bbb7970909b162f08",
+    "charts-market/NOTICE": "2bcb86f62060897acecdc15780f7b02f6df98b0dfd8e44bd039f44f7f7638472",
+    "charts-market/READABILITY.md": "8101062fd9125cee29f26879ce5a81303fa6b4927630754f1b8922e4f481733d",
+    "charts-market/README.md": "7a884e50295c8c913a47a61fe4ecbf4e5122c912b9f83a1ad9746b5effc183b4",
+    "charts-market/REFINEMENT.md": "0ee6e827043cd6a5e7a93e99d8b89cbdbe3254ecac0fc05929b0919d0a324165",
+    "charts-market/SUPPLIED-RESULTS.md": "5cbdc33282e556a8a94c950aeff9b77b99a2d5cdb0079a84d3bca2cbbf296c58",
+    "charts-market/examples/adaptive-supplied-chart.tsx": "0babb4686f1dfcfdcb7e10e9c69ebb3b436f11f44d4b9be38d092b357c07576e",
+    "charts-market/examples/endpoint-boxes.tsx": "b0a08f92eb79e12f652e12d09a8dfdac318cb201209be790e533cde52401bd83",
+    "charts-market/examples/moving-average-boxes.tsx": "33017f74fe91a2341e15ae7b84d958d90acd2050762c792b0e9137ee6cc06c2b",
+    "charts-market/examples/readable-supplied-chart.tsx": "91786454ccc5d78efbf9ebd03a73365118671322061b7f3a0395a8593d24a8e0",
+    "charts-market/examples/workspace-interactions.tsx": "21affe569b07afa7da7ab2b5032c3fcbdd58fbb9537a7b06544bc1d572466772",
+    "charts-market/package.json": "fa1def7fc9eb530e74cedce2186d899ce0a9e1ecbebf8972fee0e8f0e5df3c4d",
+    "charts-market/src/components/market-chart/MarketChart.stories.tsx": "bb771ed65d7e9fe5f45bc58b8c866902abbe583980104984a4fbda503a27e3d7",
+    "charts-market/src/components/market-chart/README.md": "f761a3c4a9cbc6b7ff2a679fb1722acf1392ccf07210cfdee0f9e97d0db70d12",
+    "charts-market/src/components/market-chart/agents.md": "a6bb97949fafec891aa92a1c6b2618b27dcc1a2b67f8a4aed423e5a80df2da9f",
+    "charts-market/src/components/market-chart/index.tsx": "4cf965d10a3ed1ce583e5ffbf3d705267d68563237a4af8e73beb148bfdc0865",
+    "charts-market/src/components/market-chart/market-chart.test.tsx": "32fb268db9de684f7d3cb24a4b712627badd5ec84935d031b99467c5215cc2f1",
+    "charts-market/src/components/market-chart/use-data-revision.test.tsx": "b107869f811211b758be06cc950046d3909ffd3b5b5173ff35a46c569807ddbd",
+    "charts-market/src/components/market-chart/use-data-revision.ts": "9ac158730fc5d7d8b4f1727749c05b5e436c4d892a3f4a8a589e75e2511ab84c",
+    "charts-market/src/components/technical-chart-view/README.md": "667ca0bae2caa96cb8d396627796fed986ce554380d7fab578673219a4a1491f",
+    "charts-market/src/components/technical-chart-view/adaptive-width.stories.tsx": "4f7b07019ddc13a2051698a79218a68304ca84d8df249e2bb5200ecc05e75e8a",
+    "charts-market/src/components/technical-chart-view/adaptive-width.test.tsx": "e4c28ebdc7e4dc4dee821d0eb0edbd750f5c18a7ff4c9f5d363e14c10a2ab686",
+    "charts-market/src/components/technical-chart-view/agents.md": "e96c4fce6f006b5951dce49e74201bfdcbdbe05ba7565bfe3f57d3b9086344d7",
+    "charts-market/src/components/technical-chart-view/calendar-gaps.stories.tsx": "d7e54b50b7334454c74debcbca53bbf78ae39b8df99009ea093214b040ff0aba",
+    "charts-market/src/components/technical-chart-view/card-fit.stories.tsx": "02b918737c978f9b08d974c3138f26cc95ac84bd4c0655a4f330a059654a3b10",
+    "charts-market/src/components/technical-chart-view/card-fit.test.tsx": "403a7feca9dfbb9bacacb4536921dc7122746c0acb229e9229906d469e4c7fa0",
+    "charts-market/src/components/technical-chart-view/earnings-timeline.stories.tsx": "1d59a0dea5473761e4945281d02cd904a39b1a4e17cc5ced12811449c02eae6f",
+    "charts-market/src/components/technical-chart-view/earnings-timeline.test.tsx": "ac096f1c5d92c8c3d9f1c4e99da88fe22bb72603115ae59e8b785cc1377aaf40",
+    "charts-market/src/components/technical-chart-view/earnings.test.ts": "03c545a794c37868118a6ccf1a55afac4c84a528f6efe93afec0031e993179c0",
+    "charts-market/src/components/technical-chart-view/earnings.ts": "c465f32048bd2aa09f6fe1f08e5984dd91e3c6d0435b108bfe52e8486bc62c4b",
+    "charts-market/src/components/technical-chart-view/endpoint-alignment.stories.tsx": "2c75cc414aaf64f20ca1a97fa716f79d71c7a51aa94f5cabce02c1729082955e",
+    "charts-market/src/components/technical-chart-view/endpoint-alignment.test.tsx": "3b38dc30331e9d3c5dd46cb983957f000cfc91103ce4f9b313284ab52372c17f",
+    "charts-market/src/components/technical-chart-view/endpoint-fixtures.ts": "8b98095f77f99893249b26af5b21ea0b7c3ec076081d3c61b640cf09fdbb7255",
+    "charts-market/src/components/technical-chart-view/fixtures.ts": "0dd8ab30f3e8fdca1eb6d5d15b5606bc0da37746f45989725540f78af38d189e",
+    "charts-market/src/components/technical-chart-view/index.tsx": "15566b3115b0fadac57ebc9179fafca3b31d74be1c5d4605e104c0a378237998",
+    "charts-market/src/components/technical-chart-view/interaction-fixtures.ts": "2cc5ed7ee9dc22eff9b77cd53e6248251a94b9b77687c4b05cf90c78dde71ac9",
+    "charts-market/src/components/technical-chart-view/interactions.stories.tsx": "285e6391b89a2f2df09cff36f406b0e75857821e9750a3fe2db43f9a4552188b",
+    "charts-market/src/components/technical-chart-view/interactions.test.tsx": "4255533250c9b45003fe6568dffd32dc5c7bc309dd85183de9307a17e7b95de7",
+    "charts-market/src/components/technical-chart-view/legend-groups.ts": "fffe81d11226f8554a85f1f6c551e299cdcb7826dd7ce3dab482a10bdf15df07",
+    "charts-market/src/components/technical-chart-view/moving-average-fixtures.ts": "347e6585d5859a36c37c6f362979b165e1c2e9cb5371c36853649923c8a8241b",
+    "charts-market/src/components/technical-chart-view/moving-average.stories.tsx": "f40be5758102bb52800940add1499c23ee5b763e7d4e4a7adeded0762245989d",
+    "charts-market/src/components/technical-chart-view/moving-average.test.tsx": "dd93161e2e18d8faca9af4ce97ca1ea1995c0dc42730bd95113ed75f849e1626",
+    "charts-market/src/components/technical-chart-view/navigation.ts": "bd20bc3fea29aaa248a0dd14c0bc70a3bcf60380116fffff248dcb5bd5b2f11c",
+    "charts-market/src/components/technical-chart-view/pane-workflow.ts": "64dcedcb9eeb5819d46ebc3584c4303f79a077032748a8ec9f2aafcbd2a5db15",
+    "charts-market/src/components/technical-chart-view/readability-fixtures.ts": "6c2a53653145cff8e9b92f11d234aaff6a90e25dac22585c28179a94139e1325",
+    "charts-market/src/components/technical-chart-view/readability.stories.tsx": "6d0f78ed210c10dc21a15c7d406bba4776865475abd79079e0118755783e8d1e",
+    "charts-market/src/components/technical-chart-view/readability.test.tsx": "4430f49a6523c71af62bfca2d5928926d73c9c81d47a9627c51b08b8da3961d4",
+    "charts-market/src/components/technical-chart-view/refinement.stories.tsx": "2d05616d71e04d0f6e506054d76b71d223c66acb00c4a0c6515077dc62f169ce",
+    "charts-market/src/components/technical-chart-view/refinement.test.tsx": "7e1d74d9dd3842e2fe01eca7bb815a4c518ff43006dac72a1192cbc62f4e0835",
+    "charts-market/src/components/technical-chart-view/scale-controls.tsx": "02849487cf408e2a1be23a0d0ffef0297cfcda18457cf844669c14c5d6d91420",
+    "charts-market/src/components/technical-chart-view/scoped-theme.tsx": "85d464ee31448162b398108dd0215481d5e6530628053c5726cc33ee4f7a38ba",
+    "charts-market/src/components/technical-chart-view/study-legend.tsx": "ab0887e30bd8ea86c25a12f79e31829d8f0929a27317b113713da259f2054fcd",
+    "charts-market/src/components/technical-chart-view/study-presentation.test.ts": "f713b40740b4a68ae00ab2cee8de1de83ffc45f7bfc664fbce95f255aa020566",
+    "charts-market/src/components/technical-chart-view/study-presentation.ts": "d3d6d453fd4e100c20e2b54b739e157295ffde62410efacf105cf4eda13cc7a5",
+    "charts-market/src/components/technical-chart-view/supplied-fixtures.ts": "3292b8c99b3c1a76480175c06ece05bf982e0ac7b0d651d1c95efa648726f7bd",
+    "charts-market/src/components/technical-chart-view/supplied-results.stories.tsx": "3362220c5840ac4f4274013153747a33ea3d152d5f20b0c604a309003bd57532",
+    "charts-market/src/components/technical-chart-view/supplied-results.test.tsx": "f2d21de24d9e044682a6a1eeea2a91f6a4ff4255d998524bc2a1e89da51e5d6c",
+    "charts-market/src/components/technical-chart-view/supplied-status.tsx": "cd2232bedb24d5e364a2865a4af4659aad19bb385711bd61015dcd6e3842a3ad",
+    "charts-market/src/components/technical-chart-view/technical-chart-view.stories.tsx": "cb55afb5d9d542ed219d91c4d4d269dd0be53864b921392b126be7a00d4828e2",
+    "charts-market/src/components/technical-chart-view/technical-chart-view.test.tsx": "c7758f4ff090763166218a51c518a69b6106af67d1f57f9ff759d27bdb0fff62",
+    "charts-market/src/components/technical-chart-view/timeline.stories.tsx": "dff76d87ade6070d4d16cec78b079542847c58cc32061420a0a54f989832e080",
+    "charts-market/src/components/technical-chart-view/timeline.test.tsx": "7f577754a738acc59d59228c0a4dac00f8db4e25cb5bd9f7e6057e1189e908f5",
+    "charts-market/src/components/technical-chart-view/use-chart-geometry.ts": "c7a618db5bf44033740a4760203b2cfcf7300ff9b206492701067f06f926f09b",
+    "charts-market/src/components/technical-chart-view/volume-axis.stories.tsx": "83411fcb4c836d049744e610334886bfed8b3b3c47c64a34e6468c1e2aeda99d",
+    "charts-market/src/controls/README.md": "f5c80336e861e608ceab8bfbe50f7ab379b62a09c722652d84c3a0a83c99230f",
+    "charts-market/src/controls/agents.md": "c30961d3b515268937f84534808a698e21df55d84c14a6b050e68cdec844b0e0",
+    "charts-market/src/controls/index.tsx": "6bca145eb411883d4305d26859e26ea1b578630129916fa1bdbf1117f2d05af7",
+    "charts-market/src/controls/market-chart-controls.stories.tsx": "835d7f1ad2e7d2a2fe8d5391ed9477b58156e25fcc35799c217edb5dc3a67d32",
+    "charts-market/src/core/data-buffer.ts": "37d915c633c9809a24514d23570c4e0873e48fad77b39c18aedcc291e86b56e2",
+    "charts-market/src/core/data-revision.ts": "f4b6664266a8ff3a1b5c5329ff92f9f9288e8a5a62c6f588837ddd707e6a9e1c",
+    "charts-market/src/core/engine.ts": "bb586db4185f2899238f279397c078d1e3546400936a86c79a3d21967519402e",
+    "charts-market/src/core/extensions.ts": "de0f9ce4e8fc144d5d3000c6b5320d6180aec34ecf377a0affd0d2259c0b38ce",
+    "charts-market/src/core/index.ts": "657816b4a63e2130a8f4e75db3c591c563f9fc2de4c31853876c461bef0acc02",
+    "charts-market/src/core/indicator-labels.ts": "fc4fd98d4d2681aacccd9cb62519cd2e7a2ad820d1617f55e5fa25b62489d976",
+    "charts-market/src/core/interactions.ts": "7e4db49a1419d4f3ea78eb1aac445bc35b32cd7ea1ca428c36aa0551c5fc21e9",
+    "charts-market/src/core/performance.test.ts": "3897aaa91be2baa6ddc241376a7341348c2a428e0bd05a3ba0005ed625052461",
+    "charts-market/src/core/presentation.ts": "b4a918cf64c9489df8b484331c907822c550811edb638c55c850310a9caa549d",
+    "charts-market/src/core/refinement.test.ts": "d56c07f53acba17ad62b075b7dae4df9c59d1a22b26b51990880d3f91cd12317",
+    "charts-market/src/core/supplied-results.ts": "615988b5afba154bd6fd6d197fa088b5b90035f1fda4979b91642d535f6c5c81",
+    "charts-market/src/core/technical-chart-state.ts": "a124b6c8e58e7eae3686726e5d674a64de0740cce329a6ff2e24c956c3f1c7fd",
+    "charts-market/src/core/time-axis.ts": "800b06f23d2edca60b5dac083e8fec21754b91c869762ba9604ceacd47a9170c",
+    "charts-market/src/core/types.ts": "3cba4b182fb28860acbe4ac87eb6cf5163b7ab25f7588a09676b6f3eef28c8a7",
+    "charts-market/src/core/validation.test.ts": "873b191cf1097a33442cd6fa7ebb0eef8ff88c4e31630e8179382037d04f7da8",
+    "charts-market/src/core/validation.ts": "4c1de961ef3b1eaa760f4a3c7d3acf1e7147572472b33c72ce3b1bd502510089",
+    "charts-market/src/drawings/README.md": "a34c60af2a5e269a4c3d3070079d4b492a9d0e0c2ac4db17047f3b60f3a7f88d",
+    "charts-market/src/drawings/agents.md": "ea6c8458a1a8b2f40704556ac386553dd4c47b382c0d791b4ed14cbe688ad776",
+    "charts-market/src/drawings/calculations.test.ts": "34f52b417a85c52498b8eafca4be33caef94f1b2e19c61a8cc5aa3fbc27e9fb8",
+    "charts-market/src/drawings/calculations.ts": "0b1f03ab8d611820e12c39d69e5d9e8939d487bef1a12ef1a59c21ea311701cd",
+    "charts-market/src/drawings/drawing-layer.test.tsx": "fac3fdc3b25aeccb04a4a6769a3e4dc0e2ade30b81a1397bd0ac554ef8690f77",
+    "charts-market/src/drawings/drawing-layer.tsx": "ef683e71f16596760a6439788ce8b613b433e996c42b26ee3d999fcec6df08b4",
+    "charts-market/src/drawings/drawings.stories.tsx": "0c647aff8ad4774a8e74e190f8cd962466067efa721cc5892b146bf47ade298f",
+    "charts-market/src/drawings/drawings.test.ts": "47c4bf32a46aabc016cf2dce18b2626aecfcc7483aea2d5c66d54bb352d60fc1",
+    "charts-market/src/drawings/geometry.test.ts": "8d4af029f05c9974396efc6ddd204bac9ac70f120df6f7ac3850b3d737006b71",
+    "charts-market/src/drawings/geometry.ts": "4ef979665d33ec92e8a8004fe73164bfcc839e4dd15a0c6852e26bdc54156001",
+    "charts-market/src/drawings/index.ts": "9c31afa98b2af616ff707e7217e80bcf4d22aaa7d48f9f6d9c2e01cef9e0077a",
+    "charts-market/src/drawings/inline-text-editor.test.tsx": "d26ad99ace551b6920c5e220ed91437615fb09506f4c90673bf8bb26b5650c7e",
+    "charts-market/src/drawings/inline-text-editor.tsx": "c958af3a33d2208c4da4448d74d8f2dc18015b67e9fe7f6db8a44748f1713b1d",
+    "charts-market/src/drawings/management.test.ts": "6c153e7399e85dda650fdaeac66c0d9bed74be356e408260d862c31623b1059c",
+    "charts-market/src/drawings/management.ts": "75d26ae561de46f8aa1835116d68d52b54b73568e922e28cf60924df8a303a42",
+    "charts-market/src/drawings/object-tree.tsx": "08285153e3669ba8fde4ac96a5b11874beb4c84937fc56c3b1939964b68cce3e",
+    "charts-market/src/drawings/renderers.ts": "d05aa891ddf5070ff741d931e714f9e841ff0d2ab9f355a311f75ee7b84c2d86",
+    "charts-market/src/drawings/supplied-renderers.ts": "c77d057e32d55f97294c6f290d41c6d0c08c6a84edf4ff8d70d9734193e004c1",
+    "charts-market/src/drawings/tool-definition.ts": "327da217011073cdb264569a6c0daa39e17c30ca362a9faa2693278263ff8fbd",
+    "charts-market/src/engine/adaptive-width.test.ts": "f676cfbcb0c4f907604d7b065f92f03ff3b8455ea531c31364203860e789eb5a",
+    "charts-market/src/engine/axis-badges.ts": "9e6caef97986971c8aa07af10a330bd92884917515e3b97852a4e52a890e634f",
+    "charts-market/src/engine/bar-geometry.test.ts": "ef32b43e49d46f9874a0ac9cae22e810fffe0ef6240c06def058fc390072ffa7",
+    "charts-market/src/engine/bar-geometry.ts": "62a41801d8ec9a966506c897929115b38773ea7e6357c4daf137794e644113c9",
+    "charts-market/src/engine/calendar-gaps.test.ts": "ac69c7a4e13c4124a1a4c1a9f246d0bc3ec2b7ccefd6ea4de110d2ef62c77e24",
+    "charts-market/src/engine/canvas-engine.test.ts": "0c21b9d4c9f70c9c93ded09a927dc9a578cfea1e67905522b6dd04e1490bb592",
+    "charts-market/src/engine/canvas-engine.ts": "d5c9a7f7bef8115c842c2066699b1c1961f5ce1af36deb1bb2b038c5e3d15199",
+    "charts-market/src/engine/data-store.ts": "d0437328f5d1e900c2222db13a9e08b99cbcb9511b88061369c9c71693b26275",
+    "charts-market/src/engine/endpoint-alignment.test.ts": "a1dd2b685ca35d5fb2a3ccff3beadaf8e62e5afea225947d74bb239935dde739",
+    "charts-market/src/engine/engine-primitives.test.ts": "aba71692508b8b2e8d33dd325c4e7771b23672bd55104af8a05a988d49a9ac9f",
+    "charts-market/src/engine/index.ts": "53f25250c09b65968d4deaffda68eb920537070ee65cf40141bf808a22bbd875",
+    "charts-market/src/engine/interactions.test.ts": "9e1277cc6cfe238a11dc8b00628d1283ddc43caeb2b4e5d16da5a0b936be6df1",
+    "charts-market/src/engine/interactions.ts": "191da0b3837593dd812647885ab08496493161090058cacde11a0766ea73f647",
+    "charts-market/src/engine/moving-average-labels.test.ts": "557b23b58df9a43a89a73cc5a54377fb1071836ef3b1917d9fc18958d584e580",
+    "charts-market/src/engine/moving-average-labels.ts": "0408aa8e068042e04a67299b1fb0f798b324d495040fa8a12181ee947f1c6989",
+    "charts-market/src/engine/pane-layout.ts": "42ea33f004c53e7adb3cab4e0ae08ba51141b08b228a49f24a4e614da206496d",
+    "charts-market/src/engine/price-scale.ts": "67289d307b8fceec0d014c34425a4fe308ceb64703c8c5afb5efa44cecbf38c8",
+    "charts-market/src/engine/readability.test.ts": "a1d7e9f2835718ced5292242730ca6409d7508ae269d4d5d2bab7f2521c8121f",
+    "charts-market/src/engine/refinement.test.ts": "e6fb911b26f6536f5f0fa4057743f79bd773e3b5e326b6c9df5b6d904ab8e07f",
+    "charts-market/src/engine/render-scheduler.ts": "0746ce54d8233c2cdf66f4b22c238d3c1c766fbd5cc0a0033e9deaf6525af6e7",
+    "charts-market/src/engine/series-renderers.ts": "91eb060695194de20fd7c1f176fecba32b67ad4e6614bcd5ad98c7c0524d91dc",
+    "charts-market/src/engine/study-scale.test.ts": "20f2557d9a67ee05b69aeca1829c5b1beb9504ab337604d48f6f2a3610bc659d",
+    "charts-market/src/engine/study-scale.ts": "4aedc5ff3b3421ffb3cc04250cabf91894937c522dbf360cd155642b7ab9bd53",
+    "charts-market/src/engine/technical-chart-contracts.test.ts": "b62418444c5e4dd9c5635e4e0abaddde5ee1caf281211fb3e0f70b9f3a302fb7",
+    "charts-market/src/engine/time-scale.ts": "857c32a9937370bfd3c1390376b083850d844863116af543e385e70759bef6f5",
+    "charts-market/src/engine/time-ticks.ts": "3406a54efe1e68a6645e7dc182ea7c21ec0d1b78ee0c9ba3a27a5db14376dfd6",
+    "charts-market/src/engine/timeline.test.ts": "d428290fbccb7def25ec0d49d36e16adfd9c368009a0bc92fdf9e34bca01d14e",
+    "charts-market/src/engine/volume-axis.test.ts": "d0ff7ed7a3e26550e93e27e56a2b3266a05d1dd796b96e090a235572e1fc014d",
+    "charts-market/src/engine/volume-profile-layer.ts": "21cb647077e7c775c0ea6e70d381fc0ff4189b0d3ea8afd30de136bb15157b82",
+    "charts-market/src/engine/volume-profile.ts": "4ea696c0e0f8d8c587793b1672a2b294043c04ba47cd03dd4e834dc878040bd0",
+    "charts-market/src/engine/workspace-interactions.test.ts": "f0c6d8718552addf4cbf3e32c6895a4c0089cb1c5e563dfe982960af353e27c2",
+    "charts-market/src/index.ts": "4f0de2f4700b325768ace7867b164a3062c2032034281e25f9293b5f9a6fff38",
+    "charts-market/src/indicators/calculations.ts": "a10fd22ad4beba7b830d5ac6ea36e506b9c76a5d49b6956d3fd63b2e1aa9c14d",
+    "charts-market/src/indicators/definitions.ts": "53113613ae1df1047c6f7613380a888521fe7149f0260bf94bec5d2b7fe4980c",
+    "charts-market/src/indicators/incremental.ts": "5e2a161d91e67f07abdfa84bce4f89ce8477b865541153210257d2c9b82348d8",
+    "charts-market/src/indicators/index.ts": "c6aa66bb0ccecf26430bd68b79f8245448a545813427e6d0d51ab09376434909",
+    "charts-market/src/indicators/indicators.test.ts": "b8d2f1063f549844d6cf3d008aee5a26e99df90c6c1f652b004f5e4403f0952b",
+    "charts-market/src/indicators/supplied-points.test.ts": "e240b3b7a3a917c813fa12e48069acfa326b6a81c1e9080b6183009323a40132",
+    "charts-market/src/indicators/supplied-points.ts": "0d2d9b4824498d1f9ef5fe5aa0eb0cea5b37d671098cbb6e1899fdf0a3360f6a",
+    "charts-market/src/indicators/supplied.ts": "dab9b683dbebc10899e8bffcd986224bd0addb9d64445a5dcf897a0e478c927c",
+    "charts-market/src/overlays/index.ts": "ce646b7753c9dcf61c00f5c5a8a390ba1a2ceeb93510b8d50881f64cb3db2407",
+    "charts-market/src/styles.css": "0e5844ec75de2fb4a76097b26bb624bf8f9d9cf59f6d947855b743dd25f920fb",
+    "charts-market/src/workspace/README.md": "d3daa45b0a1a4c49a3991b7888fdaee6db2433e26754ba3d7132e53ba4942647",
+    "charts-market/src/workspace/agents.md": "9a1953f24450fba23a06965fe99b5c7ae208f4033f31257a1d81038aed6c098d",
+    "charts-market/src/workspace/index.tsx": "d9e833c6ae8048c434e323873ad48dbce1ea71e67d6de7a45b6d17b228c5077b",
+    "charts-market/src/workspace/state.ts": "ced84b935c41c5ae59675944544b60012fffe625016abd0c75e6ccae1850dbfa",
+    "charts-market/src/workspace/workspace.stories.tsx": "ffaaae648d46841cef135a5ad8bb8562e552658232fc19fb6e17bd7a8df74e9e",
+    "charts-market/src/workspace/workspace.test.ts": "6a9dd3e1a12ab1a3c1eac593e0725d178fcf19c87af1394eb9725fa031bc56e3",
+    "charts-market/tailwind.config.cjs": "703445ad55b5a259a252001dfc85f3650b26c36e67a9aaa61d2f3fe125a39523",
+    "charts-market/tsconfig.json": "732b015ff61e15e3dee802698b57063d47229d1ca6b0c3690c93caea59249f59",
+    "charts-market/tsup.config.ts": "dea2f8d74cb53c2281ffe9790b5ec0aaa0dfa0261f6df19bc57b749a57f679be",
+    "charts-market/visual-baselines/README.md": "819291c0067f80aab6937565490f4d856dbf3dc9b225ce7c30d57c7db22e69e5",
+    "charts-market/visual-baselines/manifest.json": "e230fecab09ee0f86f86c05ebb63a5024033ff8ee4f49c1560f80c500a189af6",
+    "charts-market/visual-baselines/technical-chart-complete-technical-analysis.png": "24754161f5cd1a1615bea5f874b7dcefec8d9e3fff191b0813bda9ddb37d0c42",
+    "charts-market/visual-baselines/technical-chart-fullscreen-contained.png": "cd3d33b28ebb51e7a0eef1f21a9d95c18ddf5a0a920f45f23945bf211aeccfba",
+    "charts-market/visual-baselines/technical-chart-light.png": "50ff333b2183eb849047eaeee7d5a5b816758c01f11e27a11f5c1fcd2f9054b8",
+    "charts-market/visual-baselines/technical-chart-narrow-responsive.png": "e5cf954204f97e344c95f6b5bf7754b677d2a27b0a9fab6a7e04177e1e041870",
+    "charts-market/vitest.config.ts": "b9e99161c40d9c953ecc9c8669d5403fda4ea9ff97d434bfb3bb77a8b0bfa11f",
+    "charts-market/vitest.setup.ts": "9b328c4843431fa76d8de00008fc159e95f99a840211085ff3b8f25e53d14409",
+    "docs/ROADMAP.md": "6aba2d56318772480e7b552874c2f4583514b21d6e791b297f1d1a56725324ee"
+  },
+  "distHashes": {
+    "dist/chunk-AHEGFOLG.cjs": "8f15ff78d809a38b3f1e185641aeed37bac1b147ba94c6b88ea6624f713ae220",
+    "dist/chunk-AHEGFOLG.cjs.map": "6bddebf5a8fb3119023d440d692aab7cc74d008117516fdbafb4330d3742b4a0",
+    "dist/chunk-B2K76EZI.js": "fb3cceb2f7b4170470aa5e4f18ea6a3091a7292a5485a4b6e48b4c68412efbde",
+    "dist/chunk-B2K76EZI.js.map": "e7161e1448aa80db956b71839a9a69ad51f5db51b3c7eefdfadec8ee9e00653c",
+    "dist/chunk-DBEEALMW.cjs": "b6564a8ba6fdf936a135e21ae4bcf735c692a3104c0fa2df0790da79238b2d05",
+    "dist/chunk-DBEEALMW.cjs.map": "0882ea822ddab893e7702d7e8ddb5324b3e1467db5c96770bc9f4286b32fb293",
+    "dist/chunk-IFQ2BLD5.js": "d2fe3162f576f670d7265516bd97aef4d9e29d9fce729927baa1a0c648a6d905",
+    "dist/chunk-IFQ2BLD5.js.map": "75de0973ec2659f6a45888a8a6064a6d12bd0d1b5895d9fecf45f83927b80457",
+    "dist/chunk-MA4KWCY5.cjs": "15f8badfa1ca09eba7f515caebedc01f0f4ae9f1b13d44605349a6d0d32bdcfd",
+    "dist/chunk-MA4KWCY5.cjs.map": "790c77b6b4ffa813652afa722a3ad7ce73eedf7857fd8331b93a5d45f9c519be",
+    "dist/chunk-NWKG6CFT.js": "d2fe21e0d2aa55bb3242318132a56c89a1d4a584a5a8f19fe2fc618533f21bf5",
+    "dist/chunk-NWKG6CFT.js.map": "c710f0bf9062984ccd1e2ad8b550786acf3f2bad7e652404eba44dda4d16aace",
+    "dist/controls.cjs": "10fa20d892e9f389cd08e0a4d9adcd4ee3bc2761836d7bbfc4904c636d1c57c5",
+    "dist/controls.cjs.map": "3e1acacddd0ec28476bd62bb1f14c2879841a9aadf3b9d62f754892f0720d078",
+    "dist/controls.d.cts": "79e57d5f7688bea8c38802a556ebe9057ea5e310006c8800212b74c525be72b9",
+    "dist/controls.d.ts": "16b598676a6b1b525177b288671bf42acc6312e4b6af189707f35b21b5b9afdc",
+    "dist/controls.js": "ed94c990925ad5d80cd9fd7199b7c1288e1fde2c5c6566ef690b7cc14d9b3646",
+    "dist/controls.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "dist/core.cjs": "5ded51b9bf5957133bd6ff4e6c98cbbea82d2e5b097ab0a9325e68e330c309f8",
+    "dist/core.cjs.map": "c9f77e712369d26a8071420336b26989ec5231aa495deb43467e4c5a667bc9e0",
+    "dist/core.d.cts": "cc61cdbe76ce18e6c033a882f08dae182ae8ccf43c2323981dc4a2c9eac8905d",
+    "dist/core.d.ts": "1865f65f614361ad37460471ad043b8aef4e3a89cea96555abb5368d95fb4312",
+    "dist/core.js": "13a6d05c68f2720e86859a6a1545c79d2faf00e7b529041bc7677a3635159f5f",
+    "dist/core.js.map": "087b1c2afac2fe3bd73d4cb7809ba2ad29a9011d1690d175cb64886904ded021",
+    "dist/drawings.cjs": "3d6ca842e29a10a36bf97e92b53eb12b174dc1e086036b38f298ee912cfc8a07",
+    "dist/drawings.cjs.map": "a78578aa94f78c4f5ccc1413b618ab9dd2e5f97b4e4c3614b4833350a9458fdb",
+    "dist/drawings.d.cts": "66231af98f57ae2b82bcde6bd36e27dd8e89d525230550baf8c31046ea396718",
+    "dist/drawings.d.ts": "9f3a583bdfc272ffc15ed873de9d66f765f05edad5d76fac81e5a8e3e825adb9",
+    "dist/drawings.js": "5e04433edb1418967dede6d01e5325b1dbc4b5cd295c812dbe3c8eaa9e63889d",
+    "dist/drawings.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "dist/index-BKz2TsEQ.d.ts": "bc031b6aa12c00683fe710d05212b15ab0388309d5b481f602f315146f8bac14",
+    "dist/index-BXxI_F8u.d.ts": "b440779eef271349df5559d43adeddde67152b2252c77631acc44d2919fd4b89",
+    "dist/index-CvsdUH2H.d.cts": "0f1a57e85a464a5f332ba69a6ef1d50d4e92facad2a050ced0646ea9b9941cbe",
+    "dist/index-LRWw7YH1.d.cts": "96e05907fd2d9e7040a61475e63c6a170542a8875643d2337e46329ecd5e16cd",
+    "dist/index.cjs": "d71e7fc6bf3303d6efc2fc3153043521b207b0742a8dc12b6bcdc273049e749e",
+    "dist/index.cjs.map": "5b836a85f5efa5c00e19aa24538c17b7591b15b0846121799d956898c40fe2fe",
+    "dist/index.d.cts": "645c0cfc2c0795fb599f03fb2189996c2358d973621fcb3287bb7322f19e4d7e",
+    "dist/index.d.ts": "dc048f0e91dea071a53df179b533caf7593aae438c9737e97898208d2a5f0b2a",
+    "dist/index.js": "66babcbb137876aa31933376e993cd823393f8defcf3a3b5028c7c7d5b9fdfae",
+    "dist/index.js.map": "3ba31805cbca27800b01a0013d3393e2d05ea33f8038140c3f4d637894134f1a",
+    "dist/indicators.cjs": "09a911f86f26124f40f18973a2a818e2e3b63484fbae00a7703518b8514204ff",
+    "dist/indicators.cjs.map": "0c61e88559c5afe037cb3d3e4e4bbe18317226bce7035f2295fcf41193dc7a52",
+    "dist/indicators.d.cts": "4f1d7e1c553a25526e39fb5f58bcd510aea0347a5281a3c913dc6b2ebb8d36c2",
+    "dist/indicators.d.ts": "673a952f04f275816e7831a82894b8349bada99a8db4607f6236b2d5a87a8e98",
+    "dist/indicators.js": "5b3f32c0735b2320ae4e0e7cbd236d8f5db5bcd5812bb61a20bb8e1cc28443cc",
+    "dist/indicators.js.map": "c72f870bb261cca7ed340bde1badda12365a658c1ce8dcbad07052889390e77f",
+    "dist/overlays.cjs": "017effb1387d3e4f57914b468766d50d52ce099f8a17108099f0eddacae39e84",
+    "dist/overlays.cjs.map": "22b5d247eec44258114fb5b97fbd85dd21d29661c6e59940e8e2bb4de2cb2889",
+    "dist/overlays.d.cts": "a6cc32faf47050ce790bbac352c8432d672d8f9ff858d12ed4e2ed609f9bfff3",
+    "dist/overlays.d.ts": "501f9eb26191e50452dc79d0d49e9a3f36d8739d7616c940b42c799afc16c427",
+    "dist/overlays.js": "4280bcf8ba913e2293121c13fc9da41f736b022054770d674431857435f7923f",
+    "dist/overlays.js.map": "b26b0cff5b2bb32a943fbf9f0c71d73147593b24923c3ae23619bf1ae526a21b",
+    "dist/styles.css": "8789fcda3871a1703320e308a5047b2e6dfce861aadee97bf917c7da19620ecc",
+    "dist/types-CF-KzkQS.d.cts": "91c34fc85bed4d74d8018ea0e2efcbe28a865b21b846b336fdb0522c92c9e085",
+    "dist/types-CF-KzkQS.d.ts": "91c34fc85bed4d74d8018ea0e2efcbe28a865b21b846b336fdb0522c92c9e085",
+    "dist/types-CoZ1TE6_.d.cts": "6558abf6be97b0936c16aa0e4861514ad6947bb65071144cf7eeba314f140019",
+    "dist/types-CoZ1TE6_.d.ts": "6558abf6be97b0936c16aa0e4861514ad6947bb65071144cf7eeba314f140019",
+    "dist/workspace.cjs": "8ea17c21969381d523e0543a033fc4231a8336ea852e959dc05a9735b8611808",
+    "dist/workspace.cjs.map": "b14bd0bf3d2e90d78bbe5404edb531fa9674dec92d8d0e3c1807562005463f30",
+    "dist/workspace.d.cts": "730f4e850adeb8cf13a6ac9817351508edc4138acf2c2ce88d245c2030c6d6fc",
+    "dist/workspace.d.ts": "8e737637f9a5d8a2f919e277c14c0dd3d87b87878d7f4d7e42388d50f399a64a",
+    "dist/workspace.js": "da4a5be8d6abd12a08f12ea71a74a6f59208d22a168dde40b5ec0ba03a73daee",
+    "dist/workspace.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3"
+  },
+  "evidenceHashes": {
+    "dev-runner/results.json": "361338c3c985ff62e62e51bec4d81646b1bda9e7f66e3c9c7b8e60faa335fdfa",
+    "dev-runner/review.json": "c327857257d7ae10d6d34fe8073f0901377e6e554c451978a7c4560a0d7f82bc",
+    "dev-runner/audit.json": "ecaffedec6d04aaaeaadb524e8b00f29dfc8d645e15c7876399dec7ddb1cf473",
+    "approved-scope-amendment.json": "b1c9688bc89f28b3a362089c4d4286370006c4f0149696fde6d0408fad607ce2",
+    "browser-results.json": "715ea9d99fcdb66e4bd1936c5cef68a2309913f177700fb0bf4357b0d7c048c5",
+    "preservation.json": "cf138ab461f2ac49a38dcbaaf7203d28c72f48efef753ef1b446702dd71fd5b6",
+    "README.md": "dedea447d12107d567b35e0ee93d27359285f85e481a92a238bbae01c7ab4cab",
+    "screenshots/compact-card.png": "99a96143920ff8c16a767e2986d1b82de79293682b5bb68a4bad3f92a455ed6e",
+    "screenshots/desktop-dark.png": "a06e74818ce75a73ca8fdde7c302a9aef6102ba8760c4d888b37db183ded23e5",
+    "screenshots/desktop-light.png": "345bbb485e2833c8e82e10b379a8ab327aac6b55fc1e40509fa69e3fb1f264b7",
+    "screenshots/drawing-priority.png": "c192b62fa9ebab304c823898bd4c340a397dad988597bce178bd0c2b16e87ad4",
+    "screenshots/long-history.png": "7be5bc848a578a21b81647c0314fbbd92696f505645e2ff2f0c1ada786aa125b",
+    "screenshots/monthly-years.png": "ad3b0798fb1434496ae1c3a5d11387c3ca7c6cab51c437a6070061e7223592c8",
+    "screenshots/multi-pane.png": "3af1a60017e441b121e3c855c82656b265758bc0fa1512e13bd91834059060a3",
+    "screenshots/native-browser-200.png": "2f3d925623b3af3bb4176ceb914364831c3dd7e20e156177223705409a7f12e4",
+    "screenshots/nonpositive-log.png": "7ee54e4269c28c6794d24c6185797e0fec095971522daa6f19614f1cd0da5960",
+    "screenshots/phone320-dark.png": "a966f3b8069e05833e86cef03486ac3859b436f8923b24132a2d93c43dd47662",
+    "screenshots/phone390-dark.png": "c54a01828e675a5106c6868ecc3d20880432fb3da7c08b14976ccd7837d768cc",
+    "screenshots/two-charts.png": "16cf4295574b02b1d4f4073d365c73658110cee95d540218f71efe874cb883b8",
+    "screenshots/year-priority-desktop.png": "9c4e781883b2739073f2935bce98f60aceb79f6a657fc571d4dfc9f0d39c67c4"
+  },
+  "files": [
+    {
+      "path": "ADAPTIVE-WIDTHS.md",
+      "size": 5477,
+      "mode": 420
+    },
+    {
+      "path": "CALENDAR-COORDINATES.md",
+      "size": 8375,
+      "mode": 420
+    },
+    {
+      "path": "ENDPOINT-LABELS.md",
+      "size": 5659,
+      "mode": 420
+    },
+    {
+      "path": "INTERACTIONS.md",
+      "size": 16251,
+      "mode": 420
+    },
+    {
+      "path": "LICENSE",
+      "size": 1070,
+      "mode": 420
+    },
+    {
+      "path": "MOVING-AVERAGE-LABELS.md",
+      "size": 7155,
+      "mode": 420
+    },
+    {
+      "path": "NOTICE",
+      "size": 335,
+      "mode": 420
+    },
+    {
+      "path": "READABILITY.md",
+      "size": 8405,
+      "mode": 420
+    },
+    {
+      "path": "README.md",
+      "size": 6004,
+      "mode": 420
+    },
+    {
+      "path": "REFINEMENT.md",
+      "size": 10528,
+      "mode": 420
+    },
+    {
+      "path": "SUPPLIED-RESULTS.md",
+      "size": 13564,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-AHEGFOLG.cjs",
+      "size": 4424,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-AHEGFOLG.cjs.map",
+      "size": 3132,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-B2K76EZI.js",
+      "size": 135602,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-B2K76EZI.js.map",
+      "size": 257590,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-DBEEALMW.cjs",
+      "size": 152777,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-DBEEALMW.cjs.map",
+      "size": 18981,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-IFQ2BLD5.js",
+      "size": 3079,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-IFQ2BLD5.js.map",
+      "size": 4880,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-MA4KWCY5.cjs",
+      "size": 255994,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-MA4KWCY5.cjs.map",
+      "size": 44990,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-NWKG6CFT.js",
+      "size": 214041,
+      "mode": 420
+    },
+    {
+      "path": "dist/chunk-NWKG6CFT.js.map",
+      "size": 390242,
+      "mode": 420
+    },
+    {
+      "path": "dist/controls.cjs",
+      "size": 268,
+      "mode": 420
+    },
+    {
+      "path": "dist/controls.cjs.map",
+      "size": 355,
+      "mode": 420
+    },
+    {
+      "path": "dist/controls.d.cts",
+      "size": 1116,
+      "mode": 420
+    },
+    {
+      "path": "dist/controls.d.ts",
+      "size": 1115,
+      "mode": 420
+    },
+    {
+      "path": "dist/controls.js",
+      "size": 159,
+      "mode": 420
+    },
+    {
+      "path": "dist/controls.js.map",
+      "size": 71,
+      "mode": 420
+    },
+    {
+      "path": "dist/core.cjs",
+      "size": 16274,
+      "mode": 420
+    },
+    {
+      "path": "dist/core.cjs.map",
+      "size": 49281,
+      "mode": 420
+    },
+    {
+      "path": "dist/core.d.cts",
+      "size": 17265,
+      "mode": 420
+    },
+    {
+      "path": "dist/core.d.ts",
+      "size": 17263,
+      "mode": 420
+    },
+    {
+      "path": "dist/core.js",
+      "size": 15503,
+      "mode": 420
+    },
+    {
+      "path": "dist/core.js.map",
+      "size": 49278,
+      "mode": 420
+    },
+    {
+      "path": "dist/drawings.cjs",
+      "size": 5864,
+      "mode": 420
+    },
+    {
+      "path": "dist/drawings.cjs.map",
+      "size": 1146,
+      "mode": 420
+    },
+    {
+      "path": "dist/drawings.d.cts",
+      "size": 3222,
+      "mode": 420
+    },
+    {
+      "path": "dist/drawings.d.ts",
+      "size": 3220,
+      "mode": 420
+    },
+    {
+      "path": "dist/drawings.js",
+      "size": 3755,
+      "mode": 420
+    },
+    {
+      "path": "dist/drawings.js.map",
+      "size": 71,
+      "mode": 420
+    },
+    {
+      "path": "dist/index-BKz2TsEQ.d.ts",
+      "size": 33089,
+      "mode": 420
+    },
+    {
+      "path": "dist/index-BXxI_F8u.d.ts",
+      "size": 12797,
+      "mode": 420
+    },
+    {
+      "path": "dist/index-CvsdUH2H.d.cts",
+      "size": 12799,
+      "mode": 420
+    },
+    {
+      "path": "dist/index-LRWw7YH1.d.cts",
+      "size": 33090,
+      "mode": 420
+    },
+    {
+      "path": "dist/index.cjs",
+      "size": 186688,
+      "mode": 420
+    },
+    {
+      "path": "dist/index.cjs.map",
+      "size": 35236,
+      "mode": 420
+    },
+    {
+      "path": "dist/index.d.cts",
+      "size": 32065,
+      "mode": 420
+    },
+    {
+      "path": "dist/index.d.ts",
+      "size": 32058,
+      "mode": 420
+    },
+    {
+      "path": "dist/index.js",
+      "size": 156239,
+      "mode": 420
+    },
+    {
+      "path": "dist/index.js.map",
+      "size": 241909,
+      "mode": 420
+    },
+    {
+      "path": "dist/indicators.cjs",
+      "size": 18578,
+      "mode": 420
+    },
+    {
+      "path": "dist/indicators.cjs.map",
+      "size": 44519,
+      "mode": 420
+    },
+    {
+      "path": "dist/indicators.d.cts",
+      "size": 2896,
+      "mode": 420
+    },
+    {
+      "path": "dist/indicators.d.ts",
+      "size": 2894,
+      "mode": 420
+    },
+    {
+      "path": "dist/indicators.js",
+      "size": 17934,
+      "mode": 420
+    },
+    {
+      "path": "dist/indicators.js.map",
+      "size": 44516,
+      "mode": 420
+    },
+    {
+      "path": "dist/overlays.cjs",
+      "size": 2090,
+      "mode": 420
+    },
+    {
+      "path": "dist/overlays.cjs.map",
+      "size": 4661,
+      "mode": 420
+    },
+    {
+      "path": "dist/overlays.d.cts",
+      "size": 1877,
+      "mode": 420
+    },
+    {
+      "path": "dist/overlays.d.ts",
+      "size": 1875,
+      "mode": 420
+    },
+    {
+      "path": "dist/overlays.js",
+      "size": 1813,
+      "mode": 420
+    },
+    {
+      "path": "dist/overlays.js.map",
+      "size": 4658,
+      "mode": 420
+    },
+    {
+      "path": "dist/styles.css",
+      "size": 17133,
+      "mode": 420
+    },
+    {
+      "path": "dist/types-CF-KzkQS.d.cts",
+      "size": 21736,
+      "mode": 420
+    },
+    {
+      "path": "dist/types-CF-KzkQS.d.ts",
+      "size": 21736,
+      "mode": 420
+    },
+    {
+      "path": "dist/types-CoZ1TE6_.d.cts",
+      "size": 21736,
+      "mode": 420
+    },
+    {
+      "path": "dist/types-CoZ1TE6_.d.ts",
+      "size": 21736,
+      "mode": 420
+    },
+    {
+      "path": "dist/workspace.cjs",
+      "size": 781,
+      "mode": 420
+    },
+    {
+      "path": "dist/workspace.cjs.map",
+      "size": 443,
+      "mode": 420
+    },
+    {
+      "path": "dist/workspace.d.cts",
+      "size": 732,
+      "mode": 420
+    },
+    {
+      "path": "dist/workspace.d.ts",
+      "size": 729,
+      "mode": 420
+    },
+    {
+      "path": "dist/workspace.js",
+      "size": 516,
+      "mode": 420
+    },
+    {
+      "path": "dist/workspace.js.map",
+      "size": 71,
+      "mode": 420
+    },
+    {
+      "path": "package.json",
+      "size": 2885,
+      "mode": 420
+    }
+  ],
+  "dependencies": {
+    "aapaetsch-icons": "0.1.0-beta.0"
+  },
+  "peerDependencies": {
+    "aapaetsch-ui-kit": ">=0.2.0-beta.3",
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.js",
+      "require": "./dist/core.cjs"
+    },
+    "./indicators": {
+      "types": "./dist/indicators.d.ts",
+      "import": "./dist/indicators.js",
+      "require": "./dist/indicators.cjs"
+    },
+    "./drawings": {
+      "types": "./dist/drawings.d.ts",
+      "import": "./dist/drawings.js",
+      "require": "./dist/drawings.cjs"
+    },
+    "./overlays": {
+      "types": "./dist/overlays.d.ts",
+      "import": "./dist/overlays.js",
+      "require": "./dist/overlays.cjs"
+    },
+    "./controls": {
+      "types": "./dist/controls.d.ts",
+      "import": "./dist/controls.js",
+      "require": "./dist/controls.cjs"
+    },
+    "./workspace": {
+      "types": "./dist/workspace.d.ts",
+      "import": "./dist/workspace.js",
+      "require": "./dist/workspace.cjs"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "license": "MIT",
+  "published": false,
+  "noDownloads": true,
+  "pendingAcceptance": [
+    "Physical iPad/Safari touch and real trackpad acceptance",
+    "Portfolio exact artifact/dependency-lock approval, installation, rebuild and cached-real earnings/timeline integration verification",
+    "Separate publication authorization and trusted CI/public npm provenance verification"
+  ],
+  "provenance": "Local candidate only. Trusted CI provenance, public npm approval and consumer complete-lock/install/adoption require separate authorization."
+}
