@@ -1,0 +1,214 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-24T03:42:04.083Z",
+  "candidate": ".chart-board-card-validation/resize-feedback/candidates/board-card-resize-d01b450b62f0",
+  "package": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.3-board-card.2",
+  "packageSha256": "f74c9ca9ded42d4a5b17ad7965b80ec86b7e3aaeb40c96acbb3f9083bab0be31",
+  "integrity": "sha512-g/T8CqosETHMQlFnSpS2Rm+iVSqE4RfAIiIK4p+K/1Y/cKzw/NyXP6LKgqtqQb8+oDLLc4zm/InuuMta/fL4vQ==",
+  "size": 613925,
+  "sourceArchiveSha256": "45ce7204fc29aa5c2492b972222d2230c6e12b2960c9e76ab0b1652789973b7b",
+  "sourceBindingSha256": "d01b450b62f0c35e5db4b05d3199a22d61d1d97b2a3173fcab2ad993f97db414",
+  "runtimeBindingSha256": "2e5e52b30cc5c3a995e399c207604e0dd24db6eb0caf61646ee5d7f34030081e",
+  "previousBoard1SealedFiles": 102,
+  "packageFiles": 75,
+  "sourceFiles": 182,
+  "distFiles": 63,
+  "evidenceFiles": 8,
+  "candidateFiles": 87,
+  "candidateFileHashes": {
+    "aapaetsch-charts-market-0.1.0-beta.3-board-card.2.tgz": "f74c9ca9ded42d4a5b17ad7965b80ec86b7e3aaeb40c96acbb3f9083bab0be31",
+    "evidence/API.md": "49a3d55bff31584aae1ec611de0f72206d2de443b50f8af5a2ba57586788c6e4",
+    "evidence/browser-results.json": "402078d13f7207224d8ea89942499b098e033a45e2e89b543f0ea6fd83dc95d4",
+    "evidence/dev-runner/audit.json": "1f542709edca405d0d6d0b651fcb2167cb1dadce7797dbc9f5835802bb003927",
+    "evidence/dev-runner/results.json": "bec59ebebd0492ce32a94fcafbc3bb58f8daecd2d14efb6789e0f2631791e77f",
+    "evidence/dev-runner/review.json": "021652cd99b56968f213a1a9e195499282aeb6e94ed703add2cf584432d4962a",
+    "evidence/preservation.json": "e7ac0664249d68eed94a11b309676aa40547a8f7d1f338a0cb0c05a6f73c3701",
+    "evidence/README.md": "b26dea1bc4a8ff4bfb8b6f9e12fd89da3e1bcd32dae424326daa00df260a9f6f",
+    "evidence/screenshots/compact-stable.png": "832fd2187147cedea35eb9fad26ae4133e1fae7aae0dfb8dc23584d5ba3fa794",
+    "package-staging/ADAPTIVE-WIDTHS.md": "bb04c415f906c56530b435dca346607094b49d0d283449d437419ccd4d7ce509",
+    "package-staging/CALENDAR-COORDINATES.md": "555ffa7e24beacb0a9ccfe56e574f82aadcfec85bee6df31986eacae3c6ce5e8",
+    "package-staging/dist/chunk-33RISM4F.cjs": "a0290e18c23549d2a68fece4fcc86d9026c78c7202f8eda8d3d1fc2c083981f7",
+    "package-staging/dist/chunk-33RISM4F.cjs.map": "f758c24bedfcf8edfac439de71f49a89d801beb68114406e52847710ab9e4d4b",
+    "package-staging/dist/chunk-IMFMDZTH.js": "d6d504def0a8d62abe18ef66eb03ce0120f98475a54a3da8724f6528876baacb",
+    "package-staging/dist/chunk-IMFMDZTH.js.map": "d5849f8e0938192f8e528f3031a8ce0075d79c73e33a71a3ad67511cc10c9918",
+    "package-staging/dist/chunk-JZD64LPT.js": "573715f015e257e031c2b6b637f989755d4cc960050bb0d68e98d8dfb627012a",
+    "package-staging/dist/chunk-JZD64LPT.js.map": "5418ea6c324cfbc354aca0b1a91e914f523852f5e7560e4f5cd288a5e8ecce31",
+    "package-staging/dist/chunk-MGPDCFFZ.cjs": "18349d534a086b7e71607386fd713e127250eb51d08fef59290e456abce03404",
+    "package-staging/dist/chunk-MGPDCFFZ.cjs.map": "0510e8604eac3d64b58b83631ce40687465232ebf16cd11e4cda7e603ec018cc",
+    "package-staging/dist/chunk-ULHF3TOY.cjs": "98c82f92df695e9dcbf836bfbebe5d80593649934902abd40137b91c7619c559",
+    "package-staging/dist/chunk-ULHF3TOY.cjs.map": "089353e215bbaf8cf46da16e39cad847e35db443b85ab56d537ec4c4fef26e3a",
+    "package-staging/dist/chunk-YJCHOCZ2.js": "22ba7499b84783fd853a5fb119d2ad0a5a6c4fe779aa4ea3a36b61fcf1db0bf0",
+    "package-staging/dist/chunk-YJCHOCZ2.js.map": "e5d6a8a5c11e4abd10b6c4b8548ec8a137719634b24731ade92885b0b818144c",
+    "package-staging/dist/controls.cjs": "3efeb73235ccf99c8fc08ff9731fa2ad0e6371e3f8463295e2de238f16981a7f",
+    "package-staging/dist/controls.cjs.map": "1554eb7456a8bf004bec0a7523733b21ef408b5c9e32356a620c8563815c5f7f",
+    "package-staging/dist/controls.d.cts": "568f9a2f23c828f134ec2d489da49b1414cffc5f440428520dc9251ae3be03b1",
+    "package-staging/dist/controls.d.ts": "0e35ed8fde0f44de978104491bab4c5772a1e57565cfcbc4527c27c13c2679d2",
+    "package-staging/dist/controls.js": "7d54864bcbb4a5db7cb89491afeb58178dd188d4c0ee4d54e6bfe327dba7e73f",
+    "package-staging/dist/controls.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/dist/core.cjs": "6022bf48c9426ee07a408d9dbaed839a97a812f97112d054ab6194caf3f9fb00",
+    "package-staging/dist/core.cjs.map": "d99bade4a439f32cb2640d42a9c20bad0c1a427ec6505188f7b53188f7c9cc90",
+    "package-staging/dist/core.d.cts": "0bb1a85b008fb4df0f74caf17a3d668bc3735e5af34bfdaf8a602c15a8ff451c",
+    "package-staging/dist/core.d.ts": "d7f0878655c3ee77bf304d064fa17f87af3a5914ca6a4584a532e58f50255fd4",
+    "package-staging/dist/core.js": "b6e49a50b4934c369b74cf9b6a61cba667177db4262fcf405a8eb4dfccce2ae4",
+    "package-staging/dist/core.js.map": "c9514eff24d9225f31d7127b1baca6bbad8aecda51582b0d5ad809450db0ef59",
+    "package-staging/dist/drawings.cjs": "48c07d499fcafc27b4dfdf04d1cb3e7691264bc63395abf0ca99f96fa57b6aef",
+    "package-staging/dist/drawings.cjs.map": "17694f6e468fdc623b8c28bb995a806fa4167b568cc93b621ca69c486832dffd",
+    "package-staging/dist/drawings.d.cts": "f754d71a6059c0e73f0d4439a6436328ef39b61a95bfb1e6184c9580972c44fe",
+    "package-staging/dist/drawings.d.ts": "d785dd54c218e098da733b5cee76b88d4041bfe36c4d04dd33e671e9148c95c6",
+    "package-staging/dist/drawings.js": "72ca144d9532c2e300bf38ecd5de84291584b3937fca086f5d457c4186cc642c",
+    "package-staging/dist/drawings.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/dist/index-D1lpf_lp.d.ts": "dab64a21ddb0f3b704f240a9f90cff1fdeb820d349ca8bc2c1d4c9fe12baba32",
+    "package-staging/dist/index-DQMzeNZT.d.cts": "d04265d0802ce7b7091d66dd8775c8c147053b048a8b2732f874e8d4f908291c",
+    "package-staging/dist/index-Dw8KqcS6.d.cts": "3bf585975c2a57c27ebc4ec72d45b5b78344be2fb76ef09ff491cafbaa7f306d",
+    "package-staging/dist/index-OxNGCuwe.d.ts": "260c3248352534294b2a1463b449fd505cbc73f3c2aa8db30de6d44092d7bdbf",
+    "package-staging/dist/index.cjs": "ebafbc95404fde60fbd2660857a0530b92e492c5ad2d8859a0ca6b953a39d252",
+    "package-staging/dist/index.cjs.map": "7a6184b786df0741b4fb3dbd75c2f38967865984076ad741d0027b766c9c2cac",
+    "package-staging/dist/index.d.cts": "4524f23cde578ce30f1e8b8c0cd67bc86e7960a62b9cfb244faf3f006d30fee0",
+    "package-staging/dist/index.d.ts": "0f45574c57987b28a31b95c71d10c42ee5b28bf46cdf2e8a19705f4a67f6182c",
+    "package-staging/dist/index.js": "fcaffefa77e0aab8681a58b21e452ecdf49b2be58bb25643a784d886c8730fb4",
+    "package-staging/dist/index.js.map": "ebc298bf31a64d0a016a96f644b9d04ec71030be48d8043d7be74cb597c2d05b",
+    "package-staging/dist/indicators.cjs": "09a911f86f26124f40f18973a2a818e2e3b63484fbae00a7703518b8514204ff",
+    "package-staging/dist/indicators.cjs.map": "8e441d74b6c646bdc216f4fa8e74e44e4d1591767ad0aedb085cffc79f9a16c5",
+    "package-staging/dist/indicators.d.cts": "ea7b61d82634825ee901fa58b097bb417bd228d3fe6aae73573ef0844406abc5",
+    "package-staging/dist/indicators.d.ts": "3d8e0a91bb7e4461eec601a94ce04736ba9ffe84de92541006f1141a5229e412",
+    "package-staging/dist/indicators.js": "5b3f32c0735b2320ae4e0e7cbd236d8f5db5bcd5812bb61a20bb8e1cc28443cc",
+    "package-staging/dist/indicators.js.map": "ca9101177cb467ef2d17532c2d0509187df7cceebc99690563a451cf6a247753",
+    "package-staging/dist/overlays.cjs": "017effb1387d3e4f57914b468766d50d52ce099f8a17108099f0eddacae39e84",
+    "package-staging/dist/overlays.cjs.map": "407434e2e2fcbe768be8de2ce613b2a3cdab3c224ba086d4b29464a35f49c779",
+    "package-staging/dist/overlays.d.cts": "094cc4506c26974911ee95a8c83bd6907cc1b33fd1c7ecba52f2efd40857cf4c",
+    "package-staging/dist/overlays.d.ts": "dbe8062dd067a182c1e38811397c8d9757525beb66e804bff5c032c7cd220edd",
+    "package-staging/dist/overlays.js": "4280bcf8ba913e2293121c13fc9da41f736b022054770d674431857435f7923f",
+    "package-staging/dist/overlays.js.map": "67d38b4ca03180d9d8a84b64861f9ea7fb11a2fcdfadf5fd4febbcd6e66375b9",
+    "package-staging/dist/styles.css": "f07f59a0436f858c4067a43af38d823defc665e88956ab70c173aec5434cfb80",
+    "package-staging/dist/types-BS7DWraF.d.cts": "555d1b05e38a0a39745a7cf604df036fd186c72e6ab00965d9d1c7ce251f6423",
+    "package-staging/dist/types-BS7DWraF.d.ts": "555d1b05e38a0a39745a7cf604df036fd186c72e6ab00965d9d1c7ce251f6423",
+    "package-staging/dist/types-DGkNSbbl.d.cts": "8b17b10300b6e4db5b87ddc06c4823260fd36d74688fa01ee51e5ed420fb840d",
+    "package-staging/dist/types-DGkNSbbl.d.ts": "8b17b10300b6e4db5b87ddc06c4823260fd36d74688fa01ee51e5ed420fb840d",
+    "package-staging/dist/workspace.cjs": "0682d57335ca39e5beccb9e0bdc0f3af725cf64a1069631915b3e665be5b6422",
+    "package-staging/dist/workspace.cjs.map": "6b2913381e87c368c2f7692704a4a8f595b2d20478aa608a649b5f7b7eec6ba8",
+    "package-staging/dist/workspace.d.cts": "a7915b2ecfb969025b70155404605ca5ccc12802bfd0f84d3fca4db1e31911f0",
+    "package-staging/dist/workspace.d.ts": "c99042d5def8bd061dcfefd50edda66be69f64d425d8cb5e00475d9994fe5d48",
+    "package-staging/dist/workspace.js": "10ee1c2cf6e7f85366fecb4c7538fba26789ffb709e965da9c686befa0b520ca",
+    "package-staging/dist/workspace.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/ENDPOINT-LABELS.md": "cd013006af5027867277e1c5e384faccdb0e8de82f849d74344a6dc92e4c6ce8",
+    "package-staging/INTERACTIONS.md": "d622c12c627db89c32cb756210ae1a8c031bdf923345a21228ec0f52e81fc843",
+    "package-staging/LICENSE": "e80e9406bfe34b32e65f41b41b494d6050138bf6b1968b33e5038a6bfd102bb3",
+    "package-staging/MOVING-AVERAGE-LABELS.md": "a17072b60bef45c68a0d13d80ea81b042646659e3132f76bbb7970909b162f08",
+    "package-staging/NOTICE": "2bcb86f62060897acecdc15780f7b02f6df98b0dfd8e44bd039f44f7f7638472",
+    "package-staging/package.json": "bac784b641ba2345cee01c6b2a6b2a7ada6eccfab2cc3e578877e981bfc102f7",
+    "package-staging/READABILITY.md": "8101062fd9125cee29f26879ce5a81303fa6b4927630754f1b8922e4f481733d",
+    "package-staging/README.md": "d047c9c1f54659324a669b891057c016e900cf1087f1df3cf4507e21a332b05e",
+    "package-staging/REFINEMENT.md": "0ee6e827043cd6a5e7a93e99d8b89cbdbe3254ecac0fc05929b0919d0a324165",
+    "package-staging/SUPPLIED-RESULTS.md": "5cbdc33282e556a8a94c950aeff9b77b99a2d5cdb0079a84d3bca2cbbf296c58",
+    "receipt.json": "16be904320c75b187d8c93b8ee16599ec2ee6038f59312253bf531cc02c79b6a",
+    "reviewed-source.tar.gz": "45ce7204fc29aa5c2492b972222d2230c6e12b2960c9e76ab0b1652789973b7b",
+    "source-files.txt": "a1f1a9ec79dfe2070bd51b596d7da8298ec93c1c53b004c08cc273ed53d12415"
+  },
+  "manifestOnlyVersionOverride": true,
+  "publicModules": [
+    {
+      "subpath": ".",
+      "exports": 162
+    },
+    {
+      "subpath": "./core",
+      "exports": 23
+    },
+    {
+      "subpath": "./indicators",
+      "exports": 24
+    },
+    {
+      "subpath": "./drawings",
+      "exports": 81
+    },
+    {
+      "subpath": "./overlays",
+      "exports": 9
+    },
+    {
+      "subpath": "./controls",
+      "exports": 1
+    },
+    {
+      "subpath": "./workspace",
+      "exports": 7
+    }
+  ],
+  "publicTypes": {
+    "strict": true,
+    "skipLibCheck": false,
+    "diagnostics": 0,
+    "files": 6
+  },
+  "ssrCases": 17,
+  "protectedFilesChecked": 16745,
+  "headUnchanged": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "tests": {
+    "full": {
+      "files": 49,
+      "passed": 284,
+      "sha256": "6bd5af6f5cdc44f9b444bc62efad6aa8bf2cd6e08bba4e0c5d0fc4996a0704ea"
+    },
+    "focused": {
+      "files": 3,
+      "passed": 5,
+      "sha256": "4a4e6aa852924cdd5b0513877432a7d484c1b01a9d46db0978af07f46c32c842"
+    },
+    "baseline": {
+      "failed": 3,
+      "files": 2,
+      "expected": "All three geometry/bitmap regressions fail against sealed Board1 hook/packed engine.",
+      "sha256": "67a11a426bb1a6d1fa3e567a61cd982f07123ef120ca0464584adbfe79d90502"
+    }
+  },
+  "browser": {
+    "status": "pass",
+    "receiptSha256": "402078d13f7207224d8ea89942499b098e033a45e2e89b543f0ea6fd83dc95d4",
+    "pendingAcceptance": [
+      "Physical iPad Safari and hardware trackpad acceptance",
+      "Separate publication approval and CI/public registry verification",
+      "Portfolio exact-version/complete-lock/scripts-disabled adoption, rebuild and retained-real-data compact/expanded acceptance"
+    ],
+    "qualifications": [
+      "Synthetic supplied calendar samples, not live Portfolio or provider data. Previous Board185-story interaction/browser matrix remains historical; current187-story build received targeted geometry and keyboard/menu review.",
+      "Screenshot capture temporarily changed reported width to2 then restored412; that bounded capture-related geometry change is excluded from both clean quiet intervals.",
+      "Immediate Escape snapshot retained the closing animated menu; settled snapshot verified zero menus and focus on BB pane actions.",
+      "An initial malformed diagnostic selector query failed; corrected read-only query succeeded. No application error.",
+      "No physical hardware or product acceptance claim."
+    ],
+    "parentReportedChecks": {
+      "hostGeometryCallbackEnabled": true,
+      "freshAppearanceAndInteractions": true,
+      "statusChromeSettles": true,
+      "smallerSlotSettles": true,
+      "originalSlotRestores": true,
+      "narrowWidths": [
+        320,
+        390,
+        430
+      ],
+      "menuDismissedAndFocusReturned": true,
+      "noHorizontalOverflowAt430": true,
+      "consoleErrorsOrWarnings": 0,
+      "deviceMetricsRestored": true
+    },
+    "independentReplay": false
+  },
+  "checklist": {
+    "exactArchivesAndContents": true,
+    "validatedRuntimeAndDist": true,
+    "sourceArchiveAndBinding": true,
+    "manifestPeersLicenseHooks": true,
+    "evidenceAndGuards": true,
+    "packedNativeTypesSSR": true
+  },
+  "published": false,
+  "sealing": "Parent may now copy this review and seal read-only.",
+  "limitations": [
+    "No source/candidate mutation, build, repack, install, download, network, publication or Git mutation. Tar contents read in memory; native imports use package-staging files proven byte-identical to packed archive.",
+    "Current full284 tests/49files and five independent geometry/bitmap/ref regressions passed; redundant second full run cancelled after the clean complete result.",
+    "Browser receipt/screenshot hashes verified, not independently replayed. Parent successor receipt records quiet idle geometry periods and responsive status/resize/fresh-prop/menu focus behavior; older Board1 browser evidence remains separate. Physical-device/trackpad, product adoption and publication remain separate."
+  ]
+}
