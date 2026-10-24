@@ -1,0 +1,31 @@
+{
+  "status": "owner-authorized-exact-archive-publication",
+  "published": false,
+  "publicationAuthorized": true,
+  "parent": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "reviewBase": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "branch": "release/market-board-inline-readout-20261024",
+  "workflow": ".github/workflows/stage-reviewed-market-board-inline-readout.yml",
+  "releasePath": "releases/market-board-inline-readout-20261024",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-board-card.5",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-board-card.5.tgz",
+      "sha256": "798c92fc6f6203a7765d087b9502cfb6fb043aa4ce199f58416fa418f39a1044",
+      "integrity": "sha512-DogS7jjkD2h3FCmbUojRaRklwG4/bXmToYTm52ulotHdGCW3AMZOvRH+ZDzAHFDtKsWB1PD444O80WXEMDRHsQ==",
+      "size": 631330
+    }
+  ],
+  "sourceSha256": "ac5921c1c2bd6bbe720dcd6b5b87e88764746d65d6477f73ee9f9a9b999e8e58",
+  "sourceBindingSha256": "b9567c5e905aefff50ae965342c755949a221c9aa6eeb362adeaa7c6246b7fea",
+  "candidateReceiptSha256": "bb62742e6c61df9959445b16eea650cfe14406f9e641a25ce5e13146cc23373d",
+  "candidateReviewSha256": "9d5cd8e523ad489cfd64bdd293e1be8699ae0df3d228c815e23f5e02591bb825",
+  "pendingAcceptance": [
+    "Local source-only candidate. No publication, dependency downloads, Git remote writes or product adoption authorized.",
+    "Real Portfolio retained-data admission and exact-version/complete-lock/scripts-disabled installation/rebuild acceptance remain separate.",
+    "Physical iPad Safari, real trackpad and assistive-technology acceptance remain downstream device checks."
+  ],
+  "authorization": "Owner: Can you publish this and then hand it off to the portfolio project to implement and verify the inline readout changes?",
+  "releasePolicy": "Exact sealed archive; beta only; latest/stable unchanged; no application install, rebuild or repack; release-only remote commit; no source/main/local Git mutation."
+}
