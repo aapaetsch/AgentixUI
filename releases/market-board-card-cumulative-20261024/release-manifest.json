@@ -1,0 +1,31 @@
+{
+  "status": "owner-authorized-exact-archive-publication",
+  "published": false,
+  "publicationAuthorized": true,
+  "parent": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "reviewBase": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "branch": "release/market-board-card-cumulative-20261024",
+  "workflow": ".github/workflows/stage-reviewed-market-board-card-cumulative.yml",
+  "releasePath": "releases/market-board-card-cumulative-20261024",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-board-card.4",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-board-card.4.tgz",
+      "sha256": "453a17e613d34c7b90526a3322b77abb5d93b4f511577c7aed9a7a914948f2f6",
+      "integrity": "sha512-4ekFUHCip07IHs1Pi3/XeYvzQDjYiGlo8AESwLHUDouUybfbBuWuwRHN6SZlFmuk2qCtr/IU+bNAgnzj8QK9ZA==",
+      "size": 627151
+    }
+  ],
+  "sourceSha256": "3150c646448d18f038c990e6e892a2ea3a87ec298414206c5438b7446c7e96e1",
+  "sourceBindingSha256": "13b461c64c3660f7704fd57a79c3c22e3b987c66f8bffd7a06d5907c009b7727",
+  "candidateReceiptSha256": "4abc0ad123e9db4d9a5fd98c1eb9b30677c3e3113559befea964d79093b2df70",
+  "candidateReviewSha256": "fb55c9353cddf2cee172da1de83bf48b051f6c3e932afbfa779907fedab55f76",
+  "pendingAcceptance": [
+    "Separate publication authorization, trusted CI provenance/staging, owner physical npm approval and public registry byte/tag verification.",
+    "Exact cumulative version/complete-lock/scripts-disabled install approvals, consumer implementation/rebuild and retained real-data acceptance; host-owned exact regular09:30ET evidence and atomic data/reference admission.",
+    "Physical iPad Safari, real trackpad and device accessibility/interaction acceptance."
+  ],
+  "authorization": "Owner: Can you publish this and then hand it off to the portfolio project to implement and verify all three changes?",
+  "releasePolicy": "Exact sealed archive; beta only; latest/stable unchanged; no application install, rebuild or repack; release-only remote commit; no source/main/local Git mutation."
+}

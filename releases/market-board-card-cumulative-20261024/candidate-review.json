@@ -1,0 +1,250 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-24T05:49:54.091Z",
+  "candidate": ".chart-board-card-validation/price-references/candidates/board-card-reference-13b461c64c36",
+  "package": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.3-board-card.4",
+  "packageSha256": "453a17e613d34c7b90526a3322b77abb5d93b4f511577c7aed9a7a914948f2f6",
+  "integrity": "sha512-4ekFUHCip07IHs1Pi3/XeYvzQDjYiGlo8AESwLHUDouUybfbBuWuwRHN6SZlFmuk2qCtr/IU+bNAgnzj8QK9ZA==",
+  "size": 627151,
+  "sourceArchiveSha256": "3150c646448d18f038c990e6e892a2ea3a87ec298414206c5438b7446c7e96e1",
+  "sourceBindingSha256": "13b461c64c3660f7704fd57a79c3c22e3b987c66f8bffd7a06d5907c009b7727",
+  "runtimeBindingSha256": "1db3d558315ce26c1a3de936296e14b98f1825e4ead7a014b1709c725f00e33d",
+  "previousEmptyHeaderSealedFiles": 88,
+  "preservationReceiptSha256": "c3ecf29f57791c7cf76b36b1ecad3c8b4a21c9dcd545d57783cce5dc8a0759db",
+  "protectedCheckOwner": "Parent fresh preservation receipt, independently bound; no duplicate16745-file hashing",
+  "previousBoard2SealedFiles": 88,
+  "previousBoard1SealedFiles": 102,
+  "packageFiles": 76,
+  "sourceFiles": 190,
+  "distFiles": 63,
+  "evidenceFiles": 10,
+  "candidateFiles": 90,
+  "candidateFileHashes": {
+    "aapaetsch-charts-market-0.1.0-beta.3-board-card.4.tgz": "453a17e613d34c7b90526a3322b77abb5d93b4f511577c7aed9a7a914948f2f6",
+    "evidence/API.md": "8eda4d39ce953e01ce48f16f82fa317e8c5a9e43fa9bc1d74700949cebdc9408",
+    "evidence/browser-results.json": "12c86a7381b42ce680c690977b68370838d58e8658affc1fd8b44c1065772867",
+    "evidence/dev-runner/audit.json": "44e8d1ed66e5145515d021b2d13e23bfbe090d8717e3922d734b4b1a9a0b08ad",
+    "evidence/dev-runner/results.json": "619279411348167272d47235b6843ba73c72edcf5042f4e1f1b3108a7aaf9f77",
+    "evidence/dev-runner/review.json": "b7f66e2a34423abd95ce38e7f935554b35bb95470ed0f3d9e9c523e5fdf472ed",
+    "evidence/preservation.json": "c3ecf29f57791c7cf76b36b1ecad3c8b4a21c9dcd545d57783cce5dc8a0759db",
+    "evidence/README.md": "173632aac344a495e8173170fe2d638ea8791be4bf8268c46bd69c92b1a6a66c",
+    "evidence/screenshots/dotted-open.png": "a1abba7160446b3540833722176f90587644c991f4d7f9fb46e3a72b8c7c698e",
+    "evidence/screenshots/light-open.png": "01a6ba5c03471a6d2c674e9d0e74f13ce9022da8b8af69e7cd4814da01d8e76b",
+    "evidence/screenshots/volume-vol.png": "37f59a9554233f51cd4aec8bf1634eaa0839de35157f7d03ab00f84c1492289c",
+    "package-staging/ADAPTIVE-WIDTHS.md": "bb04c415f906c56530b435dca346607094b49d0d283449d437419ccd4d7ce509",
+    "package-staging/CALENDAR-COORDINATES.md": "555ffa7e24beacb0a9ccfe56e574f82aadcfec85bee6df31986eacae3c6ce5e8",
+    "package-staging/dist/chunk-IMFMDZTH.js": "d6d504def0a8d62abe18ef66eb03ce0120f98475a54a3da8724f6528876baacb",
+    "package-staging/dist/chunk-IMFMDZTH.js.map": "d5849f8e0938192f8e528f3031a8ce0075d79c73e33a71a3ad67511cc10c9918",
+    "package-staging/dist/chunk-JHCRVNGH.cjs": "8f6f794db939f8f1bb1b2dbdcaaffdb255a1d81bf94fc84c7086a5c626ec57a2",
+    "package-staging/dist/chunk-JHCRVNGH.cjs.map": "95a517bbbace0ca6e20fe86e48852e251d73c8389c9b1cca76e80e8af27aefd9",
+    "package-staging/dist/chunk-JZD64LPT.js": "573715f015e257e031c2b6b637f989755d4cc960050bb0d68e98d8dfb627012a",
+    "package-staging/dist/chunk-JZD64LPT.js.map": "5418ea6c324cfbc354aca0b1a91e914f523852f5e7560e4f5cd288a5e8ecce31",
+    "package-staging/dist/chunk-MGPDCFFZ.cjs": "18349d534a086b7e71607386fd713e127250eb51d08fef59290e456abce03404",
+    "package-staging/dist/chunk-MGPDCFFZ.cjs.map": "639b0289a63f60b076c6d3c7e939a49cecfd243c3c7efd9422e8a75919bd8ca3",
+    "package-staging/dist/chunk-NGRRTFBH.js": "4cd4eb4d3bc764449fa5c81fe536ff93a1890100946f91dbb85c9be66d593dad",
+    "package-staging/dist/chunk-NGRRTFBH.js.map": "f261b21c23b933432048a1ec48458b74c5a52d3969685c2a4d77c5ec08cd9426",
+    "package-staging/dist/chunk-ULHF3TOY.cjs": "98c82f92df695e9dcbf836bfbebe5d80593649934902abd40137b91c7619c559",
+    "package-staging/dist/chunk-ULHF3TOY.cjs.map": "ad14317314375471b2c2bee6c52043e09bf5bc7a815347207289cc79b9a35c2a",
+    "package-staging/dist/controls.cjs": "3efeb73235ccf99c8fc08ff9731fa2ad0e6371e3f8463295e2de238f16981a7f",
+    "package-staging/dist/controls.cjs.map": "9dcd094c60bd09047c926fe1fe2d55579468fd38547b81478d0ac4c9687f7fb0",
+    "package-staging/dist/controls.d.cts": "e7934f330075ef7443210e9a0d5f5a5f6bb868c4314969b4fa672cfb38790e39",
+    "package-staging/dist/controls.d.ts": "9d6c26ce18526537417c96a0fa4d94d85318b60735e7046de2ded9c094c91a48",
+    "package-staging/dist/controls.js": "7d54864bcbb4a5db7cb89491afeb58178dd188d4c0ee4d54e6bfe327dba7e73f",
+    "package-staging/dist/controls.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/dist/core.cjs": "6022bf48c9426ee07a408d9dbaed839a97a812f97112d054ab6194caf3f9fb00",
+    "package-staging/dist/core.cjs.map": "d99bade4a439f32cb2640d42a9c20bad0c1a427ec6505188f7b53188f7c9cc90",
+    "package-staging/dist/core.d.cts": "39cc382b4390bd6d704c9a66e4d6ddf8ad5d7b33beb8202c5aa63a5b6cfbd9cb",
+    "package-staging/dist/core.d.ts": "d406703717fced520a26415daeef54b45f7fec895866b2926ba07d2597536959",
+    "package-staging/dist/core.js": "b6e49a50b4934c369b74cf9b6a61cba667177db4262fcf405a8eb4dfccce2ae4",
+    "package-staging/dist/core.js.map": "c9514eff24d9225f31d7127b1baca6bbad8aecda51582b0d5ad809450db0ef59",
+    "package-staging/dist/drawings.cjs": "48c07d499fcafc27b4dfdf04d1cb3e7691264bc63395abf0ca99f96fa57b6aef",
+    "package-staging/dist/drawings.cjs.map": "c424465c5e45b1992f2e87b8e7491c321953d611851b9999971b26d887f13ea6",
+    "package-staging/dist/drawings.d.cts": "29fca63fac2ecf4ed83a05ca0d0b3d691e6c192c3ce34c52924d723e3b278912",
+    "package-staging/dist/drawings.d.ts": "7421710921f1aaba0fef23c5b9aa2c94ce10a589c276b8b7a10b9305ac80dfb5",
+    "package-staging/dist/drawings.js": "72ca144d9532c2e300bf38ecd5de84291584b3937fca086f5d457c4186cc642c",
+    "package-staging/dist/drawings.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/dist/index-BW_qa7J-.d.cts": "c191157124605dcc0b71eef91c77335ddc826e2652860c18a4ae3a5748921367",
+    "package-staging/dist/index-CU-4y1Ij.d.ts": "2f7028b802301cd4942d208f6667fa3d844533708b036ca71b25c0c6cd8b912a",
+    "package-staging/dist/index-DLxP8UJf.d.cts": "68de096236d82fe0e852a6032ec42280f3387d4fb82b663744f2a0e6880c25a1",
+    "package-staging/dist/index-it8w_9qB.d.ts": "e854e26681cfadce8c1ecb8761eafbdcf51e57286ac0e7dddcae2f19d1b18955",
+    "package-staging/dist/index.cjs": "bdffc8c6292012eb990e4d12ca77ae05dd5fd86f23d3e71eb5eb34b517f7acfa",
+    "package-staging/dist/index.cjs.map": "38835e1fcc7233bfd6d530c0ffc8898d9289d21fe325144e251e9413c5a56816",
+    "package-staging/dist/index.d.cts": "594d8250f619e71e3b6b48b3fe601268c9352a68364b27c076936ab1f4f22eef",
+    "package-staging/dist/index.d.ts": "bdcb7f75b07ebc5698357586ebaf5ac3fff612594ec139213e089727fd309376",
+    "package-staging/dist/index.js": "0fb713b50c2d5ba5429aaf3f22445e5b94fed5e3b457eaa8ce730a6db6776282",
+    "package-staging/dist/index.js.map": "7a8ab16ce1139a8bd3d6dc04077ad43143cffb1b34e36dc75eed0f0cdef8f249",
+    "package-staging/dist/indicators.cjs": "09a911f86f26124f40f18973a2a818e2e3b63484fbae00a7703518b8514204ff",
+    "package-staging/dist/indicators.cjs.map": "8e441d74b6c646bdc216f4fa8e74e44e4d1591767ad0aedb085cffc79f9a16c5",
+    "package-staging/dist/indicators.d.cts": "cc88763d20e1b30504bf1537687bdb36e16aaaf85c6c44f0f40dc93c9e839143",
+    "package-staging/dist/indicators.d.ts": "88013f2ad08992d9c8e16d303993440aa2a38fa53d71907737cdd150336cacf2",
+    "package-staging/dist/indicators.js": "5b3f32c0735b2320ae4e0e7cbd236d8f5db5bcd5812bb61a20bb8e1cc28443cc",
+    "package-staging/dist/indicators.js.map": "ca9101177cb467ef2d17532c2d0509187df7cceebc99690563a451cf6a247753",
+    "package-staging/dist/overlays.cjs": "017effb1387d3e4f57914b468766d50d52ce099f8a17108099f0eddacae39e84",
+    "package-staging/dist/overlays.cjs.map": "407434e2e2fcbe768be8de2ce613b2a3cdab3c224ba086d4b29464a35f49c779",
+    "package-staging/dist/overlays.d.cts": "b74a3224eb0777b59859e8210d5d09ccbca834c4e00e3d634cb15477e1eb54c0",
+    "package-staging/dist/overlays.d.ts": "4c7ee97b528ed4f08cc9656983c4ded33631af43dad1bf4e3f640464d6f06f0b",
+    "package-staging/dist/overlays.js": "4280bcf8ba913e2293121c13fc9da41f736b022054770d674431857435f7923f",
+    "package-staging/dist/overlays.js.map": "67d38b4ca03180d9d8a84b64861f9ea7fb11a2fcdfadf5fd4febbcd6e66375b9",
+    "package-staging/dist/styles.css": "f07f59a0436f858c4067a43af38d823defc665e88956ab70c173aec5434cfb80",
+    "package-staging/dist/types-CrurvZ6W.d.cts": "fa5d55fa0c305fcdb2b5ef45590a21db75f15f7f07ad4f4b3ca28f947e44f9bd",
+    "package-staging/dist/types-CrurvZ6W.d.ts": "fa5d55fa0c305fcdb2b5ef45590a21db75f15f7f07ad4f4b3ca28f947e44f9bd",
+    "package-staging/dist/types-DC1YsEnn.d.cts": "f381072ed53b064ed4c38ca89a3a52b0f4d407fa77ecb2fb3c9f41fe8c00dfb2",
+    "package-staging/dist/types-DC1YsEnn.d.ts": "f381072ed53b064ed4c38ca89a3a52b0f4d407fa77ecb2fb3c9f41fe8c00dfb2",
+    "package-staging/dist/workspace.cjs": "023175aececf94cbeefad103a9478932808a6b6b4df6ffd87c8df1276eb03d8b",
+    "package-staging/dist/workspace.cjs.map": "d29dd0702e42a6de78511b5f442f69264eeb097dc9b69202343658fab5f7e16f",
+    "package-staging/dist/workspace.d.cts": "9e0a1a926373eb4f50eda3606684121e1539bc6c59ff89605ac63569ac19422e",
+    "package-staging/dist/workspace.d.ts": "5cb8e189f71875ffd1227f77b3718bd61972e2d82cc421e107502e6c32e48091",
+    "package-staging/dist/workspace.js": "4b4a7d0c660a8a176da821fa4ff5a6ac5f40927340421da5458f94786f090367",
+    "package-staging/dist/workspace.js.map": "cba81f7ad4d5b1b629bf43823f1082e73a10d0c3114c937515e7f8c1047629b3",
+    "package-staging/ENDPOINT-LABELS.md": "cd013006af5027867277e1c5e384faccdb0e8de82f849d74344a6dc92e4c6ce8",
+    "package-staging/INTERACTIONS.md": "d622c12c627db89c32cb756210ae1a8c031bdf923345a21228ec0f52e81fc843",
+    "package-staging/LICENSE": "e80e9406bfe34b32e65f41b41b494d6050138bf6b1968b33e5038a6bfd102bb3",
+    "package-staging/MOVING-AVERAGE-LABELS.md": "a17072b60bef45c68a0d13d80ea81b042646659e3132f76bbb7970909b162f08",
+    "package-staging/NOTICE": "2bcb86f62060897acecdc15780f7b02f6df98b0dfd8e44bd039f44f7f7638472",
+    "package-staging/package.json": "5ca886b0987bf7432fde1e5c0cf4895a9e89a05a17a33c266bbc796c68de0a70",
+    "package-staging/PRICE-REFERENCES.md": "9b4cb72f6e7d220392763d504d1c819778eea00a579717533e6d22613b43f729",
+    "package-staging/READABILITY.md": "8101062fd9125cee29f26879ce5a81303fa6b4927630754f1b8922e4f481733d",
+    "package-staging/README.md": "7f7e8c4f674074c1af7b74a80239a6156c18d41b3d2cb2ec2cbe6d7b179d5f6d",
+    "package-staging/REFINEMENT.md": "0ee6e827043cd6a5e7a93e99d8b89cbdbe3254ecac0fc05929b0919d0a324165",
+    "package-staging/SUPPLIED-RESULTS.md": "5cbdc33282e556a8a94c950aeff9b77b99a2d5cdb0079a84d3bca2cbbf296c58",
+    "receipt.json": "4abc0ad123e9db4d9a5fd98c1eb9b30677c3e3113559befea964d79093b2df70",
+    "reviewed-source.tar.gz": "3150c646448d18f038c990e6e892a2ea3a87ec298414206c5438b7446c7e96e1",
+    "source-files.txt": "409bc9da2f1595a4747e1a408af4dfa6f25c03ce1eac42d97c1edbc31a71e50d"
+  },
+  "manifestOnlyVersionOverride": true,
+  "publicModules": [
+    {
+      "subpath": ".",
+      "exports": 162
+    },
+    {
+      "subpath": "./core",
+      "exports": 23
+    },
+    {
+      "subpath": "./indicators",
+      "exports": 24
+    },
+    {
+      "subpath": "./drawings",
+      "exports": 81
+    },
+    {
+      "subpath": "./overlays",
+      "exports": 9
+    },
+    {
+      "subpath": "./controls",
+      "exports": 1
+    },
+    {
+      "subpath": "./workspace",
+      "exports": 7
+    }
+  ],
+  "publicTypes": {
+    "strict": true,
+    "skipLibCheck": false,
+    "diagnostics": 0,
+    "files": 7
+  },
+  "ssrCases": 23,
+  "protectedFilesChecked": 16745,
+  "headUnchanged": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "tests": {
+    "full": {
+      "passed": 299,
+      "files": 52,
+      "logSha256": "09451c06ee6d568be12e6fd81d0042cc426d891b8aaf3dd8a69d2c4e23b1bc29",
+      "runtimeBindingSha256": "ed9e97475ed54080d1772c91ca3747898a9faa98bfe6e8da9786242e303a637e",
+      "qualification": "Complete299/52 pre-final Count→Vol copy; production change independently proven to one display string. Final affected cases and all builds/types bind final copy."
+    },
+    "independentFocused": {
+      "passed": 10,
+      "files": 2,
+      "logSha256": "401383fcf158ad268781b43308dc268e9404c870a37ac33a1606360e7bf65894",
+      "qualification": "10 reference cases before final Vol copy; same cases rerun within final affected suite."
+    },
+    "finalAffected": {
+      "passed": 34,
+      "files": 5,
+      "logSha256": "d1aca29176e250f9902cb344dcfc208350c59b4235a06a9e213d4c269e0d4f29"
+    },
+    "baseline": {
+      "status": "expected-failure",
+      "failed": 4,
+      "skipped": 3,
+      "baselinePackage": "aapaetsch-charts-market@0.1.0-beta.3-board-card.3",
+      "baselineSha256": "ef9acc20622dacb9100a09bf354eb6df75e5257573b059c7c00889992bf6422a",
+      "runtime": "Exact sealed public dist/index.js; expected reference stroke absent across four side/lane/DPR cases.",
+      "logSha256": "7b94a851c8af8bfddc74f77d5aea18070dbf95e6cdc869a9b8f018623addf7fb",
+      "sourceRollback": false
+    }
+  },
+  "browser": {
+    "status": "pass",
+    "receiptSha256": "12c86a7381b42ce680c690977b68370838d58e8658affc1fd8b44c1065772867",
+    "pendingAcceptance": [
+      "Separate publication authorization, trusted CI provenance/staging, owner physical npm approval and public registry byte/tag verification.",
+      "Exact cumulative version/complete-lock/scripts-disabled install approvals, consumer implementation/rebuild and retained real-data acceptance; host-owned exact regular09:30ET evidence and atomic data/reference admission.",
+      "Physical iPad Safari, real trackpad and device accessibility/interaction acceptance."
+    ]
+  },
+  "checklist": {
+    "exactArchivesAndContents": true,
+    "validatedRuntimeAndDist": true,
+    "sourceArchiveAndBinding": true,
+    "manifestPeersLicenseHooks": true,
+    "evidenceAndGuards": true,
+    "packedNativeTypesSSR": true
+  },
+  "published": false,
+  "sealing": "Parent may now copy this review and seal read-only.",
+  "limitations": [
+    "No source/candidate mutation, build, repack, install, download, network, publication or Git mutation. Tar contents read in memory; native imports use package-staging files proven byte-identical to packed archive.",
+    "Full299/52 is explicitly pre-Vol-copy; final34affected/5files and rebuilt modules/types/Storybook bind current bytes. Four expected sealed-predecessor reference failures remain separate. Maintained/new strict story types pass;17 pre-existing broad legacy story diagnostics remain qualified.",
+    "Browser receipt/screenshot hashes verified, not independently replayed. Parent current browser evidence is separate and copied/hash-verified only; exact counts/qualifications are retained in its receipt. Earlier Board browser evidence remains separate. Physical-device/trackpad, product adoption and publication remain separate."
+  ],
+  "singleProductionDeltaAfterFullSuite": {
+    "status": "pass",
+    "at": "2026-10-24T05:41:23.540Z",
+    "productionChangedFiles": [
+      "charts-market/src/components/technical-chart-view/legend-groups.ts"
+    ],
+    "oldSha256": "fffe81d11226f8554a85f1f6c551e299cdcb7826dd7ce3dab482a10bdf15df07",
+    "newSha256": "696df16699f64ba2368797cd856fdda4baa6e5e77d581c9a2f96592b18ff9268",
+    "change": "Single shared bar-volume display label Count→Vol; exact predecessor source transformed in memory equals current file.",
+    "preCopyRuntimeBindingSha256": "ed9e97475ed54080d1772c91ca3747898a9faa98bfe6e8da9786242e303a637e",
+    "preCopyFullTests": {
+      "tests": 299,
+      "files": 52,
+      "logSha256": "09451c06ee6d568be12e6fd81d0042cc426d891b8aaf3dd8a69d2c4e23b1bc29"
+    },
+    "noSourceRollback": true
+  },
+  "browserTiming": {
+    "beforeCopy": {
+      "records": 22,
+      "runtimeBindingSha256": "ed9e97475ed54080d1772c91ca3747898a9faa98bfe6e8da9786242e303a637e"
+    },
+    "finalCopy": {
+      "records": 15,
+      "runtimeBindingSha256": "1db3d558315ce26c1a3de936296e14b98f1825e4ead7a014b1709c725f00e33d"
+    },
+    "qualifications": [
+      "The22reference records,two dark/light screenshots and39.25s idle are explicitly pre-final-copy runtimeed9e...; the only later production change is the independently hash-reversible Count→Vol label. They are not claimed as a repeated full current-source matrix.",
+      "The15post-copy records and Vol screenshot use current runtime1db3...; they cover compact latest/pointer/keyboard/dialog,expanded inspection/revision,volume-enabled idle and retained empty-header/reference/DPR/missing behavior.",
+      "The first post-copy idle attempt returned empty Performance metric arrays after a tool query timeout; it is diagnostic only. Performance was explicitly re-enabled and the accepted50.49s interval has real counters and zero added layouts/styles.",
+      "A menu-hidden browser wait query timed out; the fresh accessibility state confirmed dismissal. The accepted idle interval starts later after the menu and pointer settled.",
+      "Opening the legend with the pointer leaves the canvas and legitimately returns to latest107; inspected102/101 and dialog107 are separately recorded, not described as a retained inspected popup value.",
+      "Pre-final first story probe was replaced by normal layer reconciliation; fixture-only public engine coordinate/snapshot probe replaced it, final source rebuilt and accepted records use that build. Earlier observation is kept separately as browser-preliminary-records.json and is not acceptance evidence.",
+      "One raw CDP screenshot command timed out; documented browser getScreenshot succeeded, saved both images and displayed them for visual inspection. No image transformation was used.",
+      "An initially guessed axis72-left story URL did not exist. The built index provided axis-72-left, which passed; the sole console error is that expected navigation diagnostic.",
+      "A button-ready midnight snapshot preceded the first chart frame and is retained only in diagnosticRecords; OHLC readiness and shared-frame synchronization were used for settled acceptance.",
+      "An initial drag at the fully fitted range was clamped. The accepted zoomed drag moves logical range4.5..40.5 to0..36 through the reference Y; synchronous pre-commit snapshots are not used to claim motion.",
+      "Browser checks use synthetic supplied levels and desktop viewport/DPR emulation. No provider data/session inference or physical device acceptance is claimed.",
+      "Broad all-market-story type diagnostics retain17pre-existing errors in4unchanged legacy files. Maintained/new strict stories and202-story build pass; exact diagnostic qualification is in Dev Runner evidence."
+    ]
+  }
+}
