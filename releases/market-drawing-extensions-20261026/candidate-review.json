@@ -1,0 +1,90 @@
+{
+  "status": "pass",
+  "at": "2026-10-26T21:39:16.544Z",
+  "candidate": ".chart-drawing-extensions-validation/publication/candidate",
+  "version": "0.1.0-beta.3-drawing-extensions.1",
+  "artifactSha256": "d9257f60bf33ebf0209c4463ee565e524d21e212a0ddc89ad4f61d38410daea3",
+  "packageSha256": "d9257f60bf33ebf0209c4463ee565e524d21e212a0ddc89ad4f61d38410daea3",
+  "receiptSha256": "fa16aba2a44aaf3813b5337c7ee53d2a14fa15ec730da6522c13eb983d467fa8",
+  "sourceArchiveSha256": "d544d29b0f585cb40e6d494e5c3d9697a4ff280ee4ed03ad5f9f4616d9f3ce3d",
+  "sourceBindingSha256": "1ccfb010fcabc6f2e27af9422fc83a59cad7219fce12648cb02a6e88f52ff56c",
+  "integrity": "sha512-BrqK0nAm/DvsGPGv0v6oUswQKIOjBh/sPrnT4XPXPLwZadQHxbrB9x22zWGyrdDDjJ4ggdtW8mwT1LTDXrSnog==",
+  "size": 660663,
+  "originalCandidate": ".chart-drawing-extensions-validation/candidates/drawing-extensions-1ccfb010fcab",
+  "originalSealSha256": "79d3ddc593a9989ca0ca772e9a5a6a9862489336b82754d3ca15ed026327a6c7",
+  "originalReadOnlyFiles": 36,
+  "packageFiles": 77,
+  "identicalNonManifestFiles": 76,
+  "distFiles": 63,
+  "sourceFiles": 208,
+  "manifestOnlyVersionOverride": true,
+  "publicModules": [
+    {
+      "subpath": ".",
+      "exports": 163,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./core",
+      "exports": 24,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./indicators",
+      "exports": 24,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./drawings",
+      "exports": 81,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./overlays",
+      "exports": 9,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./controls",
+      "exports": 1,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./workspace",
+      "exports": 7,
+      "priorExportsRetained": true
+    }
+  ],
+  "ssrCases": 51,
+  "publicTypes": {
+    "strict": true,
+    "skipLibCheck": false,
+    "diagnostics": 0
+  },
+  "helperReview": {
+    "prepareReleaseSha256": "7785e770a9aaf452e124b98a09a981ef05364fa052b8347823a609c480d75bb3",
+    "status": "template-review-pass-generated-payload-pending",
+    "checks": [
+      "Requires exact candidate review artifact/receipt and current local HEAD before constructing six isolated remote paths.",
+      "Prior reviewed workflow stages exact bytes beta/public/provenance/ignore-scripts, verifies integrity-pinned isolated npm12.2 and downloaded stage bytes, and records actual GITHUB_SHA separately from reviewBase.",
+      "Generated delivery/approval/workflow must receive independent hash-bound review before remote activation."
+    ]
+  },
+  "qualifications": [
+    "The full package run passed472 tests in62 files. It overlapped the final UTC future-tail tick clipping change and preceded the selected-key capture fix; current57 affected tests and18 independent tests cover final runtime. A final focused priority test was rerun after removing one unsupported unused prop from the reviewer harness.",
+    "Strict package, curated maintained/new stories, public examples/contracts and reviewer tests pass. The unrestricted all-story graph retains17 diagnostics in4 unchanged legacy files; it is not claimed clean.",
+    "ESLint reports0 errors and4 warnings:3 hook dependency warnings and1 story ignored by the existing lint configuration. Story compilation is checked separately.",
+    "Browser acceptance is parent-observed: earlier6053 synthetic touch/emulation/geometry, final6055 ordinary keyboard/UI/DOM/screenshots. Two closure-mismatch observations are excluded. Reviewer verifies saved hashes and local served assets, without independently operating the browser or claiming captured response-body hashes. Raw debugger denial was respected.",
+    "The synthetic Append fixture label clips at200% root font; drawing controls remain reachable. Page-scale emulation is not native browser zoom or physical-device evidence.",
+    "Prior protected files and sealed artifacts rely on the bound parent35149-file preservation receipt; root guards and HEAD are also checked directly here. No publication, release version, product adoption, physical hardware or screen-reader speech acceptance is claimed."
+  ],
+  "pendingAcceptance": [
+    "Physical iPad/Safari/touch hardware and real trackpad checks",
+    "Screen-reader speech and physical-device cancellation checks",
+    "Portfolio exact dependency/lock/scripts-disabled install, strict private persistence/Decimal preservation, reopen/conflicts/two-account isolation, deployment and cached-real acceptance",
+    "Exact consumer direct version/complete lock/scripts-disabled installation and product adoption remain separately governed."
+  ],
+  "published": false,
+  "consumerAdoption": false,
+  "noBuildRepackInstallDownloadOrRemoteActions": true
+}

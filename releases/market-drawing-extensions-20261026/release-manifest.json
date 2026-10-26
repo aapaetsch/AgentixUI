@@ -1,0 +1,35 @@
+{
+  "status": "owner-authorized-reviewed-manifest-only-release",
+  "published": false,
+  "publicationAuthorized": true,
+  "parent": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "reviewBase": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "branch": "release/market-drawing-extensions-20261026",
+  "workflow": ".github/workflows/stage-reviewed-market-drawing-extensions.yml",
+  "releasePath": "releases/market-drawing-extensions-20261026",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-drawing-extensions.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-drawing-extensions.1.tgz",
+      "sha256": "d9257f60bf33ebf0209c4463ee565e524d21e212a0ddc89ad4f61d38410daea3",
+      "integrity": "sha512-BrqK0nAm/DvsGPGv0v6oUswQKIOjBh/sPrnT4XPXPLwZadQHxbrB9x22zWGyrdDDjJ4ggdtW8mwT1LTDXrSnog==",
+      "size": 660663
+    }
+  ],
+  "sourceSha256": "d544d29b0f585cb40e6d494e5c3d9697a4ff280ee4ed03ad5f9f4616d9f3ce3d",
+  "sourceBindingSha256": "1ccfb010fcabc6f2e27af9422fc83a59cad7219fce12648cb02a6e88f52ff56c",
+  "candidateReceiptSha256": "fa16aba2a44aaf3813b5337c7ee53d2a14fa15ec730da6522c13eb983d467fa8",
+  "candidateReviewSha256": "7c212e7be8cd68ef5f0b4f30b385713dd9f2131a634344256a92f81366db96ef",
+  "originalCandidate": ".chart-drawing-extensions-validation/candidates/drawing-extensions-1ccfb010fcab",
+  "originalArtifactSha256": "56c464fe9d9d207a03796750cc8f26c43ed16c578bd7efb0ca02d3495781c884",
+  "manifestOnlyVersionOverride": true,
+  "pendingAcceptance": [
+    "Physical iPad/Safari/touch hardware and real trackpad checks",
+    "Screen-reader speech and physical-device cancellation checks",
+    "Portfolio exact dependency/lock/scripts-disabled install, strict private persistence/Decimal preservation, reopen/conflicts/two-account isolation, deployment and cached-real acceptance",
+    "Exact consumer direct version/complete lock/scripts-disabled installation and product adoption remain separately governed."
+  ],
+  "authorization": "Can you publish this and then hand it off to the portfolio project to implement and verify the line extensions and future drawing space?",
+  "releasePolicy": "Manifest-only local drawing-extensions.1 release repack reviewed before upload. Exact reviewed archive staged without CI rebuild/repack; beta only; latest/stable unchanged. Isolated release-only remote commit, source/main/local Git/product/dependencies untouched."
+}
