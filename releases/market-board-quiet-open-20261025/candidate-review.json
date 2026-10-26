@@ -1,0 +1,107 @@
+{
+  "status": "pass",
+  "at": "2026-10-26T01:27:00.918Z",
+  "candidate": ".chart-board-card-validation/quiet-status/publication/candidate",
+  "version": "0.1.0-beta.3-board-card.7",
+  "artifactSha256": "6270702db2a770c581425d48d9f2ccd41e6154fc68e88026f45059e3bc04e61d",
+  "packageSha256": "6270702db2a770c581425d48d9f2ccd41e6154fc68e88026f45059e3bc04e61d",
+  "receiptSha256": "a12b451b89182a80fb6fb44e3cd6e2b467e7b14b2df1dc20e2f10de05188afef",
+  "releasePointerSha256": "c2ea8566b723868bba516825854fed1ba438aaef22fe95a065536c16ac5250bf",
+  "integrity": "sha512-aGDvpcqDyhPhhMpMmZ2Kn/WYGgd2g5M6RrTQitygVMCW0JlHca8FgItuebf46w6mF3iqExSdFroDhp+UGPVf4w==",
+  "size": 635036,
+  "sourceArchiveSha256": "8ceaa4f40a844d369dd7ae37a154ee92427833f88ba239e1d6b9fb98dd5b17cc",
+  "sourceBindingSha256": "27936fe9bb5f94ef1f9128f86fc1fca865d166e227474bcdb4fdcf1b17a3b218",
+  "originalCandidate": ".chart-board-card-validation/quiet-status/candidates/quiet-board-27936fe9bb5f",
+  "originalArtifactSha256": "e9b4894d80de41c9b4c127bf08f806984cfe376f7fdf344ffd3b4878062e4743",
+  "originalReceiptSha256": "c7c7ab7fd850af32f25978f5d01268c46003687d68cc01d48f84508eb49b4ab5",
+  "originalSealSha256": "3d35a8822c67496d1b036ab600d9e7bcf9ada14a10bcc66cc012bb18c9f661bb",
+  "originalReadonlyFiles": 24,
+  "packageFiles": 77,
+  "unchangedNonManifestFiles": 76,
+  "unchangedDistFiles": 63,
+  "sourceInputs": 204,
+  "manifestOnlyVersionOverride": true,
+  "releaseVersionAssigned": true,
+  "workspaceManifestUnchanged": true,
+  "publicModules": [
+    {
+      "subpath": ".",
+      "exports": 162,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./core",
+      "exports": 23,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./indicators",
+      "exports": 24,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./drawings",
+      "exports": 81,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./overlays",
+      "exports": 9,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./controls",
+      "exports": 1,
+      "priorExportsRetained": true
+    },
+    {
+      "subpath": "./workspace",
+      "exports": 7,
+      "priorExportsRetained": true
+    }
+  ],
+  "ssrCases": 39,
+  "publicTypes": {
+    "status": "retained-verified",
+    "qualification": "All declarations and exports byte-identical to the independently strict-checked sealed candidate; no compiler rerun required for version-only change."
+  },
+  "tests": {
+    "full": {
+      "files": 59,
+      "tests": 432,
+      "logSha256": "475eb90fb914f5b54d639e4178717b14bb0cdf412b3b43f0d42ff4551b95808b",
+      "qualification": "Full432/59 preceded the caption-only numeric fitting helper and two additional extreme/font regressions. Renderer policy/axis structure otherwise matched; final94affected tests and all rebuilt/type/map outputs bind current fitting source. A test-only required style field was corrected after fullrun."
+    },
+    "affected": {
+      "files": 7,
+      "tests": 94,
+      "logSha256": "1b217671320ebb41b96bafbaf26a43d7dece3a0ab4de1147e1cf9391f2e2f168",
+      "sourceUnchanged": true
+    },
+    "independentCurrentCases": {
+      "axis": 10,
+      "host": 6
+    },
+    "qualification": "Full432/59 predates the caption-only fit helper and2extra font/extreme cases; current94/7 and allcurrentbuilds/types/maps bind finalsource. Initial TSfixture missingrequiredstyle and initialScientificellipsis were corrected; historicalrawlogs retained."
+  },
+  "qualification": [
+    "Authorized release transformation changes only package.json version from workspace beta.2 to board-card.7. The original readonly local candidate, source archive, 63 dist files, docs and evidence are unchanged.",
+    "Full432/59 predates numeric caption fitting; final94/7, 240-story acceptance and known17 legacy diagnostics remain exactly qualified in copied source evidence.",
+    "One prior nonsealed Vitest cache deviation remains disclosed; this review introduces no source/dependency/build/install/remote mutations."
+  ],
+  "published": false,
+  "releaseContextMetadata": {
+    "status": "pass",
+    "currentPendingAcceptance": [
+      "Physical screen-reader speech output, iPad Safari/trackpad and real provider integration remain consumer/device acceptance.",
+      "With insufficient axis height or extreme host budgets the existing priority layout may omit a lower-priority reference badge; complete exact evidence stays accessible.",
+      "Exact consumer direct version/complete lock/scripts-disabled installation and product adoption remain separately governed."
+    ],
+    "historicalPendingAcceptance": [
+      "Physical screen-reader speech output, iPad Safari/trackpad and real provider integration remain consumer/device acceptance.",
+      "With insufficient axis height or extreme host budgets the existing priority layout may omit a lower-priority reference badge; complete exact evidence stays accessible.",
+      "No publication, release-version assignment or consumer dependency adoption is authorized."
+    ],
+    "qualification": "Current release metadata now separates owner-authorized publication from the original sealed source-only acceptance wording; artifact/source/dist unchanged."
+  }
+}

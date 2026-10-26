@@ -1,0 +1,34 @@
+{
+  "status": "owner-authorized-reviewed-manifest-only-release",
+  "published": false,
+  "publicationAuthorized": true,
+  "parent": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "reviewBase": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "branch": "release/market-board-quiet-open-20261025",
+  "workflow": ".github/workflows/stage-reviewed-market-board-quiet-open.yml",
+  "releasePath": "releases/market-board-quiet-open-20261025",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-board-card.7",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-board-card.7.tgz",
+      "sha256": "6270702db2a770c581425d48d9f2ccd41e6154fc68e88026f45059e3bc04e61d",
+      "integrity": "sha512-aGDvpcqDyhPhhMpMmZ2Kn/WYGgd2g5M6RrTQitygVMCW0JlHca8FgItuebf46w6mF3iqExSdFroDhp+UGPVf4w==",
+      "size": 635036
+    }
+  ],
+  "sourceSha256": "8ceaa4f40a844d369dd7ae37a154ee92427833f88ba239e1d6b9fb98dd5b17cc",
+  "sourceBindingSha256": "27936fe9bb5f94ef1f9128f86fc1fca865d166e227474bcdb4fdcf1b17a3b218",
+  "candidateReceiptSha256": "a12b451b89182a80fb6fb44e3cd6e2b467e7b14b2df1dc20e2f10de05188afef",
+  "candidateReviewSha256": "9d51c3a74a94a0202341f2a3487179105d9ac22148762e10dc28fcc214734fb2",
+  "originalCandidate": ".chart-board-card-validation/quiet-status/candidates/quiet-board-27936fe9bb5f",
+  "originalArtifactSha256": "e9b4894d80de41c9b4c127bf08f806984cfe376f7fdf344ffd3b4878062e4743",
+  "manifestOnlyVersionOverride": true,
+  "pendingAcceptance": [
+    "Physical screen-reader speech output, iPad Safari/trackpad and real provider integration remain consumer/device acceptance.",
+    "With insufficient axis height or extreme host budgets the existing priority layout may omit a lower-priority reference badge; complete exact evidence stays accessible.",
+    "Exact consumer direct version/complete lock/scripts-disabled installation and product adoption remain separately governed."
+  ],
+  "authorization": "Can you publish this and then hand it off to the portfolio project to implement and verify the quiet status and axis-only Open labels?",
+  "releasePolicy": "Manifest-only local .7 release repack reviewed before upload. Exact reviewed archive staged without CI rebuild/repack; beta only; latest/stable unchanged. Isolated release-only remote commit, source/main/local Git/product/dependencies untouched."
+}
