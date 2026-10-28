@@ -1,0 +1,82 @@
+{
+  "status": "pass",
+  "at": "2026-10-28T21:19:15.649Z",
+  "candidate": ".chart-drawing-editor-validation/publication/candidate",
+  "receiptSha256": "5bd7f5cce4c9d753ba6348637dcc570e751aac0847b598822e6719fa727f5e42",
+  "sourceArchiveSha256": "f04e9fba4a345411cf68304275c79ffb32ec82e586a3bc2956bd5210096ad522",
+  "sourceBindingSha256": "3ffae64a81c66947be0e221c902e0c33b05d244b47a69b16161f0baf4e7b8a97",
+  "artifacts": [
+    {
+      "name": "aapaetsch-ui-kit",
+      "package": "aapaetsch-ui-kit",
+      "version": "0.2.0-beta.3-drawing-portals.1",
+      "filename": "aapaetsch-ui-kit-0.2.0-beta.3-drawing-portals.1.tgz",
+      "sha256": "d1eaa4c0c37cc229c3dd81a4e20ace2bac7a6672ca34c5fbe2cd5e0e105ef811",
+      "integrity": "sha512-kqKICF1oKg5h/Pv2P65ltMTMvIXb2B856nVES+GV2YjtcV5FbPBBPKPC3PRSlDq2XYp6fIuSYkPhcxYuv7Gcig==",
+      "size": 2306028,
+      "files": 55,
+      "identicalNonManifestFiles": 54,
+      "manifestChanges": [
+        "version"
+      ],
+      "dependenciesLicensesAndHooksUnchanged": true
+    },
+    {
+      "name": "aapaetsch-charts-market",
+      "package": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-drawing-editor.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-drawing-editor.1.tgz",
+      "sha256": "370a3c7463979ad76430d34d1c1e32c45a72f90badbdd9e70b4f9a4f0867b67a",
+      "integrity": "sha512-YOws1ekwP9wrik3jbdAvBXQ1y269fmsWsXXzCBK3O0Ki02hY5jNLSYEv3vq+VDUShSQSFdmG2IY5vBM14ctm2A==",
+      "size": 741565,
+      "files": 75,
+      "identicalNonManifestFiles": 74,
+      "manifestChanges": [
+        "version",
+        "peerDependencies.aapaetsch-ui-kit"
+      ],
+      "dependenciesLicensesAndHooksUnchanged": true
+    }
+  ],
+  "originalSealSha256": "169d4ecc711d3eb4b5a788bef24db25d5828bc1906a166ad7368a5469053f7c1",
+  "originalReadOnlyFiles": 199,
+  "originalSealUnchanged": true,
+  "sourceAndWorkspaceManifestsUnchanged": true,
+  "checks": {
+    "exactFileSets": true,
+    "allNonManifestBytesIdentical": true,
+    "onlyApprovedManifestChanges": true,
+    "nativeMarketModules": 7,
+    "nativeUiModules": 6,
+    "ssrCases": 67,
+    "strictPublicTypes": true,
+    "peerRange": ">=0.2.0-beta.3-drawing-portals.1",
+    "newUiSatisfiesPeer": true,
+    "oldUiRejected": true,
+    "marketResolvesPreparedPeer": true,
+    "noBuildRepackInstallDownload": true
+  },
+  "logs": {
+    "native": {
+      "file": "native.log",
+      "exitCode": 0,
+      "sha256": "8ac0719948875f8df75262c2f43af65d7e05e266061afe9dc5bb2332d0db31a7"
+    },
+    "uiNative": {
+      "file": "ui-native.log",
+      "exitCode": 0,
+      "sha256": "60a2414c98f13efc5bae1114d93685a93130e1b3e8be655b411aca2518bc96e4"
+    },
+    "types": {
+      "file": "public-types.log",
+      "exitCode": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "pendingAcceptance": [
+    "Physical iPad/Safari/touch/trackpad and spoken screen-reader acceptance. Touch here is Chrome DevTools emulation.",
+    "Native browser 200% zoom:720x450 CSS at DPR2 was verified as layout/raster emulation, not a native browser zoom test.",
+    "Actual private consumer persistence/mapping, provider acceptance and deployment remain in the separately authorized product adoption."
+  ],
+  "qualification": "Release manifests are explicit version/UI-peer overlays on the unchanged705-input reviewed source archive. Existing533/61/82/3test and301Storybook evidence remains bound through unchanged non-manifest files; no source rebuild performed."
+}

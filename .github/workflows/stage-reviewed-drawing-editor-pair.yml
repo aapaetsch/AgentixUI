@@ -1,0 +1,92 @@
+name: Stage reviewed coordinated drawing editor and fullscreen portals archive
+on:
+  push:
+    branches:
+      - release/drawing-editor-pair-20261028
+    paths:
+      - .github/workflows/stage-reviewed-drawing-editor-pair.yml
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: stage-drawing-editor-pair-20261028
+  cancel-in-progress: false
+jobs:
+  stage:
+    if: github.repository == 'aapaetsch/AgentixUI'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: releases/drawing-editor-pair-20261028
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+          registry-url: https://registry.npmjs.org/
+      - name: Prepare verified isolated staging-capable npm CLI
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import {createHash} from 'node:crypto';
+          import {execFileSync} from 'node:child_process';
+          const directory = path.join(process.env.RUNNER_TEMP,'npm-stage-12.2.0');
+          fs.mkdirSync(directory,{recursive:true});
+          const response = await fetch('https://registry.npmjs.org/npm/-/npm-12.2.0.tgz');
+          if (!response.ok) throw Error('npm CLI download failed: '+response.status);
+          const bytes = Buffer.from(await response.arrayBuffer());
+          const integrity = 'sha512-'+createHash('sha512').update(bytes).digest('base64');
+          if (integrity !== 'sha512-ZsJjKpTnlmSXOLLXiU1xDCzC4Wlok4IwZmh/aw2KUuXytU7q6qMv/cUT7MoeSf95Slwuw/lRXYefGzGCspHPNQ==') throw Error('npm CLI integrity mismatch');
+          const archive = path.join(directory,'npm.tgz');
+          fs.writeFileSync(archive,bytes);
+          execFileSync('tar',['-xzf',archive,'-C',directory]);
+          const cli = path.join(directory,'package/bin/npm-cli.js');
+          if (execFileSync(process.execPath,[cli,'--version'],{encoding:'utf8'}).trim() !== '12.2.0') throw Error('Unexpected npm version');
+          fs.appendFileSync(process.env.GITHUB_ENV,`NPM_STAGING_CLI=${cli}\n`);
+          console.log('Verified npm 12.2.0 CLI prepared without replacing the runner npm installation.');
+          NODE
+      - name: Verify exact reviewed archive and source
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';import {createHash} from 'node:crypto';import {execFileSync} from 'node:child_process';
+          const hash=(b,a='sha256',e='hex')=>createHash(a).update(b).digest(e);
+          const expected=[{"name":"aapaetsch-ui-kit","version":"0.2.0-beta.3-drawing-portals.1","filename":"aapaetsch-ui-kit-0.2.0-beta.3-drawing-portals.1.tgz","sha256":"d1eaa4c0c37cc229c3dd81a4e20ace2bac7a6672ca34c5fbe2cd5e0e105ef811","integrity":"sha512-kqKICF1oKg5h/Pv2P65ltMTMvIXb2B856nVES+GV2YjtcV5FbPBBPKPC3PRSlDq2XYp6fIuSYkPhcxYuv7Gcig==","size":2306028},{"name":"aapaetsch-charts-market","version":"0.1.0-beta.3-drawing-editor.1","filename":"aapaetsch-charts-market-0.1.0-beta.3-drawing-editor.1.tgz","sha256":"370a3c7463979ad76430d34d1c1e32c45a72f90badbdd9e70b4f9a4f0867b67a","integrity":"sha512-YOws1ekwP9wrik3jbdAvBXQ1y269fmsWsXXzCBK3O0Ki02hY5jNLSYEv3vq+VDUShSQSFdmG2IY5vBM14ctm2A==","size":741565}];
+          if(hash(fs.readFileSync('reviewed-source.tar.gz'))!=="f04e9fba4a345411cf68304275c79ffb32ec82e586a3bc2956bd5210096ad522")throw Error('Reviewed source mismatch');
+          if(hash(fs.readFileSync('candidate-receipt.json'))!=="5bd7f5cce4c9d753ba6348637dcc570e751aac0847b598822e6719fa727f5e42")throw Error('Candidate receipt mismatch');
+          if(hash(fs.readFileSync('candidate-review.json'))!=="c9019d141ea84e7713521f1ae36f423cd00cdd3d162823b3d3b7a07d4ce989fa")throw Error('Candidate review mismatch');
+          if(hash(fs.readFileSync('release-manifest.json'))!=="0904464302ba16d1bcbe53b735eabb1e788f5a049b57c0b68f678772d9a3e53c")throw Error('Release manifest mismatch');
+          for(const p of expected){const b=fs.readFileSync(p.filename);if(hash(b)!==p.sha256||'sha512-'+hash(b,'sha512','base64')!==p.integrity||b.length!==p.size)throw Error('Reviewed archive mismatch');const m=JSON.parse(execFileSync('tar',['-xOf',p.filename,'package/package.json'],{encoding:'utf8'}));if(m.name!==p.name||m.version!==p.version||m.publishConfig?.provenance!==true||m.publishConfig?.tag!=='beta'||m.publishConfig?.access!=='public')throw Error('Package identity mismatch');}
+          console.log('Exact reviewed coordinated drawing editor and fullscreen portals archive and source verified; no rebuild or repack.');
+          NODE
+      - name: Stage exact reviewed archive and verify registry download
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';import{createHash}from'node:crypto';import{execFileSync}from'node:child_process';
+          const expected=[{"name":"aapaetsch-ui-kit","version":"0.2.0-beta.3-drawing-portals.1","filename":"aapaetsch-ui-kit-0.2.0-beta.3-drawing-portals.1.tgz","sha256":"d1eaa4c0c37cc229c3dd81a4e20ace2bac7a6672ca34c5fbe2cd5e0e105ef811","integrity":"sha512-kqKICF1oKg5h/Pv2P65ltMTMvIXb2B856nVES+GV2YjtcV5FbPBBPKPC3PRSlDq2XYp6fIuSYkPhcxYuv7Gcig==","size":2306028},{"name":"aapaetsch-charts-market","version":"0.1.0-beta.3-drawing-editor.1","filename":"aapaetsch-charts-market-0.1.0-beta.3-drawing-editor.1.tgz","sha256":"370a3c7463979ad76430d34d1c1e32c45a72f90badbdd9e70b4f9a4f0867b67a","integrity":"sha512-YOws1ekwP9wrik3jbdAvBXQ1y269fmsWsXXzCBK3O0Ki02hY5jNLSYEv3vq+VDUShSQSFdmG2IY5vBM14ctm2A==","size":741565}];
+          if(!process.env.NPM_STAGING_CLI)throw Error('Missing verified staging CLI');
+          const hash=(bytes,algorithm='sha256',encoding='hex')=>createHash(algorithm).update(bytes).digest(encoding),newline=String.fromCharCode(10);
+          fs.mkdirSync('stage-data',{recursive:true});const receipts=[];
+          for(const item of expected){
+           const output=execFileSync(process.execPath,[process.env.NPM_STAGING_CLI,'stage','publish','./'+item.filename,'--provenance','--access','public','--tag','beta','--ignore-scripts','--registry=https://registry.npmjs.org/','--json'],{encoding:'utf8'});fs.writeFileSync('stage-data/'+item.name+'-publish.json',output);
+           const raw=JSON.parse(output),entry=raw.stageId?raw:raw[item.name]??(Array.isArray(raw)?raw[0]:null),id=entry?.stageId;
+           if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id??'')||entry.name!==item.name||entry.version!==item.version)throw Error('Invalid stage identity');
+           for(const operation of ['view','download'])fs.writeFileSync('stage-data/'+item.name+'-'+operation+'.json',execFileSync(process.execPath,[process.env.NPM_STAGING_CLI,'stage',operation,id,'--json','--registry=https://registry.npmjs.org/'],{encoding:'utf8'}));
+           const filename=`${item.name}-${item.version}-${id}.tgz`,bytes=fs.readFileSync(filename),sha256=hash(bytes),integrity='sha512-'+hash(bytes,'sha512','base64'),pm=JSON.parse(execFileSync('tar',['-xOf',filename,'package/package.json'],{encoding:'utf8'}));
+           if(sha256!==item.sha256||integrity!==item.integrity||bytes.length!==item.size||pm.name!==item.name||pm.version!==item.version)throw Error('Registry-staged bytes mismatch: '+item.name);
+           const receipt={...item,stageId:id,downloadedFilename:filename,sha256,integrity,published:false,approvalRequired:true};receipts.push(receipt);fs.writeFileSync('stage-data/'+item.name+'-staging-receipt.json',JSON.stringify(receipt,null,2)+newline);fs.writeFileSync('stage-summary.json',JSON.stringify({sourceCommit:process.env.GITHUB_SHA,reviewBase:"4a3791e23981bd13b73020c45b6a5b8dc6040975",published:false,approvalRequired:true,complete:receipts.length===2,packages:receipts},null,2)+newline);
+          }
+          NODE
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: drawing-editor-pair-staging-receipts
+          if-no-files-found: warn
+          path: |-
+            releases/drawing-editor-pair-20261028/stage-data/*.json
+            releases/drawing-editor-pair-20261028/stage-summary.json

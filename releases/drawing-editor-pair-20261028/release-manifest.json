@@ -1,0 +1,53 @@
+{
+  "status": "owner-authorized-reviewed-coordinated-release",
+  "publicationAuthorized": true,
+  "published": false,
+  "parent": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "reviewBase": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "branch": "release/drawing-editor-pair-20261028",
+  "workflow": ".github/workflows/stage-reviewed-drawing-editor-pair.yml",
+  "releasePath": "releases/drawing-editor-pair-20261028",
+  "packages": [
+    {
+      "name": "aapaetsch-ui-kit",
+      "version": "0.2.0-beta.3-drawing-portals.1",
+      "filename": "aapaetsch-ui-kit-0.2.0-beta.3-drawing-portals.1.tgz",
+      "sha256": "d1eaa4c0c37cc229c3dd81a4e20ace2bac7a6672ca34c5fbe2cd5e0e105ef811",
+      "integrity": "sha512-kqKICF1oKg5h/Pv2P65ltMTMvIXb2B856nVES+GV2YjtcV5FbPBBPKPC3PRSlDq2XYp6fIuSYkPhcxYuv7Gcig==",
+      "size": 2306028
+    },
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-drawing-editor.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-drawing-editor.1.tgz",
+      "sha256": "370a3c7463979ad76430d34d1c1e32c45a72f90badbdd9e70b4f9a4f0867b67a",
+      "integrity": "sha512-YOws1ekwP9wrik3jbdAvBXQ1y269fmsWsXXzCBK3O0Ki02hY5jNLSYEv3vq+VDUShSQSFdmG2IY5vBM14ctm2A==",
+      "size": 741565
+    }
+  ],
+  "sourceSha256": "f04e9fba4a345411cf68304275c79ffb32ec82e586a3bc2956bd5210096ad522",
+  "sourceBindingSha256": "3ffae64a81c66947be0e221c902e0c33b05d244b47a69b16161f0baf4e7b8a97",
+  "candidateReceiptSha256": "5bd7f5cce4c9d753ba6348637dcc570e751aac0847b598822e6719fa727f5e42",
+  "candidateReviewSha256": "c9019d141ea84e7713521f1ae36f423cd00cdd3d162823b3d3b7a07d4ce989fa",
+  "originalCandidate": ".chart-drawing-editor-validation/candidates/drawing-editor-pair-3ffae64a81c6",
+  "originalSealSha256": "169d4ecc711d3eb4b5a788bef24db25d5828bc1906a166ad7368a5469053f7c1",
+  "manifestChangesOnly": {
+    "ui": [
+      "version"
+    ],
+    "chart": [
+      "version",
+      "peerDependencies.aapaetsch-ui-kit"
+    ]
+  },
+  "authorization": {
+    "userRequest": "can you publish",
+    "scope": "Publish the coordinated pair described by the sealed publication proposal under beta with provenance. Necessary isolated version/peer overrides, release-only remote commit and exact archive staging are included. Source checkout, original seals, workspace manifests/lock, product adoption and outgoing messages remain untouched."
+  },
+  "pendingAcceptance": [
+    "Physical iPad/Safari/touch/trackpad and spoken screen-reader acceptance. Touch here is Chrome DevTools emulation.",
+    "Native browser 200% zoom:720x450 CSS at DPR2 was verified as layout/raster emulation, not a native browser zoom test.",
+    "Actual private consumer persistence/mapping, provider acceptance and deployment remain in the separately authorized product adoption."
+  ],
+  "releasePolicy": "Stage exact independently reviewed archives, UI first and market second, with provenance under beta. No CI rebuild/repack; latest/stable, source/main/local Git and consumer workspace remain unchanged."
+}
