@@ -1,0 +1,42 @@
+{
+  "status": "owner-authorized-reviewed-release",
+  "publicationAuthorized": true,
+  "published": false,
+  "parent": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "reviewBase": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "branch": "release/market-instrument-readout-20261028",
+  "workflow": ".github/workflows/stage-reviewed-market-instrument-readout.yml",
+  "releasePath": "releases/market-instrument-readout-20261028",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-instrument-readout.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-instrument-readout.1.tgz",
+      "sha256": "bc9c65e99be67eeeeb19f7f7fcc6fadee9594e0d040cd27379236ebe2c2a045f",
+      "integrity": "sha512-+5mK1mgxsVNxuG11HJ2RXfQBw1TfEkxwCje5GXcQQiHUUQYvJwXA6uGn509q1NN9k0QXmLiIdfVJ7OSOCC2AtA==",
+      "size": 761225
+    }
+  ],
+  "sourceSha256": "85c04a1fa8d138c07594afa3fd5d935b4665e35d01c92150a0389eb92d4d0371",
+  "sourceBindingSha256": "bff1f22e8f554fc244c43a88203c8d4c0d294d2343fa3476d48d45b29b7c84a1",
+  "candidateReceiptSha256": "8e1e57f0fde62b1a6254ebc1169d73098031dcb20484dae00ddacf2d58eaa692",
+  "candidateReviewSha256": "f5b801584ca199bcc5f3bfb7bc42b1f05bf88d416a4bfabe90d770b1a5827539",
+  "originalCandidate": ".chart-instrument-readout-validation/candidates/instrument-readout-bff1f22e8f55",
+  "originalSealSha256": "be13bd35ee8db622ed2a833bc4403675900f4068433be3477b27cb5d57020cd2",
+  "manifestChangesOnly": {
+    "chart": [
+      "version",
+      "peerDependencies.aapaetsch-ui-kit"
+    ]
+  },
+  "authorization": {
+    "userRequest": "Can you publish this and then hand it off to the portfolio project to implement and verify the updated readouts?",
+    "scope": "Publish the reviewed compact instrument/readout package with beta provenance; necessary isolated release version/compatible existing UI peer overlays, release-only remote commit/CI staging and GitHub release are included. After verified publication, send the implementation/verification handoff to Portfolio Update chart label design. Preserve original source/manifests/locks/HEAD/seals and unrelated work; no provider/DB/financial operations."
+  },
+  "pendingAcceptance": [
+    "Registry staging, owner physical npm approval and verified public publication",
+    "Portfolio dependency/lock/install/rebuild adoption and product verification",
+    "Physical mobile/touch/trackpad and screen-reader acceptance"
+  ],
+  "releasePolicy": "Stage exact independently reviewed archives, with provenance under beta. No CI rebuild/repack; latest/stable, source/main/local Git and consumer workspace remain unchanged."
+}

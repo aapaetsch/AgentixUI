@@ -1,0 +1,61 @@
+{
+  "status": "pass",
+  "at": "2026-10-29T04:12:32.391Z",
+  "candidate": ".chart-instrument-readout-validation/publication/candidate",
+  "receiptSha256": "8e1e57f0fde62b1a6254ebc1169d73098031dcb20484dae00ddacf2d58eaa692",
+  "artifacts": [
+    {
+      "package": "aapaetsch-charts-market",
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-instrument-readout.1",
+      "sha256": "bc9c65e99be67eeeeb19f7f7fcc6fadee9594e0d040cd27379236ebe2c2a045f",
+      "integrity": "sha512-+5mK1mgxsVNxuG11HJ2RXfQBw1TfEkxwCje5GXcQQiHUUQYvJwXA6uGn509q1NN9k0QXmLiIdfVJ7OSOCC2AtA==",
+      "size": 761225,
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-instrument-readout.1.tgz"
+    }
+  ],
+  "sourceArchiveSha256": "85c04a1fa8d138c07594afa3fd5d935b4665e35d01c92150a0389eb92d4d0371",
+  "sourceBindingSha256": "bff1f22e8f554fc244c43a88203c8d4c0d294d2343fa3476d48d45b29b7c84a1",
+  "originalSealSha256": "be13bd35ee8db622ed2a833bc4403675900f4068433be3477b27cb5d57020cd2",
+  "checks": {
+    "originalReadOnlyFiles": 168,
+    "sourceInputs": 228,
+    "packageFiles": 75,
+    "identicalNonManifestFiles": 74,
+    "distFiles": 61,
+    "exactlyTwoManifestOverlays": [
+      "version",
+      "peerDependencies.aapaetsch-ui-kit"
+    ],
+    "dependenciesExportsLicensesHooksUnchanged": true,
+    "alreadyPublishedUiPeer": "0.2.0-beta.3-drawing-portals.1",
+    "uiPublicTarballIntegrityVerified": true,
+    "nativeEntryPoints": 7,
+    "ssrCases": 79,
+    "strictPublicTypesExamples": "pass",
+    "sourceAndCandidatesUnchanged": true,
+    "headUnchanged": true
+  },
+  "validationQualifications": [
+    "Full543/68 covers compact formatting, pane minima and controlled-menu slot. A wide flex-basis class changed during that run; afterward the owner requested tighter intrinsic OHLC wrapping and consistent normal font. Exact reverse hashes establish these presentation-only changes in one component and identical remaining runtime inputs. Current affected42/3, independent57/5, compiled callback2, builds/types/native/maps and parent browser use final tight-wrap bytes. Earlier grids/layout checkpoints are historical.",
+    "Broad market-only story types retain17preexisting errors in4legacy files; maintained story graph, package, public and independent types pass. Initial copied peer graph additionally included23unchanged UI Popover diagnostics and is retained historically.",
+    "Scoped lint has0errors; one inherited geometryValid hook warning and one ignored Storybook file warning remain. Maintained/new stories are strictly typechecked and built.",
+    "Compiled mounted consumers use a controlled custom-engine fixture to prove exported exact-evidence revision admission and pointer/keyboard formatter callback transport. Earlier compiled real-engine JSDOM keyboard attempts stalled after render and were interrupted by their own known sessions; they are not accepted evidence. Source real-engine tests and parent browser review cover actual gestures separately.",
+    "Native79SSR cases establish safe construction, not hydration or physical-device behavior. Prior UI dist is reused read-only; no UI build/source changes.",
+    "Full-suite output retains Tooltip act(...) test-harness warnings; these are not claimed as browser application warnings.",
+    "Parent final browser evidence covers47observations/77assertions and6screenshots on final tight-wrap bytes. Network/exception evidence is bounded post-load, not complete startup/all-matrix coverage. Physical devices, screen readers, hydration, publication and consumer adoption remain separate."
+  ],
+  "pendingAcceptance": [
+    "Registry staging, owner physical npm approval and verified public publication",
+    "Portfolio dependency/lock/install/rebuild adoption and product verification",
+    "Physical mobile/touch/trackpad and screen-reader acceptance"
+  ],
+  "qualification": "Publication authorization supersedes original source-only gate. No renderer rebuild/repack/install or publication was performed by reviewer. Registry verification was one read-only exact-version metadata GET; cached published UI bytes were independently matched to its SRI. Original full-suite/display timing,17legacy diagnostics,bounded browser network,SSR/device/product qualifications are retained.",
+  "receipts": {
+    "originalReceiptSha256": "0c83e500f4e707afe95751164ecfeb3682e3d5538ec814ce35c25367a67708bc",
+    "originalReviewSha256": "af41a9c0b513f8199b6e0c406d984ea3d6295d4b702d2ea57e9b75a25dd8a0b2",
+    "publishedUiPeerMetadataSha256": "ee2853d80b1f1114260b5724b095fcfcae8a8a103efc60ea834950199bbf8cac",
+    "packedNativeSmokeSha256": "a97b84a03aa680dd82898c4e73c063766a8fd0950e30d0c62e103358dba522e8",
+    "strictPublicLogSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
