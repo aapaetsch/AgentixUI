@@ -1,0 +1,30 @@
+{
+  "status": "owner-authorized-publication",
+  "publicationAuthorized": true,
+  "published": false,
+  "repository": "aapaetsch/AgentixUI",
+  "branch": "release/drawing-alert-action-20261101",
+  "workflow": ".github/workflows/stage-reviewed-drawing-alert-action.yml",
+  "releasePath": "releases/drawing-alert-action-20261101",
+  "parent": "4a3791e23981bd13b73020c45b6a5b8dc6040975",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-drawing-alert-action.20261030.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-drawing-alert-action.20261030.1.tgz",
+      "sha256": "4298dde47cb88d6adc047bfafad9b1e952c50a9511b422db1795d65978fe9196",
+      "integrity": "sha512-TZrQYqCml3zXEgoKcONeqT4T4QcAyUVkL2Us5UvktxvMyF5mxEsUvh67rQVw6uJCLdsnaMXwsZZ82uqZj+L/VA==",
+      "size": 761628
+    }
+  ],
+  "sourceSha256": "4d5917eea4887d5f0285cfb4548d27de01621dc8394999be55d37d0302f69112",
+  "sourceBindingSha256": "8c58d463043bf9bb3e611423ff635124b766a5b6a90626090521f043ca437d1c",
+  "candidateReceiptSha256": "da471cc12f90ee918435d488ebd72c129b85930cc6e07180999ede1c740cd3c3",
+  "candidateReviewSha256": "020f3b45c1babd3fd98bd58b542fb5711a183d953379f36a3e4a2399a47c25e5",
+  "authorization": {
+    "request": "can we publish",
+    "date": "2026-11-01",
+    "scope": "Publish exact reviewed drawing-alert market package under beta using isolated release staging with provenance; no consumer adoption or original workspace manifest/lock/source changes."
+  },
+  "releasePolicy": "Stage exact reviewed archive with provenance under beta. No rebuild/repack, no latest/stable changes, no automatic owner-approval bypass."
+}

@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "package": "aapaetsch-charts-market",
+  "version": "0.1.0-beta.3-drawing-alert-action.20261030.1",
+  "parentCandidate": "drawing-alert-action-20261030.8c58d463043bf9bb",
+  "parentSourceBuildSha256": "8c58d463043bf9bb3e611423ff635124b766a5b6a90626090521f043ca437d1c",
+  "archive": ".chart-drawing-alert-action-validation/release-review/versioned-20261030-1/aapaetsch-charts-market-0.1.0-beta.3-drawing-alert-action.20261030.1.tgz",
+  "bytes": 761628,
+  "sha256": "4298dde47cb88d6adc047bfafad9b1e952c50a9511b422db1795d65978fe9196",
+  "npmIntegrity": "sha512-TZrQYqCml3zXEgoKcONeqT4T4QcAyUVkL2Us5UvktxvMyF5mxEsUvh67rQVw6uJCLdsnaMXwsZZ82uqZj+L/VA==",
+  "files": 75,
+  "metadataDelta": [
+    "version"
+  ],
+  "compiledBuildBytesUnchanged": true,
+  "documentationBytesUnchanged": true,
+  "protectedHashes": {
+    "package.json": {
+      "baselineSha256": "9cbae4a94b1b925a285e45186168eac5c33459bae24c899c687567603097a7e3",
+      "currentSha256": "9cbae4a94b1b925a285e45186168eac5c33459bae24c899c687567603097a7e3",
+      "unchanged": true
+    },
+    "package-lock.json": {
+      "baselineSha256": "5cfeac083625c8baf023dc0495699c6f0a4a199fa0a097edc041581bbd898e51",
+      "currentSha256": "5cfeac083625c8baf023dc0495699c6f0a4a199fa0a097edc041581bbd898e51",
+      "unchanged": true
+    },
+    "charts-market/package.json": {
+      "baselineSha256": "6386f9ea2d7a671beb11962c73eced21dc498d6cf0fd3ddc55f0e30cdce83713",
+      "currentSha256": "6386f9ea2d7a671beb11962c73eced21dc498d6cf0fd3ddc55f0e30cdce83713",
+      "unchanged": true
+    }
+  },
+  "registryVersionAvailability": "not_checked",
+  "provenance": "not_requested_or_verified",
+  "publicationApproval": false,
+  "published": false,
+  "consumerAdopted": false,
+  "approvalScope": "User approved assigning a new release version in the staged package only and preparing for publication review. Publication and adoption remain separate.",
+  "mismatches": []
+}
