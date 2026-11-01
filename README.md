@@ -4,7 +4,7 @@ A shared React UI library built with **TypeScript**, **React**, **Tailwind CSS**
 
 ## Features
 
-- **52+ Components** - Core UI primitives and advanced components for any application
+- **91 UI component folders** - Core UI primitives, composed controls, and finance workflows, plus separate chart and icon libraries
 - **TypeScript First** - Full type safety with comprehensive prop interfaces
 - **Tailwind CSS** - Utility-first styling with CSS variables for theming
 - **CVA Variants** - Consistent variant system using `class-variance-authority`
@@ -14,7 +14,7 @@ A shared React UI library built with **TypeScript**, **React**, **Tailwind CSS**
 ## Installation
 
 ```bash
-npm install aapaetsch-ui-kit
+npm install aapaetsch-ui-kit@beta react@19 react-dom@19
 ```
 
 ## Peer Dependencies
@@ -22,7 +22,7 @@ npm install aapaetsch-ui-kit
 Make sure you have the following installed in your project:
 
 ```bash
-npm install react react-dom
+npm install react@19 react-dom@19
 ```
 
 ## Quick Start
@@ -45,12 +45,39 @@ function App() {
         <CardTitle>Welcome</CardTitle>
       </CardHeader>
       <CardContent>
-        <Button variant="primary">Get Started</Button>
+        <Button colorStyle="filled">Get Started</Button>
       </CardContent>
     </Card>
   );
 }
 ```
+
+The package supports React 18 and 19 and includes compiled CSS. Consumers do not need Tailwind to render the bundled components. If your application uses additional Tailwind classes, compile those in your application as usual. Import the global stylesheet once, before application overrides.
+
+## Library documentation
+
+| Library | Purpose | Start here |
+| --- | --- | --- |
+| `aapaetsch-ui-kit` | UI primitives, layouts, forms, and finance workflows | [Documentation index](docs/README.md) and [component guides](docs/roadmap/components.md) |
+| `aapaetsch-charts` | Dashboard charts and quantitative report compositions | [Installation, API, and component directory](charts/README.md) |
+| `aapaetsch-charts-market` | OHLCV charts, indicators, drawings, and technical workspaces | [Installation and first chart](charts-market/README.md) |
+| `aapaetsch-icons` | Standalone React icons and raw SVG assets | [Installation and icon API](icons/README.md) |
+
+These guides describe this checkout. Features described as local candidates may require a source build; select a published version using the release evidence rather than assuming every source feature is available under the npm beta tag.
+
+## Public imports and framework integration
+
+| Import | Purpose |
+| --- | --- |
+| `aapaetsch-ui-kit` | General UI components, icons, and utilities |
+| `aapaetsch-ui-kit/finance` | Finance workflows, domain types, and payoff helpers |
+| `aapaetsch-ui-kit/templates/investment-ops` | Investment operations template |
+| `aapaetsch-ui-kit/globals.css` | Compiled styles and theme variables |
+| `aapaetsch-ui-kit/tailwind.config` | Optional CommonJS Tailwind preset for host utilities |
+
+JavaScript entrypoints support ESM and CommonJS. Use documented package exports rather than importing files from `src` or `dist`.
+
+In Next.js App Router, put interactive components behind a `"use client"` boundary and import the stylesheet from the root layout. The `react-server` export condition selects a smaller server-safe surface automatically: the root exposes typography, tables, icons, and pure utilities; the finance server entry exposes payoff helpers and finance types. Interactive finance widgets belong in client components. See the [integration guide](docs/README.md#frameworks-and-styling) for an example.
 
 ## Components
 
@@ -139,7 +166,7 @@ aapaetsch-ui-kit         ✗ chart packages
 
 `aapaetsch-charts` lives in the `charts/` npm workspace and ships shared chart chrome, ten foundational Recharts charts, and financial/quantitative compositions including depth, volume profile, equity, drawdown, returns, correlation, signals, risk, and tearsheets.
 
-`aapaetsch-charts-market` lives in `charts-market/`. It is an ESM-only technical-analysis package with a first-party Canvas 2D + SVG engine, five market-series modes, resizable panes, streaming updates, indicators, controlled drawings, chart overlays, synchronized multi-chart workspaces, and versioned persistence contracts.
+`aapaetsch-charts-market` lives in `charts-market/`. It supports ESM and CommonJS and uses a first-party Canvas 2D + SVG engine, five market-series modes, resizable panes, streaming updates, indicators, controlled drawings, chart overlays, synchronized multi-chart workspaces, and versioned persistence contracts.
 
 `globals.css` remains the **single source of truth** for theme variables across both packages. Each chart package ships a small compiled `styles.css` utility layer so its releases can evolve independently without requiring consumers to scan package source with Tailwind.
 
@@ -159,6 +186,8 @@ Each row is ranked P0–P4, tagged with effort (XS–XL), and assigned a destina
 ## Theming
 
 The library uses CSS variables for theming. Customize by overriding the following variables:
+
+Put `.dark` on the application root for the bundled dark palette. Apply theme variables at the document root so portaled menus, dialogs, and tooltips inherit the same colors. Color variables contain HSL channels; use `hsl(var(--primary))` when assigning a CSS color.
 
 ```css
 :root {
@@ -200,21 +229,19 @@ npm run build-storybook
 
 ```
 src/
-+-- components/
-�   +-- [component]/    # Unified component folders
-�   �   +-- index.tsx
-�   �   +-- [component].stories.tsx
-�   �   +-- agents.md
-�   �   +-- README.md
-
-
-
-+-- lib/              # Utilities and helpers
-�   +-- utils.ts      # cn() and other utilities
-�   +-- date-utils.ts # Date formatting and parsing
-+-- styles/           # Additional styles
-+-- globals.css       # CSS variables and base styles
-+-- index.ts          # Main exports
+|-- components/[component]/
+|   |-- index.tsx
+|   |-- [component].stories.tsx
+|   |-- agents.md
+|   `-- README.md
+|-- lib/                 # Shared helpers and domain types
+|-- globals.css          # CSS variables and style source
+|-- index.ts             # General UI exports
+`-- finance.ts           # Finance exports
+charts/                  # Dashboard and quantitative charts
+charts-market/           # Technical market charts
+icons/                   # Original React icons and raw SVGs
+docs/                    # Documentation index, roadmap, and evidence
 ```
 
 ## Browser Support
@@ -226,11 +253,11 @@ src/
 
 ## License
 
-MIT � Aidan
+MIT — Aidan
 
 ## Links
 
-- [Documentation](./docs/ROADMAP.md)
+- [Documentation](./docs/README.md)
 - [Roadmap](./docs/roadmap/overview.md)
 - [Changelog](./docs/roadmap/changelog.md)
 - [Chart Library Strategy](./docs/chart-library-strategy.md)

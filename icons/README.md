@@ -2,19 +2,46 @@
 
 Original rounded-outline SVG icons for AgentixUI. Independently usable in React 18/19, web, Electron, and non-React SVG workflows.
 
+## Installation
+
+```bash
+npm install aapaetsch-icons@beta react@19
+```
+
+React 18 or 19 is the only runtime peer. React DOM is needed by a browser app, but the icon package has no UI-kit or CSS dependency. For non-React use, import or copy the exported raw SVG assets.
+
 ## Usage
 
-    import { SearchIcon, type IconProps, type IconComponent } from "aapaetsch-icons";
-    import { CloseIcon } from "aapaetsch-icons/close";
+```tsx
+import { SearchIcon } from "aapaetsch-icons";
+import { CloseIcon } from "aapaetsch-icons/close";
 
+export function IconExamples() {
+  return <>
     <SearchIcon className="size-4 text-muted-foreground" />
     <SearchIcon size="1.25rem" strokeWidth={2} />
-    <button aria-label="Close"><CloseIcon /></button>
+    <button type="button" aria-label="Close"><CloseIcon /></button>
     <SearchIcon aria-label="Search" />
+  </>;
+}
+```
+
+The package also exports the shared IconProps and IconComponent types.
 
 Raw assets are exported as aapaetsch-icons/svg/search.svg. The same canonical components/types are re-exported by aapaetsch-ui-kit, including its server-safe entrypoint.
 
 ## API
+
+| Prop | Type | Default / meaning |
+| --- | --- | --- |
+| size | number or string | 1.5rem; sets presentation width/height |
+| strokeWidth | number or string | 2 |
+| width, height | SVG dimension attributes | Override the corresponding size default |
+| className | string | Merged last; host CSS may override SVG presentation dimensions |
+| aria-label, aria-labelledby | Standard SVG accessibility attributes | Optional; exposes a named image unless explicitly hidden |
+| ref | SVGSVGElement ref | Forwarded to the SVG root |
+
+Standard SVG attributes, event handlers, and data attributes are forwarded.
 
 Every icon accepts IconProps and forwards its SVGSVGElement ref. Standard SVG attributes, events, aria-* and data-* attributes are supported. size defaults to 1.5rem; strokeWidth defaults to 2. Explicit width and height override the corresponding size default. CSS classes override presentation dimensions, so the existing UI-kit size selectors remain authoritative.
 
@@ -30,7 +57,15 @@ Named imports and per-icon entrypoints support tree shaking. The production entr
 
 The Storybook Icons/Overview section includes searchable browsing, the pilot, light/dark kit controls, and all four review sizes. Each icon also has generated Default and Sizes stories.
 
-See DESIGN.md for geometry, semantics, and design review rules. The library includes existing story illustration subjects as well as control icons. It does not replace company logos, currency flags, charts, or other data visualizations.
+See [DESIGN.md](DESIGN.md) for geometry, semantics, and design review rules. The library includes existing story illustration subjects as well as control icons. It does not replace company logos, currency flags, charts, or other data visualizations.
+
+## Troubleshooting
+
+- An icon inherits its color through currentColor: set color or a text color class on the icon or parent.
+- Tailwind className examples require the host to compile those classes. Use size and standard SVG attributes when the host does not use Tailwind.
+- CSS width/height override presentation attributes; inspect inherited size selectors if the size prop appears ineffective.
+- Keep decorative icons hidden from assistive technology; put the accessible name on an icon-only button.
+- Catalog and per-icon imports are different surfaces. Use catalog.json for discovery and named/per-icon exports for rendering.
 
 ## Development
 
