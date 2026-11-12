@@ -1,0 +1,31 @@
+{
+  "published": true,
+  "verifiedAt": "2026-11-01T18:39:30.714Z",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-drawing-alert-action.20261030.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-drawing-alert-action.20261030.1.tgz",
+      "sha256": "4298dde47cb88d6adc047bfafad9b1e952c50a9511b422db1795d65978fe9196",
+      "integrity": "sha512-TZrQYqCml3zXEgoKcONeqT4T4QcAyUVkL2Us5UvktxvMyF5mxEsUvh67rQVw6uJCLdsnaMXwsZZ82uqZj+L/VA==",
+      "size": 761628,
+      "published": true,
+      "distTags": {
+        "latest": "0.0.0-stage",
+        "beta": "0.1.0-beta.3-drawing-alert-action.20261030.1"
+      },
+      "provenance": {
+        "cryptographicallyVerified": true,
+        "commit": "7aaaeb8fc6be3fccbc8cd4ad7cde3cbcba4f54f6",
+        "workflow": ".github/workflows/stage-reviewed-drawing-alert-action.yml",
+        "ref": "refs/heads/release/drawing-alert-action-20261101",
+        "invocation": "https://github.com/aapaetsch/AgentixUI/actions/runs/41337422277/attempts/1"
+      },
+      "npmUrl": "https://www.npmjs.com/package/aapaetsch-charts-market/v/0.1.0-beta.3-drawing-alert-action.20261030.1"
+    }
+  ],
+  "sourceSha256": "4d5917eea4887d5f0285cfb4548d27de01621dc8394999be55d37d0302f69112",
+  "sourceBindingSha256": "8c58d463043bf9bb3e611423ff635124b766a5b6a90626090521f043ca437d1c",
+  "inventorySha256": "f443d17825536688c957ebc1dac6082f601b7c1068b2d54e2a14fe815ce693b4",
+  "consumerAdopted": false
+}

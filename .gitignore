@@ -43,8 +43,7 @@ lerna-debug.log*
 storybook-static/
 .storybook-out/
 .icon-validation/
-.chart-refinement-validation/
-.chart-supplied-validation/
+.chart-*-validation/
 .dashboard-grid-validation/
 charts-market/.cache/
 .out/

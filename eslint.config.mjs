@@ -13,8 +13,7 @@ export default [
     ignores: [
       "dist/**",
       ".icon-validation/**",
-      ".chart-refinement-validation/**",
-      ".chart-supplied-validation/**",
+      ".chart-*-validation/**",
       ".dashboard-grid-validation/**",
       "charts-market/.cache/**",
       "icons/dist/**",
