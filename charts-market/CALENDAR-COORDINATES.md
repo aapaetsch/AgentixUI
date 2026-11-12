@@ -144,3 +144,80 @@ are unchanged; geometry never causes browser financial calculations.
 Styles remain `aapaetsch-charts-market/styles.css` plus
 `aapaetsch-ui-kit/globals.css`. No new stylesheet, theme token, peer dependency,
 provider, persistence layer or financial formula is introduced.
+## Opt-in future annotation ruler
+
+`MarketTimeAxis` accepts `futureDisplay?: MarketFutureDisplayPolicy`, exported
+from the package root and `/core`:
+
+```ts
+interface MarketFutureDisplayPolicy {
+  convention: 'utc-calendar';
+  intervalSeconds: number; // explicit seconds per logical slot, 1..31622400
+  horizonMonths?: number; // integer 1..60, default 12
+  emptyOrigin?: MarketTime; // only for an empty compressed axis
+}
+```
+
+This is runtime display geometry, never a calendar of predicted exchange sessions.
+Daily/session-rollup consumers can explicitly choose 86400 seconds; weekly can
+choose 604800; monthly can choose a fixed interval such as 2592000 seconds. The
+latter means 30 elapsed UTC days per logical slot, **not** one calendar month per
+slot. Intraday consumers declare their interval in seconds. No cadence, holiday,
+weekday, exchange timezone or open is inferred. Labels and precise inspection in
+the extension use UTC; known history retains the existing host timezone policy.
+
+The seam is the last known coordinate: last accepted observation for compressed,
+last supplied grid instant for calendar (including exact future earnings), or
+`domain.to` for UTC. The extension maps `logical = seamLogical +
+(utcSeconds - seamSeconds) / intervalSeconds`. Its inverse is the identical linear
+map. The horizon is that seam plus the declared number of UTC calendar months,
+retaining UTC time of day and clamping a month-end day (Feb 29 becomes Feb 28
+in a non-leap year). Finite, representable dates are required. Empty compressed
+data needs `emptyOrigin`; without it there is no invented epoch or ruler.
+
+Known calendar/UTC coordinates are unchanged. Opted-in compressed history
+interpolates non-observation dates between the surrounding accepted timestamps,
+with the inverse interpolation for pointer coordinates. Observations retain their
+integer coordinates. This allows a Sunday annotation to survive a Monday append
+without changing its saved date. It creates no OHLC samples. Before the first
+known coordinate and beyond the horizon there is no new geometry; anchors remain
+in the document and are never clamped, deleted or rewritten. A compatible append
+reprojects a non-Latest display viewport through its timestamp bounds. Retained
+anchors within the available coordinate domain remain editable after retention.
+
+Pan bounds use the entire horizon rather than the legacy 150-slot ceiling. No
+future slot array is allocated, including for a minute interval over five years.
+Month/year ticks are computed from visible UTC bounds (at most 62 month candidates);
+shorter future views add bounded day/clock candidates. Every tick uses the same
+`coordinateForTime`/`coordinateFor`/`pointForCoordinate` map as drawings. Supplied
+future earnings keep their exact instant and existing accessible evidence.
+
+Fit, Home, Latest and time-axis double-click still return to known history plus
+the small configured initial padding, bounded by the horizon. They do not fit a
+year of future space automatically. An empty compressed ruler has no history and
+starts at its declared origin with the normal small display span.
+
+`MarketChartSnapshot.futureInspection` is either null or
+`{time, coordinates: {x,y}, paneId}`. It is annotation inspection only, with no
+bar, prices, volume or study values. Economic `crosshair` remains null in future
+space; OHLC/study readouts show unavailable, and a fully future window does not
+repeat latest-value data badges. The date crosshair explicitly says “display”
+and UTC. Host code must never promote this field to a calculation, dataset,
+manifest, acquisition bound, financial value or seed request. Economic visible
+ranges remain clipped to accepted observations and are absent for empty future
+views; only logical viewport echoes describe future presentation space.
+
+The composite retains its last accepted economic range and settled profile range
+in controlled state while an empty future view has no economic bounds. This
+prevents a visible-profile request from becoming an unbounded whole-dataset
+request. The engine snapshot still reports `visibleRange: null` for that view;
+state's retained economic range is the last calculation input, not a statement
+that future observations exist. The old 0..150 right-offset settings continue to
+describe initial padding; the opted-in logical pan horizon is independently given
+by the future policy.
+
+Omitting `futureDisplay` retains the existing undated padding, 150-slot bounds,
+legacy compressed snapping and all existing consumer defaults. Future geometry
+also enables the existing range-sensitive timeline when `appearance.timeline`
+is omitted. `appearance.timeline` remains the way to configure normal padding,
+known-history label hints and scale controls.

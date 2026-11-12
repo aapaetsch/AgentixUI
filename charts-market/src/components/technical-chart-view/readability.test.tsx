@@ -10,6 +10,7 @@ import {readabilityBars, readabilityDefinitions, readabilityResults, readability
 import {SuppliedStatus} from './supplied-status';
 import {StudyLegend} from './study-legend';
 import {supplementaryLegendGroups} from './legend-groups';
+import {readableValue} from './study-presentation';
 
 beforeEach(() => {
   vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(new Proxy({}, {get: () => vi.fn()}) as unknown as CanvasRenderingContext2D);
@@ -17,6 +18,20 @@ beforeEach(() => {
 });
 afterEach(() => {cleanup(); vi.restoreAllMocks();});
 describe('supplied chart readability and visible color keys', () => {
+  it.each([200,800])('uses the same Vol name in the %spx legend, accessible readout and keyboard-opened complete mapping',async width=>{
+    const state=readabilityState();state.drawings=[];state.profiles=[];
+    const bar={...readabilityBars[5],volume:1234567},makeGroups=(volume:number|undefined)=>supplementaryLegendGroups(state,'price',bar.time,{...bar,volume},{},{});
+    const view=render(<StudyLegend groups={makeGroups(bar.volume)} width={width} locale="en-US" timeLabel="Inspect supplied observation" showIdentity/>);
+    const valueReadout=width<540?screen.getByLabelText('Bar volume: Vol 1234567'):screen.getByRole('button',{name:'Bar volume: Rising bar, Falling bar, Vol 1234567. Study details'});
+    expect(valueReadout).toHaveTextContent(readableValue(bar.volume,'en-US'));expect(view.container).not.toHaveTextContent('Count');
+    if(width>=540){expect(valueReadout).toHaveAttribute('title','Bar volume · Inspect supplied observation');expect(valueReadout.querySelector('[data-legend-swatch="Rising bar"]')).toHaveStyle({background:'hsl(var(--positive))'});expect(valueReadout.querySelector('[data-legend-swatch="Falling bar"]')).toHaveStyle({background:'hsl(var(--negative))'});expect(valueReadout).toHaveTextContent('Vol');}
+    const trigger=screen.getByRole('button',{name:'Legend: all 1 study and overlay mappings'});trigger.focus();await userEvent.setup().keyboard('{Enter}');
+    const dialog=await screen.findByRole('dialog',{name:'Chart legend and values'}),section=within(dialog).getByRole('region',{name:'Bar volume'});
+    expect(section).toHaveTextContent('Vol');expect(section).toHaveTextContent('1234567');expect(section).not.toHaveTextContent('Count');expect(section).toHaveTextContent('not buyer/seller-initiated volume');
+    await userEvent.setup().keyboard('{Escape}');await waitFor(()=>expect(trigger).toHaveFocus());
+    view.rerender(<StudyLegend groups={makeGroups(0)} width={width} locale="en-US" timeLabel="Inspect zero observation" showIdentity/>);expect(width<540?screen.getByLabelText('Bar volume: Vol 0'):screen.getByRole('button',{name:'Bar volume: Rising bar, Falling bar, Vol 0. Study details'})).toHaveTextContent('0');
+    view.rerender(<StudyLegend groups={makeGroups(undefined)} width={width} locale="en-US" timeLabel="Inspect missing observation" showIdentity/>);expect(width<540?screen.getByLabelText('Bar volume: Vol No supplied sample'):screen.getByRole('button',{name:'Bar volume: Rising bar, Falling bar, Vol No supplied sample. Study details'})).toHaveTextContent('—');
+  });
   it.each(['bb', 'macd', 'stochastic'] as const)('maps every %s output and histogram style through public definition labels', async id => {
     const state = readabilityState(), definition = readabilityDefinitions.find(item => item.id === id)!;
     state.indicators = [{id: 'opaque:mapped-output', definitionId: id, version: 1, visible: true, parameters: definition.defaultParameters}];
@@ -66,9 +81,14 @@ describe('supplied chart readability and visible color keys', () => {
     const adx = results['opaque:adx']!; expect(adx.kind).toBe('indicator');
     const expected = adx.kind === 'indicator' ? adx.points[75].values : {};
     expect(screen.getByRole('button', {name: new RegExp(`^ADX 14: ADX ${expected.adx}, \\+DI ${expected.plus_di}, −DI ${expected.minus_di}`)})).toHaveAttribute('title', expect.stringContaining('Inspect'));
+    const volumeName=(index:number)=>`Bar volume: Rising bar, Falling bar, Vol ${readabilityBars[index].volume}. Study details`;
+    expect(screen.getByRole('button',{name:volumeName(75)})).toHaveAttribute('title',expect.stringContaining('Inspect'));
+    const chart=screen.getByRole('img',{name:'Interactive market price chart'});fireEvent.keyDown(chart,{key:'ArrowRight'});await waitFor(()=>expect(screen.getByRole('button',{name:volumeName(76)})).toBeInTheDocument());
+    fireEvent.keyDown(chart,{key:'ArrowLeft'});await waitFor(()=>expect(screen.getByRole('button',{name:volumeName(75)})).toBeInTheDocument());
     const vwap = results['opaque:session']!;
     expect(screen.getByRole('button', {name: /^Session VWAP:/})).toHaveAccessibleName(expect.stringContaining(String(vwap.kind === 'drawing' ? vwap.points[75].value : '')));
     await act(async () => ref.current!.clearCrosshairPosition());
+    expect(screen.getByRole('button',{name:volumeName(readabilityBars.length-1)})).toBeInTheDocument();
     const sma = results['opaque:sma:one']!;
     const sparse = sma.kind === 'indicator' ? {...sma, points: sma.points.slice(0, -1)} : sma;
     view.rerender(<TechnicalChartView {...props} suppliedResults={{...results, 'opaque:sma:one': sparse}}/>);

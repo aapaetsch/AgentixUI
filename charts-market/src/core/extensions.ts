@@ -60,6 +60,10 @@ export interface IndicatorInstance<TParameters extends SerializableParameters = 
 export interface DrawingPoint {
   time: OhlcBar["time"];
   price: number;
+  /** Exact authored Decimal text. Geometry uses price; hosts retain this text without numeric round-trips. */
+  priceText?: string;
+  /** Exact UTC ISO timestamp, Z or +00:00 with at most six fractional digits; retained for unchanged geometry. */
+  utcTimeText?: string;
   /** Optional persistent OHLC binding used by snapped points. */
   anchor?: { field: "open" | "high" | "low" | "close" };
 }

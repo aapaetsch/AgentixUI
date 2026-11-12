@@ -1,5 +1,15 @@
 # MarketChart
 
+## Floating editor maintenance
+
+Props: optional `drawingEditor: MarketDrawingEditorOptions`; forward inherited chart timezone, engine ruler and actual axis geometry through the existing DrawingLayer. Dependencies: existing UI-kit/Radix controls and original icons only. Styling: scoped Tailwind theme/portal, handle-only capture and visual-viewport bounds. Preserve omitted defaults and inactive/default/Board behavior. Exact point text is authored coordinate state, not financial evidence. `use-drawing-document.ts` retains optimistic edits through known delayed acknowledgements; explicit shared cancel clears them. Regenerate exact-coordinate metadata from restored undo/redo documents. Do not re-key stale financial strings or persist toolbar position. See ../../../DRAWING-EDITOR.md and the four focused editor/history tests.
+
+- **Supplied price references:** Explicitly destructure priceReferences; forward initial options and reconcile through optional setPriceReferences without engine reconstruction or DOM prop leakage. Supplied reference inputs do not enter calculation dependencies or drawings. Keep exact noninteractive accessible descriptions and clear on removal; full price/session evidence and revision admission remain host-owned. Alternative engines may omit the optional setter. See ../../../PRICE-REFERENCES.md.
+
+- Keep canvasHostRef explicitly wired to the existing canvas allocation element. Composite chrome measurement must use simultaneous DOM extents, not mix a new engine callback height with an older React allocation. Preserve callbacks/ref cleanup and custom-engine compatibility. Do not reset equal canvas bitmap dimensions; assignments clear Canvas2D even when equal.
+
+- Disabled data-table controls must not render an empty footer or reserve chrome. Only toggle mode needs the View/Hide controls row; always mode renders the table directly. Forward lineMarker presentation unchanged; lineInspection snapshots are display geometry only and never authoritative price readouts.
+
 - **All-output endpoint alignment:** Forward `presentation.badges.endpointValues` and readable `axisLabel` metadata for every output. The engine owns per-pane gutter geometry and keeps ticks/crosshair in a separate lane. Internal mode metadata never changes calculations; supplied mode stays formula-free. See ../../../ENDPOINT-LABELS.md.
 
 - **Moving-average labels:** The first-party engine owns its relative surface, accessible DOM notes and SVG anchors. Do not depend on their private DOM in hosts. Forward `presentation.badges.movingAverages` and `IndicatorRenderSeries.axisLabel` unchanged in supplied mode, with no formulas. Internal metadata uses definition/line/parameter labels and duplicate ordinals. Runtime toggles preserve the engine, data, history and persisted state. See ../../../MOVING-AVERAGE-LABELS.md.
@@ -18,3 +28,6 @@
 - Refinement: theme/presentation/availability changes preserve the engine; accepted revisions commit only after React commits. Keep drawing commands on shared history and exact host anchors unchanged during style edits. Full snapshot ingestion is O(N); do not introduce full-history work in pointer events. See ../../../REFINEMENT.md.
 
 - Adaptive widths: presentation.candles/volume widthMode and gap are runtime-only. Both adaptive passes share exact fractional CSS boundaries from nominal slot spacing, never observed-neighbor distance. Keep defaults/caps unchanged in proportional mode; adaptive mode ignores legacy caps and degrades to one device pixel or a subpixel slot. Bound hollow borders/wicks within the same footprint. See ../../../ADAPTIVE-WIDTHS.md.
+
+- **Workspace interactions:** Forward runtime interactions, interactionState, viewportCommand and intrinsic content extent without reconstructing the engine. Explicit single scroll ownership; never discover host ancestors. Echo logical ranges without replaying stale economic acknowledgements. Independent pane scales/reset retain supplied modes/domains. Drawing cancellation/Escape consumes before temporary pane restore. See ../../../INTERACTIONS.md.
+- Timeline snapshot forwarding: onSnapshotChange belongs in the technicalCallbacks ref and must never become an engine creation dependency or DOM prop. Optional priceAxis/timeTicks/scale observations preserve alternate engine compatibility. Keep new calendar logical ranges on controlled echoes; no provider or serializer changes. See ../../../INTERACTIONS.md.

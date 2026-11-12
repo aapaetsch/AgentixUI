@@ -1,13 +1,17 @@
 import * as React from 'react';
-import {Button, Dialog, DialogTitle, DialogDescription} from 'aapaetsch-ui-kit';
+import {Button, Dialog, DialogTitle, DialogDescription,cn} from 'aapaetsch-ui-kit';
 import {DialogContent} from './scoped-theme';
-import {readableValue} from './study-presentation';
+import {readableValue,compactReadoutValue} from './study-presentation';
 import type {SuppliedCalculationResult} from '../../core';
 
 export interface StudyLegendGroup {
   id: string;
   label: string;
-  lines: Array<{label: string; value: number | null; color: string; style?: 'line' | 'histogram' | 'dashed'; showValue?: boolean; formatValue?: (value: number) => string}>;
+  /** Internal presentation category; never inferred from a producer label or instance ID. */
+  kind?: 'bar-volume';
+  /** Concise caption for the opt-in inline surface; complete/default mappings retain label. */
+  inlineLabel?: string;
+  lines: Array<{id?:string;label: string; value: number | null; exactValue?:string|null; color: string; style?: 'line' | 'histogram' | 'dashed'; showValue?: boolean; formatValue?: (value: number) => string}>;
   result?: SuppliedCalculationResult;
   references?: Array<{value: number; label?: string}>;
   description?: string;
@@ -16,24 +20,50 @@ export interface StudyLegendGroup {
 export function studyStatus(result?: SuppliedCalculationResult): string {
   return [result?.status ?? 'Waiting', result?.stale && 'Stale', result?.approximate && 'Approximate', result?.warning && 'Warning'].filter(Boolean).join(' · ');
 }
+/** Color-only keys need no Board header; missing/warmup numeric observations still do. */
+export function inlineStudyGroups(groups: StudyLegendGroup[], volumeOnly = false): StudyLegendGroup[] {
+  return groups.filter(group => (!volumeOnly || group.kind === 'bar-volume') && group.lines.some(line =>
+    line.showValue !== false && (!volumeOnly || line.value != null && Number.isFinite(line.value))));
+}
 /** One compact row, with a keyboard/touch reachable complete readout at every width. */
-export function StudyLegend({groups, width, locale, timeLabel, showIdentity, onRequestEvidence, onHeightChange}: {
-  groups: StudyLegendGroup[]; width: number; locale?: string; timeLabel: string; showIdentity: boolean; onRequestEvidence?: () => void; onHeightChange?: (height: number) => void;
+export function StudyLegend({groups, width, locale, timeLabel, showIdentity, inline = false, volumeOnly = false,compactValues=false, onRequestEvidence, onHeightChange}: {
+  groups: StudyLegendGroup[]; width: number; locale?: string; timeLabel: string; showIdentity: boolean; inline?: boolean; volumeOnly?: boolean;compactValues?:boolean; onRequestEvidence?: () => void; onHeightChange?: (height: number) => void;
 }) {
   const [open, setOpen] = React.useState(false);
   const returnFocus = React.useRef<HTMLButtonElement | null>(null);
   const openLegend: React.MouseEventHandler<HTMLButtonElement> = event => {returnFocus.current = event.currentTarget; setOpen(true);};
   const root = React.useRef<HTMLDivElement>(null), heightCallback = React.useRef(onHeightChange); heightCallback.current = onHeightChange;
+  const inlineReadout = inline || volumeOnly;
+  const displayedGroups = inlineReadout ? inlineStudyGroups(groups, volumeOnly) : groups;
+  const hasGroups=displayedGroups.length>0;
   React.useLayoutEffect(() => {
+    if(inlineReadout)setOpen(false);
+    if(!hasGroups){heightCallback.current?.(0);setOpen(false);return;}
     const element = root.current; if (!element) return;
-    const measure = () => heightCallback.current?.(Math.max(28, element.getBoundingClientRect().height));
+    const measure = () => heightCallback.current?.(Math.max(inlineReadout ? 0 : 28, element.getBoundingClientRect().height));
     measure(); if (typeof ResizeObserver === 'undefined') return;
     const observer = new ResizeObserver(measure); observer.observe(element); return () => observer.disconnect();
-  }, []);
+  }, [hasGroups, inlineReadout, volumeOnly]);
   const compact = width < 540;
   const visibleGroups = compact ? [] : groups;
   const primaryLine = groups[0]?.lines.find(line => line.showValue !== false);
   const swatch = (line: StudyLegendGroup['lines'][number]) => <span aria-hidden="true" data-legend-swatch={line.label} className={line.style === 'histogram' ? 'h-2 w-2 shrink-0' : line.style === 'dashed' ? 'w-3 shrink-0 border-t border-dashed' : 'h-0.5 w-3 shrink-0'} style={line.style === 'dashed' ? {borderColor: line.color} : {background: line.color}}/>;
+  if(!hasGroups)return null;
+  if(inlineReadout)return <div ref={root} role="list" aria-label="Visible chart legend" aria-live="off" className={cn("pointer-events-auto min-w-0 flex-1 items-baseline gap-x-2 gap-y-0 text-[0.6875rem] leading-4",compactValues&&compact?"grid grid-cols-2":"flex flex-wrap")}>
+    {displayedGroups.flatMap(group => {
+      const lines = group.lines.filter(line => line.showValue !== false);
+      const context = group.valueContext === 'range' ? 'Range summary, not a crosshair-time observation' : timeLabel;
+      const evidence = [context, group.description, group.result && studyStatus(group.result), group.result?.warning, group.result?.provenanceLabel, group.result?.coverageSummary].filter(Boolean).join(' · ');
+      return lines.map((line, index) => {
+        const caption = group.inlineLabel ?? (lines.length === 1 ? group.label : `${group.label} ${line.label}`);
+        const raw=line.exactValue!==undefined?line.exactValue:line.value;
+        const exact = `${caption}: ${raw ?? 'No supplied sample / warmup'}`;
+        return <span key={`${group.id}:${index}`} role="listitem" aria-label={exact} aria-description={evidence} title={`${exact} · ${evidence}`} className={cn("inline-flex min-w-0 max-w-full items-baseline gap-1 font-mono tabular-nums",compactValues&&compact&&'gap-0.5',compactValues&&compact&&group.kind==='bar-volume'&&'col-span-2')}>
+          {line.color !== 'transparent' ? swatch(line) : null}<span className={cn("font-sans text-muted-foreground",compactValues?'min-w-0 truncate':'shrink-0')}>{caption}</span><span className={cn("min-w-0 truncate",compactValues&&"shrink-0")}>{compactValues?raw==null?'—':compactReadoutValue(line.value,locale,group.kind==='bar-volume'):line.exactValue!==undefined?line.exactValue??'—':readableValue(line.value, locale, line.formatValue)}</span>
+        </span>;
+      });
+    })}
+  </div>;
   return <>
     <div ref={root} className="pointer-events-auto flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-0" aria-label="Visible chart legend">
       {groups.length ? <Button type="button" size="xs" colorStyle="ghost" className="h-7 shrink-0 px-1" onClick={openLegend} aria-label={`Legend: all ${groups.length} study and overlay mappings`}>Legend{compact ? ` (${groups.length})` : ''}</Button> : null}

@@ -148,6 +148,28 @@ export function defaultDrawingHandles(context: DrawingRendererContext) {
   }] : []);
 }
 
+/** Chronological left/right, independent of anchor creation order. Equal-time lines
+ * extend upward/downward in screen geometry respectively; coincident points stay selectable. */
+export function directionalTrendPrimitives(context: DrawingRendererContext): DrawingPrimitive[] {
+  const [a,b] = context.points; if (!a || !b) return [];
+  const left = context.drawing.parameters.extendLeft === true, right = context.drawing.parameters.extendRight === true;
+  const ordered = a.x < b.x || a.x === b.x && a.y <= b.y ? [a,b] : [b,a];
+  const [first,second] = ordered;
+  if (distanceBetween(first,second) <= EPSILON) return [{id:'line',kind:'ellipse',cx:first.x,cy:first.y,rx:3,ry:3}];
+  const clipped = left && !right ? clipLineToBounds(second,first,context.bounds,'ray') : clipLineToBounds(first,second,context.bounds,left&&right?'infinite':right?'ray':'segment');
+  return clipped ? [{id:'line',kind:'line',from:clipped[0],to:clipped[1]}] : [];
+}
+
+/** Omitted horizontal flags preserve legacy full-width rendering. Both false is a 6px marker. */
+export function directionalHorizontalPrimitives(context: DrawingRendererContext): DrawingPrimitive[] {
+  const point=context.points[0]; if(!point)return [];
+  const left=typeof context.drawing.parameters.extendLeft==='boolean'?context.drawing.parameters.extendLeft:true;
+  const right=typeof context.drawing.parameters.extendRight==='boolean'?context.drawing.parameters.extendRight:true;
+  if(!left&&!right)return [{id:'line',kind:'ellipse',cx:point.x,cy:point.y,rx:3,ry:3}];
+  const clipped=clipLineToBounds({x:left?Math.min(0,point.x):point.x,y:point.y},{x:right?Math.max(context.bounds.width,point.x):point.x,y:point.y},context.bounds);
+  return clipped?[{id:'line',kind:'line',from:clipped[0],to:clipped[1]}]:[];
+}
+
 export function resolveDrawingRenderer(
   drawing: DrawingState,
   tools: readonly DrawingToolDefinition[],

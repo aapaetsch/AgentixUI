@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { earningsBarTime, earningsDescription } from "./earnings";
+import { earningsBarTime, earningsDescription, earningsPinLeft } from "./earnings";
 import { PriceScale } from "../../engine/price-scale";
 import type { OhlcBar, MarketTime } from "../../core";
 import type { TechnicalEarningsEvent } from "./earnings";
@@ -33,6 +33,32 @@ describe("earnings date placement", () => {
     };
     expect(earningsBarTime(event, bars)).toBe("2026-09-09");
     expect(earningsDescription(event)).toContain("2026-09-06 · Estimated date");
+  });
+});
+describe("earnings timeline hit targets", () => {
+  it("keeps both fitted endpoints and bounds their 24px buttons and focus rings", () => {
+    const pane = { left: 54, width: 358.21875 };
+    expect(earningsPinLeft(54, pane)).toBe(56);
+    expect(earningsPinLeft(412.21875, pane)).toBe(386.21875);
+    expect(earningsPinLeft(200, pane)).toBe(188);
+    expect(earningsPinLeft(358.21875, { width: 358.21875 })).toBe(332.21875);
+  });
+  it("never pulls an off-screen, missing or invalid anchor onto a visible edge", () => {
+    const pane = { left: 54, width: 358.21875 };
+    for (const x of [53.999, 412.219, null, undefined, NaN, Infinity, -Infinity]) {
+      expect(earningsPinLeft(x, pane)).toBeNull();
+    }
+    expect(earningsPinLeft(0, { width: NaN })).toBeNull();
+    expect(earningsPinLeft(0, { width: 27 })).toBeNull();
+    expect(earningsPinLeft(0, { left: Infinity, width: 100 })).toBeNull();
+  });
+  it("retains an exact future calendar anchor without inventing a price row", () => {
+    const source = JSON.stringify(bars);
+    const event: TechnicalEarningsEvent = {
+      id: "future-calendar", time: "2026-10-01", barTime: "2026-10-01",
+    };
+    expect(earningsBarTime(event, bars)).toBe("2026-10-01");
+    expect(JSON.stringify(bars)).toBe(source);
   });
 });
 describe("readable scale ticks", () => {

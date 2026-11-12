@@ -36,7 +36,10 @@
     "READABILITY.md",
     "ADAPTIVE-WIDTHS.md",
     "MOVING-AVERAGE-LABELS.md",
-    "ENDPOINT-LABELS.md"
+    "ENDPOINT-LABELS.md",
+    "INTERACTIONS.md",
+    "PRICE-REFERENCES.md",
+    "BOARD-INLINE-READOUT.md"
   ],
   "exports": {
     ".": {

@@ -12,10 +12,10 @@ export interface TechnicalChartLegendMetadata {
 export function supplementaryLegendGroups(state: TechnicalChartViewState, paneId: string, time: MarketTime | undefined, bar: OhlcBar | undefined,
   results: SuppliedCalculationResults, profiles: Record<string, VolumeProfileResult>, metadata?: TechnicalChartLegendMetadata, allowMetadataPoints = false): StudyLegendGroup[] {
   const groups: StudyLegendGroup[] = [];
-  if (state.panes.find(pane => pane.id === paneId)?.showVolume) groups.push({id: `bar-volume:${paneId}`, label: 'Bar volume', description: 'Rising/falling refers to close versus open, not buyer/seller-initiated volume.',
+  if (state.panes.find(pane => pane.id === paneId)?.showVolume) groups.push({id: `bar-volume:${paneId}`, kind: 'bar-volume', label: 'Bar volume', inlineLabel: 'vol', description: 'Rising/falling refers to close versus open, not buyer/seller-initiated volume.',
     lines: [{label: 'Rising bar', color: 'hsl(var(--positive))', style: 'histogram', showValue: false, value: null},
       {label: 'Falling bar', color: 'hsl(var(--negative))', style: 'histogram', showValue: false, value: null},
-      {label: 'Count', color: 'transparent', value: bar?.volume ?? null}]});
+      {label: 'Vol', color: 'transparent', value: bar?.volume ?? null}]});
   for (const drawing of state.drawings.filter(item => item.visible && (item.paneId ?? 'price') === paneId && ['session-vwap', 'anchored-vwap'].includes(item.type))) {
     const result = results[drawing.id], supplied = result ? result.kind === 'drawing' && ['available', 'partial'].includes(result.status) ? result.points : [] : allowMetadataPoints ? metadata?.drawings?.[drawing.id]?.points ?? [] : [];
     groups.push({id: `drawing:${drawing.id}`, label: metadata?.drawings?.[drawing.id]?.label ?? drawing.name ?? (drawing.type === 'session-vwap' ? 'Session VWAP' : 'Anchored VWAP'), result,

@@ -1,13 +1,23 @@
 "use client";
+import type {DrawingChangeMetadata,MarketDrawingEditorOptions} from '../../drawings';
 
 import * as React from "react";
+import type { MarketChartInteractions, MarketChartInteractionState, MarketChartInteractionChange, MarketViewportCommand } from '../../core';
+import {reorderTechnicalPane,resizeTechnicalPane} from './pane-workflow';
 import {suppliedLinePoints} from "../../indicators/supplied-points";
 import {SuppliedStatus,type TechnicalSuppliedDetails} from "./supplied-status";
 export type {TechnicalSuppliedDetails} from "./supplied-status";
 import {useChartGeometry} from "./use-chart-geometry";
+import {TimelineScaleControls} from './scale-controls';
+import type {TechnicalPaneMenuState} from './pane-menu';
+export {useTechnicalPaneMenu} from './pane-menu';
+export type {TechnicalPaneMenuState} from './pane-menu';
 import {studyLabels, studyValueAt} from './study-presentation';
 import {indicatorDisplayLabel} from '../../core/indicator-labels';
-import {StudyLegend, type StudyLegendGroup} from './study-legend';
+import {StudyLegend, inlineStudyGroups, type StudyLegendGroup} from './study-legend';
+import {MeasuredPaneHeader} from './pane-header';
+import {InstrumentReadout,useInstrumentEvidence,applyInstrumentStudyText,instrumentKeyboardText,instrumentPaneDefinitions,instrumentMinimumHeight,type TechnicalChartInstrumentReadout} from './instrument-readout';
+export type {TechnicalChartInstrumentReadout,TechnicalChartReadoutObservation} from './instrument-readout';
 import {supplementaryLegendGroups, type TechnicalChartLegendMetadata} from './legend-groups';
 export type {TechnicalChartLegendMetadata} from './legend-groups';
 import {navigateVisibleRange, type ChartNavigationIntent} from './navigation';
@@ -22,6 +32,7 @@ export type { TechnicalChartTheme } from "./scoped-theme";
 import {
   earningsBarTime,
   earningsDescription,
+  earningsPinLeft,
   type TechnicalEarningsEvent,
 } from "./earnings";
 export type { TechnicalEarningsEvent } from "./earnings";
@@ -112,8 +123,19 @@ export interface TechnicalChartAppearance extends MarketChartPresentation {
   /** plot preserves legacy height; available budgets all composite chrome within height. */
   heightMode?:"plot"|"available";
   minimumPlotHeight?:number;
-  suppliedStatus?:"expanded"|"compact";
+  /** `host` allocates no supplied-study status chrome. The host must expose complete evidence,
+   * including loading, failure/stale and rejected updates, through its existing expanded surface.
+   * This is presentation only: admission/matching and chart loading/error props stay unchanged. */
+  suppliedStatus?:"expanded"|"compact"|"host";
+  /** Hide compact supplied-details entry points; retain status, rejected-result and warning semantics. Default true. */
+  suppliedDetails?:boolean;
   legends?:"expanded"|"compact";
+  /** Board opt-ins: `inline` wraps every numeric study/volume readout without a Legend disclosure;
+   * `volume-only` shows only finite supplied bar volume (including zero), omitting all other groups.
+   * Missing volume reserves no row in volume-only mode. Caption is exactly `vol`; series/badges stay visible.
+   * Host-expanded inline details retain complete source evidence.
+   * Omission preserves default full-chart legends; this runtime option never changes saved study evidence. */
+  studyReadout?: 'inline' | 'volume-only';
   /** One combined navigation/scale/evidence strip. Legacy composition remains the default. */
   navigation?: "standard" | "integrated";
   height: number;
@@ -147,7 +169,20 @@ export interface TechnicalRangeShortcut {
 }
 export interface TechnicalChartViewProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
+  /** Controlled runtime access to the existing pane menu; undefined preserves internal behavior. */
+  paneMenu?:TechnicalPaneMenuState|null;
+  onPaneMenuChange?:(menu:TechnicalPaneMenuState|null)=>void;
+  /** Omit compact inline symbol/chevron buttons only when a discoverable host trigger is provided. */
+  paneMenuTrigger?:'internal'|'none';
+  /** Host policy for all user Log actions. Host still owns incoming controlled scale state. */
+  allowLogScale?:boolean;
   /** Host-owned UTC/calendar display geometry. Compressed by default; not serialized. */
+  interactions?: MarketChartInteractions;
+  interactionState?: MarketChartInteractionState;
+  onInteractionStateChange?: MarketChartInteractionChange;
+  viewportCommand?: MarketViewportCommand;
+  /** Every valid local resize draft, final/end or cancellation. Save may retain the latest draft. */
+  onPaneLayoutChange?: (panes: TechnicalPaneState[], metadata: MarketChartChangeMetadata) => void;
   timeAxis?: MarketTimeAxis;
   discontinuities?: readonly MarketTimeGap[];
   /** Defaults to historical internal calculation behavior. */
@@ -157,6 +192,8 @@ export interface TechnicalChartViewProps
   suppliedResults?: SuppliedCalculationResults;
   /** Display-only names/previously supplied drawing values. Never enters request keys or saved documents. */
   legendMetadata?: TechnicalChartLegendMetadata;
+  /** Combined company/OHLC header with inline named studies; never saved or included in request identity. */
+  instrumentReadout?:TechnicalChartInstrumentReadout;
   onCalculationRequest?: (request: CalculationRequest) => void;
   /** Independent palette, including portaled controls. Custom CSS variables can be passed in style. */
   theme?: TechnicalChartTheme;
@@ -174,6 +211,7 @@ export interface TechnicalChartViewProps
   onRequestSuppliedDetails?:(details:TechnicalSuppliedDetails)=>void;
   drawingToolIds?:readonly string[];
   drawingCommand?:MarketDrawingCommandRequest;
+  drawingEditor?:MarketDrawingEditorOptions;
   onDrawingHistoryChange?:(history:MarketDrawingHistorySnapshot)=>void;
   state: TechnicalChartViewState;
   onStateChange(
@@ -188,6 +226,8 @@ export interface TechnicalChartViewProps
   /** Supplied levels describe the selected range; the consumer updates them when its range changes. */
   profileSources?: Record<string, VolumeProfileSource>;
   markers?: MarketMarker[];
+  /** Exact host-supplied display prices. No session inference, formulas, drawing or saved-state ownership. */
+  priceReferences?: MarketChartProps['priceReferences'];
   /** Supplied earnings dates, shown as event pins with accessible report details. */
   earnings?: readonly TechnicalEarningsEvent[];
   dataAvailability?: MarketDataAvailability;
@@ -264,10 +304,11 @@ export const TechnicalChartView = React.forwardRef<
   TechnicalChartViewProps
 >(function TechnicalChartView(
   {
-    timeAxis, discontinuities, calculationMode = "internal", calculationIdentity:hostCalculationIdentity, suppliedResults = emptySuppliedResults, legendMetadata, onCalculationRequest, theme, onVisibleRangeChange,
+    paneMenu,onPaneMenuChange,paneMenuTrigger='internal',allowLogScale=true,
+    interactions, interactionState:controlledInteractionState, onInteractionStateChange, viewportCommand, onPaneLayoutChange, timeAxis, discontinuities, calculationMode = "internal", calculationIdentity:hostCalculationIdentity, suppliedResults = emptySuppliedResults, legendMetadata, instrumentReadout, onCalculationRequest, theme, onVisibleRangeChange,
     symbol,
     interval,
-    data:incomingData, chartApiRef, dataIdentity, dataRevision, onDataAcceptance, onGeometryChange, onRequestSuppliedDetails, drawingToolIds, drawingCommand, onDrawingHistoryChange,
+    data:incomingData, chartApiRef, dataIdentity, dataRevision, onDataAcceptance, onGeometryChange, onRequestSuppliedDetails, drawingToolIds, drawingCommand, drawingEditor, onDrawingHistoryChange,
     state,
     onStateChange,
     symbolSearch,
@@ -277,6 +318,7 @@ export const TechnicalChartView = React.forwardRef<
     availableIndicators = calculationMode === "supplied" ? suppliedStudyDefinitions : builtInIndicators,
     profileSources = emptySources,
     markers = emptyMarkers,
+    priceReferences,
     earnings = emptyEarnings,
     dataAvailability,
     appearance,
@@ -307,13 +349,62 @@ export const TechnicalChartView = React.forwardRef<
 ) {
   const accepted=useMarketDataRevision(incomingData,dataIdentity??hostCalculationIdentity,dataRevision,onDataAcceptance);
   const data=accepted.data;
+  const unifiedReadout=instrumentReadout!==undefined;
+  const instrumentEvidence=useInstrumentEvidence(instrumentReadout?.exactValues,data,dataIdentity??hostCalculationIdentity??'',accepted.revision,accepted.receipt?.status);
   const calculationIdentity=accepted.revision!=null&&accepted.revision<0?undefined:hostCalculationIdentity&&accepted.revision!=null?marketDataCalculationIdentity(hostCalculationIdentity,accepted.revision,dataIdentity??hostCalculationIdentity):hostCalculationIdentity;
   const rootRef = React.useRef<HTMLDivElement>(null);
+  const paneMenuFocus=React.useRef<HTMLElement|undefined>(undefined);
+  if(paneMenu?.returnFocus)paneMenuFocus.current=paneMenu.returnFocus;
+  const intrinsicContentRef=React.useRef<HTMLDivElement>(null);
+  const canvasHostRef=React.useRef<HTMLDivElement>(null);
   const chartRef = React.useRef<MarketChartHandle>(null);
+  const [liveAxis,setLiveAxis]=React.useState<Pick<MarketChartSnapshot,'priceAxis'|'scale'>|null>(null);
+  const liveAxisKey=React.useRef('');
+  const observeAxis=React.useCallback((snapshot:MarketChartSnapshot)=>{
+    const next={priceAxis:snapshot.priceAxis,scale:snapshot.scale},key=JSON.stringify(next);
+    if(key!==liveAxisKey.current){liveAxisKey.current=key;setLiveAxis(next);}
+  },[]);
   React.useImperativeHandle(chartApiRef,()=>({
-    executeDrawingCommand:command=>chartRef.current?.executeDrawingCommand(command),getDrawingHistory:()=>chartRef.current?.getDrawingHistory()??{canUndo:false,canRedo:false,selectedIds:[],drawingCount:0},resetScale:()=>chartRef.current?.resetScale(),appendOrUpdate:bar=>chartRef.current?.appendOrUpdate(bar),fitContent:metadata=>chartRef.current?.fitContent(metadata),scrollToRealtime:metadata=>chartRef.current?.scrollToRealtime(metadata),setVisibleRange:(range,metadata)=>chartRef.current?.setVisibleRange(range,metadata),setCrosshairPosition:(time,price)=>chartRef.current?.setCrosshairPosition(time,price),clearCrosshairPosition:()=>chartRef.current?.clearCrosshairPosition(),getSnapshot:()=>chartRef.current?.getSnapshot()??null,coordinateForTime:time=>chartRef.current?.coordinateForTime(time)??null,
+    resetPaneScale:(paneId,metadata)=>chartRef.current?.resetPaneScale(paneId,metadata),setViewportCommand:viewport=>chartRef.current?.setViewportCommand(viewport),executeDrawingCommand:command=>chartRef.current?.executeDrawingCommand(command),getDrawingHistory:()=>chartRef.current?.getDrawingHistory()??{canUndo:false,canRedo:false,selectedIds:[],drawingCount:0},resetScale:()=>chartRef.current?.resetScale(),appendOrUpdate:bar=>chartRef.current?.appendOrUpdate(bar),fitContent:metadata=>chartRef.current?.fitContent(metadata),scrollToRealtime:metadata=>chartRef.current?.scrollToRealtime(metadata),setVisibleRange:(range,metadata)=>chartRef.current?.setVisibleRange(range,metadata),setCrosshairPosition:(time,price)=>chartRef.current?.setCrosshairPosition(time,price),clearCrosshairPosition:()=>chartRef.current?.clearCrosshairPosition(),getSnapshot:()=>chartRef.current?.getSnapshot()??null,coordinateForTime:time=>chartRef.current?.coordinateForTime(time)??null,
   }),[]);
+  const workspace=interactions?.mode==='workspace';
+  const [localInteractionState,setLocalInteractionState]=React.useState<MarketChartInteractionState>({});
+  const interactionState=controlledInteractionState??localInteractionState;
+  const interactionRef=React.useRef(interactionState);interactionRef.current=interactionState;
+  const interactionCallbacks=React.useRef({onInteractionStateChange,onPaneLayoutChange});interactionCallbacks.current={onInteractionStateChange,onPaneLayoutChange};
+  const changeInteraction=React.useCallback<MarketChartInteractionChange>((next,metadata)=>{interactionRef.current=next;setLocalInteractionState(next);interactionCallbacks.current.onInteractionStateChange?.(next,metadata);},[]);
+  const paneActionRefs=React.useRef(new Map<string,HTMLButtonElement>());
+  const pendingScrollRestore=React.useRef<{scrollTop:number;focus:HTMLElement|null}|null>(null);
+  const maximizeRestore=React.useRef<{scrollTop:number;focus:HTMLElement|null}|null>(null);
+  const paneAcknowledgements=React.useRef<string[]>([]);
+  const paneDataset=JSON.stringify([interactions?.contextKey!==undefined?'context':'fallback',interactions?.contextKey??dataIdentity??hostCalculationIdentity,symbol,interval]);
+  const priorPaneDataset=React.useRef(paneDataset);
+  const previousPaneInput=React.useRef(JSON.stringify(state.panes));
+  const [paneDraft,setPaneDraft]=React.useState<TechnicalPaneState[]|null>(null);
+  const displayedPanes=paneDraft??state.panes;
+  const paneDraftRef=React.useRef(displayedPanes);paneDraftRef.current=displayedPanes;
+  const paneGesture=React.useRef<{id:number;kind:'resize'|'reorder';paneId:string;startY:number;panes:TechnicalPaneState[];height:number;target:HTMLElement}|null>(null);
+  const [renderedPlotHeight,setRenderedPlotHeight]=React.useState<number|undefined>(undefined);
+  const restorePane=React.useCallback((source:MarketChartChangeMetadata['source']='user')=>{
+    const restore=maximizeRestore.current;maximizeRestore.current=null;
+    changeInteraction({...interactionRef.current,maximizedPaneId:null},{source,gesture:'pane-restore',phase:'end'});
+    pendingScrollRestore.current=restore;
+  },[changeInteraction]);
+  const togglePane=(paneId:string)=>{
+    if(interactionRef.current.maximizedPaneId===paneId){restorePane();return;}
+    if(!maximizeRestore.current)maximizeRestore.current={scrollTop:interactions?.scrollOwner?.getScrollTop()??0,focus:document.activeElement instanceof HTMLElement?(document.activeElement.closest('[role="menu"]')?paneActionRefs.current.get(paneId)??null:document.activeElement):null};
+    changeInteraction({...interactionRef.current,maximizedPaneId:paneId},{source:'user',gesture:'pane-maximize',paneId,phase:'end'});
+  };
+  React.useEffect(()=>{
+    const pending=pendingScrollRestore.current;if(!pending||interactionState.maximizedPaneId)return;
+    const snapshot=chartRef.current?.getSnapshot(),bottom=snapshot?.panes.reduce((n,p)=>Math.max(n,p.top+p.height),0)??Infinity;
+    if(renderedPlotHeight==null||renderedPlotHeight+1<bottom+28)return;
+    const frame=requestAnimationFrame(()=>{pendingScrollRestore.current=null;if(pending.focus?.isConnected)pending.focus.focus({preventScroll:true});else rootRef.current?.querySelector<HTMLButtonElement>('[data-chart-pane-header] button:not(:disabled)')?.focus({preventScroll:true});const owner=interactions?.scrollOwner;if(owner){if(owner.restoreScrollTop)owner.restoreScrollTop(pending.scrollTop);else owner.scrollTo(pending.scrollTop);}});
+    return()=>cancelAnimationFrame(frame);
+  },[interactionState.maximizedPaneId,renderedPlotHeight,interactions?.scrollOwner,paneDataset]);
+  React.useEffect(()=>{if(interactionState.maximizedPaneId&&!state.panes.some(p=>p.id===interactionState.maximizedPaneId&&p.visible!==false))restorePane('data');},[state.panes,interactionState.maximizedPaneId,restorePane]);
   const [earningsOpen, setEarningsOpen] = React.useState(false);
+  const earningsTriggerRef = React.useRef<HTMLButtonElement | null>(null);
   const earningsEvents = React.useMemo(
     () =>
       earnings
@@ -348,7 +439,10 @@ export const TechnicalChartView = React.forwardRef<
   const [profileHit, setProfileHit] = React.useState<VolumeProfileHit>();
   const [tableOpen, setTableOpen] = React.useState(false);
   const [paneHeaderHeights, setPaneHeaderHeights] = React.useState<Record<string, number>>({});
-  const presentation = React.useMemo(() => ({...appearance, drawingEvidenceLabels: appearance?.drawingEvidenceLabels ?? appearance?.legends !== 'compact', paneHeaderHeights}), [appearance, paneHeaderHeights]);
+  const readoutMaximizedPane=workspace?interactionState.maximizedPaneId:undefined;
+  const renderingPanes=React.useMemo(()=>unifiedReadout?instrumentPaneDefinitions(displayedPanes,paneHeaderHeights,readoutMaximizedPane):displayedPanes,[unifiedReadout,displayedPanes,paneHeaderHeights,readoutMaximizedPane]);
+  const minimumPlotHeight=Math.max(appearance?.minimumPlotHeight??120,unifiedReadout?instrumentMinimumHeight(renderingPanes,readoutMaximizedPane):0);
+  const presentation = React.useMemo(() => ({...appearance,...(unifiedReadout?{ohlcInPaneHeader:true}:{}), drawingEvidenceLabels: appearance?.drawingEvidenceLabels ?? appearance?.legends !== 'compact', paneHeaderHeights}), [appearance, paneHeaderHeights,unifiedReadout]);
   const [jumpDate, setJumpDate] = React.useState("");
   const [settledRange, setSettledRange] = React.useState<
     VisibleRange | undefined
@@ -356,9 +450,16 @@ export const TechnicalChartView = React.forwardRef<
   const viewportTimer = React.useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
+  const viewportCommandId = viewportCommand?.id;
+  React.useEffect(() => {
+    if (viewportCommandId !== undefined) {
+      clearTimeout(viewportTimer.current);
+      viewportTimer.current = undefined;
+    }
+  }, [viewportCommandId]);
   const available = {
-    header: true,
-    commands: true,
+    header: !unifiedReadout,
+    commands: !unifiedReadout,
     drawingRail: true,
     footer: true,
     indicators: true,
@@ -366,17 +467,18 @@ export const TechnicalChartView = React.forwardRef<
     dataTable: true,
     ...features,
   };
-  const height=useChartGeometry(rootRef,appearance?.height??660,appearance?.heightMode??"plot",appearance?.minimumPlotHeight??120,onGeometryChange);
-  const emit = (
+  const height=useChartGeometry(rootRef,appearance?.height??660,appearance?.heightMode??"plot",minimumPlotHeight,onGeometryChange,workspace?renderedPlotHeight:undefined,workspace?intrinsicContentRef:undefined,workspace?canvasHostRef:undefined,unifiedReadout);
+  const emit = React.useCallback((
     changes: Partial<TechnicalChartViewState>,
     type: TechnicalChartViewChangeMetadata["type"],
     entityId?: string,
     origin?:MarketChartChangeMetadata,
+    drawing?:DrawingChangeMetadata,
   ) => {
     if (type === "viewport") clearTimeout(viewportTimer.current);
     const current = latest.current;
     if (
-      changes.viewport &&
+      !workspace && !appearance?.timeline && !timeAxis?.futureDisplay && changes.viewport &&
       changes.viewport.rightOffsetBars !==
         current.state.viewport.rightOffsetBars
     ) {
@@ -392,8 +494,8 @@ export const TechnicalChartView = React.forwardRef<
     queueMicrotask(() => {
       latest.current = { ...latest.current, state: renderedState.current };
     });
-    current.onStateChange(next, { type, id: entityId, ...origin });
-  };
+    current.onStateChange(next, { type, id: entityId, ...origin,...(drawing?{drawing}:{}) });
+  },[workspace,appearance?.timeline,timeAxis?.futureDisplay]);
   const openPanel = (next: NonNullable<typeof panel>) => {
     setQuery("");
     setPanel(next);
@@ -508,8 +610,8 @@ export const TechnicalChartView = React.forwardRef<
     [state.profiles, profileResults],
   );
   const paneSizes = React.useMemo(
-    () => Object.fromEntries(state.panes.map((p) => [p.id, p.size])),
-    [state.panes],
+    () => Object.fromEntries(displayedPanes.map((p) => [p.id, p.size])),
+    [displayedPanes],
   );
   const changePane = (paneId: string, changes: Partial<TechnicalPaneState>) =>
     emit(
@@ -520,6 +622,7 @@ export const TechnicalChartView = React.forwardRef<
       },
       "pane",
       paneId,
+      {source:"user",gesture:changes.collapsed!=null?"pane-collapse":undefined,phase:"end",paneId},
     );
   const range = (bars: number) => {
     if (!data.length) return;
@@ -576,8 +679,11 @@ export const TechnicalChartView = React.forwardRef<
       "indicator-remove",
       instanceId,
     );
-  const setScaleMode = (mode: MarketScaleMode) =>
-    emit({ scale: { mode, autoScale: true } }, "scale");
+  const setScaleMode = (mode: MarketScaleMode) => {
+    if(mode==='logarithmic'&&!allowLogScale)return;
+    if(workspace)chartRef.current?.resetPaneScale("price",{source:"user",gesture:"reset",paneId:"price"});
+    emit({ scale: { mode, autoScale: true },panes:state.panes.map(p=>p.id==='price'&&p.scaleMode?{...p,scaleMode:mode}:p) }, "scale",undefined,workspace?{source:"user",gesture:"reset",paneId:"price"}:undefined);
+  };
   const maximize = () =>
     emit(
       { chrome: { ...state.chrome, maximized: !state.chrome.maximized } },
@@ -593,21 +699,65 @@ export const TechnicalChartView = React.forwardRef<
   const labelFor = (instanceId: string) => labels.get(instanceId) ?? 'Unavailable study';
   const requestLabels = Object.fromEntries(requests.map(request => [request.instanceId, request.kind === 'indicator' ? labelFor(request.instanceId) : request.kind === 'profile' ? 'Volume profile' : 'VWAP']));
   const integratedNavigation = appearance?.navigation === 'integrated' && available.footer && state.chrome.footer;
-  const suppliedStatus = calculationMode === 'supplied' && (requests.length > 0 || !calculationIdentity || appearance?.suppliedStatus === 'compact' && dataAvailability)
-    ? <SuppliedStatus availability={dataAvailability} requests={requests} results={matchedResults} incoming={suppliedResults} missingIdentity={!calculationIdentity} compact={appearance?.suppliedStatus === 'compact'} inline={integratedNavigation} labels={requestLabels} onRequestDetails={onRequestSuppliedDetails}/> : null;
+  const iconScales=appearance?.timeline?.scaleControls==='icons';
+  const actualScale=liveAxis?.scale??state.scale;
+  const toggleAuto=()=>{
+    if(workspace&&!actualScale.autoScale){chartRef.current?.resetPaneScale('price',{source:'user',gesture:'reset',paneId:'price',phase:'end'});return;}
+    const snapshot=chartRef.current?.getSnapshot()?.scales.price;
+    emit({scale:{...actualScale,autoScale:!actualScale.autoScale,manualRange:actualScale.autoScale&&snapshot?{minimum:snapshot.minimum,maximum:snapshot.maximum,anchor:snapshot.anchor}:undefined}},'scale',undefined,{source:'user',gesture:'reset',paneId:'price',phase:'end'});
+  };
+  const suppliedStatus = calculationMode === 'supplied' && appearance?.suppliedStatus !== 'host' && (requests.length > 0 || !calculationIdentity || appearance?.suppliedStatus === 'compact' && dataAvailability)
+    ? <SuppliedStatus showDetails={appearance?.suppliedDetails!==false} boundWarnings={appearance?.studyReadout==='volume-only'} availability={dataAvailability} requests={requests} results={matchedResults} incoming={suppliedResults} missingIdentity={!calculationIdentity} compact={appearance?.suppliedStatus === 'compact'} inline={integratedNavigation} labels={requestLabels} onRequestDetails={onRequestSuppliedDetails}/> : null;
   const navigate = (intent: ChartNavigationIntent) => {
     const next = navigateVisibleRange(chartRef.current?.getSnapshot()?.visibleRange ?? state.viewport.visibleRange, data, timeAxis, intent);
     if (next) chartRef.current?.setVisibleRange(next, {source: 'user', gesture: 'keyboard'});
   };
 
+  const publishPaneDraft=React.useCallback((panes:TechnicalPaneState[],metadata:MarketChartChangeMetadata)=>{
+    paneDraftRef.current=panes;setPaneDraft(panes);interactionCallbacks.current.onPaneLayoutChange?.(panes,metadata);
+    if(metadata.phase==='end'){paneAcknowledgements.current.push(JSON.stringify(panes));if(paneAcknowledgements.current.length>64)paneAcknowledgements.current.shift();emit({panes},metadata.gesture==='pane-reorder'?'pane-reorder':'pane-resize',metadata.paneId,metadata);}
+  },[emit]);
+  const cancelPaneGesture=React.useCallback(()=>{
+    const gesture=paneGesture.current;if(!gesture)return;paneGesture.current=null;
+    publishPaneDraft(gesture.panes,{source:'user',gesture:gesture.kind==='resize'?'pane-resize':'pane-reorder',phase:'cancel',paneId:gesture.paneId});
+    try{if(gesture.target.hasPointerCapture(gesture.id))gesture.target.releasePointerCapture(gesture.id);}catch{/* Already released. */}
+    setPaneDraft(null);
+  },[publishPaneDraft]);
+  React.useEffect(()=>{window.addEventListener('blur',cancelPaneGesture);return()=>{window.removeEventListener('blur',cancelPaneGesture);const g=paneGesture.current;paneGesture.current=null;try{if(g?.target.hasPointerCapture(g.id))g.target.releasePointerCapture(g.id);}catch{/* Unmounted. */}};},[cancelPaneGesture]);
+  React.useEffect(()=>{
+    const datasetChanged=priorPaneDataset.current!==paneDataset;priorPaneDataset.current=paneDataset;
+    const incoming=JSON.stringify(state.panes),draft=JSON.stringify(paneDraftRef.current);
+    const changed=previousPaneInput.current!==incoming;previousPaneInput.current=incoming;if(!datasetChanged&&!changed)return;
+    if(datasetChanged || draft&&incoming!==draft&&!paneAcknowledgements.current.includes(incoming)){cancelPaneGesture();setPaneDraft(null);if(datasetChanged){clearTimeout(viewportTimer.current);viewportTimer.current=undefined;paneAcknowledgements.current=[];maximizeRestore.current=null;pendingScrollRestore.current=null;}}
+    else if(draft===incoming&&!paneGesture.current)setPaneDraft(null);
+  },[state.panes,paneDataset,cancelPaneGesture]);
+  const startPaneGesture=(event:React.PointerEvent<HTMLElement>,kind:'resize'|'reorder',paneId:string,currentHeight:number)=>{
+    if(event.button!==0)return;event.preventDefault();event.stopPropagation();event.currentTarget.focus({preventScroll:true});
+    paneGesture.current={id:event.pointerId,kind,paneId,startY:event.clientY,panes:paneDraftRef.current,height:currentHeight,target:event.currentTarget};event.currentTarget.setPointerCapture(event.pointerId);
+  };
+  const movePaneGesture=(event:React.PointerEvent<HTMLElement>)=>{
+    const g=paneGesture.current;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopPropagation();
+    if(g.kind==='resize')publishPaneDraft(resizeTechnicalPane(g.panes,g.paneId,event.clientY-g.startY,g.height),{source:'user',gesture:'pane-resize',phase:'change',paneId:g.paneId});
+  };
+  const endPaneGesture=(event:React.PointerEvent<HTMLElement>)=>{
+    const g=paneGesture.current;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopPropagation();paneGesture.current=null;
+    let panes=paneDraftRef.current;
+    if(g.kind==='reorder'){
+      const surface=chartRef.current?.getSnapshot(),target=surface?.panes.find(p=>{const bounds=g.target.closest('[data-chart-surface]')?.getBoundingClientRect();const y=event.clientY-(bounds?.top??0);return y>=p.top&&y<=p.top+p.height;});
+      if(target)panes=reorderTechnicalPane(g.panes,g.paneId,target.id);
+    }
+    publishPaneDraft(panes,{source:'user',gesture:g.kind==='resize'?'pane-resize':'pane-reorder',phase:'end',paneId:g.paneId});
+    if(g.target.hasPointerCapture(g.id))g.target.releasePointerCapture(g.id);
+  };
   const paneHeaders = (
     snapshot: MarketChartSnapshot | null,
     series: IndicatorRenderSeries[],
   ) => (
     <>
       {snapshot?.panes.map((geometry, paneIndex) => {
-        const pane = state.panes.find((p) => p.id === geometry.id);
-        if (!pane) return null;
+        const definition = displayedPanes.find((p) => p.id === geometry.id);
+        if (!definition) return null;
+        const pane=workspace&&interactionState.maximizedPaneId===definition.id?{...definition,collapsed:false}:definition;
         const paneSeries = series.filter(
           (s) => (s.placement === "overlay" ? "price" : s.paneId) === pane.id,
         );
@@ -615,40 +765,70 @@ export const TechnicalChartView = React.forwardRef<
           pane.id === "price"
             ? symbol
             : pane.studyIds.map(labelFor).join(' / ') || (pane.showVolume ? 'Volume' : 'Study pane');
-        const inspectedTime = snapshot.crosshair?.time ?? data.at(-1)?.time;
-        const timeLabel = inspectedTime == null ? 'No observation' : `${snapshot.crosshair ? 'Inspect' : 'Last'} · ${new Intl.DateTimeFormat(appearance?.locale, {dateStyle: 'medium', timeStyle: 'short', timeZone: appearance?.timeZone ?? 'UTC'}).format(new Date(marketTimeKey(inspectedTime) * 1000))}`;
-        const groups: StudyLegendGroup[] = pane.studyIds.flatMap(id => {
+        const futureOnly=!!timeAxis?.futureDisplay&&(!!snapshot.futureInspection||!snapshot.visibleRange);
+        const missingInspection=unifiedReadout&&snapshot.inspectionUnavailable===true;
+        const noObservation=futureOnly||missingInspection;
+        const inspectedBar=noObservation?undefined:snapshot.crosshair?.bar??data.at(-1);
+        const inspectedTime = noObservation?snapshot.futureInspection?.time:snapshot.crosshair?.time ?? data.at(-1)?.time;
+        const timeLabel = missingInspection?'Inspection unavailable · no observation':futureOnly ? inspectedTime == null ? 'Future display · no observation' : 'Future display · '+new Intl.DateTimeFormat(appearance?.locale,{dateStyle:'medium',timeStyle:'long',timeZone:'UTC'}).format(new Date(marketTimeKey(inspectedTime)*1000)) : inspectedTime == null ? 'No observation' : `${snapshot.crosshair ? 'Inspect' : 'Last'} · ${new Intl.DateTimeFormat(appearance?.locale, {dateStyle: 'medium', timeStyle: 'short', timeZone: appearance?.timeZone ?? 'UTC'}).format(new Date(marketTimeKey(inspectedTime) * 1000))}`;
+        let groups: StudyLegendGroup[] = pane.studyIds.flatMap(id => {
           const instance = state.indicators.find(item => item.id === id && item.visible);
           const definition = availableIndicators.find(item => item.id === instance?.definitionId);
           if (!instance || !definition) return [];
           return [{id, label: labelFor(id), result: matchedResults[id], references: definition.referenceLines, lines: definition.lines.map(line => {
             const rendered = paneSeries.find(item => item.id === `${id}:${line.id}`);
-            return {label: line.label, color: rendered?.color ?? instance.colors?.[line.id] ?? line.color ?? '#64748b', style: rendered?.style ?? line.style ?? 'line', value: rendered ? snapshot.crosshair ? snapshot.crosshair.values[rendered.id] ?? null : studyValueAt(rendered.points, inspectedTime) : null, formatValue: definition.formatValue};
+            return {id:`${id}:${line.id}`,label: line.label, color: rendered?.color ?? instance.colors?.[line.id] ?? line.color ?? '#64748b', style: rendered?.style ?? line.style ?? 'line', value: noObservation || unifiedReadout&&calculationMode==='supplied'&&!matchedResults[id] ? null : rendered ? snapshot.crosshair ? snapshot.crosshair.values[rendered.id] ?? null : studyValueAt(rendered.points, inspectedTime) : null, formatValue: definition.formatValue};
           })}];
         });
-        groups.push(...supplementaryLegendGroups(state, pane.id, inspectedTime, snapshot.crosshair?.bar ?? data.at(-1), matchedResults, profileResults, legendMetadata, calculationMode !== 'supplied'));
-        const headerHeight = paneHeaderHeights[pane.id] ?? 28;
+        const volumeOnly=!unifiedReadout&&appearance?.studyReadout==='volume-only';
+        const volumeBar=inspectedBar;
+        groups.push(...supplementaryLegendGroups(state, pane.id, inspectedTime, volumeBar, matchedResults, profileResults, legendMetadata, calculationMode !== 'supplied'));
+        if(noObservation)for(const group of groups)group.lines=group.lines.map(line=>({...line,value:null}));
+        if(unifiedReadout){groups=applyInstrumentStudyText(groups,inspectedBar,instrumentEvidence);groups=[...groups.filter(group=>group.kind==='bar-volume'),...groups.filter(group=>group.kind!=='bar-volume')];}
+        const inlineReadout=unifiedReadout||volumeOnly||appearance?.studyReadout==='inline';
+        const compactReadout=inlineReadout&&!workspace&&paneMenuTrigger==='none';
+        const narrowInstrument=unifiedReadout&&pane.id==='price'&&geometry.width<540;
+        const headerEarnings=unifiedReadout&&pane.id==='price'&&!pane.collapsed&&earningsEvents.length>0&&!available.header;
+        const visibleGroups=inlineReadout?inlineStudyGroups(groups,volumeOnly):groups;
+        const hasHeaderContent=workspace||paneMenuTrigger==='internal'||(!pane.collapsed&&(unifiedReadout&&pane.id==='price'||visibleGroups.length>0));
+        const minimumHeaderHeight=compactReadout?0:28;
+        const headerHeight=hasHeaderContent?Math.max(minimumHeaderHeight,paneHeaderHeights[pane.id]??minimumHeaderHeight):0;
         return (
           <React.Fragment key={pane.id}>
-            <div
-              className="pointer-events-none absolute left-2 right-20 z-10 flex min-h-7 min-w-0 items-start gap-1 bg-background/90 text-[0.6875rem]"
-              style={{ top: geometry.top, left: (geometry.left ?? 0) + 8 }}
-              aria-label={`${paneLabel} pane legend`}
+            <MeasuredPaneHeader
+              hasContent={hasHeaderContent}
+              compactReadout={compactReadout}
+              onHeightChange={height=>setPaneHeaderHeights(previous=>previous[pane.id]==null||Math.abs(previous[pane.id]-height)>(compactReadout?0:1)?{...previous,[pane.id]:height}:previous)}
+              className={cn("absolute left-2 right-20 z-10 flex min-w-0 items-start gap-1 bg-background/90 text-[0.6875rem]",unifiedReadout&&"group",workspace?"pointer-events-auto":"pointer-events-none")}
+              style={{ top: geometry.top, left: (geometry.left ?? 0) + 8, ...(inlineReadout?{right:'auto',width:Math.max(0,geometry.width-16)}:{}) }}
+              label={`${paneLabel} pane legend`}
+              onDoubleClick={event=>{if(workspace && !(event.target as HTMLElement).closest('button,input,[role="menuitem"]'))togglePane(pane.id);}}
             >
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+              {workspace?(pane.collapsed?<span aria-hidden="true" className="w-11 shrink-0" />:<button type="button" disabled={!!interactionState.maximizedPaneId} aria-label={`Reorder ${paneLabel} pane`} className={cn("pointer-events-auto relative top-2 z-20 -my-2 flex size-11 shrink-0 touch-none items-center justify-center rounded text-muted-foreground hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring",narrowInstrument&&"absolute left-0 top-0 my-0")} onPointerDown={event=>startPaneGesture(event,'reorder',pane.id,geometry.height)} onPointerMove={movePaneGesture} onPointerUp={endPaneGesture} onPointerCancel={cancelPaneGesture} onLostPointerCapture={cancelPaneGesture} onKeyDown={event=>{if(event.key==='ArrowUp'||event.key==='ArrowDown'){event.preventDefault();const panes=technicalChartViewReducer({...state,panes:displayedPanes},{type:'move-pane',id:pane.id,direction:event.key==='ArrowUp'?-1:1}).panes;publishPaneDraft(panes,{source:'user',gesture:'pane-reorder',phase:'end',paneId:pane.id});}}}><span aria-hidden="true" className={narrowInstrument?undefined:"inline-block -translate-y-2"}>↕</span></button>):null}
+              <DropdownMenu open={paneMenu===undefined?undefined:paneMenu?.paneId===pane.id}
+                onOpenChange={open=>{if(!open)onPaneMenuChange?.(null);else{const trigger=paneActionRefs.current.get(pane.id),bounds=trigger?.getBoundingClientRect();if(bounds)onPaneMenuChange?.({paneId:pane.id,anchor:{x:bounds.left,y:bounds.bottom},returnFocus:trigger});}}}>
+                {paneMenuTrigger==='internal'?<span className={cn(unifiedReadout?'pointer-events-auto order-last inline-flex size-11 shrink-0':'contents',narrowInstrument&&'absolute top-0',unifiedReadout&&pane.collapsed&&'h-7')} style={narrowInstrument?{right:headerEarnings?'2.75rem':0}:undefined}><DropdownMenuTrigger asChild>
                   <Button
                     size="xs"
                     colorStyle="ghost"
-                    className="pointer-events-auto h-7 max-w-[45%] shrink-0 bg-background/90 px-1"
+                    className={cn("pointer-events-auto h-7 max-w-[45%] shrink-0 bg-background/90 px-1",unifiedReadout&&"order-last size-11 min-w-11 opacity-0 focus:opacity-100 group-hover:opacity-100 group-focus-within:opacity-100",unifiedReadout&&pane.collapsed&&'h-7')}
+                    ref={node=>{if(node)paneActionRefs.current.set(pane.id,node);else paneActionRefs.current.delete(pane.id);}}
                     aria-label={`${paneLabel} pane actions`}
+                    style={paneMenu?.paneId===pane.id?{position:'fixed',left:paneMenu.anchor.x,top:paneMenu.anchor.y,width:1,height:1,pointerEvents:'none',opacity:0}:undefined}
                   >
-                    <span className="min-w-0 truncate" title={paneLabel}>{paneLabel}</span>
-                    <ChevronDown className="size-3 shrink-0" />
+                    {unifiedReadout?<MoreHorizontal className="size-4"/>:<><span className="min-w-0 truncate" title={paneLabel}>{paneLabel}</span><ChevronDown className="size-3 shrink-0"/></>}
                   </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                </DropdownMenuTrigger></span>:paneMenu?.paneId===pane.id?<DropdownMenuTrigger asChild><span aria-hidden="true" tabIndex={-1} style={{position:'fixed',left:paneMenu.anchor.x,top:paneMenu.anchor.y,width:1,height:1,pointerEvents:'none',opacity:0}}/></DropdownMenuTrigger>:null}
+                <DropdownMenuContent aria-labelledby={undefined} aria-label={`${paneLabel} pane actions`} className="max-h-[var(--radix-dropdown-menu-content-available-height)] max-w-[var(--radix-dropdown-menu-content-available-width)] overflow-y-auto motion-reduce:animate-none" collisionPadding={8}
+                  onCloseAutoFocus={event=>{if(paneMenuFocus.current?.isConnected){event.preventDefault();paneMenuFocus.current.focus();paneMenuFocus.current=undefined;}}}>
+                  {workspace?<>
+                    <DropdownMenuItem onSelect={()=>togglePane(pane.id)}>{interactionState.maximizedPaneId===pane.id?'Restore pane stack':'Maximize pane'}</DropdownMenuItem>
+                    <DropdownMenuItem onSelect={()=>chartRef.current?.resetPaneScale(pane.id,{source:'user',gesture:'reset',paneId:pane.id})}>Reset pane scale</DropdownMenuItem>
+                    <DropdownMenuItem disabled={!!interactionState.maximizedPaneId} onSelect={()=>publishPaneDraft(resizeTechnicalPane(displayedPanes,pane.id,40,geometry.height),{source:'user',gesture:'pane-resize',phase:'end',paneId:pane.id})}>Grow pane</DropdownMenuItem>
+                    <DropdownMenuItem disabled={!!interactionState.maximizedPaneId} onSelect={()=>publishPaneDraft(resizeTechnicalPane(displayedPanes,pane.id,-40,geometry.height),{source:'user',gesture:'pane-resize',phase:'end',paneId:pane.id})}>Shrink pane</DropdownMenuItem>
+                  </>:null}
                   <DropdownMenuItem
+                    disabled={!!interactionState.maximizedPaneId}
                     onSelect={() =>
                       changePane(pane.id, { collapsed: !pane.collapsed })
                     }
@@ -657,7 +837,7 @@ export const TechnicalChartView = React.forwardRef<
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     icon={<ArrowUp />}
-                    disabled={paneIndex === 0}
+                    disabled={paneIndex === 0||!!interactionState.maximizedPaneId}
                     onSelect={() =>
                       onStateChange(
                         technicalChartViewReducer(state, {
@@ -665,7 +845,7 @@ export const TechnicalChartView = React.forwardRef<
                           id: pane.id,
                           direction: -1,
                         }),
-                        { type: "pane-reorder", id: pane.id },
+                        { type: "pane-reorder", id: pane.id,source:"user",gesture:"pane-reorder",phase:"end" },
                       )
                     }
                   >
@@ -673,7 +853,7 @@ export const TechnicalChartView = React.forwardRef<
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     icon={<ArrowDown />}
-                    disabled={paneIndex === snapshot.panes.length - 1}
+                    disabled={paneIndex === snapshot.panes.length - 1||!!interactionState.maximizedPaneId}
                     onSelect={() =>
                       onStateChange(
                         technicalChartViewReducer(state, {
@@ -681,7 +861,7 @@ export const TechnicalChartView = React.forwardRef<
                           id: pane.id,
                           direction: 1,
                         }),
-                        { type: "pane-reorder", id: pane.id },
+                        { type: "pane-reorder", id: pane.id,source:"user",gesture:"pane-reorder",phase:"end" },
                       )
                     }
                   >
@@ -735,7 +915,8 @@ export const TechnicalChartView = React.forwardRef<
                       Earnings dates ({earningsEvents.length})
                     </DropdownMenuItem>
                   ) : null}
-                  {pane.id==="price"?<DropdownMenuItem onSelect={()=>emit({scale:{mode:state.scale.mode,autoScale:true}},"scale",undefined,{source:"user",gesture:"reset"})}>Reset price scale</DropdownMenuItem>:null}
+                  {pane.id==="price"?<DropdownMenuItem onSelect={()=>{chartRef.current?.resetPaneScale("price",{source:"user",gesture:"reset",paneId:"price"});emit({scale:{mode:state.scale.mode,autoScale:true}},"scale",undefined,{source:"user",gesture:"reset"});}}>Reset price scale</DropdownMenuItem>:null}
+                  {pane.id==='price'?<DropdownMenuItem disabled={!allowLogScale&&actualScale.mode!=='logarithmic'} onSelect={()=>setScaleMode(actualScale.mode==='logarithmic'?'normal':'logarithmic')}>{actualScale.mode==='logarithmic'?'Use linear scale':'Use logarithmic scale'}</DropdownMenuItem>:null}
                   <DropdownMenuSeparator />
                   {pane.studyIds.map((id) => (
                     <DropdownMenuItem
@@ -750,36 +931,36 @@ export const TechnicalChartView = React.forwardRef<
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-              {!pane.collapsed ? (
-                <StudyLegend groups={groups} width={Math.max(80, geometry.width - (pane.id === 'price' ? 100 : 90))} locale={appearance?.locale} timeLabel={timeLabel} showIdentity={pane.id === 'price' || pane.studyIds.length > 1}
-                  onHeightChange={height => setPaneHeaderHeights(previous => previous[pane.id] == null || Math.abs(previous[pane.id] - height) > 1 ? {...previous, [pane.id]: Math.ceil(height)} : previous)}
-                  onRequestEvidence={onRequestSuppliedDetails ? () => onRequestSuppliedDetails({requests, results: matchedResults, rejectedResults: Object.fromEntries(requests.filter(request => suppliedResults[request.instanceId] && !matchedResults[request.instanceId]).map(request => [request.instanceId, suppliedResults[request.instanceId]])), missingIdentity: !calculationIdentity, availability: dataAvailability}) : undefined}/>
-              ) : null}
-            </div>
+              {!pane.collapsed?(instrumentReadout&&pane.id==='price'?<InstrumentReadout value={instrumentReadout} symbol={symbol} interval={interval} bar={inspectedBar} evidence={instrumentEvidence} timeLabel={timeLabel} narrow={narrowInstrument} actionsWidth={(paneMenuTrigger==='internal'?44:0)+(headerEarnings?44:0)} leadingWidth={workspace?44:0} locale={appearance?.locale}><StudyLegend groups={groups} compactValues={unifiedReadout} inline={inlineReadout} volumeOnly={volumeOnly} width={Math.max(80,geometry.width-(unifiedReadout?16:pane.id==='price'?100:90))} locale={appearance?.locale} timeLabel={timeLabel} showIdentity={pane.id === 'price' || pane.studyIds.length > 1}
+                  onRequestEvidence={appearance?.suppliedStatus!=='host'&&appearance?.suppliedDetails!==false&&onRequestSuppliedDetails ? () => onRequestSuppliedDetails({requests, results: matchedResults, rejectedResults: Object.fromEntries(requests.filter(request => suppliedResults[request.instanceId] && !matchedResults[request.instanceId]).map(request => [request.instanceId, suppliedResults[request.instanceId]])), missingIdentity: !calculationIdentity, availability: dataAvailability}) : undefined}/></InstrumentReadout>:<StudyLegend groups={groups} compactValues={unifiedReadout} inline={inlineReadout} volumeOnly={volumeOnly} width={Math.max(80,geometry.width-(unifiedReadout?16:pane.id==='price'?100:90))} locale={appearance?.locale} timeLabel={timeLabel} showIdentity={pane.id === 'price' || pane.studyIds.length > 1}
+                  onRequestEvidence={appearance?.suppliedStatus!=='host'&&appearance?.suppliedDetails!==false&&onRequestSuppliedDetails ? () => onRequestSuppliedDetails({requests, results: matchedResults, rejectedResults: Object.fromEntries(requests.filter(request => suppliedResults[request.instanceId] && !matchedResults[request.instanceId]).map(request => [request.instanceId, suppliedResults[request.instanceId]])), missingIdentity: !calculationIdentity, availability: dataAvailability}) : undefined}/>):null}
+              {headerEarnings?<button type="button" aria-label="Earnings events" className={cn("pointer-events-auto order-last flex size-11 shrink-0 items-center justify-center text-xs focus-visible:ring-2 focus-visible:ring-ring",narrowInstrument&&'absolute right-0 top-0')} onClick={()=>setEarningsOpen(true)}>E</button>:null}
+            </MeasuredPaneHeader>
             {pane.id === "price" && !pane.collapsed ? (
               <>
-                <div
+                {!unifiedReadout?<div
                   aria-label="OHLC readout"
                   aria-live="off"
                   className="pointer-events-none absolute right-20 z-10 flex flex-wrap items-baseline gap-x-2 overflow-hidden bg-background/90 font-mono text-[0.6875rem] leading-[0.875rem] tabular-nums"
                   style={{
                     top: geometry.top + headerHeight,
                     left: (geometry.left ?? 0) + 8,
+                    ...(inlineReadout?{right:'auto',width:Math.max(0,geometry.width-16)}:{}),
                     maxHeight: Math.max(0,Math.min(28,geometry.height-headerHeight)),
                   }}
                 >
                   {(["open", "high", "low", "close"] as const).map((key) => (
                     <span
                       key={key}
-                      title={String((snapshot.crosshair?.bar ?? data.at(-1))?.[key] ?? "—")}
-                      aria-label={`${key}: ${(snapshot.crosshair?.bar ?? data.at(-1))?.[key] ?? "unavailable"}`}
+                      title={String(inspectedBar?.[key] ?? "—")}
+                      aria-label={`${key}: ${inspectedBar?.[key] ?? "unavailable"}`}
                       className="inline-flex min-w-0 max-w-[calc(50%-0.25rem)] items-baseline gap-1 whitespace-nowrap"
                     >
                       <span className="shrink-0 text-muted-foreground">
                         {key[0].toUpperCase()}
                       </span>{" "}
                       <span className="min-w-0 truncate">
-                      {appearance?.legends==="compact" ? ((snapshot.crosshair?.bar ?? data.at(-1))?.[key] == null ? "—" : new Intl.NumberFormat(appearance.locale,{notation:"compact",maximumSignificantDigits:5}).format((snapshot.crosshair?.bar ?? data.at(-1))![key])) : calculationMode === "supplied" ? String((snapshot.crosshair?.bar ?? data.at(-1))?.[key] ?? "—") : (snapshot.crosshair?.bar ?? data.at(-1))?.[key].toFixed(pane.precision ?? 2) ?? "—"}
+                      {appearance?.legends==="compact" ? (inspectedBar?.[key] == null ? "—" : new Intl.NumberFormat(appearance.locale,{notation:"compact",maximumSignificantDigits:5}).format(inspectedBar[key])) : calculationMode === "supplied" ? String(inspectedBar?.[key] ?? "—") : inspectedBar?.[key].toFixed(pane.precision ?? 2) ?? "—"}
                       </span>
                     </span>
                   ))}
@@ -789,30 +970,31 @@ export const TechnicalChartView = React.forwardRef<
                       geometry.width < 400 && "sr-only",
                     )}
                   >
-                    {snapshot.crosshair ? "Inspect" : "Last"}{(snapshot.crosshair?.bar ?? data.at(-1))?.incomplete ? " · Incomplete bar" : ""} {countdown}
+                    {futureOnly?"Future display · unavailable":snapshot.crosshair ? "Inspect" : "Last"}{inspectedBar?.incomplete ? " · Incomplete bar" : ""} {!futureOnly&&countdown}
                   </span>
-                </div>
+                </div>:null}
                 {earningsEvents.map(({ event, anchor }) => {
                   const x =
                     anchor == null
                       ? null
                       : chartRef.current?.coordinateForTime(anchor);
-                  if (
-                    x == null ||
-                    x < (geometry.left ?? 0) + 12 ||
-                    x > (geometry.left ?? 0) + geometry.width - 12
-                  )
-                    return null;
+                  const pinLeft = earningsPinLeft(x, geometry);
+                  if (pinLeft == null) return null;
                   return (
                     <Tooltip key={event.id}>
                       <TooltipTrigger asChild>
                         <button
                           type="button"
                           aria-label={earningsDescription(event)}
-                          onClick={() => setEarningsOpen(true)}
+                          onClick={(click) => {
+                            earningsTriggerRef.current = click.currentTarget;
+                            setEarningsOpen(true);
+                          }}
                           className="pointer-events-auto absolute z-20 flex size-6 items-center justify-center rounded-full border border-violet-400 bg-background text-xs font-semibold text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                           style={{
-                            left: x - 12,
+                            left: pinLeft,
+                            width: 24,
+                            height: 24,
                             top: geometry.top + geometry.height - 27,
                           }}
                         >
@@ -827,22 +1009,26 @@ export const TechnicalChartView = React.forwardRef<
                 })}
               </>
             ) : null}
-            {paneIndex < snapshot.panes.length - 1 ? (
+            {paneIndex < snapshot.panes.length - 1 && (!workspace || !pane.collapsed) ? (
               <div
                 role="separator"
                 tabIndex={0}
                 aria-label={`Resize ${paneLabel} pane`}
                 aria-orientation="horizontal"
-                aria-valuemin={5}
-                aria-valuemax={95}
+                aria-valuetext={workspace?`${Math.round(geometry.height)} pixels`:undefined}
+                aria-valuemin={workspace?(pane.minimumSize??48):5}
+                aria-valuemax={workspace?100000:95}
                 aria-valuenow={Math.round(
-                  (geometry.height / (height - 28)) * 100,
+                  workspace?geometry.height:(geometry.height / (height - 28)) * 100,
                 )}
-                className="pointer-events-none absolute left-0 right-0 z-20 h-1 focus-visible:bg-ring focus-visible:outline-none"
-                style={{ top: geometry.top + geometry.height - 2 }}
+                className={cn("absolute right-0 z-20 focus-visible:bg-ring focus-visible:outline-none",workspace?"pointer-events-auto flex size-11 touch-none cursor-row-resize items-center justify-center rounded hover:bg-muted/50 before:block before:h-1 before:w-6 before:rounded before:bg-border":"pointer-events-none left-0 h-1")}
+                onPointerDown={workspace?event=>startPaneGesture(event,'resize',pane.id,geometry.height):undefined}
+                onPointerMove={workspace?movePaneGesture:undefined} onPointerUp={workspace?endPaneGesture:undefined} onPointerCancel={cancelPaneGesture} onLostPointerCapture={cancelPaneGesture}
+                style={{ top: geometry.top + geometry.height - (workspace?22:2) }}
                 onKeyDown={(event) => {
                   if (!["ArrowUp", "ArrowDown"].includes(event.key)) return;
                   event.preventDefault();
+                  if(workspace){publishPaneDraft(resizeTechnicalPane(displayedPanes,pane.id,event.key==='ArrowUp'?-40:40,geometry.height),{source:'user',gesture:'pane-resize',phase:'end',paneId:pane.id});return;}
                   const nextPane = state.panes.find(
                     (p) => p.id === snapshot.panes[paneIndex + 1].id,
                   );
@@ -886,7 +1072,14 @@ export const TechnicalChartView = React.forwardRef<
     <ChartThemeContext.Provider value={{ theme, style: { ...(theme ? technicalChartThemes[theme] : {}), ...style } }}>
     <TooltipProvider delayDuration={300}>
       <Dialog open={earningsOpen} onOpenChange={setEarningsOpen}>
-        <DialogContent className="max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-h-[80vh] overflow-y-auto" onCloseAutoFocus={(event) => {
+          const trigger = earningsTriggerRef.current;
+          earningsTriggerRef.current = null;
+          if (trigger?.isConnected) {
+            event.preventDefault();
+            trigger.focus({preventScroll:true});
+          }
+        }}>
           <DialogTitle>{symbol} earnings</DialogTitle>
           <DialogDescription>
             Supplied announcement dates. Dates beyond the available candles are
@@ -926,6 +1119,7 @@ export const TechnicalChartView = React.forwardRef<
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (event.defaultPrevented) return;
+          if(workspace&&event.key==="Escape"&&interactionState.maximizedPaneId&&!panel&&!earningsOpen&&!(event.target as HTMLElement).closest("input,textarea,[contenteditable=true],[role=menu]")){event.preventDefault();restorePane();return;}
           if (
             (event.ctrlKey || event.metaKey) &&
             event.key.toLowerCase() === "k"
@@ -935,6 +1129,7 @@ export const TechnicalChartView = React.forwardRef<
           }
         }}
       >
+        <div ref={intrinsicContentRef} className={workspace?"flow-root min-w-0":"contents"}>
         <div className={cn("flex h-9 items-center justify-between gap-3 border-b border-border bg-muted/25 px-3 text-xs", !available.header && "hidden")}>
           <span className="truncate font-medium tracking-wide">
             {appearance?.title ?? "Technical analysis"}
@@ -1165,7 +1360,11 @@ export const TechnicalChartView = React.forwardRef<
         ) : null}
         {!integratedNavigation ? suppliedStatus : null}
         {accepted.receipt && ["superseded","identity-mismatch","invalid"].includes(accepted.receipt.status)?<p role="status" aria-label="Bar update status" className="px-3 py-1 text-xs text-foreground">Bar update {accepted.receipt.status}. Last accepted snapshot retained. {accepted.receipt.message}</p>:null}
+        {workspace&&interactionState.maximizedPaneId?<Button size="sm" colorStyle="ghost" className="m-1" onClick={()=>restorePane()}>Restore pane stack</Button>:null}
         <MarketChart
+          interactions={interactions} interactionState={interactionState} onInteractionStateChange={changeInteraction} viewportCommand={viewportCommand}
+          onContentHeightChange={workspace?setRenderedPlotHeight:undefined}
+          canvasHostRef={canvasHostRef}
           presentation={presentation}
           drawingToolIds={drawingToolIds}
           drawingCommand={drawingCommand}
@@ -1177,8 +1376,10 @@ export const TechnicalChartView = React.forwardRef<
           suppliedDrawingResults={matchedResults}
           themeRevision={JSON.stringify([theme, style])}
           onVisibleRangeChange={onVisibleRangeChange}
+          onSnapshotChange={iconScales?observeAxis:undefined}
           ref={chartRef}
           data={renderData}
+          dataIdentity={dataIdentity??hostCalculationIdentity??JSON.stringify([symbol,interval])}
           symbol={symbol}
           interval={interval}
           height={height}
@@ -1186,7 +1387,7 @@ export const TechnicalChartView = React.forwardRef<
           scaleMode={state.scale.mode}
           scale={state.scale}
           viewport={state.viewport}
-          panes={state.panes}
+          panes={renderingPanes}
           paneSizes={paneSizes}
           showVolume={false}
           showControls={false}
@@ -1196,6 +1397,7 @@ export const TechnicalChartView = React.forwardRef<
           error={error}
           emptyMessage={emptyMessage}
           markers={markers}
+          priceReferences={priceReferences}
           indicators={indicators}
           overlays={state.overlays}
           renderLayers={layers}
@@ -1211,6 +1413,7 @@ export const TechnicalChartView = React.forwardRef<
           )}
           chartDescription={`${symbol}, ${interval}, ${state.chartType}, ${data.length} bars, ${state.panes.filter((p) => p.visible !== false).length} panes. Arrow keys inspect, plus and minus zoom, Home and End navigate.`}
           drawings={state.drawings}
+          drawingEditor={drawingEditor}
           selectedDrawingIds={state.selectedDrawingIds}
           activeDrawingTool={state.activeDrawingTool}
           showDrawingToolbar={
@@ -1229,9 +1432,9 @@ export const TechnicalChartView = React.forwardRef<
             keepDrawingMode: state.chrome.keepDrawingMode,
           }}
           drawingInteraction={{ snapMode: state.chrome.magnet }}
-          onDrawingsChange={(drawings) => emit({ drawings }, "drawing")}
+          onDrawingsChange={(drawings,metadata) => emit({ drawings }, "drawing",undefined,undefined,metadata)}
           onSelectedDrawingIdsChange={(selectedDrawingIds) =>
-            emit({ selectedDrawingIds }, "drawing")
+            emit({ selectedDrawingIds }, "drawing",undefined,undefined,{type:'selection',drawingIds:selectedDrawingIds})
           }
           onActiveDrawingToolChange={(activeDrawingTool) =>
             emit({ activeDrawingTool }, "drawing")
@@ -1251,7 +1454,8 @@ export const TechnicalChartView = React.forwardRef<
             )
           }
           onScaleChange={(scale,metadata) => emit({ scale }, "scale",undefined,metadata)}
-          onPaneSizesChange={(sizes,metadata) =>
+          onPaneSizesChange={(sizes,metadata) => {
+            if(workspace){publishPaneDraft(paneDraftRef.current.map(p=>({...p,size:sizes[p.id]??p.size})),metadata??{source:'user',gesture:'pane-resize',phase:'end'});return;}
             emit(
               {
                 panes: state.panes.map((p) => ({
@@ -1260,22 +1464,29 @@ export const TechnicalChartView = React.forwardRef<
                 })),
               },
               "pane-resize",undefined,metadata,
-            )
-          }
+            );
+          }}
           onViewportChange={(viewport,metadata) => {
             clearTimeout(viewportTimer.current);
             viewportTimer.current = setTimeout(() => {
-              setSettledRange(viewport.visibleRange);
-              emit({ viewport }, "viewport",undefined,metadata);
+              // Empty future presentation must not broaden visible-profile inputs to the whole dataset.
+              const futureOnly=!!timeAxis?.futureDisplay&&!viewport.visibleRange;
+              const retained=futureOnly?latest.current.state.viewport.visibleRange:viewport.visibleRange;
+              const next=futureOnly?{...viewport,visibleRange:retained}:viewport;
+              setSettledRange(current=>futureOnly?retained??current:viewport.visibleRange);
+              emit({ viewport:next }, "viewport",undefined,metadata);
             }, 140);
           }}
+          formatKeyboardInspection={instrumentReadout?snapshot=>instrumentKeyboardText(instrumentReadout,symbol,interval,snapshot,instrumentEvidence,new Map(state.indicators.filter(i=>i.visible).flatMap(i=>availableIndicators.find(d=>d.id===i.definitionId)?.lines.map(line=>[i.id+':'+line.id,labelFor(i.id)+' '+line.label] as const)??[]))):undefined}
           renderSurfaceOverlay={paneHeaders}
         />
         {available.footer && state.chrome.footer ? (
           <div
-            className="flex min-h-10 flex-wrap items-center gap-1 border-t border-border px-2 py-1 text-xs"
+            className={cn('min-h-10 border-t border-border text-xs',iconScales?'grid items-start':'flex flex-wrap items-center gap-1 px-2 py-1')}
+            style={iconScales?{gridTemplateColumns:liveAxis?.priceAxis?.side==='left'?`${Math.max(0,(rootRef.current?.clientWidth??0)-liveAxis.priceAxis.surfaceWidth)}px 88px minmax(0,1fr)`:'minmax(0,1fr) 88px'}:undefined}
             aria-label="Range and status"
           >
+            <div className={cn(iconScales?'flex min-w-0 flex-wrap items-center gap-1 px-2 py-1 [overflow-wrap:anywhere]':'contents')} style={iconScales?{gridColumn:liveAxis?.priceAxis?.side==='left'?3:1,gridRow:1}:undefined}>
             {integratedNavigation ? <div className="flex shrink-0 items-center" role="group" aria-label="Chart navigation">
               {navigationControls ?? (narrow ? <DropdownMenu><DropdownMenuTrigger asChild><Button type="button" size="xs" colorStyle="ghost" className="h-8">Navigate<ChevronDown className="size-3"/></Button></DropdownMenuTrigger><DropdownMenuContent>{([['left', 'Pan left'], ['right', 'Pan right'], ['in', 'Zoom in'], ['out', 'Zoom out']] as const).map(([intent, label]) => <DropdownMenuItem key={intent} onSelect={() => navigate(intent)} disabled={!data.length}>{label}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu> : <>{([['left', 'Pan left', '←'], ['right', 'Pan right', '→'], ['in', 'Zoom in', '+'], ['out', 'Zoom out', '−']] as const).map(([intent, label, glyph]) => <Action key={intent} label={label} onClick={() => navigate(intent)} disabled={!data.length}>{glyph}</Action>)}</>)}
             </div> : navigationControls}
@@ -1301,10 +1512,11 @@ export const TechnicalChartView = React.forwardRef<
               Latest
             </Action>
             <div className="flex-1" />
-            <Action
+            {!iconScales?<><Action
               label="Toggle automatic scale"
               aria-pressed={state.scale.autoScale}
               onClick={() => {
+                if(workspace&&!state.scale.autoScale)chartRef.current?.resetPaneScale("price",{source:"user",gesture:"reset",paneId:"price"});
                 const snapshot = chartRef.current?.getSnapshot()?.scales.price;
                 emit(
                   {
@@ -1328,15 +1540,16 @@ export const TechnicalChartView = React.forwardRef<
             </Action>
             <Action
               label="Toggle logarithmic scale"
-              aria-pressed={state.scale.mode === "logarithmic"}
+              disabled={!allowLogScale&&actualScale.mode!=='logarithmic'}
+              aria-pressed={actualScale.mode === "logarithmic"}
               onClick={() =>
                 setScaleMode(
-                  state.scale.mode === "logarithmic" ? "normal" : "logarithmic",
+                  actualScale.mode === "logarithmic" ? "normal" : "logarithmic",
                 )
               }
             >
               Log
-            </Action>
+            </Action></>:null}
             {onRequestTimezone ? (
               <Action label="Choose timezone" onClick={onRequestTimezone}>
                 {appearance?.timeZone ?? "UTC"}
@@ -1360,9 +1573,11 @@ export const TechnicalChartView = React.forwardRef<
             {clock}
             {integratedNavigation ? suppliedStatus : null}
             {footerActions}
+            </div>
+            {iconScales?<div style={{gridColumn:2,gridRow:1,width:liveAxis?.priceAxis?.width??88}}><TimelineScaleControls allowLogScale={allowLogScale} scale={actualScale} onAuto={toggleAuto} onLog={()=>setScaleMode(actualScale.mode==='logarithmic'?'normal':'logarithmic')}/></div>:null}
           </div>
         ) : null}
-        {Object.entries(profileResults).length && appearance?.suppliedStatus!=="compact" ? (
+        {Object.entries(profileResults).length && appearance?.suppliedStatus!=="compact" && appearance?.suppliedStatus!=="host" ? (
           <div
             className="flex flex-wrap gap-x-4 border-t border-border px-3 py-1 text-[0.6875rem] text-muted-foreground"
             aria-label="Volume profile summary"
@@ -1666,7 +1881,7 @@ export const TechnicalChartView = React.forwardRef<
                         "indexedTo100",
                       ] as const
                     ).map((mode) => (
-                      <option key={mode}>{mode}</option>
+                      <option key={mode} disabled={mode==='logarithmic'&&!allowLogScale}>{mode}</option>
                     ))}
                   </select>
                 </label>
@@ -2165,6 +2380,7 @@ export const TechnicalChartView = React.forwardRef<
             ) : null}
           </DialogContent>
         </Dialog>
+        </div>
       </div>
     </TooltipProvider>
     </ChartThemeContext.Provider>

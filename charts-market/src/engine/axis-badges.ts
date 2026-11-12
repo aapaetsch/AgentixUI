@@ -4,6 +4,10 @@ export interface AxisBadge {
   text: string;
   color: string;
   priority: number;
+  /** Runtime supplied references retain an outlined style independent of data badges. */
+  reference?: boolean;
+  /** Additive short caption above a reference's numeric value. */
+  caption?: string;
 }
 /** Highest priority survives overcrowding; stable IDs break ties. */
 export function layoutAxisBadges(

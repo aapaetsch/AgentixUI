@@ -40,6 +40,59 @@ Regression and VWAP use the read-only ordered OHLCV slice supplied to `MarketCha
 
 Position account size, risk percentage, and quantity are calculation metadata only. `onCreateDrawingAlert` is an intent callback; the package never evaluates alerts or places trades.
 
+## Selected drawing alert action
+
+The opt-in floating editor uses the existing public
+`MarketDrawingEditorOptions.onAlertIntent?: (drawingId: string) => void`:
+
+```tsx
+<MarketChart
+  data={bars}
+  drawings={drawings}
+  selectedDrawingIds={selectedIds}
+  drawingEditor={{active: true, onAlertIntent: openSavedDrawingAlertInspector}}
+/>
+```
+
+With the callback, **Create alert** appears in the desktop toolbar and More
+drawing actions menu for one selected visible horizontal line, trend line or
+rectangle. Vertical/time-only drawings have no alert action. Locked objects remain
+eligible because the intent does not modify them. Hidden objects, cleared/multiple
+selection, inactive editors and disposed instances have no action controls.
+Existing interval-visibility settings remain recoverable through explicit saved
+object selection. Without the callback the existing disabled **Drawing alerts —
+coming later** placeholder remains on both surfaces, including vertical lines.
+
+The callback receives exactly the unchanged opaque ID, with no listing, price,
+rule or saved revision inferred by the renderer. The host must resolve that ID in
+its current account/listing document, flush pending saves or explain conflicts,
+check final eligibility and open its own inspector. Replace the callback on listing
+changes and use the chart's existing context/cancellation lifecycle to dispose old
+controls. Never serialize callbacks in `DrawingState`. The renderer has no alert
+API, storage, credential access, price-rule evaluation or notification behavior.
+See [DRAWING-ALERT-ACTION.md](../../DRAWING-ALERT-ACTION.md) for delivery boundaries.
+
 ## Management and persistence
 
 `DrawingObjectTree`, `DrawingInlineTextEditor`, management helpers, versioned clipboard helpers, controlled favorites/recent tools, keep-drawing mode, defaults/templates, z-order, grouping, lock/hide/remove-all commands, and synchronization modes (`off`, `same-symbol`, `layout`) are exported from `aapaetsch-charts-market/drawings`. Existing drawing documents remain readable because every new drawing-state field is optional.
+## Directional supplied lines and future editing
+
+Trend and horizontal lines support optional boolean `parameters.extendLeft` and
+`parameters.extendRight` without rewriting saved anchors or IDs. Trend defaults
+to a segment; each missing horizontal flag defaults true for legacy full width.
+A horizontal line with both flags false is a selectable 6px marker. Chronological
+left/right ignore anchor insertion order. Equal-time trend anchors use up/down
+as the deterministic vertical convention.
+
+The floating contextual toolbar commits each toggle through one existing style
+transaction. Standalone horizontal `DrawingToolbar` opts in using the additive
+`onLineExtensionChange({extendLeft,extendRight})`; old style callbacks retain their
+string/number signatures. Both controls are labeled, pressed, focusable and have
+at least44px targets. No extension controls appear for rectangles/vertical lines.
+
+For direct composition pass `DrawingLayer futureDisplay={!!timeAxis.futureDisplay}`;
+the chart components do this automatically. The engine owns all dates and bounds.
+Future group moves/duplicates reject a translation if any anchor cannot map, and
+selected arrow-key edits take priority over Canvas navigation. See
+`../../INTERACTIONS.md` and `../../CALENDAR-COORDINATES.md` for complete public
+policy/types/serialization examples and supplied-only limitations.

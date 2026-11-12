@@ -41,3 +41,20 @@ export function earningsDescription(event: TechnicalEarningsEvent): string {
     .slice(0, 10);
   return `${event.label ?? "Earnings"} · ${date}${event.estimated ? " · Estimated date" : ""}${event.session && event.session !== "unknown" ? ` · ${event.session.replaceAll("-", " ")}` : ""}`;
 }
+
+/** Inclusive plot visibility uses the unchanged economic coordinate. Only the
+ * 24px hit target moves inward, with 2px reserved for its focus ring. Canvas
+ * geometry is in CSS pixels, independent of the surrounding root font size. */
+export function earningsPinLeft(
+  anchorX: number | null | undefined,
+  pane: { left?: number; width: number },
+): number | null {
+  const left = pane.left ?? 0;
+  const right = left + pane.width;
+  if (
+    anchorX == null || !Number.isFinite(anchorX) ||
+    !Number.isFinite(left) || !Number.isFinite(right) || pane.width < 28 ||
+    anchorX < left || anchorX > right
+  ) return null;
+  return Math.max(left + 2, Math.min(anchorX - 12, right - 26));
+}

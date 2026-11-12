@@ -112,3 +112,28 @@ const practicalDrawings: DrawingState[] = [
 export const PracticalToolPack: Story = { args: { initialDrawings: practicalDrawings, initialSelection: ["channel", "range"], showObjectTree: true, height: 620 }, parameters: { docs: { description: { story: "A chart-first object-management workspace spanning channels, measurements, positions, Fibonacci, VWAP, annotations, grouped movement, z-order, alerts, favorites, recent tools, and per-tool defaults." } } } };
 
 export const InlinePlainTextEditing: Story = { render: () => { const [value, setValue] = React.useState("Breakout confirmed\nVolume expanding"); return <div className="min-h-48 bg-muted/30 p-8"><DrawingInlineTextEditor value={value} onValueChange={setValue} onCommit={() => undefined} onCancel={() => setValue("")} /></div>; } };
+
+const alertDrawings: DrawingState[] = [
+  ...baselineDrawings,
+  {id:'zone / opaque 003',type:'rectangle',version:1,points:[{time:28,price:110},{time:48,price:122}],parameters:{color:'#16a34a',lineWidth:1},visible:true,locked:false},
+  {id:'date',type:'vertical-line',version:1,points:[{time:40,price:120}],parameters:{color:'#9333ea',lineWidth:1},visible:true,locked:false},
+];
+function AlertActionDemo({enabled=true,locked=false,hidden=false}:{enabled?:boolean;locked?:boolean;hidden?:boolean}) {
+  const [drawings,setDrawings]=React.useState(()=>alertDrawings.map(d=>({...d,locked,visible:!hidden}))),[selected,setSelected]=React.useState(['level']);
+  const [receipt,setReceipt]=React.useState('No intent received');
+  return <section className="min-w-0 bg-background p-2 text-foreground">
+    <div role="group" aria-label="Select alert fixture drawing" className="mb-2 flex flex-wrap gap-2">
+      {drawings.map(d=><button key={d.id} type="button" className="min-h-11 rounded border border-border px-3 focus-visible:ring-2 focus-visible:ring-ring" onClick={()=>setSelected([d.id])}>{d.type}</button>)}
+      <button type="button" className="min-h-11 rounded border border-border px-3 focus-visible:ring-2 focus-visible:ring-ring" onClick={()=>setSelected([])}>Clear selection</button>
+    </div>
+    <output aria-live="polite" className="block break-words text-sm">{receipt}</output>
+    <MarketChart data={data} symbol="SYNTHETIC" calculationMode="supplied" height={420} drawings={drawings} selectedDrawingIds={selected}
+      onDrawingsChange={setDrawings} onSelectedDrawingIdsChange={setSelected}
+      drawingEditor={{active:true,onAlertIntent:enabled?id=>setReceipt(`Host received drawing ID: ${id}`):undefined}}/>
+  </section>;
+}
+export const CreateAlert: Story = {render:()=> <AlertActionDemo/>,parameters:{docs:{description:{story:'Synthetic supplied drawings. Create alert sends only the selected opaque ID to this demo host. Choose a vertical line to verify the action is absent. No alert is created.'}}}};
+export const CreateAlertNarrow: Story = {render:()=> <div className="mx-auto w-[20rem] max-w-full"><AlertActionDemo/></div>,parameters:{viewport:{defaultViewport:'mobile1'},docs:{description:{story:'At a phone viewport use More drawing actions → Create alert. Menu dismissal returns focus to More; Escape cancels without an intent.'}}}};
+export const CreateAlertLocked: Story = {render:()=> <AlertActionDemo locked/>,parameters:{docs:{description:{story:'Locked price drawings still offer Create alert; the intent does not unlock or edit them.'}}}};
+export const CreateAlertHidden: Story = {render:()=> <AlertActionDemo hidden/>,parameters:{docs:{description:{story:'Hidden saved drawings have no floating editor or Create alert controls.'}}}};
+export const CreateAlertUnavailable: Story = {render:()=> <AlertActionDemo enabled={false}/>,parameters:{docs:{description:{story:'Omitting onAlertIntent preserves the disabled Drawing alerts — coming later action, including the overflow and vertical drawings.'}}}};

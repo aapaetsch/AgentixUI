@@ -35,20 +35,20 @@ function drawSeries(
         x: timeToCoordinate ? timeToCoordinate(bar.time) : logicalToCoordinate(startIndex + offset),
         y: scale.toCoordinate(bar.close),
         bar,
-      }))
-      .filter(
-        (point): point is { x: number; y: number; bar: OhlcBar } =>
-          point.y != null && point.x != null && Number.isFinite(point.x) && (isTimeSegmentContinuous?.(point.bar.time, point.bar.time) ?? true),
-      );
+      }));
     if (!points.length) return;
     context.strokeStyle = theme.primary;
     context.fillStyle = theme.primary;
     context.lineWidth = 2;
-    const segments: typeof points[] = [];
+    const segments: {x:number;y:number;bar:OhlcBar}[][] = [];
+    let broken=true;
     points.forEach(point => {
+      if(point.x==null||point.y==null||!Number.isFinite(point.x)||!Number.isFinite(point.y)||isTimeSegmentContinuous?.(point.bar.time,point.bar.time)===false){broken=true;return;}
+      const valid={x:point.x,y:point.y,bar:point.bar};
       const segment = segments.at(-1), previous = segment?.at(-1);
-      if (!previous || isTimeSegmentContinuous?.(previous.bar.time, point.bar.time) === false) segments.push([point]);
-      else segment!.push(point);
+      if (broken || !previous || isTimeSegmentContinuous?.(previous.bar.time, point.bar.time) === false) segments.push([valid]);
+      else segment!.push(valid);
+      broken=false;
     });
     segments.forEach(segment => {
       if (segment.length === 1) { const point = segment[0]; context.fillRect(point.x - 2, point.y - 2, 4, 4); return; }

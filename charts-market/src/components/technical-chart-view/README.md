@@ -1,5 +1,59 @@
 # TechnicalChartView
 
+Floating drawing editor: `drawingEditor?: MarketDrawingEditorOptions` forwards the public active-instance editor to MarketChart. `TechnicalChartViewChangeMetadata.drawing` retains exact-coordinate metadata on authored commits and undo/redo; `{type:'selection'}` remains transient. Keep account-session toolbar position outside saved drawing documents and supply statistics only for matching admitted context/geometry. See [DRAWING-EDITOR.md](../../../DRAWING-EDITOR.md) and packaged [INTERACTIONS.md](../../../INTERACTIONS.md). The nine **Market Charts / Drawing Editor** stories cover themes, 390/320 widths, axis modes, delayed echo, four instances and object-tree recovery.
+
+Quiet compact Boards can opt into `appearance.suppliedStatus='host'` with their existing discoverable expanded evidence surface. It reserves no study-status/profile-summary/details chrome and does not alter data admission, warnings/results or the distinct chart loading/error props. Combine `studyReadout:'volume-only'` with references using `showPlotLabel:false, showAxisLabel:true, axisLabel:'Open'`. Expanded/default policies remain compatible. See [BOARD-INLINE-READOUT.md](../../../BOARD-INLINE-READOUT.md) and [PRICE-REFERENCES.md](../../../PRICE-REFERENCES.md) for ownership and exact API mapping.
+
+For compact Boards with a shared checkbox color key, use `appearance.studyReadout='volume-only'`: only finite supplied bar volume appears, with exactly one lowercase `vol` caption. Zero remains zero; hidden/missing/nonfinite volume or no bars creates no readout or header band with an external title menu. All other legend groups disappear without changing selected series, points, axis badges or evidence. Expanded Boards retain `'inline'` and discoverable complete source evidence. Omitted-option full-chart behavior and warnings remain unchanged. See [BOARD-INLINE-READOUT.md](../../../BOARD-INLINE-READOUT.md).
+
+For compact and expanded Board charts, `appearance.studyReadout='inline'` removes the Legend disclosure and group buttons, shows every visible numeric study output and a single lowercase `vol` caption, and measures natural wrapped height without an empty disclosure band. With an external host title menu, no readouts means zero header height. Internal/workspace controls keep their allocation. Exact supplied values/status/context remain accessible and the host must retain discoverable complete source evidence. Default full-chart legends are unchanged. See [BOARD-INLINE-READOUT.md](../../../BOARD-INLINE-READOUT.md).
+
+`priceReferences?: readonly MarketPriceReference[]` adds supplied display-only dotted levels without reserving a study header or introducing drawing/hit targets. The consumer owns exact source/session selection and atomic data/reference admission. Use an empty array for missing evidence. Optional R-prefixed outlined axis values use shared collision placement; the full supplied label and exact price remain accessible. See [PRICE-REFERENCES.md](../../../PRICE-REFERENCES.md) for the typed API, filtering and lifecycle boundaries.
+
+Default bar-volume values are labeled `Vol` in visible and complete legend mappings with the `Bar volume` title. The optional Board inline surface uses exactly `vol` and omits direction/color-only captions. Supplied numbers, formatting/null handling, direction-color meaning and My Charts defaults remain unchanged.
+
+With `paneMenuTrigger="none"`, a standard-mode pane with no visible study/overlay/volume legend has no empty header reservation; the OHLC readout starts at its normal pane-top inset. The external controlled menu stays mounted and usable. Internal triggers and workspace reorder handles still reserve their real header, as do genuine legends (including unavailable supplied outputs). The complete header is observed as content appears, disappears or wraps, keeping canvas spacing and OHLC offsets consistent. No new prop or saved-state field is required. See **Market Charts / Empty Header** for external-title, dynamic study/volume, internal, workspace, dense, theme and narrow fixtures.
+
+Available-height layout measures natural content and the live canvas-host allocation together. `onGeometryChange` may update host presentation state without requiring memoized appearance objects for correctness. Keep the available slot independent from intrinsic content allocation, and honor reported intrinsic overflow when pane requests exceed it. Stable dimensions do not clear/reallocate the canvas bitmap. Synthetic **Resize Feedback** stories exercise fractional compact slots with an active host geometry callback.
+
+## Host title menu and line inspection
+
+`appearance.suppliedDetails=false` removes compact “Supplied calculation details”
+and the host Complete source evidence action. Omission preserves existing behavior, including
+the fallback dialog. This option does not hide supplied status: missing identity,
+unavailable/warning/rejected-result messages, including supplied profile reasons, and critical availability descriptions
+remain visible. Request keys, accepted results and calculation semantics are
+unchanged. Use `suppliedStatus:'compact'` for the condensed summary and supply
+host-owned data/status actions separately when needed. Changing the option while
+the fallback dialog is open closes it.
+
+Use `useTechnicalPaneMenu()` in the host card and spread `getTriggerProps('price')`
+onto a native ticker/company-title button. Pass its `paneMenu` and
+`onPaneMenuChange` to TechnicalChartView with `paneMenuTrigger="none"` to omit the
+inline symbol/chevron. This opens the same pane actions, with Escape/outside
+dismissal and focus restored to the title. Direct controlled state is also public:
+`TechnicalPaneMenuState = {paneId, anchor:{x,y}, returnFocus?}`; anchor coordinates
+are viewport CSS pixels. `undefined` preserves internal menus; `null` closes a
+controlled menu. Keep anchor coordinates current if the host moves while open.
+The host owns optional background-card activation and must suppress nested controls,
+portaled items, selected text, reorder/plot gestures and completed drags. Keep a
+native visible title button for Enter/Space and preserve expand/details separately.
+
+`allowLogScale={false}` disables the shared Log menu item, footer button/icon and
+settings option without changing incoming host scale state. It is runtime policy,
+outside version-1 documents and calculation keys.
+
+For Board line charts opt into `appearance.crosshair.lineMarker={ {visible:true} }`.
+Radius is 2..8 CSS px (default4), strokeWidth .5..4 (default2), with optional fill
+and stroke colors/tokens. Defaults use primary fill and background outline. A
+marker follows the rendered close stroke horizontally regardless of pointer Y;
+it uses the actual manual/log/time geometry and never adds a price observation.
+`MarketChartSnapshot.lineInspection` exposes display x/y, exact/interpolated source
+and bracketing times; exact OHLC/study inspection remains separate. Explicit true
+gaps, invalid samples, future whitespace and pointer leave/cancel/blur clear it.
+Custom line renderers are excluded because their geometry may differ. See
+**Market Charts / Board Card** for compact, expanded, theme and compatibility stories.
+
 Opt in to separate-gutter price and all-study endpoint boxes with `appearance.badges.endpointValues='all-visible'`. Includes oscillator outputs, exact visible endpoints and per-pane collision/overflow semantics; defaults and host pane geometry remain intact. See [ENDPOINT-LABELS.md](../../../ENDPOINT-LABELS.md).
 
 `appearance.badges.movingAverages='all-visible'` retains outlined boxes for every tagged visible moving-average price overlay. Values come from the exact last accepted visible bar; historic pan, missing/null samples, off-scale/log values, connectors and bounded overflow are documented in [MOVING-AVERAGE-LABELS.md](../../../MOVING-AVERAGE-LABELS.md). Defaults and host pane minimums remain unchanged.
@@ -102,4 +156,49 @@ See [READABILITY.md](../../../READABILITY.md) for visible theme/override-matched
 # Adaptive candle and volume geometry
 
 Set `appearance.candles` and `appearance.volume` to `{widthMode: 'adaptive', gap: 2}` for matching widths based on the current shared time-scale slots. Omission preserves legacy geometry. See [ADAPTIVE-WIDTHS.md](../../../ADAPTIVE-WIDTHS.md) for proportional precedence, dense zoom, DPI, validation and runtime examples. Appearance changes retain supplied identities, saved documents and shared drawing history.
+
+
+Workspace interaction props and methods are documented in [INTERACTIONS.md](../../../INTERACTIONS.md). All are opt-in runtime geometry; retain supplied-only calculation and version-1 serialization boundaries.
+# Timeline controls
+
+`appearance.timeline` forwards the shared runtime `MarketTimelinePresentation`.
+`{range:'auto',sessions,rightPaddingBars:10,scaleControls:'icons'}` enables
+visible-span labels, supplied session starts, blank logical right space and
+44px Auto/manual + linear/log targets beneath the actual88px price axis.
+Read live snapshot scale state after native axis gestures; retain logicalRange
+on controlled viewport echoes and use viewportCommand for external dates.
+Missing sessions means first/last supplied observation per display day, not an
+official market open. No provider, calendar inference or calculation changes.
+See ../../../INTERACTIONS.md for exact typed examples/defaults/origins and
+**Market Charts / Timeline Controls** for synthetic range/DST/sparse fixtures.
+
+
+
+## Future annotation ruler
+
+Pass an opt-in `timeAxis.futureDisplay` with
+`{convention:'utc-calendar', intervalSeconds:86400, horizonMonths:12}` for a daily
+calendar-time annotation ruler. The engine preserves known coordinates and exact
+earnings instants, computes future ticks without a generated bar/session calendar,
+and keeps economic bounds on accepted observations. Future OHLC/study/volume
+readouts are unavailable; `snapshot.futureInspection` has a date/coordinates and
+no financial bar. Empty future views retain the last accepted calculation/profile
+range in controlled state while the engine snapshot reports no observations.
+
+Trend/horizontal extension controls, bounded drawing edits, shared history and
+keyboard priority are integrated through the public chart path. Keep logical
+viewport echoes; use the existing explicit viewport command for new external date
+intent. Default consumers remain unchanged without this opt-in. See the package
+`INTERACTIONS.md` and `CALENDAR-COORDINATES.md` for types, examples, horizon/UTC
+semantics and the separate product/private-persistence adoption gates.
+
+# Compact supplied instrument header
+
+Add `instrumentReadout` for the combined company/logo/period/exchange/OHLC row with
+`vol` and named studies beneath. It is runtime presentation only. Optional source,
+dataset-identity and accepted-revision bound `exactValues` preserve original
+decimal strings without new calculations; missing, gap and future inspections
+remain unavailable. Existing public pane-menu/host action APIs compose with it.
+See the packaged [BOARD-INLINE-READOUT.md](../../../BOARD-INLINE-READOUT.md) for
+types, admission rules, accessibility, metadata bounds and adoption mapping.
 

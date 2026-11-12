@@ -1,6 +1,6 @@
 import type { DrawingCoordinate, DrawingPrimitive, DrawingRendererContext, DrawingRendererDefinition } from "../core";
 import { calculateDrawingVwap, calculateLinearRegression, calculatePosition, calculateRangeMeasurement, formatDuration, type DrawingPriceSource } from "./calculations";
-import { clipLineToBounds, defaultDrawingHandles } from "./geometry";
+import { clipLineToBounds, defaultDrawingHandles, directionalTrendPrimitives, directionalHorizontalPrimitives } from "./geometry";
 
 const asNumber = (value: unknown, fallback: number) => typeof value === "number" && Number.isFinite(value) ? value : fallback;
 const asBoolean = (value: unknown, fallback = false) => typeof value === "boolean" ? value : fallback;
@@ -18,9 +18,9 @@ function extensionMode(context: DrawingRendererContext): "segment" | "ray" | "in
   return left && right ? "infinite" : right ? "ray" : "segment";
 }
 
-const horizontalLineRenderer: DrawingRendererDefinition = { id: "horizontal-line", getPrimitives: ({ points, bounds }) => points[0] ? [{ id: "line", kind: "line", from: { x: 0, y: points[0].y }, to: { x: bounds.width, y: points[0].y } }] : [], getHandles: defaultDrawingHandles };
+const horizontalLineRenderer: DrawingRendererDefinition = { id: "horizontal-line", getPrimitives: directionalHorizontalPrimitives, getHandles: defaultDrawingHandles };
 const verticalLineRenderer: DrawingRendererDefinition = { id: "vertical-line", getPrimitives: ({ points, bounds }) => points[0] ? [{ id: "line", kind: "line", from: { x: points[0].x, y: 0 }, to: { x: points[0].x, y: bounds.height } }] : [], getHandles: defaultDrawingHandles };
-const trendLineRenderer: DrawingRendererDefinition = { id: "trend-line", getPrimitives: (context) => linePrimitive("line", context.points, context.bounds), getHandles: defaultDrawingHandles };
+const trendLineRenderer: DrawingRendererDefinition = { id: "trend-line", getPrimitives: directionalTrendPrimitives, getHandles: defaultDrawingHandles };
 const arrowRenderer: DrawingRendererDefinition = { id: "arrow", getPrimitives: (context) => { const line = linePrimitive("line", context.points, context.bounds); const [first, second] = context.points; return first && second ? [...line, { id: "arrowhead", kind: "arrowhead", at: second, from: first }] : line; }, getHandles: defaultDrawingHandles };
 const rayRenderer: DrawingRendererDefinition = { id: "ray", getPrimitives: (context) => linePrimitive("ray", context.points, context.bounds, "ray"), getHandles: defaultDrawingHandles };
 const extendedLineRenderer: DrawingRendererDefinition = { id: "extended-line", getPrimitives: (context) => linePrimitive("extended-line", context.points, context.bounds, "infinite"), getHandles: defaultDrawingHandles };

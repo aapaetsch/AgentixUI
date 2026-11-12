@@ -1,5 +1,16 @@
 # DrawingLayer and DrawingToolbar
 
+## Selected drawing Create alert intent
+
+- **Props:** Preserve the existing optional `MarketDrawingEditorOptions.onAlertIntent(drawingId)`; send only the selected opaque ID unchanged.
+- **Dependencies:** Existing Button/Tooltip and Radix dropdown items; no new callback, dependency or serialized field.
+- **Styling Decisions:** Reuse the existing 44px toolbar actions, mobile overflow, focus/escape/position behavior. Enabled accessible text and overflow text are both `Create alert`.
+- **Maintenance Notes:** With a callback, allow horizontal/trend lines and rectangles only; exclude vertical/time-only drawings. Omitted callbacks keep the disabled coming-later placeholder on both surfaces for all existing editor types. Visible locked drawings remain eligible without edits; hidden objects have no editor. Host resolves current listing/account/save revision and owns final eligibility. Replace callbacks and cancel old editor controls on listing changes. Do not interpret price rules, contact APIs, persist alert state or issue notifications. Tests cover callback replacement, same-ID revision cancellation, selection changes, deleted/hidden/inactive/disposed controls, native keyboard activation, overflow focus and omission compatibility.
+
+## Opt-in floating editor
+
+Props: `editor`, interval and cancel revision flow through DrawingLayer from public chart props. Private helpers: typed presentation/state, fixed-position hook, four-tab editor and SVG presentation/timeline overlays. Dependencies: existing UI-kit/Radix components and original icons; no standalone new public component or dependency. Styling: Tailwind theme tokens, 44px controls, secondary-action overflow, exact engine axis bounds. Maintenance: only a single visible supported selection gets an editor; lock blocks geometry/style/text; hide is recoverable. Cancel revision must clear preview and remount the editor to release dialogs and handle capture with stale host selection. Exact text survives only unchanged coordinates. Supplied financial results require matching nonempty context and exact geometry; drafts suppress stale results. Pixel distance/angle alone are browser calculated. Keep original line/ray geometry and observation/future-axis policies. Full contract: [DRAWING-EDITOR.md](../../DRAWING-EDITOR.md); evidence: .chart-drawing-editor-validation/.
+
 - **Props:** Controlled drawing documents/preferences, transient selected IDs, fixed/multi-click/variable/freehand lifecycles, tool and renderer registries, read-only OHLCV context, object-tree actions, alert intents, engine coordinate port, consolidated interaction settings and typed commit callbacks.
 - **Dependencies:** React, UI-kit buttons/dropdown menus/tooltips, AgentixUI icons and engine-neutral drawing contracts.
 - **Styling Decisions:** The chart remains the visual anchor. The compact pointer/tool menu and contextual controls use one restrained toolbar; SVG primitives retain serialized color while hover, focus, snap markers and touch handles add non-layout feedback.
@@ -12,3 +23,4 @@
 
 
 - Host gaps clip SVG drawing geometry and handles, reject pointer hits inside open gaps, and split supplied VWAP at gaps/nulls. Singleton supplied paths remain visible. Coordinate conversion on whitespace is geometry only. Prefer engine.shiftTime for host display-unit keyboard nudges; preserve compressed fallback behavior.
+- **Directional lines:** supplied trend/horizontal extensions are serialized optional boolean parameters. Trend defaults false/false; each absent horizontal flag defaults true; horizontal false/false is a selectable 6px marker. Direction is chronological, not anchor insertion order. Render/hit-test shared clipped primitives; retain actual handle positions and anchor/ID bytes on style edits. Equal-time left/right means up/down. Floating controls use44px labeled pressed buttons and one shared style transaction. No controls/flags for rectangles/verticals or mixed tool selections.

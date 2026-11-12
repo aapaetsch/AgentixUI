@@ -104,6 +104,10 @@ export interface TechnicalChartViewState {
   extensions?: Record<string, JsonValue>;
 }
 export interface TechnicalChartViewChangeMetadata {
+  /** Final shared drawing transaction, including lossless authored coordinates for private adapters. */
+  drawing?: import('../drawings').DrawingChangeMetadata;
+  phase?: import("./presentation").MarketChartChangeMetadata["phase"];
+  paneId?: string;
   source?: import("./presentation").MarketChartChangeMetadata["source"];
   gesture?: import("./presentation").MarketChartChangeMetadata["gesture"];
   type:

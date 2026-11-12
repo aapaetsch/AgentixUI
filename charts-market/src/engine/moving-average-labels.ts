@@ -69,13 +69,16 @@ export function movingAverageValueText(value: number | null): string {
 export class MovingAverageAxisLayer {
   private root: HTMLDivElement;
   private signature = '';
+  private occupied: Array<{y: number; height: number}> = [];
+  /** Engine-owned geometry, without querying private DOM, for other labels sharing this lane. */
+  get occupiedBounds(): readonly {y: number; height: number}[] {return this.occupied;}
   constructor(surface: HTMLElement) {
     this.root = document.createElement('div');
     this.root.className = 'pointer-events-none absolute inset-0 z-10 overflow-hidden';
     this.root.dataset.movingAverageAxis = '';
     surface.appendChild(this.root);
   }
-  clear(): void {if (this.signature) {this.root.replaceChildren(); this.signature = '';}}
+  clear(): void {this.occupied = []; if (this.signature) {this.root.replaceChildren(); this.signature = '';}}
   destroy(): void {this.root.remove();}
   update(labels: MovingAverageLabel[], geometry: {axisX: number; top: number; height: number; width: number; fontSize: number; paneId?: string; dedicated?: boolean}, theme: MarketChartTheme): void {
     const signature = JSON.stringify([labels, geometry, theme]);
@@ -87,6 +90,7 @@ export class MovingAverageAxisLayer {
     const overflowFocused = document.activeElement === this.root.querySelector('[data-endpoint-overflow]');
     const scrollTop = this.root.querySelector('[data-endpoint-overflow]')?.scrollTop ?? 0;
     this.root.replaceChildren();
+    this.occupied = [];
     if (!labels.length || geometry.height <= 0) return;
     // Dedicated gutters grow with font size. At extreme font/viewport ratios,
     // wrap complete numeric text rather than clipping it or shrinking the font.
@@ -98,6 +102,7 @@ export class MovingAverageAxisLayer {
     };
     let rowHeight = heightFor(false), layout = layoutMovingAverageLabels(labels, geometry.top, geometry.height, rowHeight);
     if (layout.overflow) {rowHeight = heightFor(true); layout = layoutMovingAverageLabels(labels, geometry.top, geometry.height, rowHeight);}
+    this.occupied = layout.overflow ? [{y: geometry.top + geometry.height / 2, height: geometry.height}] : layout.labels.map(label => ({y:label.y,height:rowHeight - 2}));
     const region = document.createElement('div');
     region.setAttribute('role', 'region');
     const group = geometry.dedicated ? `${geometry.paneId ?? 'chart'} value` : 'moving-average';

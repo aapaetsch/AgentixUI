@@ -1,4 +1,7 @@
 import type { DrawingParameterSchema, DrawingState, DrawingToolDefinition, SerializableParameters } from "../core";
+import {drawingDocumentComparisonKey} from './document-key';
+export * from './editor-types';
+export {marketDrawingGeometryKey} from './editor-state';
 
 export type DrawingChangeType =
   | "create" | "move" | "resize" | "style" | "delete" | "visibility" | "lock"
@@ -9,6 +12,8 @@ export interface DrawingChangeMetadata {
   type: DrawingChangeType;
   drawingIds: string[];
   transactionId?: string;
+  /** Exact authored coordinate text retained by this commit/history snapshot; never financial calculations. */
+  exactCoordinates?: import('./editor-types').MarketDrawingExactCoordinate[];
 }
 
 /** Runtime command mailbox; IDs make retries/controlled rerenders idempotent. */
@@ -52,8 +57,7 @@ export function stripTransientDrawingState(drawings: readonly DrawingState[]): D
 }
 
 export function drawingDocumentsEqual(first: readonly DrawingState[], second: readonly DrawingState[]): boolean {
-  const canonical=(value:unknown):unknown=>Array.isArray(value)?value.map(canonical):value&&typeof value==="object"?Object.fromEntries(Object.entries(value).sort(([a],[b])=>a.localeCompare(b)).map(([key,item])=>[key,canonical(item)])):value;
-  return JSON.stringify(canonical(stripTransientDrawingState(first))) === JSON.stringify(canonical(stripTransientDrawingState(second)));
+  return drawingDocumentComparisonKey(first)===drawingDocumentComparisonKey(second);
 }
 
 function commit(history: DrawingHistory, present: DrawingState[], transactionId?: string): DrawingHistory {
@@ -126,13 +130,16 @@ function tool(id: string, label: string, category: DrawingToolDefinition["catego
   return { id, version: 1, label, rendererId, category, input: { mode, points }, requiredPoints: points, parameterSchema: schema, defaultParameters: { ...defaults, ...parameters } as DrawingParameters };
 }
 
-export const trendLineDrawing = tool("trend-line", "Trend line", "lines", 2);
+/** Optional serialized flags in DrawingState.parameters; anchors and IDs never change on a toggle. */
+export type MarketLineExtensionParameters = SerializableParameters & { extendLeft?: boolean; extendRight?: boolean };
+const lineExtensionSchema: DrawingParameterSchema = { ...commonSchema, extendLeft: {type:'boolean',label:'Extend left'}, extendRight: {type:'boolean',label:'Extend right'} };
+export const trendLineDrawing = tool("trend-line", "Trend line", "lines", 2, {}, 'trend-line', 'drag', lineExtensionSchema);
 export const arrowDrawing = tool("arrow", "Arrow", "lines", 2);
 export const rayDrawing = tool("ray", "Ray", "lines", 2);
 export const infoLineDrawing = tool("info-line", "Info line", "lines", 2, { showAngle: false }, "info-line");
 export const extendedLineDrawing = tool("extended-line", "Extended line", "lines", 2);
 export const trendAngleDrawing = tool("trend-angle", "Trend angle", "lines", 2);
-export const horizontalLineDrawing = tool("horizontal-line", "Horizontal line", "lines", 1);
+export const horizontalLineDrawing = tool("horizontal-line", "Horizontal line", "lines", 1, {}, 'horizontal-line', 'point', lineExtensionSchema);
 export const horizontalRayDrawing = tool("horizontal-ray", "Horizontal ray", "lines", 1);
 export const verticalLineDrawing = tool("vertical-line", "Vertical line", "lines", 1);
 export const crossLineDrawing = tool("cross-line", "Cross line", "lines", 1);

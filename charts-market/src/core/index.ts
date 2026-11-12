@@ -8,6 +8,7 @@ export type {
   JsonValue,
   MarketChartType,
   MarketMarker,
+  MarketPriceReference,
   MarketSessionRange,
   MarketScaleMode,
   MarketSeries,
@@ -68,3 +69,4 @@ export * from "./time-axis";
 export type { MarketRenderBounds } from "./engine";
 export * from "./presentation";
 export * from "./data-revision";
+export * from './interactions';

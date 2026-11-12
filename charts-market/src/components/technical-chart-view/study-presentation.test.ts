@@ -5,6 +5,15 @@ import {studyLabels, studyValueAt} from './study-presentation';
 import {supplementaryLegendGroups} from './legend-groups';
 import {navigateVisibleRange} from './navigation';
 describe('public study presentation without financial inference', () => {
+  it('uses Vol for the supplied bar-volume value without changing title, direction colors, values or request identities', () => {
+    const state=readabilityState(),saved=JSON.stringify(state),keys=createCalculationRequests('host-admitted','SYN','5m',state),bar=readabilityBars[5];
+    for(const volume of [1234567,0,undefined]){
+      const group=supplementaryLegendGroups(state,'price',bar.time,{...bar,volume},{},{})[0];
+      expect(group).toMatchObject({id:'bar-volume:price',label:'Bar volume',description:'Rising/falling refers to close versus open, not buyer/seller-initiated volume.'});
+      expect(group.lines).toEqual([{label:'Rising bar',color:'hsl(var(--positive))',style:'histogram',showValue:false,value:null},{label:'Falling bar',color:'hsl(var(--negative))',style:'histogram',showValue:false,value:null},{label:'Vol',color:'transparent',value:volume??null}]);
+    }
+    expect(JSON.stringify(state)).toBe(saved);expect(createCalculationRequests('host-admitted','SYN','5m',state)).toEqual(keys);
+  });
   it('uses names/parameters and bounded duplicate ordinals without changing request identities', () => {
     const state = readabilityState(), original = createCalculationRequests('id', 'SYN', '5m', state);
     state.indicators.push({...state.indicators[0], id: 'another:opaque/id'});

@@ -7,6 +7,9 @@ export interface TechnicalSuppliedDetails {requests: readonly CalculationRequest
 interface SuppliedStatusProps extends TechnicalSuppliedDetails {
   incoming: SuppliedCalculationResults;
   compact: boolean;
+  showDetails?:boolean;
+  /** Keep critical text readable within the existing compact Board budget; never discard it. */
+  boundWarnings?:boolean;
   inline?: boolean;
   labels?: Record<string, string>;
   onRequestDetails?: (details: TechnicalSuppliedDetails) => void;
@@ -27,8 +30,9 @@ export function suppliedStatusSummary({requests, results, incoming, availability
   for (const [label, count] of counts) if (label !== 'Stale') labels.push(`${count} ${label}`);
   return labels.join(' · ') || 'No supplied studies';
 }
-export function SuppliedStatus({requests, results, incoming, missingIdentity, compact, inline, labels = {}, onRequestDetails, availability}: SuppliedStatusProps) {
+export function SuppliedStatus({requests, results, incoming, missingIdentity, compact, inline, labels = {}, onRequestDetails, availability,showDetails=true,boundWarnings=false}: SuppliedStatusProps) {
   const [open, setOpen] = React.useState(false);
+  React.useEffect(()=>{if(!showDetails)setOpen(false);},[showDetails]);
   const detailsButton = React.useRef<HTMLButtonElement>(null);
   const full = (request: CalculationRequest) => {
     const result = results[request.instanceId], superseded = !!incoming[request.instanceId] && !result;
@@ -40,13 +44,18 @@ export function SuppliedStatus({requests, results, incoming, missingIdentity, co
     if (onRequestDetails) onRequestDetails(payload); else setOpen(true);
   };
   const summary = suppliedStatusSummary({requests, results, incoming, availability});
+  const warningRequests=requests.filter(request=>{const result=results[request.instanceId];return !!result?.warning||result?.status==='unavailable'||result?.kind==='profile'&&!!result.profile.unavailable||!!incoming[request.instanceId]&&!result;});
+  const availabilityWarning=availability?.description&&/error|unavailable|stale/i.test(availability.status);
+  const bounded=!!(boundWarnings&&compact&&!showDetails&&(warningRequests.length||availabilityWarning));
   return <>
-    <div role="status" aria-label="Supplied calculation status" className={cn('flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-xs text-foreground forced-colors:text-[CanvasText]', inline ? 'py-0' : 'px-3 py-1')}>
+    <div role="status" aria-label="Supplied calculation status" tabIndex={bounded?0:undefined} className={cn('flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-xs text-foreground forced-colors:text-[CanvasText]', inline ? 'py-0' : 'px-3 py-1',bounded&&'max-h-16 overflow-y-auto focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring')}>
       {missingIdentity ? <span>Supplied results unavailable: calculationIdentity is required.</span>
         : compact ? <span className="break-words">{summary}</span> : requests.map(request => <span key={request.instanceId} className="break-words">{full(request)}</span>)}
-      {compact ? <Button ref={detailsButton} type="button" size="xs" colorStyle="text" className="h-7 shrink-0" onClick={details} aria-label="Supplied calculation details">Details</Button> : null}
+      {compact&&showDetails ? <Button ref={detailsButton} type="button" size="xs" colorStyle="text" className="h-7 shrink-0" onClick={details} aria-label="Supplied calculation details">Details</Button> : null}
+      {compact&&!showDetails?warningRequests.map(request=>{const result=results[request.instanceId];return <span key={request.instanceId} className="break-words">{full(request)}{result?.kind==='profile'&&result.profile.unavailable?` · ${result.profile.unavailable}`:''}{incoming[request.instanceId]&&!result&&incoming[request.instanceId]?.warning?` · Rejected response warning: ${incoming[request.instanceId]?.warning}`:''}</span>;}):null}
+      {compact&&!showDetails&&availability?.description&&/error|unavailable|stale/i.test(availability.status)?<span className="break-words">{availability.description}</span>:null}
     </div>
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={showDetails&&open} onOpenChange={setOpen}>
       <DialogContent onCloseAutoFocus={event => {event.preventDefault(); detailsButton.current?.focus();}} className="max-h-[80dvh] max-w-[min(40rem,calc(100%-1rem))] overflow-auto text-foreground motion-reduce:animate-none">
         <DialogTitle>Supplied calculation details</DialogTitle>
         <DialogDescription>Host-supplied status, provenance, coverage and warnings. Superseded results are never rendered.</DialogDescription>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DialogContent as BaseDialogContent, DropdownMenuContent as BaseDropdownMenuContent, TooltipContent as BaseTooltipContent, cn } from "aapaetsch-ui-kit";
+import { DialogContent as BaseDialogContent, DropdownMenuContent as BaseDropdownMenuContent, TooltipContent as BaseTooltipContent, PopoverContent as BasePopoverContent, cn } from "aapaetsch-ui-kit";
 
 export type TechnicalChartTheme = "light" | "dark" | "midnight";
 /** HSL channels, matching the UI kit CSS variable contract. Applied to root AND portals. */
@@ -13,10 +13,14 @@ for (const palette of Object.values(technicalChartThemes)) Object.assign(palette
   "--secondary": palette["--muted" as keyof React.CSSProperties], "--secondary-foreground": palette["--foreground" as keyof React.CSSProperties], "--destructive": palette["--negative" as keyof React.CSSProperties],
 });
 export const ChartThemeContext = React.createContext<{ theme?: TechnicalChartTheme; style?: React.CSSProperties }>({});
+/** Opt-in editor portals only; omitted consumers keep the UI kit's body destination. */
+export const ChartPortalContainerContext = React.createContext<Element|undefined>(undefined);
 function usePortalTheme(className?: string, style?: React.CSSProperties) {
   const scope = React.useContext(ChartThemeContext);
-  return { className: cn(scope.theme && scope.theme !== "light" && "dark", className), style: { ...scope.style, ...style } };
+  const container=React.useContext(ChartPortalContainerContext);
+  return { className: cn(scope.theme && scope.theme !== "light" && "dark", className), style: { ...scope.style, ...style },...(container?{portalContainer:container}:{}) };
 }
 export const DialogContent = React.forwardRef<React.ElementRef<typeof BaseDialogContent>, React.ComponentPropsWithoutRef<typeof BaseDialogContent>>(({ className, style, ...props }, ref) => <BaseDialogContent ref={ref} {...props} {...usePortalTheme(className, style)} />);
 export const DropdownMenuContent = React.forwardRef<React.ElementRef<typeof BaseDropdownMenuContent>, React.ComponentPropsWithoutRef<typeof BaseDropdownMenuContent>>(({ className, style, ...props }, ref) => <BaseDropdownMenuContent ref={ref} {...props} {...usePortalTheme(className, style)} />);
 export const TooltipContent = React.forwardRef<React.ElementRef<typeof BaseTooltipContent>, React.ComponentPropsWithoutRef<typeof BaseTooltipContent>>(({ className, style, ...props }, ref) => <BaseTooltipContent ref={ref} {...props} {...usePortalTheme(className, style)} />);
+export const PopoverContent = React.forwardRef<React.ElementRef<typeof BasePopoverContent>, React.ComponentPropsWithoutRef<typeof BasePopoverContent>>(({className,style,...props},ref)=><BasePopoverContent ref={ref} {...props} {...usePortalTheme(className,style)}/>);

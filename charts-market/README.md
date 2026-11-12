@@ -110,6 +110,24 @@ See [TechnicalChartView documentation](src/components/technical-chart-view/READM
 
 ## Supplied producer results
 
+### Earnings timeline coordinates
+
+Supply `earnings` to render native **E** buttons on the price-pane timeline. Each
+button identifies the supplied announcement date, estimated status and session on
+hover/focus; click, Enter, Space or touch opens the shared earnings details card.
+Closing the card restores focus to the marker when it is still visible.
+
+An explicit event `barTime` is the exact display anchor, including a future date
+present in the host's `timeAxis` calendar without a corresponding price candle.
+Both ends of the visible plot are inclusive. At an edge only the 24 CSS-pixel
+button hit target moves inward to keep its focus ring inside the pane; the event
+date and calendar coordinate stay unchanged. Truly off-screen anchors stay hidden.
+Events without a resolvable anchor remain in the accessible earnings list and are
+never relocated to the last candle. No calendar sessions or price rows are added.
+
+See **Market Charts / Earnings timeline** in Storybook for fitted endpoints,
+pan/zoom/Fit/Latest, calendar/event updates, light/dark and compact-card examples.
+
 TechnicalChartView now supports controlled supplied-only calculations, independent palettes and UTC viewport linking. See [the integration contract and publication review](./SUPPLIED-RESULTS.md) for exact types, adapter mappings, guard behavior and limitations.
 
 
@@ -117,7 +135,47 @@ Host-controlled calendar geometry: see [CALENDAR-COORDINATES.md](./CALENDAR-COOR
 
 Research workspace refinement: see [REFINEMENT.md](./REFINEMENT.md) for typed appearance, compact evidence/details, available-height geometry, shared drawing commands/history, accepted snapshot revisions and interaction-origin callbacks. Runtime additions preserve version-1 persistence and supplied-only calculations.
 
+Workspace interactions opt-in: see [INTERACTIONS.md](./INTERACTIONS.md) for the public scroll owner, temporary pane scales/maximize, logical viewport commands, per-gesture pane drafts and intrinsic geometry contract. Defaults and version-1 serializers remain compatible.
+
+`appearance.suppliedDetails=false` removes compact supplied-details entry points
+while preserving status and critical warnings; defaults remain unchanged.
+
+Board card controls: `useTechnicalPaneMenu`, controlled `paneMenu`/
+`onPaneMenuChange`, `paneMenuTrigger="none"` and `allowLogScale={false}` provide
+host-title access to the same shared pane menu and runtime scale policy. Opt into
+`appearance.crosshair.lineMarker` for a small outlined closing-price hover dot.
+Its exact/interpolated display geometry is separate from OHLC/study readouts.
+See the TechnicalChartView README and **Market Charts / Board Card** stories.
+
+Timeline controls: `appearance.timeline` (`presentation.timeline` on MarketChart)
+opts into visible-span labels, supplied session starts, calendar right-space pan
+and optional stateful Auto/linear-log icons beneath the real price axis. Public
+types include `MarketTimelinePresentation`, `MarketTimelineRange` and
+`MarketTimeTick`; `onSnapshotChange` exposes optional resolved ticks/axis geometry.
+See the typed examples, defaults, callback origins and blank-space economic
+contract in [INTERACTIONS.md](./INTERACTIONS.md). No new price bars, sessions,
+calculation inputs or saved-state fields are generated.
+### Drawing extensions and future annotation dates (local candidate)
+
+Opt into `timeAxis.futureDisplay` to author drawings on a bounded UTC calendar
+ruler beyond known observations. Optional serialized `extendLeft`/`extendRight`
+booleans on trend and horizontal lines use the existing selection toolbar and
+shared history; saved anchors and IDs stay exact. Existing consumers retain their
+defaults. See [INTERACTIONS.md](./INTERACTIONS.md) for typed controlled examples and
+[CALENDAR-COORDINATES.md](./CALENDAR-COORDINATES.md) for the seam, interval, horizon,
+inspection and economic-bound contract. These options do not acquire data or
+create future sessions, prices or study observations.
 ## Feature integration notes
+
+Opt-in floating drawing editor: pass `drawingEditor={{active:true,...}}` on the active editable `TechnicalChartView` or `MarketChart` instance. The shared portal toolbar, atomic Style/Text/Coordinates/Visibility dialog, exact-coordinate history, host-supplied statistics and selected timeline are documented in [DRAWING-EDITOR.md](./DRAWING-EDITOR.md). The complete public contract is also embedded in [INTERACTIONS.md](./INTERACTIONS.md), which is included by the unchanged package manifest. Default/Board consumers retain existing behavior. Local review evidence and the separate publication proposal are under `.chart-drawing-editor-validation/`; no publication or product adoption follows from this opt-in.
+
+Quiet compact Boards may opt into `appearance.suppliedStatus='host'` with existing discoverable host-expanded evidence, and `priceReferences` using `showPlotLabel:false, showAxisLabel:true, axisLabel:'Open'`. This removes only redundant study-status chrome and the plot caption, retains complete evidence/accessibility and preserves default/expanded behavior. See [BOARD-INLINE-READOUT.md](./BOARD-INLINE-READOUT.md) and [PRICE-REFERENCES.md](./PRICE-REFERENCES.md). Publication and consumer adoption remain separate from this local source candidate.
+
+See [BOARD-INLINE-READOUT.md](./BOARD-INLINE-READOUT.md) for compact `studyReadout='volume-only'` beside a host shared average key and expanded `'inline'` with all numeric values. Both use natural measured height and one lowercase `vol`; missing volume reserves no compact row, zero remains zero, and omitted-option full-chart legends are unchanged.
+
+See [PRICE-REFERENCES.md](./PRICE-REFERENCES.md) for runtime supplied dotted price levels, optional outlined reference values and exact host-owned evidence boundaries. These noninteractive references do not enter saved state, drawings or calculations.
+
+Shared bar-volume legend values use `Vol`; the `Bar volume` group title, supplied values and direction colors retain their existing meaning.
 
 See [ENDPOINT-LABELS.md](./ENDPOINT-LABELS.md) for opt-in price and all-study endpoint boxes in a separate gutter, pane-relative anchors, minimal collision displacement and accessible bounded overflow. This includes oscillator line/histogram outputs and preserves existing defaults.
 

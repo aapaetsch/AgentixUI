@@ -1,4 +1,10 @@
 "use client";
+import {useDrawingDocument} from './use-drawing-document';
+import {exactDrawingCoordinates} from '../../drawings/editor-state';
+import {completeDrawingCoordinates,drawingCoordinateCompletionError} from '../../drawings/completed-coordinates';
+import type {MarketDrawingEditorOptions} from '../../drawings/editor-types';
+import type { MarketChartInteractions, MarketChartInteractionState, MarketChartInteractionChange, MarketViewportCommand } from '../../core';
+
 
 import * as React from "react";
 import {useMarketDataRevision} from "./use-data-revision";
@@ -60,8 +66,11 @@ import {
 } from "../../drawings";
 import { builtInIndicators } from "../../indicators";
 import { createMarketChartEngine } from "../../engine";
+import {acceptedPriceReferences} from '../../engine/price-references';
 
 export interface MarketChartHandle {
+  resetPaneScale(paneId: string, metadata?: MarketChartChangeMetadata): void;
+  setViewportCommand(viewport: MarketViewportOptions): void;
   resetScale():void;
   executeDrawingCommand(command:MarketDrawingCommand):void;
   getDrawingHistory():MarketDrawingHistorySnapshot;
@@ -76,11 +85,23 @@ export interface MarketChartHandle {
 }
 
 export interface MarketChartProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
+  /** Additive active-instance floating authoring UI; omitted retains the historical controls. */
+  drawingEditor?:MarketDrawingEditorOptions;
   data: OhlcBar[];
   /** Revisioned full snapshots require an explicit current dataIdentity. */
   dataIdentity?:string;
   dataRevision?:MarketDataRevision;
   onDataAcceptance?:(receipt:MarketDataAcceptance)=>void;
+  interactions?: MarketChartInteractions;
+  interactionState?: MarketChartInteractionState;
+  onInteractionStateChange?: MarketChartInteractionChange;
+  viewportCommand?: MarketViewportCommand;
+  /** Actual overflowing plot extent, including axis; no economic range intent. */
+  onContentHeightChange?: (height: number) => void;
+  /** Live canvas-host allocation for composed layout measurement; no ancestor lookup. */
+  canvasHostRef?: React.Ref<HTMLDivElement>;
+  /** Read-only runtime geometry/scale/ticks. Called after layout; must not drive economic requests. */
+  onSnapshotChange?: (snapshot: MarketChartSnapshot) => void;
   presentation?:MarketChartPresentation;
   drawingToolIds?:readonly string[];
   drawingCommand?:MarketDrawingCommandRequest;
@@ -120,6 +141,8 @@ export interface MarketChartProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   error?: React.ReactNode;
   emptyMessage?: React.ReactNode;
   markers?: MarketMarker[];
+  /** Noninteractive supplied display levels; never calculated, persisted or included in drawing history. */
+  priceReferences?: readonly import('../../core').MarketPriceReference[];
   availableIndicators?: IndicatorDefinition[];
   indicators?: IndicatorInstance[];
   onIndicatorsChange?: (indicators: IndicatorInstance[]) => void;
@@ -145,6 +168,8 @@ export interface MarketChartProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   onVisibleRangeChange?: (range: VisibleRange | null, metadata?:MarketChartChangeMetadata) => void;
   onCurrentBarChange?: (snapshot: CurrentBarSnapshot | null) => void;
   onCrosshairChange?: (snapshot: MarketCrosshairSnapshot | null) => void;
+  /** Presentation-only text for keyboard inspection; pointer moves never announce. */
+  formatKeyboardInspection?: (snapshot:MarketCrosshairSnapshot)=>string;
   onDrawingsChange?: (drawings: DrawingState[], metadata?: DrawingChangeMetadata) => void;
   onSelectedDrawingIdsChange?: (drawingIds: string[]) => void;
   onActiveDrawingToolChange?: (toolId: string | undefined) => void;
@@ -190,7 +215,7 @@ function formatTime(time: MarketTime, locale?: string, timeZone?: string): strin
 export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>(function MarketChart({
   data:incomingData, dataIdentity, dataRevision, onDataAcceptance, presentation, drawingToolIds, drawingCommand, onDrawingHistoryChange, timeAxis, discontinuities,
   calculationMode = "internal", suppliedIndicatorSeries = [], suppliedDrawingResults, themeRevision,
-  panes, viewport, scale, onViewportChange, onScaleChange,
+  interactions, interactionState, onInteractionStateChange, viewportCommand, onContentHeightChange, canvasHostRef, onSnapshotChange, panes, viewport, scale, onViewportChange, onScaleChange,
   showSummary = true, showDrawingToolbar = true, drawingToolbarOrientation = 'horizontal', drawingToolbarClassName, renderSurfaceOverlay, chartDescription,
   chartType = "candlestick",
   scaleMode = "normal",
@@ -205,13 +230,15 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   error,
   emptyMessage = "No market data is available for this range.",
   markers = [],
+  priceReferences,
   availableIndicators = builtInIndicators,
   indicators = [],
   onIndicatorsChange,
   paneSizes,
   onPaneSizesChange,
   renderLayers = [],
-  drawings = [],
+  drawings:controlledDrawings = [],
+  drawingEditor,
   drawingTools:requestedDrawingTools = builtInDrawingTools,
   drawingRenderers = builtInDrawingRenderers,
   drawingInteraction,
@@ -230,6 +257,7 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   onVisibleRangeChange,
   onCurrentBarChange,
   onCrosshairChange,
+  formatKeyboardInspection,
   onDrawingsChange,
   onSelectedDrawingIdsChange,
   onActiveDrawingToolChange,
@@ -239,6 +267,8 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   className,
   ...props
 }, forwardedRef) {
+  const drawingDocument=useDrawingDocument(controlledDrawings,drawingEditor!==undefined,JSON.stringify([dataIdentity,symbol,interval]));
+  const drawings=drawingDocument.drawings;
   const accepted=useMarketDataRevision(incomingData,dataIdentity,dataRevision,onDataAcceptance);
   const data=React.useMemo(()=>Array.from(accepted.data),[accepted.data]);
   const drawingTools=React.useMemo(()=>drawingToolIds?requestedDrawingTools.filter(tool=>drawingToolIds.includes(tool.id)):requestedDrawingTools,[requestedDrawingTools,drawingToolIds]);
@@ -247,6 +277,14 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   const [cancelDrawingRevision,setCancelDrawingRevision]=React.useState(0);
   const retainedSnapshot=React.useRef<MarketChartSnapshot|null>(null);
   const chartHostRef = React.useRef<HTMLDivElement>(null);
+  const attachCanvasHost=React.useCallback((element:HTMLDivElement|null)=>{
+    chartHostRef.current=element;
+    if(typeof canvasHostRef==='function'){
+      const cleanup=canvasHostRef(element);
+      if(typeof cleanup==='function')return()=>{chartHostRef.current=null;cleanup();};
+    }
+    else if(canvasHostRef)canvasHostRef.current=element;
+  },[canvasHostRef]);
   const chartSurfaceRef = React.useRef<HTMLDivElement>(null);
   const indicatorSelectId = React.useId();
   const engineRef = React.useRef<MarketChartEngine | null>(null);
@@ -263,17 +301,21 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   const [currentBar, setCurrentBar] = React.useState<OhlcBar | null>(data.at(-1) ?? null);
   const [crosshairSnapshot, setCrosshairSnapshot] = React.useState<MarketCrosshairSnapshot | null>(null);
   const [internalSelectedDrawingIds, setInternalSelectedDrawingIds] = React.useState<string[]>(() => drawings.filter((drawing) => drawing.selected).map((drawing) => drawing.id));
+  const [futureInspection,setFutureInspection]=React.useState<MarketChartSnapshot['futureInspection']>(null);
+  const [inspectionUnavailable,setInspectionUnavailable]=React.useState(false);
+  const keyboardInspectionRef=React.useRef(formatKeyboardInspection);keyboardInspectionRef.current=formatKeyboardInspection;
   const [drawingStylePreview, setDrawingStylePreview] = React.useState<Record<string, string | number> | null>(null);
   const [drawingHistoryRevision, setDrawingHistoryRevision] = React.useState(0);
   const [geometrySnapshot, setGeometrySnapshot] = React.useState<MarketChartSnapshot | null>(null);
   const [announcement, setAnnouncement] = React.useState('');
   const geometryKeyRef = React.useRef('');
-  const technicalCallbacks = React.useRef({ onViewportChange, onScaleChange }); technicalCallbacks.current = { onViewportChange, onScaleChange };
+  const technicalCallbacks = React.useRef({ onViewportChange, onScaleChange, onInteractionStateChange, onContentHeightChange, onSnapshotChange }); technicalCallbacks.current = { onViewportChange, onScaleChange, onInteractionStateChange, onContentHeightChange, onSnapshotChange };
+  const [contentHeight,setContentHeight]=React.useState(height);
   const issues = React.useMemo(() => reportMarketDataIssues(data), [data]);
   const geometryErrors = React.useMemo(() => validateMarketTimeGeometry(timeAxis, discontinuities), [timeAxis, discontinuities]);
   const geometryValid = geometryErrors.length === 0;
   const renderData = React.useMemo(() => issues.length ? [] : data, [data, issues.length]);
-  const engineOptionsRef = React.useRef({ presentation, timeAxis, discontinuities, chartType, renderData, height, showVolume, scaleMode, markers, extendedSessions, locale, timeZone, paneSizes, renderLayers, panes, viewport, scale });
+  const engineOptionsRef = React.useRef({ interactions, interactionState, presentation, timeAxis, discontinuities, chartType, renderData, height, showVolume, scaleMode, markers, priceReferences, extendedSessions, locale, timeZone, paneSizes, renderLayers, panes, viewport, scale });
   const historyLimit = drawingInteraction?.historyLimit ?? defaultDrawingInteraction.historyLimit;
   const drawingHistoryRef = React.useRef(createDrawingHistory(drawings, historyLimit));
   const indicatorRuntimeRef = React.useRef(new Map<string, IndicatorRuntime>());
@@ -312,7 +354,7 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   heightRef.current = height;
   indicatorsRef.current = indicators;
   indicatorSeriesRef.current = indicatorSeries;
-  engineOptionsRef.current = { presentation, timeAxis, discontinuities, chartType, renderData, height, showVolume, scaleMode, markers, extendedSessions, locale, timeZone, paneSizes, renderLayers, panes, viewport, scale };
+  engineOptionsRef.current = { interactions, interactionState, presentation, timeAxis, discontinuities, chartType, renderData, height, showVolume, scaleMode, markers, priceReferences, extendedSessions, locale, timeZone, paneSizes, renderLayers, panes, viewport, scale };
 
   React.useEffect(() => {
     const history = drawingHistoryRef.current;
@@ -340,15 +382,18 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
     const initial = engineOptionsRef.current;
     const theme=readTheme(host);
     Promise.resolve().then(() => engineFactory(host, {
+      interactions:initial.interactions, interactionState:initial.interactionState,
+      onInteractionStateChange:(next,metadata)=>technicalCallbacks.current.onInteractionStateChange?.(next,metadata),
+      onContentHeightChange:next=>{setContentHeight(previous=>previous===next?previous:next);technicalCallbacks.current.onContentHeightChange?.(next);},
       presentation:initial.presentation,
       timeAxis: geometryValid ? initial.timeAxis : undefined, discontinuities: geometryValid ? initial.discontinuities : undefined,
       chartType: initial.chartType, data: initial.renderData, height: initial.height, showVolume: initial.showVolume,
-      scaleMode: initial.scaleMode, markers: initial.markers, locale: initial.locale, timeZone: initial.timeZone, theme,
+      scaleMode: initial.scaleMode, markers: initial.markers, priceReferences: initial.priceReferences, locale: initial.locale, timeZone: initial.timeZone, theme,
       paneSizes: initial.paneSizes, renderLayers: initial.renderLayers, panes: initial.panes, viewport: initial.viewport ?? retainedSnapshot.current?.viewport, scale: initial.scale ?? retainedSnapshot.current?.scale,
       extendedSessions: initial.extendedSessions,
       onVisibleRangeChange: (range,metadata) => { setViewportRevision((value) => value + 1); visibleRangeCallbackRef.current?.(range,metadata); },
       onCrosshairMove: (time) => {
-        const bar = time == null ? engineOptionsRef.current.timeAxis && engineOptionsRef.current.timeAxis.mode !== "compressed" ? null : dataRef.current.at(-1) ?? null : barsByTimeRef.current.get(marketTimeKey(time)) ?? null;
+        const bar = time == null ? engineOptionsRef.current.interactions?.mode==="workspace" || engineOptionsRef.current.timeAxis?.futureDisplay || engineOptionsRef.current.timeAxis && engineOptionsRef.current.timeAxis.mode !== "compressed" ? null : dataRef.current.at(-1) ?? null : barsByTimeRef.current.get(marketTimeKey(time)) ?? null;
         setCurrentBar(bar);
         currentBarCallbackRef.current?.(bar ? snapshotForBar(bar, calculationMode) : null);
       },
@@ -356,8 +401,8 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
       onPaneSizesChange: (sizes,metadata) => paneSizesCallbackRef.current?.(sizes,metadata),
       onViewportChange: (next,metadata) => technicalCallbacks.current.onViewportChange?.(next,metadata),
       onScaleChange: (next,metadata) => technicalCallbacks.current.onScaleChange?.(next,metadata),
-      onSnapshotChange: snapshot => { const key = JSON.stringify([snapshot.panes, snapshot.scales, snapshot.visibleRange]); if (geometryKeyRef.current !== key) { geometryKeyRef.current = key; setGeometrySnapshot(snapshot); } },
-      onKeyboardInspect: snapshot => setAnnouncement(formatTime(snapshot.time, initial.locale, initial.timeZone) + ', close ' + snapshot.bar.close),
+      onSnapshotChange: snapshot => {setInspectionUnavailable(snapshot.inspectionUnavailable===true);setFutureInspection(previous=>JSON.stringify(previous)===JSON.stringify(snapshot.futureInspection??null)?previous:snapshot.futureInspection??null); const key = JSON.stringify([snapshot.panes, snapshot.scales, snapshot.visibleRange, snapshot.viewport?.logicalRange]); if (geometryKeyRef.current !== key) { geometryKeyRef.current = key; setGeometrySnapshot(snapshot); } technicalCallbacks.current.onSnapshotChange?.(snapshot); },
+      onKeyboardInspect: snapshot => setAnnouncement(keyboardInspectionRef.current?.(snapshot)??formatTime(snapshot.time, initial.locale, initial.timeZone) + ', close ' + snapshot.bar.close),
       onError: (message) => setEngineError(message),
     })).then((engine) => {
       if (cancelled) { engine.destroy(); return; }
@@ -388,10 +433,16 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   }, [engineFactory, calculationMode]);
 
   React.useEffect(()=>{const host=chartHostRef.current;if(host){engineRef.current?.setTheme?.(readTheme(host));engineRef.current?.setIndicatorSeries(indicatorSeriesRef.current);}},[themeRevision,engineRevision]);
+  React.useEffect(()=>{engineRef.current?.setInteractions?.(interactions);},[interactions,engineRevision]);
+  React.useEffect(()=>{if(interactionState)engineRef.current?.setInteractionState?.(interactionState);},[interactionState,engineRevision]);
+  const appliedViewportCommand=React.useRef<string|number|undefined>(undefined);
+  React.useEffect(()=>{if(viewportCommand&&appliedViewportCommand.current!==viewportCommand.id&&engineRef.current){appliedViewportCommand.current=viewportCommand.id;engineRef.current.setViewportCommand?.(viewportCommand.viewport);}},[viewportCommand,engineRevision]);
   React.useEffect(()=>{engineRef.current?.setPresentation?.(presentation??{});},[presentation,engineRevision]);
   React.useEffect(() => { if (geometryValid) { engineRef.current?.setTimeAxis?.(timeAxis); setViewportRevision(value => value + 1); } }, [timeAxis, geometryValid, engineRevision]);
   React.useEffect(() => { if (geometryValid) { engineRef.current?.setDiscontinuities?.(discontinuities ?? []); setViewportRevision(value => value + 1); } }, [discontinuities, geometryValid, engineRevision]);
+  const interactionDataset=React.useRef(JSON.stringify([interactions?.contextKey!==undefined?'context':'fallback',interactions?.contextKey??dataIdentity,symbol,interval]));
   React.useEffect(() => { engineRef.current?.setData(renderData); }, [renderData, engineRevision]);
+  React.useEffect(()=>{const key=JSON.stringify([interactions?.contextKey!==undefined?'context':'fallback',interactions?.contextKey??dataIdentity,symbol,interval]);if(interactionDataset.current!==key){interactionDataset.current=key;engineRef.current?.resetInteractionGeometry?.();}},[interactions?.contextKey,dataIdentity,symbol,interval,engineRevision]);
   React.useEffect(() => { if(panes) engineRef.current?.setPanes?.(panes); }, [panes, engineRevision]);
   React.useEffect(() => { if(viewport) engineRef.current?.setViewport?.(viewport); }, [viewport, engineRevision]);
   React.useEffect(() => { if(scale) engineRef.current?.setScale?.(scale); }, [scale, engineRevision]);
@@ -399,6 +450,7 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   React.useEffect(() => { engineRef.current?.setScaleMode(scaleMode); }, [scaleMode, engineRevision]);
   React.useEffect(() => { engineRef.current?.setVolumeVisible(showVolume); }, [showVolume, engineRevision]);
   React.useEffect(() => { engineRef.current?.setMarkers(markers); }, [markers, engineRevision]);
+  React.useEffect(() => { engineRef.current?.setPriceReferences?.(priceReferences??[]); }, [priceReferences, engineRevision]);
   React.useEffect(() => { engineRef.current?.setExtendedSessions(extendedSessions); }, [extendedSessions, engineRevision]);
   React.useEffect(() => { engineRef.current?.setIndicatorSeries(indicatorSeries); }, [indicatorSeries, engineRevision]);
   React.useEffect(() => { engineRef.current?.setOverlays(overlays); }, [overlays, engineRevision]);
@@ -422,6 +474,8 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
       setCurrentBar(bar);
       currentBarCallbackRef.current?.(snapshotForBar(bar, calculationMode));
     },
+    resetPaneScale:(paneId,metadata)=>engineRef.current?.resetPaneScale?.(paneId,metadata),
+    setViewportCommand:viewport=>engineRef.current?.setViewportCommand?.(viewport),
     resetScale:()=>engineRef.current?.resetScale?.(),
     fitContent: metadata => engineRef.current?.fitContent(metadata),
     scrollToRealtime: metadata => engineRef.current?.scrollToRealtime(metadata),
@@ -433,7 +487,8 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
   }), [calculationMode]);
 
   const visibleError = error ?? geometryErrors[0] ?? (issues.length ? issues[0].message : engineError);
-  const snapshot = currentBar ? snapshotForBar(currentBar, calculationMode) : null;
+  const futureOnly=!!timeAxis?.futureDisplay&&(!!futureInspection||!!geometrySnapshot&&!geometrySnapshot.visibleRange);
+  const snapshot = !futureOnly&&currentBar ? snapshotForBar(currentBar, calculationMode) : null;
   const numberFormatter = React.useMemo(() => new Intl.NumberFormat(locale, { maximumFractionDigits: 4 }), [locale]);
   const showTable = dataTable === "always" || (dataTable === "toggle" && tableOpen);
   const usesLegacySelection = controlledSelectedDrawingIds === undefined && onSelectedDrawingIdsChange === undefined;
@@ -461,21 +516,30 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
     }
   };
   const commitDrawings = (next: DrawingState[], metadata: DrawingChangeMetadata = { type: "style", drawingIds: effectiveSelectedDrawingIds }) => {
-    const history = reduceDrawingHistory(drawingHistoryRef.current, { type: "commit", drawings: stripTransientDrawingState(next), metadata });
-    if (history === drawingHistoryRef.current) return;
+    const completed=completeDrawingCoordinates(next,metadata,drawingEditor?.active===true);
+    if(!completed){setAnnouncement(drawingCoordinateCompletionError);return false;}
+    const history = reduceDrawingHistory(drawingHistoryRef.current, { type: "commit", drawings: stripTransientDrawingState(completed), metadata });
+    if (history === drawingHistoryRef.current) return true;
     drawingHistoryRef.current = history;
     setDrawingHistoryRevision((value) => value + 1);
-    onDrawingsChange?.(withLegacySelection(history.present), metadata);
+    drawingDocument.commit(history.present);
+    const exactCoordinates=exactDrawingCoordinates(history.present.filter(d=>metadata.drawingIds.includes(d.id)));
+    onDrawingsChange?.(withLegacySelection(history.present), {...metadata,...(exactCoordinates.length?{exactCoordinates}:{})});
+    return true;
   };
   const undoDrawings = () => {
     const history = reduceDrawingHistory(drawingHistoryRef.current, { type: "undo" }); if (history === drawingHistoryRef.current) return;
     drawingHistoryRef.current = history; setDrawingHistoryRevision((value) => value + 1);
-    onDrawingsChange?.(withLegacySelection(history.present), { type: "undo", drawingIds: history.present.map((drawing) => drawing.id) });
+    drawingDocument.commit(history.present);
+    const exactCoordinates=exactDrawingCoordinates(history.present);
+    onDrawingsChange?.(withLegacySelection(history.present), { type: "undo", drawingIds: history.present.map((drawing) => drawing.id),...(exactCoordinates.length?{exactCoordinates}:{}) });
   };
   const redoDrawings = () => {
     const history = reduceDrawingHistory(drawingHistoryRef.current, { type: "redo" }); if (history === drawingHistoryRef.current) return;
     drawingHistoryRef.current = history; setDrawingHistoryRevision((value) => value + 1);
-    onDrawingsChange?.(withLegacySelection(history.present), { type: "redo", drawingIds: history.present.map((drawing) => drawing.id) });
+    drawingDocument.commit(history.present);
+    const exactCoordinates=exactDrawingCoordinates(history.present);
+    onDrawingsChange?.(withLegacySelection(history.present), { type: "redo", drawingIds: history.present.map((drawing) => drawing.id),...(exactCoordinates.length?{exactCoordinates}:{}) });
   };
 
   const historySnapshot:MarketDrawingHistorySnapshot={canUndo:drawingHistoryRef.current.past.length>0,canRedo:drawingHistoryRef.current.future.length>0,selectedIds:effectiveSelectedDrawingIds,drawingCount:drawingHistoryRef.current.present.length};
@@ -487,15 +551,17 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
     if(!onDrawingsChange)return;
     if(command.type==="undo")undoDrawings();else if(command.type==="redo")redoDrawings();
     else if(command.type==="select")changeSelection(command.ids.filter(id=>drawings.some(d=>d.id===id)));
-    else if(command.type==="cancel"){setCancelDrawingRevision(v=>v+1);setDrawingStylePreview(null);onActiveDrawingToolChange?.(undefined);changeSelection([]);}
+    else if(command.type==="cancel"){drawingDocument.reset();setCancelDrawingRevision(v=>v+1);setDrawingStylePreview(null);onActiveDrawingToolChange?.(undefined);changeSelection([]);}
     else if(command.type==="delete"){commitDrawings(drawings.filter(d=>!selectedDrawingSet.has(d.id)),{type:"delete",drawingIds:effectiveSelectedDrawingIds});changeSelection([]);}
     else if(command.type==="style")commitDrawings(drawings.map(d=>selectedDrawingSet.has(d.id)?{...d,parameters:{...d.parameters,...command.parameters}}:d),{type:"style",drawingIds:effectiveSelectedDrawingIds});
   };
   const processedCommand=React.useRef<string|number|undefined>(undefined);
   React.useEffect(()=>{if(drawingCommand&&processedCommand.current!==drawingCommand.id){processedCommand.current=drawingCommand.id;commandRef.current(drawingCommand.command);}},[drawingCommand]);
   React.useEffect(()=>{if(activeDrawingTool&&drawingToolIds&&!drawingToolIds.includes(activeDrawingTool))commandRef.current({type:"cancel"});},[activeDrawingTool,drawingToolIds]);
+  const suppliedReferences=renderData.length>0?acceptedPriceReferences(priceReferences):[];
   return (
     <div className={cn("overflow-hidden rounded-[var(--radius)] border border-border bg-background text-foreground", className)} {...props}>
+      {suppliedReferences.length>0 ? <div className="sr-only" aria-label="Supplied price references">{suppliedReferences.map(reference=><p key={reference.id}>{reference.label}: {reference.price} (supplied reference; may be outside the current view)</p>)}</div>:null}
       {showControls ? (
         <MarketChartControls
           symbol={symbol} interval={interval} intervalOptions={intervalOptions} chartType={chartType} scaleMode={scaleMode}
@@ -506,7 +572,7 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
       ) : null}
       {onDrawingsChange && showDrawingToolbar ? <DrawingToolbar
         orientation={drawingToolbarOrientation} className={drawingToolbarClassName} style={drawingToolbarOrientation==="vertical"?{maxHeight:height,overflowY:"auto"}:undefined}
-        tools={drawingTools} activeToolId={activeDrawingTool} selectedDrawing={selectedDrawing} selectedDrawings={selectedDrawings}
+        tools={drawingTools} activeToolId={activeDrawingTool} selectedDrawing={drawingEditor?undefined:selectedDrawing} selectedDrawings={drawingEditor?[]:selectedDrawings}
         canUndo={drawingHistoryRef.current.past.length > 0} canRedo={drawingHistoryRef.current.future.length > 0}
         onActiveToolChange={(toolId) => { onActiveDrawingToolChange?.(toolId); if (toolId) onDrawingPreferencesChange?.({ ...drawingPreferences, recentToolIds: [toolId, ...(drawingPreferences?.recentToolIds ?? []).filter((id) => id !== toolId)].slice(0, 8) }); }} onUndo={undoDrawings} onRedo={redoDrawings}
         favoriteToolIds={drawingPreferences?.favoriteToolIds} recentToolIds={drawingPreferences?.recentToolIds} keepDrawingMode={drawingPreferences?.keepDrawingMode ?? drawingInteraction?.keepDrawingMode}
@@ -517,6 +583,7 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
         onRemoveAll={() => { commitDrawings([], { type: "clear", drawingIds: drawings.map((drawing) => drawing.id) }); changeSelection([]); }}
         onCreateAlert={onCreateDrawingAlert && selectedDrawing && (["lines", "channels", "volume"].includes(drawingTools.find((tool) => tool.id === selectedDrawing.type)?.category ?? "") || selectedDrawing.type === "rectangle") ? () => onCreateDrawingAlert?.(selectedDrawing.id) : undefined}
         onStylePreview={setDrawingStylePreview}
+        onLineExtensionChange={changes=>commitDrawings(drawings.map(drawing=>selectedDrawingSet.has(drawing.id)?{...drawing,parameters:{...drawing.parameters,...changes}}:drawing),{type:'style',drawingIds:effectiveSelectedDrawingIds,transactionId:crypto.randomUUID()})}
         onStyleCommit={(changes) => { setDrawingStylePreview(null); commitDrawings(drawings.map((drawing) => selectedDrawingSet.has(drawing.id) ? { ...drawing, parameters: { ...drawing.parameters, ...changes } } : drawing), { type: "style", drawingIds: effectiveSelectedDrawingIds, transactionId: `style-${Date.now()}` }); }}
         onDelete={() => { commitDrawings(drawings.filter((drawing) => !selectedDrawingSet.has(drawing.id)), { type: "delete", drawingIds: effectiveSelectedDrawingIds }); changeSelection([]); }}
         onToggleVisibility={() => commitDrawings(drawings.map((drawing) => selectedDrawingSet.has(drawing.id) ? { ...drawing, visible: !drawing.visible } : drawing), { type: "visibility", drawingIds: effectiveSelectedDrawingIds })}
@@ -548,8 +615,9 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
       ) : null}
       <div className={cn(showDrawingObjectTree && "flex min-w-0")}><div
         ref={chartSurfaceRef}
+        data-chart-surface=""
         className={cn("relative min-w-0 flex-1 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring/60", activeDrawingTool && "cursor-crosshair")}
-        style={{ minHeight: height }}
+        style={{ minHeight: interactions ? contentHeight : height }}
         tabIndex={onDrawingsChange ? 0 : undefined}
         aria-label={chartDescription ?? (onDrawingsChange ? "Interactive market chart" : undefined)}
         onKeyDownCapture={(event) => {
@@ -558,16 +626,19 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
           if (event.key.toLowerCase() === "z") { event.preventDefault(); event.shiftKey ? redoDrawings() : undoDrawings(); }
           else if (event.key.toLowerCase() === "y") { event.preventDefault(); redoDrawings(); }
           else if (event.key.toLowerCase() === "c" && effectiveSelectedDrawingIds.length && navigator.clipboard) { event.preventDefault(); void navigator.clipboard.writeText(serializeDrawingClipboard(drawings.filter((drawing) => selectedDrawingSet.has(drawing.id)))); }
-          else if (event.key.toLowerCase() === "v" && navigator.clipboard) { event.preventDefault(); void navigator.clipboard.readText().then((text) => { const pasted = parseDrawingClipboard(text).map((drawing, index) => ({ ...drawing, id: `pasted-${Date.now()}-${index}`, name: drawing.name ? `${drawing.name} copy` : undefined })); commitDrawings([...drawings, ...pasted], { type: "clipboard", drawingIds: pasted.map((drawing) => drawing.id) }); changeSelection(pasted.map((drawing) => drawing.id)); }).catch(() => undefined); }
+          else if (event.key.toLowerCase() === "v" && navigator.clipboard) { event.preventDefault(); void navigator.clipboard.readText().then((text) => { const pasted = parseDrawingClipboard(text).map((drawing, index) => ({ ...drawing, id: `pasted-${Date.now()}-${index}`, name: drawing.name ? `${drawing.name} copy` : undefined })); if(commitDrawings([...drawings, ...pasted], { type: "clipboard", drawingIds: pasted.map((drawing) => drawing.id) }))changeSelection(pasted.map((drawing) => drawing.id)); }).catch(() => undefined); }
         }}
       >
-        <div ref={chartHostRef} style={{ height }} />
+        <div ref={attachCanvasHost} style={{ height: interactions ? contentHeight : height }} />
         <span className="sr-only" aria-live="polite">{announcement}</span>
-        {renderSurfaceOverlay?.(geometrySnapshot ? { ...geometrySnapshot, crosshair: crosshairSnapshot } : null, indicatorSeries)}
+        {renderSurfaceOverlay?.(geometrySnapshot ? { ...geometrySnapshot, crosshair: crosshairSnapshot, futureInspection,inspectionUnavailable } : null, indicatorSeries)}
         {!renderSurfaceOverlay && crosshairSnapshot && crosshairLegendSeries.length ? <div aria-label="Pane indicator legend" className="pointer-events-none absolute left-2 top-2 z-10 flex max-w-[calc(100%-5rem)] flex-wrap gap-x-4 rounded-[var(--radius)] border border-border/70 bg-background/85 px-2 py-1 font-mono text-[0.6875rem] text-muted-foreground shadow-sm backdrop-blur-sm">
           {crosshairLegendSeries.map((series) => <span key={series.id} style={{ color: series.color }}>{series.id} {crosshairSnapshot.values[series.id] == null ? "—" : (series.formatValue?.(crosshairSnapshot.values[series.id]!) ?? numberFormatter.format(crosshairSnapshot.values[series.id]!))}</span>)}
         </div> : null}
         {engineRef.current && onDrawingsChange ? <DrawingLayer
+          editor={drawingEditor?{...drawingEditor,timeZone:drawingEditor.timeZone??timeZone}:undefined}
+          interval={interval}
+          futureDisplay={!!timeAxis?.futureDisplay}
           cancelRevision={cancelDrawingRevision}
           discontinuities={discontinuities}
           calculationMode={calculationMode}
@@ -590,11 +661,11 @@ export const MarketChart = React.forwardRef<MarketChartHandle, MarketChartProps>
         /> : null}
         {loading ? <div role="status" className="absolute inset-0 grid place-items-center bg-background"><div className="h-24 w-[70%] animate-pulse motion-reduce:animate-none rounded bg-muted" role="img" aria-label="Loading market chart" /></div> : null}
         {!loading && visibleError ? <div role="alert" className="absolute inset-0 grid place-items-center bg-background p-6 text-center text-sm text-foreground">{visibleError}</div> : null}
-        {!loading && !visibleError && data.length === 0 ? <div className="absolute inset-0 grid place-items-center bg-background p-6 text-center text-sm text-muted-foreground">{emptyMessage}</div> : null}
-      </div>{showDrawingObjectTree && onDrawingsChange ? <DrawingObjectTree drawings={drawings} selectedDrawingIds={effectiveSelectedDrawingIds} onSelectedDrawingIdsChange={changeSelection} onRename={(id, name) => commitDrawings(drawings.map((drawing) => drawing.id === id ? { ...drawing, name } : drawing), { type: "rename", drawingIds: [id] })} onReorder={(id, direction) => commitDrawings(reorderDrawing(drawings, id, direction), { type: "reorder", drawingIds: [id] })} onToggleVisibility={(id) => commitDrawings(drawings.map((drawing) => drawing.id === id ? { ...drawing, visible: !drawing.visible } : drawing), { type: "visibility", drawingIds: [id] })} onToggleLock={(id) => commitDrawings(drawings.map((drawing) => drawing.id === id ? { ...drawing, locked: !drawing.locked } : drawing), { type: "lock", drawingIds: [id] })} onDuplicate={(id) => commitDrawings(duplicateDrawings(drawings, [id], () => `duplicate-${Date.now()}`), { type: "duplicate", drawingIds: [id] })} onDelete={(id) => commitDrawings(drawings.filter((drawing) => drawing.id !== id), { type: "delete", drawingIds: [id] })} onGroup={(ids) => commitDrawings(groupDrawings(drawings, ids, `group-${Date.now()}`), { type: "group", drawingIds: ids })} onUngroup={(ids) => commitDrawings(ungroupDrawings(drawings, ids), { type: "ungroup", drawingIds: ids })} /> : null}</div>
-      <div className={cn(dataTable === "none" && "hidden", "flex items-center justify-between gap-3 border-t border-border px-3 py-2 text-xs text-muted-foreground")}>
-        {dataTable === "toggle" ? <Button type="button" colorStyle="text" size="xs" onClick={() => setTableOpen((value) => !value)}>{tableOpen ? "Hide data" : "View data"}</Button> : <span />}
-      </div>
+        {!loading && !visibleError && data.length === 0 && !timeAxis?.futureDisplay ? <div className="absolute inset-0 grid place-items-center bg-background p-6 text-center text-sm text-muted-foreground">{emptyMessage}</div> : null}
+      </div>{showDrawingObjectTree && onDrawingsChange ? <DrawingObjectTree drawings={drawings} selectedDrawingIds={effectiveSelectedDrawingIds} onSelectedDrawingIdsChange={changeSelection} onRename={(id, name) => commitDrawings(drawings.map((drawing) => drawing.id === id ? { ...drawing, name } : drawing), { type: "rename", drawingIds: [id] })} onReorder={(id, direction) => commitDrawings(reorderDrawing(drawings, id, direction), { type: "reorder", drawingIds: [id] })} onToggleVisibility={(id) => commitDrawings(drawings.map((drawing) => drawing.id === id ? { ...drawing, visible: !drawing.visible } : drawing), { type: "visibility", drawingIds: [id] })} onToggleLock={(id) => commitDrawings(drawings.map((drawing) => drawing.id === id ? { ...drawing, locked: !drawing.locked } : drawing), { type: "lock", drawingIds: [id] })} onDuplicate={(id) => {const duplicateId=`duplicate-${Date.now()}`;commitDrawings(duplicateDrawings(drawings,[id],()=>duplicateId),{type:"duplicate",drawingIds:drawingEditor?.active===true?[duplicateId]:[id]});}} onDelete={(id) => commitDrawings(drawings.filter((drawing) => drawing.id !== id), { type: "delete", drawingIds: [id] })} onGroup={(ids) => commitDrawings(groupDrawings(drawings, ids, `group-${Date.now()}`), { type: "group", drawingIds: ids })} onUngroup={(ids) => commitDrawings(ungroupDrawings(drawings, ids), { type: "ungroup", drawingIds: ids })} /> : null}</div>
+      {dataTable === "toggle" ? <div className="flex items-center justify-between gap-3 border-t border-border px-3 py-2 text-xs text-muted-foreground">
+        <Button type="button" colorStyle="text" size="xs" onClick={() => setTableOpen((value) => !value)}>{tableOpen ? "Hide data" : "View data"}</Button>
+      </div> : null}
       {showTable ? (
         <div className="max-h-72 overflow-auto border-t border-border">
           <table className="w-full min-w-[40rem] text-left text-xs">

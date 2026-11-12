@@ -23,3 +23,11 @@ export function studyValueAt(points: Readonly<IndicatorRenderSeries['points']>, 
 export function readableValue(value: number | null, locale?: string, formatter?: (value: number) => string): string {
   return value == null ? '—' : formatter?.(value) ?? new Intl.NumberFormat(locale, {maximumFractionDigits: 4, maximumSignificantDigits: 6}).format(value);
 }
+/** Compact display only. Keep the original accepted text in the accessible name/title. */
+export function compactReadoutValue(value:number|null|undefined,locale?:string,volume=false):string{
+  if(value==null||!Number.isFinite(value))return '—';
+  const magnitude=Math.abs(value);
+  const options:Intl.NumberFormatOptions=volume||magnitude>=1e4?{notation:'compact',maximumFractionDigits:2}:magnitude>0&&magnitude<.001?{notation:'scientific',maximumFractionDigits:2}:magnitude>0&&magnitude<1?{maximumSignificantDigits:3}:{minimumFractionDigits:2,maximumFractionDigits:2};
+  const text=new Intl.NumberFormat(locale,{useGrouping:false,...options}).format(value);
+  return text.length<=7?text:new Intl.NumberFormat(locale,{useGrouping:false,notation:'scientific',maximumFractionDigits:0}).format(value);
+}

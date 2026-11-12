@@ -33,8 +33,7 @@ export class PriceScale {
     margin = 0.08,
   ): string | null {
     this.anchor = anchor;
-    if (this.mode === "logarithmic" && values.some((value) => value <= 0))
-      return "Logarithmic scale requires positive visible prices.";
+    if (this.mode === "logarithmic" && (values.some((value) => value <= 0) || fixedDomain?.some(value=>value<=0))) { this.minimum=0;this.maximum=1;return "Logarithmic scale requires positive visible prices.";}
     let transformed = values
       .filter(Number.isFinite)
       .map((value) => this.transform(value));
@@ -43,6 +42,7 @@ export class PriceScale {
         this.transform(fixedDomain[0]),
         this.transform(fixedDomain[1]),
       ];
+    transformed=transformed.filter(Number.isFinite);
     if (!transformed.length) {
       this.minimum = 0;
       this.maximum = 1;
@@ -62,6 +62,7 @@ export class PriceScale {
       minimum -= 1;
       maximum += 1;
     }
+    if(!Number.isFinite(minimum)||!Number.isFinite(maximum)||!Number.isFinite(maximum-minimum)){this.minimum=0;this.maximum=1;return "Visible scale exceeds finite display bounds.";}
     this.minimum = minimum;
     this.maximum = maximum;
     return null;
@@ -70,7 +71,8 @@ export class PriceScale {
     if (
       Number.isFinite(range.minimum) &&
       Number.isFinite(range.maximum) &&
-      range.maximum > range.minimum
+      range.maximum > range.minimum &&
+      Number.isFinite(range.maximum-range.minimum)
     ) {
       this.minimum = range.minimum;
       this.maximum = range.maximum;
@@ -146,7 +148,7 @@ export class PriceScale {
     return value;
   }
   private inverse(value: number): number | null {
-    if (this.mode === "logarithmic") return Math.exp(value);
+    if (this.mode === "logarithmic") {const raw=Math.exp(value);return Number.isFinite(raw)&&raw>0?raw:null;}
     if (this.mode === "percentage")
       return this.anchor ? this.anchor * (1 + value / 100) : null;
     if (this.mode === "indexedTo100")

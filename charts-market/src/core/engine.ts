@@ -1,7 +1,9 @@
+import type { MarketChartInteractions, MarketChartInteractionState, MarketChartInteractionChange } from './interactions';
 import type { MarketScaleOptions, MarketViewportOptions, TechnicalPaneState } from "./technical-chart-state";
 import type {
   MarketChartType,
   MarketMarker,
+  MarketPriceReference,
   MarketScaleMode,
   MarketSessionRange,
   MarketChartSnapshot,
@@ -92,6 +94,10 @@ export interface MarketSeriesRendererContext {
 }
 export interface MarketSeriesRendererDefinition { id: MarketChartType; draw(context: MarketSeriesRendererContext): void }
 export interface MarketChartEngineOptions {
+  interactions?: MarketChartInteractions;
+  interactionState?: MarketChartInteractionState;
+  onInteractionStateChange?: MarketChartInteractionChange;
+  onContentHeightChange?: (height: number) => void;
   presentation?: MarketChartPresentation;
   timeAxis?: MarketTimeAxis;
   discontinuities?: readonly MarketTimeGap[];
@@ -102,6 +108,8 @@ export interface MarketChartEngineOptions {
   showVolume: boolean;
   scaleMode: MarketScaleMode;
   markers: MarketMarker[];
+  /** Runtime supplied levels; excluded from calculations and saved state. */
+  priceReferences?: readonly MarketPriceReference[];
   extendedSessions?: MarketSessionRange[];
   locale?: string;
   timeZone?: string;
@@ -123,6 +131,11 @@ export interface MarketChartEngineOptions {
 }
 
 export interface MarketChartEngine {
+  resetInteractionGeometry?(viewport?: MarketViewportOptions): void;
+  setInteractions?(interactions?: MarketChartInteractions): void;
+  setInteractionState?(state: MarketChartInteractionState): void;
+  resetPaneScale?(paneId: string, metadata?: MarketChartChangeMetadata): void;
+  setViewportCommand?(viewport: MarketViewportOptions): void;
   resetScale?():void;
   setTheme?(theme: MarketChartTheme): void;
   setPresentation?(presentation: MarketChartPresentation): void;
@@ -135,6 +148,7 @@ export interface MarketChartEngine {
   setChartType(type: MarketChartType): void;
   setScaleMode(mode: MarketScaleMode): void;
   setMarkers(markers: MarketMarker[]): void;
+  setPriceReferences?(references: readonly MarketPriceReference[]): void;
   setExtendedSessions(sessions: MarketSessionRange[]): void;
   setIndicatorSeries(series: IndicatorRenderSeries[]): void;
   setOverlays(overlays: ChartOverlayState[]): void;
@@ -151,6 +165,9 @@ export interface MarketChartEngine {
   setCrosshairPosition(time: MarketTime, price: number): void;
   clearCrosshairPosition(): void;
   coordinateForTime(time: MarketTime): number | null;
+  /** Display ruler positions only, never observation indexes or acquisition evidence. */
+  logicalForTime?(time: MarketTime): number | null;
+  timeForLogical?(logical: number): MarketTime | null;
   coordinateFor(point: DrawingPoint): { x: number; y: number } | null;
   pointForCoordinate(coordinate: { x: number; y: number }): DrawingPoint | null;
   getSnapshot(): MarketChartSnapshot;
