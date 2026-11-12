@@ -6,7 +6,7 @@ Component READMEs describe public APIs, Storybook supplies interactive examples,
 
 | Library | Start here |
 | --- | --- |
-| UI kit | [Installation and quick start](../README.md), [component folders](../src/components) |
+| UI kit | [Installation and quick start](ui-kit.md), [component folders](../src/components) |
 | Dashboard and quant charts | [Install, API, and component directory](../charts/README.md) |
 | Technical market charts | [Install and first workspace](../charts-market/README.md) |
 | Icons | [Install and API](../icons/README.md), [design system](../icons/DESIGN.md) |
@@ -61,6 +61,7 @@ Each component folder contains implementation, stories, a human README, and agen
 Guides describe this checkout unless they name a particular release. Local completion and successful builds do not establish npm availability. Package manifests/lockfile describe local dependencies; [release evidence](evidence) records reviewed or published artifacts. Check those records before assuming a candidate feature exists in an installed package.
 
 - [Main roadmap and status](ROADMAP.md)
+- [Market feature release records and local evidence policy](evidence/market-feature-releases.md)
 - [Roadmap overview](roadmap/overview.md)
 - [Changelog](roadmap/changelog.md)
 - [Chart architecture and package boundaries](chart-library-strategy.md)
