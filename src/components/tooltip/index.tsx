@@ -175,6 +175,9 @@ export interface TooltipContentProps
       "sideOffset"
     >,
     VariantProps<typeof tooltipContentVariants> {
+  /** Portal destination; omit to preserve the default body portal. Supports fullscreen hosts. */
+  portalContainer?: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Portal>["container"];
+
   /**
    * Distance from the trigger element
    * @default 4
@@ -206,10 +209,10 @@ const TooltipContent = React.forwardRef<
   TooltipContentProps
 >(
   (
-    { className, size, sideOffset = 6, showArrow = false, children, ...props },
+    { className, size, sideOffset = 6, showArrow = false, children, portalContainer, ...props },
     ref
   ) => (
-    <TooltipPrimitive.Portal>
+    <TooltipPrimitive.Portal container={portalContainer}>
       <TooltipPrimitive.Content
         ref={ref}
         data-slot="tooltip-content"

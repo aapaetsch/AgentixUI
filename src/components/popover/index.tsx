@@ -96,6 +96,9 @@ export interface PopoverPortalProps
 export interface PopoverContentProps
   extends React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>,
     VariantProps<typeof popoverContentVariants> {
+  /** Portal destination; omit to preserve the default body portal. Supports fullscreen hosts. */
+  portalContainer?: React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Portal>["container"];
+
   /**
    * Whether to show the arrow pointing to the trigger
    * @default false
@@ -210,6 +213,7 @@ const PopoverContent = React.forwardRef<
       children,
       size,
       showArrow = false,
+      portalContainer,
       arrow,
       sideOffset = 4,
       align = "center",
@@ -217,7 +221,7 @@ const PopoverContent = React.forwardRef<
     },
     ref
   ) => (
-    <PopoverPrimitive.Portal>
+    <PopoverPrimitive.Portal container={portalContainer}>
       <PopoverPrimitive.Content
         ref={ref}
         data-slot="popover-content"

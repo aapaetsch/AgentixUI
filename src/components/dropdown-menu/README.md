@@ -61,3 +61,7 @@ import {
 - Use `DropdownMenuTrigger asChild` whenever the trigger should inherit the sizing and focus behavior of another component.
 - Pair `DropdownMenuItem` with the library `Button` and `aapaetsch-icons` icons for consistent visuals.
 - `DropdownMenuShortcut` is a visual affordance only; keyboard handlers still need to be implemented by the consumer.
+
+## Fullscreen portal destination
+
+DropdownMenuContent accepts optional `portalContainer` (the underlying Radix Portal container type). Omit it for the existing body portal. A fullscreen host supplies its fullscreen element so the content remains in that browser subtree; the prop is consumed by the Portal and never forwarded to DOM. Existing focus, dismiss, keyboard, variants and default behavior remain unchanged. This additive API needs the corresponding UI-kit release before a consumer relies on it.

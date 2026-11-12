@@ -166,6 +166,9 @@ export interface DialogOverlayProps
 export interface DialogContentProps
   extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
     VariantProps<typeof dialogContentVariants> {
+  /** Portal destination; omit to preserve the default body portal. Supports fullscreen hosts. */
+  portalContainer?: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>["container"];
+
   /**
    * Whether to show the close button
    * @default true
@@ -474,6 +477,7 @@ const DialogContent = React.forwardRef<
       closeButton,
       onCloseClick,
       preventBackgroundClose = false,
+      portalContainer,
       onInteractOutside,
       onEscapeKeyDown,
       ...props
@@ -506,7 +510,7 @@ const DialogContent = React.forwardRef<
     );
 
     return (
-      <DialogPortal>
+      <DialogPortal container={portalContainer}>
         <DialogOverlay />
         <DialogPrimitive.Content
           ref={ref}

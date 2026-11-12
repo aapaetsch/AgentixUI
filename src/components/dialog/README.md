@@ -261,3 +261,7 @@ Each nesting level increases z-index by 10:
 ## License
 
 MIT © Aidan
+
+## Fullscreen portal destination
+
+DialogContent accepts optional `portalContainer` (the underlying Radix Portal container type). Omit it for the existing body portal. A fullscreen host supplies its fullscreen element so the content remains in that browser subtree; the prop is consumed by the Portal and never forwarded to DOM. Existing focus, dismiss, keyboard, variants and default behavior remain unchanged. This additive API needs the corresponding UI-kit release before a consumer relies on it.

@@ -65,7 +65,10 @@ export interface DropdownMenuTriggerProps extends React.ComponentPropsWithoutRef
 export interface DropdownMenuPortalProps extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Portal> {}
 
 export interface DropdownMenuContentProps
-  extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> {}
+  extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> {
+  /** Portal destination; omit to preserve the default body portal. Supports fullscreen hosts. */
+  portalContainer?: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Portal>["container"];
+}
 
 export interface DropdownMenuItemProps
   extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>,
@@ -128,8 +131,8 @@ function DropdownMenuSub(props: DropdownMenuSubProps) {
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   DropdownMenuContentProps
->(({ className, sideOffset = 6, align = "start", ...props }, ref) => (
-  <DropdownMenuPrimitive.Portal>
+>(({ className, sideOffset = 6, align = "start", portalContainer, ...props }, ref) => (
+  <DropdownMenuPrimitive.Portal container={portalContainer}>
     <DropdownMenuPrimitive.Content
       ref={ref}
       data-slot="dropdown-menu-content"
