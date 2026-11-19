@@ -1,0 +1,29 @@
+{
+  "status": "owner-authorized-publication",
+  "publicationAuthorized": true,
+  "published": false,
+  "repository": "aapaetsch/AgentixUI",
+  "branch": "release/price-thickness-20261119",
+  "workflow": ".github/workflows/stage-reviewed-price-thickness.yml",
+  "releasePath": "releases/price-thickness-20261119",
+  "parent": "024b772db0e9e6a295001bd1afeb72145e66357b",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-price-thickness.20261119.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-price-thickness.20261119.1.tgz",
+      "sha256": "e11c54f63b49cc5c0eb616de6d6077e4a9be70df39be824e6b55954ca64e1469",
+      "integrity": "sha512-yrlpFkNhyawoXWA8loITH0lsumRDLrzlxbDqyYuYqpPIPBnjETxiTm3M4ld5uQTTMPbTYfq17DRVSk0kXUR94w==",
+      "size": 764093
+    }
+  ],
+  "sourceSha256": "042c5c824c553c044f4ed8331ed709160c60c8cb6120a6f0cc0c5edeca876012",
+  "candidateReceiptSha256": "9386eb3adec4bc585120e59c57620f150a6b227ec21cd713598a22ecad118efa",
+  "candidateReviewSha256": "d3346c02cb18f018761ad328c3e82428088bca1a2aa21cd0668c7326007d305e",
+  "authorization": {
+    "request": "can you commit and publish these changes",
+    "date": "2026-11-19",
+    "scope": "Commit/push thickness changes; publish exact market archive under beta. Consumer adoption excluded."
+  },
+  "releasePolicy": "Stage frozen bytes with provenance, preserve latest/stable, no automatic security-key approval."
+}

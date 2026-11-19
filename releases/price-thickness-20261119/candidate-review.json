@@ -1,0 +1,81 @@
+{
+  "status": "passed",
+  "sourceCommit": "024b772db0e9e6a295001bd1afeb72145e66357b",
+  "package": {
+    "name": "aapaetsch-charts-market",
+    "version": "0.1.0-beta.3-price-thickness.20261119.1",
+    "filename": "aapaetsch-charts-market-0.1.0-beta.3-price-thickness.20261119.1.tgz",
+    "sha256": "e11c54f63b49cc5c0eb616de6d6077e4a9be70df39be824e6b55954ca64e1469",
+    "integrity": "sha512-yrlpFkNhyawoXWA8loITH0lsumRDLrzlxbDqyYuYqpPIPBnjETxiTm3M4ld5uQTTMPbTYfq17DRVSk0kXUR94w==",
+    "size": 764093
+  },
+  "exactPeers": [
+    {
+      "name": "aapaetsch-ui-kit",
+      "version": "0.2.0-beta.3-drawing-portals.1",
+      "sha256": "d1eaa4c0c37cc229c3dd81a4e20ace2bac7a6672ca34c5fbe2cd5e0e105ef811",
+      "integrity": "sha512-kqKICF1oKg5h/Pv2P65ltMTMvIXb2B856nVES+GV2YjtcV5FbPBBPKPC3PRSlDq2XYp6fIuSYkPhcxYuv7Gcig==",
+      "license": "MIT",
+      "dependencies": {
+        "clsx": "2.1.1",
+        "cmdk": "1.1.1",
+        "date-fns": "4.1.0",
+        "tailwind-merge": "2.6.0",
+        "aapaetsch-icons": "0.1.0-beta.0",
+        "react-day-picker": "9.13.0",
+        "@headlessui/react": "2.2.9",
+        "@use-gesture/react": "10.3.1",
+        "@radix-ui/react-slot": "1.2.4",
+        "@radix-ui/react-tabs": "1.1.13",
+        "embla-carousel-react": "8.6.0",
+        "@radix-ui/react-toast": "1.2.15",
+        "@tanstack/react-table": "8.21.3",
+        "@radix-ui/react-avatar": "1.1.11",
+        "@radix-ui/react-dialog": "1.1.15",
+        "@radix-ui/react-select": "2.2.6",
+        "@radix-ui/react-slider": "1.3.6",
+        "@radix-ui/react-switch": "1.2.6",
+        "react-resizable-panels": "4.12.2",
+        "@radix-ui/react-popover": "1.1.15",
+        "@radix-ui/react-toolbar": "1.1.15",
+        "@radix-ui/react-tooltip": "1.2.8",
+        "@tanstack/react-virtual": "3.13.12",
+        "embla-carousel-autoplay": "8.6.0",
+        "@radix-ui/react-checkbox": "1.3.3",
+        "class-variance-authority": "0.7.1",
+        "@radix-ui/react-accordion": "1.2.12",
+        "@radix-ui/react-separator": "1.1.11",
+        "@radix-ui/react-hover-card": "1.1.15",
+        "@radix-ui/react-collapsible": "1.1.12",
+        "@radix-ui/react-radio-group": "1.3.8",
+        "@radix-ui/react-scroll-area": "1.2.10",
+        "@radix-ui/react-alert-dialog": "1.1.15",
+        "@radix-ui/react-context-menu": "2.2.16",
+        "@radix-ui/react-toggle-group": "1.1.15",
+        "@radix-ui/react-dropdown-menu": "2.1.16"
+      }
+    },
+    {
+      "name": "aapaetsch-icons",
+      "version": "0.1.0-beta.0",
+      "sha256": "4ecace9459b4b7143905a9bddcbc5d11db19eb7c96c47930f233c2115cb9eea3",
+      "integrity": "sha512-RRAvgpj0tECOIWBuH48PB76Xd203TAGZKCvo3qsR0TXKAqA+O7/RZUAx0HsrnnAmT7h3usgkBM9L00F+9nouvQ==",
+      "license": "MIT",
+      "dependencies": {
+        "clsx": "2.1.1",
+        "tailwind-merge": "2.6.0"
+      }
+    }
+  ],
+  "checks": {
+    "archiveHash": true,
+    "esmAndCjsCore": true,
+    "esmAndCjsRootSSR": true,
+    "publicTypes": true,
+    "publishedPortalPeer": true,
+    "licenseNoticeAndDocs": true,
+    "noSourceOrDependenciesBundled": true
+  },
+  "fileCount": 76,
+  "qualification": "React 19 installed peer and exact published UI/icon archives; no lifecycle scripts or product changes."
+}
