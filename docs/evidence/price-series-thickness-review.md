@@ -97,3 +97,7 @@ package dry-run is validation evidence only, not a frozen publishable artifact.
 
 Implementation is complete and ready for source review. Publication readiness
 still requires the exact immutable release/peer coordination described above.
+
+November 19: the owner authorized commit and publication. Source is committed and
+the immutable candidate uses the existing exact portal-capable UI peer. See
+[publication progress and artifact identity](price-series-thickness-publication.md).
