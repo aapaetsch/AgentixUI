@@ -1,5 +1,7 @@
 # TechnicalChartView
 
+- **Price line width:** inherited `appearance.line.width` forwards unchanged through runtime presentation. Keep per-chart persistence host-owned, outside saved state/request keys. Preserve supplied admission, viewport/history, keyboard and accessible observations. Comparison stories cover line/candlestick/bar Thin/Thick without a new selector.
+
 ## Floating editor maintenance
 
 Props: forward optional `drawingEditor` and additive `metadata.drawing` without converting exact Decimal/UTC text or persisting runtime position. Dependencies: existing scoped UI-kit/Radix Dialog/Tabs/Popover/Dropdown/Tooltip and original icons. Styling: fixed editor portal inherits chart variables; portal contents require foreground as well as background tokens in dark themes. Preserve supplied-result admission and default/Board chrome. Keep editor geometry in the existing engine; do not query private DOM or synthesize observations. Selection is not a save transaction. Stories use synthetic public verification output; native-device acceptance is separately qualified. See ../../../DRAWING-EDITOR.md.

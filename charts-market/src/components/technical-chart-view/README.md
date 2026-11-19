@@ -202,3 +202,10 @@ remain unavailable. Existing public pane-menu/host action APIs compose with it.
 See the packaged [BOARD-INLINE-READOUT.md](../../../BOARD-INLINE-READOUT.md) for
 types, admission rules, accessibility, metadata bounds and adoption mapping.
 
+# Price line width
+
+`appearance.line.width` forwards the public `MarketChartPresentation` option:
+finite CSS pixels 0.5–5, default 2. Hosts may persist a Thin/Thick choice and map
+it to 1/3px without changing the shared saved-state or financial request schema.
+See ../../../PRICE-SERIES-THICKNESS.md and the Price series thickness stories.
+

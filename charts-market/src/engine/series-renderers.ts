@@ -39,7 +39,8 @@ function drawSeries(
     if (!points.length) return;
     context.strokeStyle = theme.primary;
     context.fillStyle = theme.primary;
-    context.lineWidth = 2;
+    const lineWidth = presentation?.line?.width ?? 2;
+    context.lineWidth = lineWidth;
     const segments: {x:number;y:number;bar:OhlcBar}[][] = [];
     let broken=true;
     points.forEach(point => {
@@ -51,7 +52,7 @@ function drawSeries(
       broken=false;
     });
     segments.forEach(segment => {
-      if (segment.length === 1) { const point = segment[0]; context.fillRect(point.x - 2, point.y - 2, 4, 4); return; }
+      if (segment.length === 1) { const point = segment[0]; context.fillRect(point.x - lineWidth, point.y - lineWidth, lineWidth * 2, lineWidth * 2); return; }
       context.beginPath();
       segment.forEach((point,index) => index ? context.lineTo(point.x,point.y) : context.moveTo(point.x,point.y));
       context.stroke();
@@ -65,6 +66,7 @@ function drawSeries(
       const baseline = scale.toCoordinate(visible[0].close);
       if (baseline != null) {
         context.strokeStyle = theme.border;
+        context.lineWidth = 2;
         context.setLineDash([4, 4]);
         context.beginPath();
         context.moveTo(0, baseline);

@@ -1,5 +1,7 @@
 # MarketChart
 
+- **Price line width:** `presentation.line.width` is runtime-only CSS geometry (0.5..5, default 2). Isolated squares use twice the width; preserve the 4px default. Shared line/area/baseline strokes honor it, baseline reference and inspection markers retain independent styles. No coordinate, gap, calculation, serializer or data changes. See ../../../PRICE-SERIES-THICKNESS.md.
+
 ## Floating editor maintenance
 
 Props: optional `drawingEditor: MarketDrawingEditorOptions`; forward inherited chart timezone, engine ruler and actual axis geometry through the existing DrawingLayer. Dependencies: existing UI-kit/Radix controls and original icons only. Styling: scoped Tailwind theme/portal, handle-only capture and visual-viewport bounds. Preserve omitted defaults and inactive/default/Board behavior. Exact point text is authored coordinate state, not financial evidence. `use-drawing-document.ts` retains optimistic edits through known delayed acknowledgements; explicit shared cancel clears them. Regenerate exact-coordinate metadata from restored undo/redo documents. Do not re-key stale financial strings or persist toolbar position. See ../../../DRAWING-EDITOR.md and the four focused editor/history tests.

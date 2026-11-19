@@ -112,3 +112,4 @@ TechnicalChartView inline OHLC card fit (2026-10-17): ✅ Complete — labels an
   synthetic stories, regression/build/browser evidence and a sealed local candidate
   are recorded in `.chart-drawing-extensions-validation/`. Publication and Portfolio
   dependency/private-persistence/deployment/device acceptance remain separate.
+TechnicalChartView price-series thickness (2026-11-18): ✅ Complete — additive `line.width` CSS-pixel presentation (0.5–5, default 2), inherited appearance API, compatible isolated points and nine themed six-style stories. Dev Runner: 584 tests, market typecheck, aggregate build and production Storybook passed; nine desktop/narrow browser comparisons passed. Existing component count unchanged. See docs/evidence/price-series-thickness-review.md; publication and consumer adoption remain separate approvals.

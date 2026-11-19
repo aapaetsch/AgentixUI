@@ -24,6 +24,11 @@ export interface MarketChartPresentation {
   timeline?: MarketTimelinePresentation;
   /** Supplied drawing evidence callouts; composite compact legends retain evidence in accessible details. Default true. */
   drawingEvidenceLabels?: boolean;
+  line?: {
+    /** Built-in line/area/baseline price stroke in finite CSS pixels, 0.5..5; default 2.
+     * Isolated observations use centered squares with side length twice the width. */
+    width?: number;
+  };
   candles?: {
     /** Proportional preserves historical ratio/cap defaults. Adaptive uses slot spacing minus gap. */
     widthMode?: 'proportional' | 'adaptive';
@@ -82,6 +87,7 @@ export interface TechnicalChartGeometry {
 export function validateMarketPresentation(value: MarketChartPresentation = {}): void {
   const check=(v:number|undefined,min:number,max:number,name:string)=>{if(v!=null&&(!Number.isFinite(v)||v<min||v>max))throw Error(`Invalid chart presentation ${name}: expected ${min}..${max}.`);};
   for (const height of Object.values(value.paneHeaderHeights ?? {})) check(height, 0, 1000, 'paneHeaderHeight');
+  check(value.line?.width, .5, 5, 'line width');
   check(value.timeline?.rightPaddingBars, 0, 150, 'timeline rightPaddingBars');
   if (value.timeline?.range != null && !['auto','1D','5D','1M','3M','6M','1Y','all'].includes(value.timeline.range)) throw Error('Invalid chart timeline range.');
   if (value.timeline?.scaleControls != null && value.timeline.scaleControls !== 'icons') throw Error('Invalid chart timeline scaleControls.');

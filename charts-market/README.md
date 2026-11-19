@@ -184,3 +184,10 @@ See [MOVING-AVERAGE-LABELS.md](./MOVING-AVERAGE-LABELS.md) for opt-in outlined b
 See [READABILITY.md](./READABILITY.md) for visible study/VWAP/volume/profile legends, timestamp-aligned display values, accessible compact details, reference-aware automatic scales and integrated navigation. Source changes are a local publication candidate until separately approved.
 
 See [ADAPTIVE-WIDTHS.md](./ADAPTIVE-WIDTHS.md) for opt-in matching candle/volume widths with a configurable CSS-pixel gap, dense/DPI behavior and unchanged proportional defaults.
+
+## Price stroke width
+
+Set `TechnicalChartView appearance={{line: {width: 1}}}` (or `MarketChart`
+`presentation`) for a thin closing-price line; use `3` for thick. Finite CSS
+pixels 0.5–5, default 2. See [price series thickness](PRICE-SERIES-THICKNESS.md)
+for isolated markers, candle/bar composition and compatibility.

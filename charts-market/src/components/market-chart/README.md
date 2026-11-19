@@ -65,3 +65,9 @@ observed fields before updating React state, and never trigger economic requests
 from scale/layout snapshots. See ../../../INTERACTIONS.md for typed usage and
 the exact controlled viewport/session/default contracts.
 
+# Price line width
+
+`presentation.line.width` accepts finite CSS pixels 0.5–5 (default 2).
+Built-in line/area/baseline price strokes and isolated-point squares honor it;
+runtime updates retain the engine and viewport. See ../../../PRICE-SERIES-THICKNESS.md.
+
