@@ -36,10 +36,15 @@ passed at release commit `bb5503138e53e8bf246b9f1ce511f541af84b2ff` on
 `release/price-thickness-20261119`. npm-staged download size/SHA256/SHA512 matched
 the exact frozen archive. Stage ID: `2fe107d5-38b4-44a0-bbb3-18d52447995c`.
 
-**Awaiting owner npm sign-in and final staged-package authentication. The version
-is not yet claimed as published.** Final verification must download the public
-archive, match the frozen bytes, cryptographically verify Sigstore provenance
-and confirm beta selects the new version while latest/stable remain unchanged.
+**Published and verified on November 19, 2026**, after owner sign-in and security-key
+authentication. [Exact npm version](https://www.npmjs.com/package/aapaetsch-charts-market/v/0.1.0-beta.3-price-thickness.20261119.1).
+
+The public npm archive matches the frozen size, SHA256 and SHA512 integrity above.
+Sigstore verification passed with the GitHub Actions issuer and exact workflow
+identity; SLSA subject, release source commit and workflow invocation were checked.
+`beta` selects this new version. `latest` remains `0.0.0-stage`; no stable tag was
+added or changed. The [portable receipt](price-series-thickness-publication.json)
+records the exact artifact and provenance identity.
 
 Local detailed evidence and scripts:
 `.chart-thickness-validation/publication-20261119/`. The source, license and

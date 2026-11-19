@@ -1,0 +1,35 @@
+{
+  "published": true,
+  "verifiedAt": "2026-11-19T23:35:25.965Z",
+  "sourceCommit": "024b772db0e9e6a295001bd1afeb72145e66357b",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-price-thickness.20261119.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-price-thickness.20261119.1.tgz",
+      "sha256": "e11c54f63b49cc5c0eb616de6d6077e4a9be70df39be824e6b55954ca64e1469",
+      "integrity": "sha512-yrlpFkNhyawoXWA8loITH0lsumRDLrzlxbDqyYuYqpPIPBnjETxiTm3M4ld5uQTTMPbTYfq17DRVSk0kXUR94w==",
+      "size": 764093,
+      "published": true,
+      "distTags": {
+        "latest": "0.0.0-stage",
+        "beta": "0.1.0-beta.3-price-thickness.20261119.1"
+      },
+      "peerDependencies": {
+        "react": ">=18.0.0 <20.0.0",
+        "react-dom": ">=18.0.0 <20.0.0",
+        "aapaetsch-ui-kit": "0.2.0-beta.3-drawing-portals.1"
+      },
+      "provenance": {
+        "cryptographicallyVerified": true,
+        "commit": "bb5503138e53e8bf246b9f1ce511f541af84b2ff",
+        "workflow": ".github/workflows/stage-reviewed-price-thickness.yml",
+        "ref": "refs/heads/release/price-thickness-20261119",
+        "invocation": "https://github.com/aapaetsch/AgentixUI/actions/runs/44637453730/attempts/1"
+      },
+      "npmUrl": "https://www.npmjs.com/package/aapaetsch-charts-market/v/0.1.0-beta.3-price-thickness.20261119.1"
+    }
+  ],
+  "sourceSha256": "042c5c824c553c044f4ed8331ed709160c60c8cb6120a6f0cc0c5edeca876012",
+  "consumerAdopted": false
+}
