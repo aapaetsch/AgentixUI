@@ -1,0 +1,29 @@
+{
+  "status": "owner-authorized-publication",
+  "publicationAuthorized": true,
+  "published": false,
+  "repository": "aapaetsch/AgentixUI",
+  "branch": "release/ohlc-ticks-20261119",
+  "workflow": ".github/workflows/stage-reviewed-ohlc-ticks.yml",
+  "releasePath": "releases/ohlc-ticks-20261119",
+  "parent": "a79be92ccbf4a972c2a587652562f1ec9f461a43",
+  "packages": [
+    {
+      "name": "aapaetsch-charts-market",
+      "version": "0.1.0-beta.3-ohlc-ticks.20261119.1",
+      "filename": "aapaetsch-charts-market-0.1.0-beta.3-ohlc-ticks.20261119.1.tgz",
+      "sha256": "335aa4c25ef098af67faf38c98efe245bd804fd026c5c45b29b32bc7338e2fe1",
+      "integrity": "sha512-ZfQzMQ3IJHRYoucNtazj9JHjhGcRgmvoTFXVEAGON9TJTn6eGAjK6F7VxihuHd/7Wcg3s0asWNvGr7sJhP34Ew==",
+      "size": 766821
+    }
+  ],
+  "sourceSha256": "2a69bf562ad8d4f5d5917cedfcb0620e38f29fc5c6837139de50bd11f6750e47",
+  "candidateReceiptSha256": "d5a729e4fb9b3ba9c6b4fbe1034f7788fbdffbf6e8ddd9fa27e1dd6fc0996249",
+  "candidateReviewSha256": "c6fb39a3055b8f5c5c8965d11ee58f1b4ea99c1c4557a282dbfc902dbeb407be",
+  "authorization": {
+    "request": "can you commit and publish the OHLC tick-width changes",
+    "date": "2026-11-19",
+    "scope": "Commit/push thickness changes; publish exact market archive under beta. Consumer adoption excluded."
+  },
+  "releasePolicy": "Stage frozen bytes with provenance, preserve latest/stable, no automatic security-key approval."
+}

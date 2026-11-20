@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "archiveSha256": "335aa4c25ef098af67faf38c98efe245bd804fd026c5c45b29b32bc7338e2fe1",
+  "sourceFilesUnchanged": true,
+  "esmAndCjsPublicCore": true,
+  "esmAndCjsRootImports": true,
+  "publicTypes": true,
+  "declaredUiPeer": "0.2.0-beta.3-drawing-portals.1",
+  "qualification": "Existing installed workspace peers and React/transitive dependencies; no installation/network/publication. Exact published peer compatibility was not rerun.",
+  "sourceCommit": "a79be92ccbf4a972c2a587652562f1ec9f461a43",
+  "package": {
+    "name": "aapaetsch-charts-market",
+    "version": "0.1.0-beta.3-ohlc-ticks.20261119.1",
+    "filename": "aapaetsch-charts-market-0.1.0-beta.3-ohlc-ticks.20261119.1.tgz",
+    "sha256": "335aa4c25ef098af67faf38c98efe245bd804fd026c5c45b29b32bc7338e2fe1",
+    "integrity": "sha512-ZfQzMQ3IJHRYoucNtazj9JHjhGcRgmvoTFXVEAGON9TJTn6eGAjK6F7VxihuHd/7Wcg3s0asWNvGr7sJhP34Ew==",
+    "size": 766821
+  },
+  "archiveVerification": {
+    "status": "passed",
+    "files": 76,
+    "allPackedBytesMatchVerifiedStage": true,
+    "licenseAndNotice": true
+  },
+  "devRunner": {
+    "status": "passed",
+    "marketTests": {
+      "files": 72,
+      "tests": 603
+    },
+    "marketTypecheck": true,
+    "aggregateBuild": true,
+    "storybook": {
+      "stories": 1955,
+      "docs": 270,
+      "priceThickness": [
+        "market-charts-price-series-thickness--dark",
+        "market-charts-price-series-thickness--light",
+        "market-charts-price-series-thickness--midnight",
+        "market-charts-price-series-thickness--narrow-390",
+        "market-charts-price-series-thickness--narrow-light",
+        "market-charts-price-series-thickness--dense",
+        "market-charts-price-series-thickness--dense-narrow",
+        "market-charts-price-series-thickness--single-points",
+        "market-charts-price-series-thickness--supplied-gaps",
+        "market-charts-price-series-thickness--supplied-gaps-narrow",
+        "market-charts-price-series-thickness--dense-light",
+        "market-charts-price-series-thickness--dense-narrow-light",
+        "market-charts-price-series-thickness--wick-edges",
+        "market-charts-price-series-thickness--wick-edges-narrow"
+      ]
+    },
+    "finalAfterAliasEdit": {
+      "typecheck": true,
+      "focusedFiles": 2,
+      "focusedTests": 19
+    },
+    "sourceEditsByDevRunner": false,
+    "qualification": "Root browser verification separate; no archive/publication/consumer changes by Dev Runner.",
+    "warnings": [
+      "Existing outdated Browserslist database and ambiguous Tailwind easing utilities.",
+      "Existing declaration circular reexport warnings.",
+      "Storybook existing sourcemap-location diagnostics and >500kB chunks."
+    ]
+  },
+  "browserComparisons": 14
+}

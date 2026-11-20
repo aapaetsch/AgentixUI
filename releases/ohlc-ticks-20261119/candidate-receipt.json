@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "a79be92ccbf4a972c2a587652562f1ec9f461a43",
+  "package": {
+    "name": "aapaetsch-charts-market",
+    "version": "0.1.0-beta.3-ohlc-ticks.20261119.1",
+    "filename": "aapaetsch-charts-market-0.1.0-beta.3-ohlc-ticks.20261119.1.tgz",
+    "sha256": "335aa4c25ef098af67faf38c98efe245bd804fd026c5c45b29b32bc7338e2fe1",
+    "integrity": "sha512-ZfQzMQ3IJHRYoucNtazj9JHjhGcRgmvoTFXVEAGON9TJTn6eGAjK6F7VxihuHd/7Wcg3s0asWNvGr7sJhP34Ew==",
+    "size": 766821
+  },
+  "sourceSha256": "2a69bf562ad8d4f5d5917cedfcb0620e38f29fc5c6837139de50bd11f6750e47",
+  "originalCandidate": {
+    "status": "local-proposed-candidate",
+    "published": false,
+    "registryAvailabilityChecked": false,
+    "consumerAdopted": false,
+    "baseline": "284a3f6eae96c05846f48c2be69cf7a3d6b66910",
+    "package": "aapaetsch-charts-market",
+    "version": "0.1.0-beta.3-ohlc-ticks.20261119.1",
+    "archive": "C:\\Users\\aapae\\Documents\\Projects\\Aidans-React-UI\\.chart-ohlc-tick-validation\\archives\\aapaetsch-charts-market-0.1.0-beta.3-ohlc-ticks.20261119.1.tgz",
+    "sha256": "335aa4c25ef098af67faf38c98efe245bd804fd026c5c45b29b32bc7338e2fe1",
+    "integrity": "sha512-ZfQzMQ3IJHRYoucNtazj9JHjhGcRgmvoTFXVEAGON9TJTn6eGAjK6F7VxihuHd/7Wcg3s0asWNvGr7sJhP34Ew==",
+    "size": 766821,
+    "fileCount": 76,
+    "peerDependencies": {
+      "aapaetsch-ui-kit": "0.2.0-beta.3-drawing-portals.1",
+      "react": ">=18.0.0 <20.0.0",
+      "react-dom": ">=18.0.0 <20.0.0"
+    },
+    "isolatedOverrides": [
+      "version",
+      "peerDependencies.aapaetsch-ui-kit"
+    ],
+    "workspaceManifestAndLockUnchanged": true,
+    "sourceArchive": "C:\\Users\\aapae\\Documents\\Projects\\Aidans-React-UI\\.chart-ohlc-tick-validation\\archives\\ohlc-tick-width-source.tar.gz",
+    "sourceSha256": "9beff6063d7a79a46e858a717624a6357ca372babe03e99ba76747c3caa917f9",
+    "sourceFiles": {
+      "charts-market/src/core/presentation.ts": "e4d9915db30164270c306ecf647b571fac5380d58d971cfbd0b0299a1ba4cec6",
+      "charts-market/src/engine/series-renderers.ts": "87d3d09a37e3dddadb6a52b9846a70183b74e3bda06234e21898c47face099fc",
+      "charts-market/src/engine/ohlc-tick-width.test.ts": "cd33b07831b30ea8ec91cb0acf212de7df91848ea9c702361bd321c347514b31",
+      "charts-market/src/components/technical-chart-view/ohlc-tick-width.test.tsx": "b28b35ecbefd4be0f5e46e03b2f8b109d10279779b7a5a4e01ebcccc1c6483c0",
+      "charts-market/src/components/technical-chart-view/line-width.stories.tsx": "62d846a1addaa121b23ba52c81352fcce827211eac6a03add9041e5ad9dcc94b",
+      "charts-market/ADAPTIVE-WIDTHS.md": "6f64a7a40f4bcf2b96919e2cc9183aa1e63638d8b7f40fc35d6156ed421e0f8c",
+      "docs/ROADMAP.md": "51f7dc94bf2cbf75a6d1ac0d5569cc94fb20120994ee4f5c2a82776e4e8b3964"
+    },
+    "qualification": "Local candidate only. Publication, push and exact consumer adoption require separate approvals. No dependency installation."
+  },
+  "immutableArchiveUnchanged": true,
+  "peerDependencies": {
+    "aapaetsch-ui-kit": "0.2.0-beta.3-drawing-portals.1",
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0"
+  },
+  "published": false
+}
