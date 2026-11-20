@@ -93,9 +93,10 @@ function drawSeries(
     context.fillStyle = color;
     const strokeWidth = adaptive ? Math.min(presentation?.candles?.wickWidth ?? 1, geometry.width) : presentation?.candles?.wickWidth ?? 1;
     context.lineWidth = strokeWidth;
+    const stemX = adaptive ? geometry.center : Math.round(x) + 0.5;
     context.beginPath();
-    context.moveTo(adaptive ? geometry.center : Math.round(x) + 0.5, high!);
-    context.lineTo(adaptive ? geometry.center : Math.round(x) + 0.5, low!);
+    context.moveTo(stemX, high!);
+    context.lineTo(stemX, low!);
     context.stroke();
     if (
       type === "candlestick" &&
@@ -117,6 +118,21 @@ function drawSeries(
         geometry.width,
         Math.max(1, Math.abs(close! - open!)),
       );
+    else if (presentation?.bars?.tickWidth != null) {
+      // Retain proportional stem snapping; adaptive ticks use the exact supplied center.
+      // Butt caps need no horizontal inset, even when a slot is narrower than a device pixel.
+      const left = stemX - geometry.width / 2, right = stemX + geometry.width / 2;
+      context.save();
+      context.lineWidth = presentation.bars.tickWidth;
+      context.lineCap = 'butt';
+      context.beginPath();
+      context.moveTo(left, open!);
+      context.lineTo(stemX, open!);
+      context.moveTo(stemX, close!);
+      context.lineTo(right, close!);
+      context.stroke();
+      context.restore();
+    }
     else {
       context.beginPath();
       context.moveTo(geometry.left + (adaptive ? strokeWidth / 2 : 0), open!);

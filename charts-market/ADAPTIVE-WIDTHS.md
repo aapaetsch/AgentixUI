@@ -1,5 +1,41 @@
 # Adaptive candle and volume widths
 
+## Independent OHLC tick width
+
+`MarketChartPresentation.bars?: {tickWidth?: number}` is also available as
+`TechnicalChartView.appearance.bars.tickWidth` and `MarketChart.presentation`.
+The optional scalar accepts finite **0.5–5 CSS pixels inclusive**. Invalid values
+are rejected by existing constructor/runtime presentation validation even on a
+chart type that ignores the option. No new composite forwarding is necessary.
+
+Omission preserves the legacy OHLC tick width (`candles.wickWidth`) and inset
+endpoints exactly. An explicit width affects only the two horizontal OHLC ticks;
+the high–low stem retains its existing width and path. Open extends left to the
+stem and close extends right from it, at their unmodified supplied prices.
+Flat (`butt`) caps keep the stroke ends inside the horizontal bar footprint.
+Tick line caps/width are scoped with Canvas save/restore. Incomplete dashes and
+direction colors are inherited unchanged.
+
+Adaptive ticks use the same exact time center and width as the shared geometry
+above, without the legacy stem-width inset. Thus each tick retains a positive
+half-slot length even at sub-device-pixel spacing. Their requested stroke width
+is vertical thickness and is not reduced to the horizontal slot width. Existing
+antialiasing and plot clipping still apply. Proportional ticks retain the legacy
+snapped stem center and unchanged body-width span, centered on that stem. Neither
+mode changes the high–low path, price/time scales, observations or slot spacing.
+
+MyCharts' host mapping is now: candle Thin/Thick adaptive gaps **2/1px**, wick
+width **1px**; OHLC gap **1px** and stem **1px** in both presets, with
+`bars.tickWidth` **1/2px**. Line widths remain **1/3px**. These settings do not
+enter version-1 saved state or supplied financial request identities; the host
+owns saved selections. This local follow-up requires its own immutable release
+and exact consumer version/lock approval before adoption.
+
+The existing Price series thickness stories compare these presets in light/dark
+desktop/narrow and dense views. Canvas regression tests cover legacy omission,
+stroke widths/endpoints/caps, fractional slots/DPR1/2, equal open/close, one-sided
+and zero-length wicks, and unchanged line/candle paths.
+
 Adaptive sizing is opt-in runtime presentation. Existing consumers, including compact Chart Boards that omit these options, keep their historical geometry.
 
 ```tsx
